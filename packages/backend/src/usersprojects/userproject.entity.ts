@@ -1,0 +1,38 @@
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { User } from '../users/user.entity';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
+import { Project } from '../projects/project.entity';
+
+@Unique(['user', 'project'])
+@Index(['user', 'project'])
+@Entity()
+export class UserProject {
+  @ApiProperty()
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @ApiProperty({ example: 'a uuid...', description: 'User id' })
+  @ManyToOne(() => User, (user) => user.id, { nullable: false })
+  user: string;
+
+  @ApiProperty({ example: 'a uuid...', description: 'Project id' })
+  @ManyToOne(() => Project, (project) => project.id, {
+    nullable: false,
+  })
+  project: string;
+
+  @ApiProperty({
+    example: 'true/false',
+    description: 'Is user project admin ?',
+  })
+  @Column({ nullable: false, default: false })
+  isprojectadmin: boolean;
+}
