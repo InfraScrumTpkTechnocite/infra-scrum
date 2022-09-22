@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 2481 3508" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-7.18829,-193.689)">
+        <g transform="matrix(1,0,0,1,36.2397,78.2193)">
+            <g transform="matrix(1.56044,0,0,1.58436,96.0666,299.356)">
+                <g>
+                    <g transform="matrix(-1.84297,0.739647,-0.597793,-1.48552,3328.41,4610.8)">
+                        <path d="M352.976,2880.03L702.235,2817.75L698.674,2786.84L349.416,2849.12L352.976,2880.03Z" style="fill:rgb(31,113,165);"/>
+                    </g>
+                    <g transform="matrix(9.80571e-17,1.60139,-1.60139,9.80571e-17,5333.92,-74.8989)">
+                        <rect x="372.73" y="2820.52" width="298.544" height="31.223" style="fill:rgb(31,113,165);"/>
+                    </g>
+                    <g transform="matrix(1,0,0,1,-1057.14,-2090.03)">
+                        <path d="M2127.27,3029.2L1692.67,2653.06L1692.78,3184.36L1742.78,3184.35L1742.7,2762.48C1843.68,2849.88 2094.55,3067 2094.55,3067L2127.27,3029.2Z" style="fill:rgb(31,113,165);"/>
+                    </g>
+                    <g transform="matrix(9.80571e-17,1.60139,-1.60139,9.80571e-17,5066.26,140.477)">
+                        <rect x="372.73" y="2820.52" width="298.544" height="31.223" style="fill:rgb(31,113,165);"/>
+                    </g>
+                </g>
+            </g>
+            <g transform="matrix(2.08496,0,0,2.08496,-257.242,-1566.33)">
+                <path d="M1110.36,1964.52L1110.36,1145.42L291.259,1145.42L291.259,1964.52L1110.36,1964.52ZM1068.32,1187.46L1068.32,1922.48C1068.32,1922.48 333.3,1922.48 333.3,1922.48C333.3,1922.48 333.3,1187.46 333.3,1187.46L1068.32,1187.46Z" style="fill:rgb(31,113,165);"/>
+            </g>
+        </g>
+        <g transform="matrix(1.39844,0,0,1.39844,-245.996,-1230.17)">
+            <text x="452.842px" y="3021.49px" style="font-family:'FuturaPT-Bold', 'Futura PT', sans-serif;font-weight:700;font-size:319.347px;fill:rgb(31,113,165);">TRIP<tspan x="1099.52px 1257.92px " y="3021.49px 3021.49px ">TY</tspan>K</text>
+        </g>
+    </g>
+</svg>
