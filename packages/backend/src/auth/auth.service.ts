@@ -17,7 +17,9 @@ export class AuthService {
     );
     console.log(`comparaison passwords=${await compare(pass, user.password)}`);
     if (user && (await compare(pass, user.password))) {
-      console.log(`user ${user.username} exists and passwords comparison is ok.`);
+      console.log(
+        `user ${user.username} exists and passwords comparison is ok.`,
+      );
       const { password, ...result } = user;
       return result;
     }
