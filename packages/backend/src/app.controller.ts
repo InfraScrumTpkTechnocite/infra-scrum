@@ -32,7 +32,7 @@ export class AppController {
   @Post('auth/login')
   async login(@Request() req) {
     //return req.user;
-    //console.log('app.controller - login');
+    console.log('app.controller - login');
     return this.authService.login(req.user);
   }
 
