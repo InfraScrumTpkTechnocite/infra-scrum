@@ -61,6 +61,15 @@ export class AppController {
         .catch((error) => console.log(error.driverError.detail));
     });
 
+    this.rolesService
+      .findOneByName('superadmin')
+      .then((role) => {
+        seederUsers[0].role = role.id;
+        console.log(`superadmin role id : ${role.id}`);
+      })
+      .catch((error) => console.log(error.driverError.detail));
+    console.log(`seederUsers[0] role id : ${seederUsers[0].role}`);
+    
     seederUsers.forEach((user) => {
       this.usersService
         .create(user)
