@@ -7,6 +7,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
+    {
+        path: 'admin',
+        loadChildren: () =>
+            import('./admin/admin.module').then((m) => m.AdminModule)
+    },
     { path: 'index', component: IndexComponent },
     { path: 'login', component: LoginComponent },
     { path: 'create-user', component: CreateUserComponent},
