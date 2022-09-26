@@ -6,11 +6,11 @@ import { IndexComponent } from './index/index.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
+    { path: '', redirectTo: 'index', pathMatch: 'full' },
     { path: 'index', component: IndexComponent },
     { path: 'login', component: LoginComponent },
     { path: 'create-user', component: CreateUserComponent},
-    { path: '', redirectTo: 'index', pathMatch: 'full' },
-    { path: '**', component: PageNotFoundComponent },
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
