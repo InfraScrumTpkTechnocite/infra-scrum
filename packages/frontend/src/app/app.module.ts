@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './form/login/login.component';
+import { CreateUserComponent } from './form/create-user/create-user.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -13,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     IndexComponent,
     HeaderComponent,
-    LoginComponent
+    LoginComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
