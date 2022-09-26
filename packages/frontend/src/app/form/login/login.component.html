@@ -13,14 +13,46 @@
             </div>
 
             <button (click)="login()" class="transform text-white rounded-sm bg-primary py-2 font-bold duration-300 hover:bg-secondary">
-        LOG IN
-      </button>
+              LOG IN
+            </button>
 
             <p class="text-center text-gray-700 text-lg">
                 No account?
                 <a href="#" class="font-medium text-primary underline-offset-4 hover:underline">Create One</a
         >
-      </p>
-    </section>
+          <input id="username" formControlName="username"
+            type="text"
+            placeholder="Email or Username"
+            class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+          />
+                </p>
+
+        <div
+          class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+        >
+          <input id="password" formControlName="password"
+            type="password"
+            placeholder="Password"
+            class="w-full text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+          />
+        </div>
+
+        <button type="submit" [disabled]="!profileForm.valid"
+          class="transform text-white rounded-sm bg-primary py-2 font-bold duration-300 hover:bg-secondary"
+        >
+          LOG IN
+        </button>
+
+        <p class="text-center text-gray-700 text-lg">
+          No account?
+          <a
+            href="#"
+            class="font-medium text-primary underline-offset-4 hover:underline"
+            >Create One</a
+          >
+        </p>
+      </section>
+
+
   </main>
 </div>
