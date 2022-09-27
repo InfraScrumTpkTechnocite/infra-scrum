@@ -7,7 +7,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from './users/user.entity';
 import { UsersService } from './users/users.service';
-import { seederUsers, seederProjects, seederRoles } from './seeder/seeder';
+import { seederUser, seederProjects, seederRoles } from './seeder/seeder';
 import { ProjectsService } from './projects/projects.service';
 import { RolesService } from './roles/roles.service';
 
@@ -32,7 +32,7 @@ export class AppController {
   @Post('auth/login')
   async login(@Request() req) {
     //return req.user;
-    //console.log('app.controller - login');
+    console.log('app.controller - login');
     return this.authService.login(req.user);
   }
 
@@ -48,7 +48,18 @@ export class AppController {
     seederRoles.forEach((role) => {
       this.rolesService
         .create(role)
-        .then((role) => console.log(`User ${role.name} created`))
+        .then((role) => {
+          console.log(`Role ${role.name} created`);
+          if (role.name == 'superadmin') {
+            seederUser.role = role.id;
+            this.usersService
+              .create(seederUser)
+              .then((seederUser) =>
+                console.log(`User ${seederUser.username} created`),
+              )
+              .catch((error) => console.log(error.driverError.detail));
+          }
+        })
         .catch((error) => console.log(error.driverError.detail));
     });
 
@@ -58,13 +69,6 @@ export class AppController {
         .then((project) =>
           console.log(`Project ${project.projectname} created`),
         )
-        .catch((error) => console.log(error.driverError.detail));
-    });
-
-    seederUsers.forEach((user) => {
-      this.usersService
-        .create(user)
-        .then((user) => console.log(`User ${user.username} created`))
         .catch((error) => console.log(error.driverError.detail));
     });
   }

@@ -3,9 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------------------------------------------------------------- */
+/*                                   General                                  */
+/* -------------------------------------------------------------------------- */
+
 *{
     font-family: 'Raleway', sans-serif;
 }
+
+/* -------------------------------------------------------------------------- */
+/*                             Gradient animations                            */
+/* -------------------------------------------------------------------------- */
 
 .gradientBackgroundTpk {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #1f71a5, #50E2AD);
@@ -24,4 +32,30 @@
       background-position: 0% 50%;
     }
   }
-  
+
+
+/* Button animations */
+
+  .btn-hover {
+    cursor: pointer;
+    background-size: 300% 100%;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+  }
+  .btn-hover:hover {
+    background-position: 100% 0;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.btn-hover:focus {
+    outline: none;
+}
+.btn-hover.tpkBlueBtn {
+  background-image: linear-gradient(to right, #25aae1, #1F71A5, #0faee4, #275E9d);
+  box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+/*  */
