@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
+    constructor(private http: HttpClient) {}
 
   constructor(
     private http: HttpClient,
     public jwtHelper: JwtHelperService,
     private router: Router
   ) { }
+  
+  isLoggedIn: boolean = false;
 
   login(username: string, password: string) {
     return this.http.post<any>('/backend/auth/login', {username, password})

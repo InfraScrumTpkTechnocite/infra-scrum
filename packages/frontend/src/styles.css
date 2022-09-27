@@ -16,7 +16,7 @@
 /* -------------------------------------------------------------------------- */
 
 .gradientBackgroundTpk {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #1f71a5, #50E2AD);
+    background: linear-gradient(-45deg, #ee7752, #7536e2, #1f71a5, #50E2AD);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
@@ -58,4 +58,11 @@
   background-image: linear-gradient(to right, #25aae1, #1F71A5, #0faee4, #275E9d);
   box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
 }
+.btn-hover.tpkErrorBtn {
+    background-image: linear-gradient(to right, #e44e4d, #e12525, #e40f0f, #9d2727);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
 /*  */
+=======
+/*  */
+
