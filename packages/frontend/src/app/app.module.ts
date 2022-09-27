@@ -14,27 +14,28 @@ import { FormsModule } from '@angular/forms';
 import { CreateUserComponent } from './form/create-user/create-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProjectsComponent } from './projects/projects.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        IndexComponent,
-        HeaderComponent,
-        LoginComponent,
-        EditNewTasksComponent,
-        CreateUserComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule
-    ],
-    providers: [],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    IndexComponent,
+    HeaderComponent,
+    LoginComponent,
+    CreateUserComponent,
+    EditNewTasksComponent,
+    ProjectsComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
