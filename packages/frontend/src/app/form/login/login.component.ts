@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       this.profileForm.controls.username.value,
       this.profileForm.controls.password.value
       ).subscribe(data => console.log('authlogin OK'));
-     this.authService.isLoggedIn = true;
+     //this.authService.isLoggedIn = true;
   }
 
 }

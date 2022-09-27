@@ -52,10 +52,10 @@ export class KanbanstatusController {
     return await this.kanbanStatusService.findOne(id);
   }
 
-  @Get('/:projectid/:kanbanstatusname')
+  @Get('/:kanbanstatusname/:projectid')
   async findOneByProjectAndName(
-    @Param('projectid') projectid: string,
     @Param('kanbanstatusname') kanbanstatusname: string,
+    @Param('projectid') projectid: string,
   ): Promise<KanbanStatus> {
     return await this.kanbanStatusService.findOneByProjectAndName(
       projectid,

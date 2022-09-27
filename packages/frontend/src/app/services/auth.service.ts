@@ -15,7 +15,7 @@ export class AuthService {
     private router: Router
   ) { }
   
-  isLoggedIn: boolean = false;
+  //isLoggedIn: boolean = false;
 
   login(username: string, password: string) {
     return this.http.post<any>('/backend/auth/login', {username, password})
