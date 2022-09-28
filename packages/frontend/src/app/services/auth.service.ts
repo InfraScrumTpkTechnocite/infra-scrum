@@ -23,9 +23,9 @@ export class AuthService {
       }))
   }
 
-  public isAuthenticated(): boolean {
-    const token: any = localStorage.getItem('jwt-token');    // Check whether the token is expired and return
-    // true or false
-    return !this.jwtHelper.isTokenExpired(token);
-  }
+    public isAuthenticated(): boolean {
+        const token: any = localStorage.getItem('jwt-token'); // Check whether the token is expired and return
+        // true or false
+        return !this.jwtHelper.isTokenExpired(token);
+    }
 }

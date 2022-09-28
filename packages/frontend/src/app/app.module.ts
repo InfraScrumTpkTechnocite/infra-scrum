@@ -13,7 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProjectsComponent } from './projects/projects.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

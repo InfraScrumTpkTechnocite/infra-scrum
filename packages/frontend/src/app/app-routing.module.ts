@@ -22,10 +22,14 @@ const routes: Routes = [
     { path: 'index', component: IndexComponent },
     { path: 'login', component: LoginComponent },
 
-    { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuardService]},
+    {
+        path: 'projects',
+        component: ProjectsComponent,
+        canActivate: [AuthGuardService]
+    },
 
     { path: 'edit-new-tasks', component: EditNewTasksComponent },
-    { path: 'create-user', component: CreateUserComponent},
+    { path: 'create-user', component: CreateUserComponent },
 
     { path: '**', component: PageNotFoundComponent }
 ];
