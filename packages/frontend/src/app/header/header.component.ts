@@ -11,10 +11,10 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {}
     loggedIn() {
-        return this.authService.isLoggedIn;
+        return this.authService.isAuthenticated();
     }
 
     logOut() {
-        this.authService.isLoggedIn = false;
+        localStorage.removeItem('jwt-token');
     }
 }
