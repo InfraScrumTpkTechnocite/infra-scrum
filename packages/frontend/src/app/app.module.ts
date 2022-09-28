@@ -9,6 +9,7 @@ import { LoginComponent } from './form/login/login.component';
 import { CreateUserComponent } from './form/create-user/create-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MatchPasswordDirective } from './directives/password-pattern.directive';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     IndexComponent,
     HeaderComponent,
     LoginComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    MatchPasswordDirective
   ],
   imports: [
     BrowserModule,
