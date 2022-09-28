@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -12,8 +13,12 @@ export class LoginComponent implements OnInit {
     username: new FormControl(''),
     password: new FormControl(''),
   });
-
-    constructor(private authService: AuthService) {}
+  showErrorMessage: boolean = false;
+  
+    constructor(
+      private authService: AuthService,
+      private router: Router
+      ) {}
 
   ngOnInit(): void {}
 
@@ -27,8 +32,16 @@ export class LoginComponent implements OnInit {
     this.authService.login(
       this.profileForm.controls.username.value,
       this.profileForm.controls.password.value
-      ).subscribe(data => console.log('authlogin OK'));
+      ).subscribe({
+        next: (response) => {
+          this.router.navigate(['projects']);
+        },
+        error: (error) => {
+          this.showErrorMessage = true;
+          //console.log(`Error : ${error.message}`);
+        },
+        complete: () => {console.log(`login process completed.`)}
+      })
      //this.authService.isLoggedIn = true;
   }
-
 }

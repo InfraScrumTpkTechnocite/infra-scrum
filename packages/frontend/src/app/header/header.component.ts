@@ -7,16 +7,14 @@ import { AuthService } from '../services/auth.service';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    constructor(/* public authService: AuthService */) {}
+    constructor(public authService: AuthService) {}
 
     ngOnInit(): void {}
     loggedIn() {
-        //return this.authService.isLoggedIn;
-        return localStorage.getItem('jwt-token') != undefined ? true : false;
+        return this.authService.isAuthenticated();
     }
 
     logOut() {
-        //this.authService.isLoggedIn = false;
         localStorage.removeItem('jwt-token');
     }
 }
