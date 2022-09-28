@@ -6,9 +6,12 @@ import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './form/login/login.component';
+import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
 import { CreateUserComponent } from './form/create-user/create-user.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatchPasswordDirective } from './directives/password-pattern.directive';
+import { ProjectsComponent } from './projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -16,11 +19,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     IndexComponent,
     HeaderComponent,
     LoginComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    MatchPasswordDirective,
+    EditNewTasksComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
     ReactiveFormsModule
   ],

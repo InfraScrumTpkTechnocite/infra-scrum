@@ -4,7 +4,8 @@ export const seederRoles: any = [
   { name: 'superadmin' },
   { name: 'admin' },
   { name: 'employee' },
-  { name: 'trainee' },
+  { name: 'intern' },
+  { name: 'guest' },
 ];
 
 export const seederUser: any = {
