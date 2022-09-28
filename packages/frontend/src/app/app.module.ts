@@ -7,7 +7,6 @@ import { IndexComponent } from './index/index.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './form/login/login.component';
 import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
-import { FormsModule } from '@angular/forms';
 import { CreateUserComponent } from './form/create-user/create-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
