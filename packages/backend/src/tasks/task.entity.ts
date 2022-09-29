@@ -57,5 +57,5 @@ export class Task {
 
   @ApiProperty({ example: 'a uuid...', description: 'Task type id' })
   @ManyToOne(() => TaskType, (tasktype) => tasktype.id, { nullable: false })
-  tasktype: string;
+  tasktype: TaskType;
 }
