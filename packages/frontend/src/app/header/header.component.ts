@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { HeaderTitleService } from '../services/header-title.service';
 
 @Component({
     selector: 'app-header',
@@ -7,9 +8,17 @@ import { AuthService } from '../services/auth.service';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    constructor(public authService: AuthService) {}
+    title: string = '';
+    constructor(
+        public authService: AuthService,
+        private headerTitleService: HeaderTitleService
+    ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.headerTitleService.title.subscribe((updatedTitle) => {
+            this.title = updatedTitle;
+        });
+    }
     loggedIn() {
         return this.authService.isAuthenticated();
     }

@@ -20,9 +20,10 @@ module.exports = {
       'grey1': '#e1e1e0',
       'grey2': '#a1a1a0',
       'grey3': '#71716f',
-      'grey4': '"3c3c3b',
+      'grey4': '#3c3c3b',
     }
    },
   },
   plugins: [],
 }
+
