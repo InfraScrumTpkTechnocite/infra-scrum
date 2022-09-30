@@ -35,7 +35,7 @@ export class Project {
   @ManyToOne(() => Project, (project) => project.id, {
     nullable: true,
   })
-  project: string;
+  project: Project;
 
   @ApiProperty({
     example: 'https://github....',

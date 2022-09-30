@@ -31,5 +31,5 @@ export class KanbanStatus {
   @ManyToOne(() => Project, (project) => project.id, {
     nullable: false,
   })
-  project: string;
+  project: Project;
 }
