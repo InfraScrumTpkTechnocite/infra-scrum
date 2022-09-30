@@ -67,7 +67,7 @@ export class AppController {
       this.projectsService
         .create(project)
         .then((project) =>
-          console.log(`Project ${project.projectname} created`),
+          console.log(`Project ${project.name} created`),
         )
         .catch((error) => console.log(error.driverError.detail));
     });

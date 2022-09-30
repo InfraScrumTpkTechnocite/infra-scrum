@@ -1,61 +1,79 @@
 /* You can add global styles to this file, and also import other style files */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* -------------------------------------------------------------------------- */
+
+
 /*                                   General                                  */
+
+
 /* -------------------------------------------------------------------------- */
 
-*{
+* {
     font-family: 'Raleway', sans-serif;
 }
 
+
 /* -------------------------------------------------------------------------- */
+
+
 /*                             Gradient animations                            */
+
+
 /* -------------------------------------------------------------------------- */
 
 .gradientBackgroundTpk {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #1f71a5, #50E2AD);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
 }
 
 @keyframes gradient {
     0% {
-      background-position: 0% 50%;
+        background-position: 0% 50%;
     }
     50% {
-      background-position: 100% 50%;
+        background-position: 100% 50%;
     }
     100% {
-      background-position: 0% 50%;
+        background-position: 0% 50%;
     }
-  }
+}
+
 
 
 /* Button animations */
 
-  .btn-hover {
+.btn-hover {
     cursor: pointer;
     background-size: 300% 100%;
     -moz-transition: all .4s ease-in-out;
     -o-transition: all .4s ease-in-out;
     -webkit-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
-  }
-  .btn-hover:hover {
+}
+
+.btn-hover:hover {
     background-position: 100% 0;
     -moz-transition: all .4s ease-in-out;
     -o-transition: all .4s ease-in-out;
     -webkit-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
 }
+
 .btn-hover:focus {
     outline: none;
 }
+
 .btn-hover.tpkBlueBtn {
-  background-image: linear-gradient(to right, #25aae1, #1F71A5, #0faee4, #275E9d);
-  box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+    background-image: linear-gradient(to right, #25aae1, #1F71A5, #0faee4, #275E9d);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
 }
-/*  */
+.btn-hover.tpkErrorBtn {
+    background-image: linear-gradient(to right, #e44e4d, #e12525, #e40f0f, #9d2727);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+

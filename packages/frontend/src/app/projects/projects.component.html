@@ -1,0 +1,615 @@
+<div class="w-full lg:w-11/12 m-auto mt-2 p-4">
+    <!-- TITRE qui ira se mettre dans le header une fois la fonctionnalité ajoutée -->
+
+    <div class="bg-tpkwhite bg-opacity-40 p-4 lg:p-6 rounded-xl">
+        <!-- BOUTON CREATE NEW PROJECT (uniquement visible et utilisable par superadmin et admin) -->
+        <div class="flex items-center justify-center pb-6">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-16 sm:w-24 h-16 sm:h-24 text-primary rounded-full hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-md hover:cursor-pointer"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+            </svg>
+        </div>
+        <!-- CONTAINER PROJETS-->
+        <div
+            class="mx-auto grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8"
+        >
+            <!-- PROJET(S) [venir boucler sur les projets assignés au user ou créé par lui (admin dans ce cas)] -->
+            <div
+                class="flex flex-col bg-primary h-72 lg:h-96 rounded-md shadow-md shadow-secondary hover:shadow-lg hover:shadow-primary transition ease-in-out delay-200 hover:cursor-pointer"
+            >
+                <!-- bouton icône edit -->
+                <div class="text-right">
+                    <button
+                        class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6 md:w-8 md:h-8"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <!-- titre projet-->
+                <div
+                    class="flex items-center justify-center border-4 border-secondary bg-tpkwhite rounded-md max-w-1 h-2/5 lg:h-1/5 mx-4"
+                >
+                    <h2
+                        class="text-secondary text-center text-xl md:text-2xl font-extrabold"
+                    >
+                        This is a long project name, nondedjoss
+                    </h2>
+                </div>
+                <!-- image + description -->
+                <div
+                    class="flex items-center justify-around border-4 border-secondary bg-tpkwhite rounded-md h-1/2 lg:h-3/5 mx-4 my-1 p-2 xl:p-0"
+                >
+                    <img
+                        class="h-20 lg:h-32 rounded-sm"
+                        src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                        alt="projet"
+                    />
+                    <div
+                        class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 text-clip overflow-scroll"
+                    >
+                        <p class="text-secondary">
+                            Lorem ipsum dolor sit, amet consectetur adipisicing
+                            elit. Laudantium aperiam nostrum nisi magni quam
+                            quibusdam reiciendis itaque, facere delectus
+                            veritatis, tempora temporibus quaerat repellat porro
+                            architecto magnam aspernatur inventore ipsa!
+                            Quisquam animi eos architecto labore, numquam magni
+                            necessitatibus mollitia! Iste totam libero neque
+                            commodi nemo maxime perspiciatis minima nulla
+                            asperiores optio porro est, unde tempore quos
+                            distinctio magni. Tenetur, magni! Aliquam minima,
+                            vero saepe, repudiandae rerum, beatae omnis quos rem
+                            adipisci vel alias harum maxime dolore pariatur ea
+                            consequuntur a est iste. Minima exercitationem
+                            debitis ducimus dolores illum reiciendis.
+                            Laudantium. At voluptas ad odio libero fugit
+                            officiis! Aliquam tempore libero velit fuga, nemo
+                            cupiditate. Alias eius vitae consectetur vel quo?
+                            Porro voluptatum voluptate, incidunt totam maxime
+                            odit consequuntur aut vitae. Quas accusamus autem
+                            eligendi veritatis natus officia excepturi eius?
+                            Laboriosam, delectus tempora. Sint inventore
+                            provident totam nemo explicabo aliquam nostrum
+                            repellat voluptas cum? Ab velit nihil molestiae quo,
+                            enim necessitatibus! Tempore in voluptatem porro
+                            cumque tenetur, mollitia sunt sint ad esse nisi,
+                            nemo natus obcaecati laboriosam blanditiis
+                            praesentium. Ipsam modi dolorum consectetur est quis
+                            voluptates blanditiis sed iste? Est, eaque!
+                            Temporibus itaque iure recusandae suscipit, voluptas
+                            molestiae velit amet repellendus ratione quo quas
+                            officiis at, et dolor aliquid cum dolores? Ex
+                            excepturi aut ipsam dolor nihil odit a nostrum
+                            saepe. Minima eius, dolores omnis expedita quia
+                            autem officiis cumque commodi molestias aperiam
+                            dicta repellat ut nesciunt odit ex asperiores
+                            laboriosam tempora quaerat ratione? Illo
+                            exercitationem sequi accusamus facilis quia hic.
+                            Consequuntur, vero. Ea doloremque corporis ipsam
+                            ullam odio, optio veritatis illo, laudantium,
+                            provident mollitia beatae architecto. Quaerat, nulla
+                            ipsa consectetur nobis magni sit quas laboriosam
+                            odit pariatur rerum enim quibusdam? Consectetur
+                            reiciendis delectus exercitationem ipsum! Sit
+                            reiciendis ex placeat quibusdam aut ratione
+                            distinctio consequatur illum eius expedita laborum
+                            id, nesciunt maiores enim facere praesentium
+                            perspiciatis. Totam iste optio facere provident!
+                            Neque et voluptatem corrupti nostrum unde voluptates
+                            sequi! Fuga rem architecto iure asperiores. Adipisci
+                            atque saepe eius minima explicabo provident
+                            repudiandae incidunt numquam vel placeat, aut
+                            blanditiis eveniet deserunt obcaecati! Nesciunt ut
+                            tenetur iure labore necessitatibus magni tempore
+                            vel! Eligendi a rerum nihil laboriosam architecto
+                            cumque officiis atque, tempore, hic nam totam
+                            possimus vero aspernatur maiores cupiditate
+                            laudantium illum eveniet. Quia, vero maiores. Vel
+                            obcaecati ab aliquam temporibus nesciunt. Dolores at
+                            consequatur soluta necessitatibus illum placeat
+                            aperiam, sed perspiciatis qui! Molestias tempore
+                            dolore animi ut minima, molestiae hic aspernatur
+                            consectetur. Impedit sint voluptatum tempore, magnam
+                            quo mollitia beatae amet! Iure blanditiis eum
+                            voluptatum sit impedit nisi sint magni voluptatibus
+                            explicabo quisquam, unde quaerat doloremque magnam
+                            rem nostrum cumque neque labore. Voluptate suscipit
+                            rem quis minima, rerum deserunt! Possimus at,
+                            eligendi ex veniam reiciendis inventore mollitia
+                            eveniet illum aliquam doloribus aut quia asperiores
+                            voluptatibus dolorum, delectus neque commodi
+                            recusandae porro. Vel. Eveniet corporis quaerat
+                            nesciunt. Quam natus laudantium molestias mollitia
+                            accusantium. Mollitia impedit dicta ipsum soluta,
+                            corporis illum, saepe quibusdam dolorum, repellat
+                            aliquam tempore hic distinctio optio laboriosam rem
+                            culpa quisquam. Rem blanditiis molestias labore
+                            asperiores aspernatur voluptatum a, architecto vero
+                            atque ipsam pariatur voluptatem expedita? Cupiditate
+                            error corrupti debitis a nemo optio placeat vitae
+                            rem! Enim odit ratione amet laborum!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="flex flex-col bg-primary h-72 lg:h-96 rounded-md shadow-md shadow-secondary hover:shadow-lg hover:shadow-primary transition ease-in-out delay-200 hover:cursor-pointer"
+            >
+                <!-- bouton icône edit -->
+                <div class="text-right">
+                    <button
+                        class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6 md:w-8 md:h-8"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <!-- titre projet-->
+                <div
+                    class="flex items-center justify-center border-4 border-secondary bg-tpkwhite rounded-md max-w-1 h-2/5 lg:h-1/5 mx-4"
+                >
+                    <h2
+                        class="text-secondary text-center text-xl md:text-2xl font-extrabold"
+                    >
+                        This is a long project name, nondedjoss
+                    </h2>
+                </div>
+                <!-- image + description -->
+                <div
+                    class="flex items-center justify-around border-4 border-secondary bg-tpkwhite rounded-md h-1/2 lg:h-3/5 mx-4 my-1 p-2 xl:p-0"
+                >
+                    <img
+                        class="h-20 lg:h-32 rounded-sm"
+                        src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                        alt="projet"
+                    />
+                    <div
+                        class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 text-clip overflow-scroll"
+                    >
+                        <p class="text-secondary">
+                            Lorem ipsum dolor sit, amet consectetur adipisicing
+                            elit. Laudantium aperiam nostrum nisi magni quam
+                            quibusdam reiciendis itaque, facere delectus
+                            veritatis, tempora temporibus quaerat repellat porro
+                            architecto magnam aspernatur inventore ipsa!
+                            Quisquam animi eos architecto labore, numquam magni
+                            necessitatibus mollitia! Iste totam libero neque
+                            commodi nemo maxime perspiciatis minima nulla
+                            asperiores optio porro est, unde tempore quos
+                            distinctio magni. Tenetur, magni! Aliquam minima,
+                            vero saepe, repudiandae rerum, beatae omnis quos rem
+                            adipisci vel alias harum maxime dolore pariatur ea
+                            consequuntur a est iste. Minima exercitationem
+                            debitis ducimus dolores illum reiciendis.
+                            Laudantium. At voluptas ad odio libero fugit
+                            officiis! Aliquam tempore libero velit fuga, nemo
+                            cupiditate. Alias eius vitae consectetur vel quo?
+                            Porro voluptatum voluptate, incidunt totam maxime
+                            odit consequuntur aut vitae. Quas accusamus autem
+                            eligendi veritatis natus officia excepturi eius?
+                            Laboriosam, delectus tempora. Sint inventore
+                            provident totam nemo explicabo aliquam nostrum
+                            repellat voluptas cum? Ab velit nihil molestiae quo,
+                            enim necessitatibus! Tempore in voluptatem porro
+                            cumque tenetur, mollitia sunt sint ad esse nisi,
+                            nemo natus obcaecati laboriosam blanditiis
+                            praesentium. Ipsam modi dolorum consectetur est quis
+                            voluptates blanditiis sed iste? Est, eaque!
+                            Temporibus itaque iure recusandae suscipit, voluptas
+                            molestiae velit amet repellendus ratione quo quas
+                            officiis at, et dolor aliquid cum dolores? Ex
+                            excepturi aut ipsam dolor nihil odit a nostrum
+                            saepe. Minima eius, dolores omnis expedita quia
+                            autem officiis cumque commodi molestias aperiam
+                            dicta repellat ut nesciunt odit ex asperiores
+                            laboriosam tempora quaerat ratione? Illo
+                            exercitationem sequi accusamus facilis quia hic.
+                            Consequuntur, vero. Ea doloremque corporis ipsam
+                            ullam odio, optio veritatis illo, laudantium,
+                            provident mollitia beatae architecto. Quaerat, nulla
+                            ipsa consectetur nobis magni sit quas laboriosam
+                            odit pariatur rerum enim quibusdam? Consectetur
+                            reiciendis delectus exercitationem ipsum! Sit
+                            reiciendis ex placeat quibusdam aut ratione
+                            distinctio consequatur illum eius expedita laborum
+                            id, nesciunt maiores enim facere praesentium
+                            perspiciatis. Totam iste optio facere provident!
+                            Neque et voluptatem corrupti nostrum unde voluptates
+                            sequi! Fuga rem architecto iure asperiores. Adipisci
+                            atque saepe eius minima explicabo provident
+                            repudiandae incidunt numquam vel placeat, aut
+                            blanditiis eveniet deserunt obcaecati! Nesciunt ut
+                            tenetur iure labore necessitatibus magni tempore
+                            vel! Eligendi a rerum nihil laboriosam architecto
+                            cumque officiis atque, tempore, hic nam totam
+                            possimus vero aspernatur maiores cupiditate
+                            laudantium illum eveniet. Quia, vero maiores. Vel
+                            obcaecati ab aliquam temporibus nesciunt. Dolores at
+                            consequatur soluta necessitatibus illum placeat
+                            aperiam, sed perspiciatis qui! Molestias tempore
+                            dolore animi ut minima, molestiae hic aspernatur
+                            consectetur. Impedit sint voluptatum tempore, magnam
+                            quo mollitia beatae amet! Iure blanditiis eum
+                            voluptatum sit impedit nisi sint magni voluptatibus
+                            explicabo quisquam, unde quaerat doloremque magnam
+                            rem nostrum cumque neque labore. Voluptate suscipit
+                            rem quis minima, rerum deserunt! Possimus at,
+                            eligendi ex veniam reiciendis inventore mollitia
+                            eveniet illum aliquam doloribus aut quia asperiores
+                            voluptatibus dolorum, delectus neque commodi
+                            recusandae porro. Vel. Eveniet corporis quaerat
+                            nesciunt. Quam natus laudantium molestias mollitia
+                            accusantium. Mollitia impedit dicta ipsum soluta,
+                            corporis illum, saepe quibusdam dolorum, repellat
+                            aliquam tempore hic distinctio optio laboriosam rem
+                            culpa quisquam. Rem blanditiis molestias labore
+                            asperiores aspernatur voluptatum a, architecto vero
+                            atque ipsam pariatur voluptatem expedita? Cupiditate
+                            error corrupti debitis a nemo optio placeat vitae
+                            rem! Enim odit ratione amet laborum!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="flex flex-col bg-primary h-72 lg:h-96 rounded-md shadow-md shadow-secondary hover:shadow-lg hover:shadow-primary transition ease-in-out delay-200 hover:cursor-pointer"
+            >
+                <!-- bouton icône edit -->
+                <div class="text-right">
+                    <button
+                        class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6 md:w-8 md:h-8"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <!-- titre projet-->
+                <div
+                    class="flex items-center justify-center border-4 border-secondary bg-tpkwhite rounded-md max-w-1 h-2/5 lg:h-1/5 mx-4"
+                >
+                    <h2
+                        class="text-secondary text-center text-xl md:text-2xl font-extrabold"
+                    >
+                        This is a long project name, nondedjoss
+                    </h2>
+                </div>
+                <!-- image + description -->
+                <div
+                    class="flex items-center justify-around border-4 border-secondary bg-tpkwhite rounded-md h-1/2 lg:h-3/5 mx-4 my-1 p-2 xl:p-0"
+                >
+                    <img
+                        class="h-20 lg:h-32 rounded-sm"
+                        src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                        alt="projet"
+                    />
+                    <div
+                        class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 text-clip overflow-scroll"
+                    >
+                        <p class="text-secondary">
+                            Lorem ipsum dolor sit, amet consectetur adipisicing
+                            elit. Laudantium aperiam nostrum nisi magni quam
+                            quibusdam reiciendis itaque, facere delectus
+                            veritatis, tempora temporibus quaerat repellat porro
+                            architecto magnam aspernatur inventore ipsa!
+                            Quisquam animi eos architecto labore, numquam magni
+                            necessitatibus mollitia! Iste totam libero neque
+                            commodi nemo maxime perspiciatis minima nulla
+                            asperiores optio porro est, unde tempore quos
+                            distinctio magni. Tenetur, magni! Aliquam minima,
+                            vero saepe, repudiandae rerum, beatae omnis quos rem
+                            adipisci vel alias harum maxime dolore pariatur ea
+                            consequuntur a est iste. Minima exercitationem
+                            debitis ducimus dolores illum reiciendis.
+                            Laudantium. At voluptas ad odio libero fugit
+                            officiis! Aliquam tempore libero velit fuga, nemo
+                            cupiditate. Alias eius vitae consectetur vel quo?
+                            Porro voluptatum voluptate, incidunt totam maxime
+                            odit consequuntur aut vitae. Quas accusamus autem
+                            eligendi veritatis natus officia excepturi eius?
+                            Laboriosam, delectus tempora. Sint inventore
+                            provident totam nemo explicabo aliquam nostrum
+                            repellat voluptas cum? Ab velit nihil molestiae quo,
+                            enim necessitatibus! Tempore in voluptatem porro
+                            cumque tenetur, mollitia sunt sint ad esse nisi,
+                            nemo natus obcaecati laboriosam blanditiis
+                            praesentium. Ipsam modi dolorum consectetur est quis
+                            voluptates blanditiis sed iste? Est, eaque!
+                            Temporibus itaque iure recusandae suscipit, voluptas
+                            molestiae velit amet repellendus ratione quo quas
+                            officiis at, et dolor aliquid cum dolores? Ex
+                            excepturi aut ipsam dolor nihil odit a nostrum
+                            saepe. Minima eius, dolores omnis expedita quia
+                            autem officiis cumque commodi molestias aperiam
+                            dicta repellat ut nesciunt odit ex asperiores
+                            laboriosam tempora quaerat ratione? Illo
+                            exercitationem sequi accusamus facilis quia hic.
+                            Consequuntur, vero. Ea doloremque corporis ipsam
+                            ullam odio, optio veritatis illo, laudantium,
+                            provident mollitia beatae architecto. Quaerat, nulla
+                            ipsa consectetur nobis magni sit quas laboriosam
+                            odit pariatur rerum enim quibusdam? Consectetur
+                            reiciendis delectus exercitationem ipsum! Sit
+                            reiciendis ex placeat quibusdam aut ratione
+                            distinctio consequatur illum eius expedita laborum
+                            id, nesciunt maiores enim facere praesentium
+                            perspiciatis. Totam iste optio facere provident!
+                            Neque et voluptatem corrupti nostrum unde voluptates
+                            sequi! Fuga rem architecto iure asperiores. Adipisci
+                            atque saepe eius minima explicabo provident
+                            repudiandae incidunt numquam vel placeat, aut
+                            blanditiis eveniet deserunt obcaecati! Nesciunt ut
+                            tenetur iure labore necessitatibus magni tempore
+                            vel! Eligendi a rerum nihil laboriosam architecto
+                            cumque officiis atque, tempore, hic nam totam
+                            possimus vero aspernatur maiores cupiditate
+                            laudantium illum eveniet. Quia, vero maiores. Vel
+                            obcaecati ab aliquam temporibus nesciunt. Dolores at
+                            consequatur soluta necessitatibus illum placeat
+                            aperiam, sed perspiciatis qui! Molestias tempore
+                            dolore animi ut minima, molestiae hic aspernatur
+                            consectetur. Impedit sint voluptatum tempore, magnam
+                            quo mollitia beatae amet! Iure blanditiis eum
+                            voluptatum sit impedit nisi sint magni voluptatibus
+                            explicabo quisquam, unde quaerat doloremque magnam
+                            rem nostrum cumque neque labore. Voluptate suscipit
+                            rem quis minima, rerum deserunt! Possimus at,
+                            eligendi ex veniam reiciendis inventore mollitia
+                            eveniet illum aliquam doloribus aut quia asperiores
+                            voluptatibus dolorum, delectus neque commodi
+                            recusandae porro. Vel. Eveniet corporis quaerat
+                            nesciunt. Quam natus laudantium molestias mollitia
+                            accusantium. Mollitia impedit dicta ipsum soluta,
+                            corporis illum, saepe quibusdam dolorum, repellat
+                            aliquam tempore hic distinctio optio laboriosam rem
+                            culpa quisquam. Rem blanditiis molestias labore
+                            asperiores aspernatur voluptatum a, architecto vero
+                            atque ipsam pariatur voluptatem expedita? Cupiditate
+                            error corrupti debitis a nemo optio placeat vitae
+                            rem! Enim odit ratione amet laborum!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="flex flex-col bg-primary h-72 lg:h-96 rounded-md shadow-md shadow-secondary hover:shadow-lg hover:shadow-primary transition ease-in-out delay-200 hover:cursor-pointer"
+            >
+                <!-- bouton icône edit -->
+                <div class="text-right">
+                    <button
+                        class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6 md:w-8 md:h-8"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <!-- titre projet-->
+                <div
+                    class="flex items-center justify-center border-4 border-secondary bg-tpkwhite rounded-md max-w-1 h-2/5 lg:h-1/5 mx-4"
+                >
+                    <h2
+                        class="text-secondary text-center text-xl md:text-2xl font-extrabold"
+                    >
+                        This is a long project name, nondedjoss
+                    </h2>
+                </div>
+                <!-- image + description -->
+                <div
+                    class="flex items-center justify-around border-4 border-secondary bg-tpkwhite rounded-md h-1/2 lg:h-3/5 mx-4 my-1 p-2 xl:p-0"
+                >
+                    <img
+                        class="h-20 lg:h-32 rounded-sm"
+                        src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                        alt="projet"
+                    />
+                    <div
+                        class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 text-clip overflow-scroll"
+                    >
+                        <p class="text-secondary">
+                            Lorem ipsum dolor sit, amet consectetur adipisicing
+                            elit. Laudantium aperiam nostrum nisi magni quam
+                            quibusdam reiciendis itaque, facere delectus
+                            veritatis, tempora temporibus quaerat repellat porro
+                            architecto magnam aspernatur inventore ipsa!
+                            Quisquam animi eos architecto labore, numquam magni
+                            necessitatibus mollitia! Iste totam libero neque
+                            commodi nemo maxime perspiciatis minima nulla
+                            asperiores optio porro est, unde tempore quos
+                            distinctio magni. Tenetur, magni! Aliquam minima,
+                            vero saepe, repudiandae rerum, beatae omnis quos rem
+                            adipisci vel alias harum maxime dolore pariatur ea
+                            consequuntur a est iste. Minima exercitationem
+                            debitis ducimus dolores illum reiciendis.
+                            Laudantium. At voluptas ad odio libero fugit
+                            officiis! Aliquam tempore libero velit fuga, nemo
+                            cupiditate. Alias eius vitae consectetur vel quo?
+                            Porro voluptatum voluptate, incidunt totam maxime
+                            odit consequuntur aut vitae. Quas accusamus autem
+                            eligendi veritatis natus officia excepturi eius?
+                            Laboriosam, delectus tempora. Sint inventore
+                            provident totam nemo explicabo aliquam nostrum
+                            repellat voluptas cum? Ab velit nihil molestiae quo,
+                            enim necessitatibus! Tempore in voluptatem porro
+                            cumque tenetur, mollitia sunt sint ad esse nisi,
+                            nemo natus obcaecati laboriosam blanditiis
+                            praesentium. Ipsam modi dolorum consectetur est quis
+                            voluptates blanditiis sed iste? Est, eaque!
+                            Temporibus itaque iure recusandae suscipit, voluptas
+                            molestiae velit amet repellendus ratione quo quas
+                            officiis at, et dolor aliquid cum dolores? Ex
+                            excepturi aut ipsam dolor nihil odit a nostrum
+                            saepe. Minima eius, dolores omnis expedita quia
+                            autem officiis cumque commodi molestias aperiam
+                            dicta repellat ut nesciunt odit ex asperiores
+                            laboriosam tempora quaerat ratione? Illo
+                            exercitationem sequi accusamus facilis quia hic.
+                            Consequuntur, vero. Ea doloremque corporis ipsam
+                            ullam odio, optio veritatis illo, laudantium,
+                            provident mollitia beatae architecto. Quaerat, nulla
+                            ipsa consectetur nobis magni sit quas laboriosam
+                            odit pariatur rerum enim quibusdam? Consectetur
+                            reiciendis delectus exercitationem ipsum! Sit
+                            reiciendis ex placeat quibusdam aut ratione
+                            distinctio consequatur illum eius expedita laborum
+                            id, nesciunt maiores enim facere praesentium
+                            perspiciatis. Totam iste optio facere provident!
+                            Neque et voluptatem corrupti nostrum unde voluptates
+                            sequi! Fuga rem architecto iure asperiores. Adipisci
+                            atque saepe eius minima explicabo provident
+                            repudiandae incidunt numquam vel placeat, aut
+                            blanditiis eveniet deserunt obcaecati! Nesciunt ut
+                            tenetur iure labore necessitatibus magni tempore
+                            vel! Eligendi a rerum nihil laboriosam architecto
+                            cumque officiis atque, tempore, hic nam totam
+                            possimus vero aspernatur maiores cupiditate
+                            laudantium illum eveniet. Quia, vero maiores. Vel
+                            obcaecati ab aliquam temporibus nesciunt. Dolores at
+                            consequatur soluta necessitatibus illum placeat
+                            aperiam, sed perspiciatis qui! Molestias tempore
+                            dolore animi ut minima, molestiae hic aspernatur
+                            consectetur. Impedit sint voluptatum tempore, magnam
+                            quo mollitia beatae amet! Iure blanditiis eum
+                            voluptatum sit impedit nisi sint magni voluptatibus
+                            explicabo quisquam, unde quaerat doloremque magnam
+                            rem nostrum cumque neque labore. Voluptate suscipit
+                            rem quis minima, rerum deserunt! Possimus at,
+                            eligendi ex veniam reiciendis inventore mollitia
+                            eveniet illum aliquam doloribus aut quia asperiores
+                            voluptatibus dolorum, delectus neque commodi
+                            recusandae porro. Vel. Eveniet corporis quaerat
+                            nesciunt. Quam natus laudantium molestias mollitia
+                            accusantium. Mollitia impedit dicta ipsum soluta,
+                            corporis illum, saepe quibusdam dolorum, repellat
+                            aliquam tempore hic distinctio optio laboriosam rem
+                            culpa quisquam. Rem blanditiis molestias labore
+                            asperiores aspernatur voluptatum a, architecto vero
+                            atque ipsam pariatur voluptatem expedita? Cupiditate
+                            error corrupti debitis a nemo optio placeat vitae
+                            rem! Enim odit ratione amet laborum!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="flex bg-blue-500 h-72 lg:h-96 justify-center rounded-xl">
+            <div
+                class="flex border-2 border-black bg-yellow-400 rounded-md w-full h-1/5 m-4"
+            >
+                <div class="flex items-center justify-center w-4/5">
+                    <h2
+                        class="text-primary ml-36 uppercase text-xl font-extrabold"
+                    >
+                        Project name
+                    </h2>
+                </div>
+                <div class="w-1/5 flex justify-end">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-8 h-8 pr-2 pt-2 cursor-pointer"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                        />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex bg-blue-500 h-72 lg:h-96 justify-center rounded-xl">
+            <div
+                class="flex flex-col border-2 border-black bg-yellow-400 rounded-md w-full h-1/5 m-4"
+            >
+                <div class="w-full text-right">
+                    <button class="pr-2 pt-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <h2
+                        class="text-primary text-center uppercase text-xl font-extrabold"
+                    >
+                        Project name
+                    </h2>
+                </div>
+            </div>
+        </div> -->

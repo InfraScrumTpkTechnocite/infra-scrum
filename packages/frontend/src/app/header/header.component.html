@@ -12,22 +12,37 @@
             InfraScrum
         </h1>
     </div>
-    <div
-        class="<text-md></text-md> sm:text-xl md:text-2xl text-white flex items-center mr-6 md:mr-8"
-    >
-        <a href="#" class="mr-3 group transition duration-300 pt-1"
-            >Sign Up
-            <span
-                class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-secondary"
-            ></span>
-        </a>
-
-        <button
-            type="button"
-            routerLink="login"
-            class="btn-hover tpkBlueBtn rounded-2xl px-3 py-2 md:px-4 md:py-3"
+    <div class="flex items-center text-white mr-6 md:mr-8">
+        <div
+            *ngIf="!loggedIn()"
+            class="<text-md sm:text-xl md:text-2xl flex items-center"
         >
-            Login
+            <a
+                routerLink="create-user"
+                class="mr-3 group transition duration-300 pt-1"
+                >Sign Up
+                <span
+                    class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-secondary"
+                ></span>
+            </a>
+
+            <button
+                type="button"
+                routerLink="login"
+                class="btn-hover tpkBlueBtn rounded-2xl px-3 py-2 md:px-4 md:py-3"
+            >
+                Login
+            </button>
+        </div>
+        <button
+            *ngIf="loggedIn()"
+            routerLink="/index"
+            (click)="logOut()"
+            type="button"
+            routerLink="/"
+            class="btn-hover tpkErrorBtn rounded-2xl px-3 py-2 md:px-4 md:py-3 text-md sm:text-xl md:text-2xl"
+        >
+            Logout
         </button>
     </div>
 </div>
