@@ -1,4 +1,4 @@
-export class project {
+export class Project {
   id?: string;
   name: string;
   description: string;
@@ -12,7 +12,7 @@ export class project {
   constructor() {
     this.name = '';
     this.description = '';
-    this.project = '00000000-0000-0000-0000-000000000000';
+    this.project = '00000000-0000-0000-0000-000000000000';//projet "normal" par défault (pas un sous-projet/sprint)
     this.githuburl = '';
     this.githubtoken = '';
     this.startdate = '';
