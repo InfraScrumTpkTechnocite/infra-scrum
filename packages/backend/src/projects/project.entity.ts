@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-@Unique(['projectname', 'project']) //no duplicate Sprint in one project !
+@Unique(['name', 'project']) //no duplicate Sprint in one project !
 @Unique(['githuburl'])
 export class Project {
   @ApiProperty()
@@ -19,7 +19,7 @@ export class Project {
 
   @ApiProperty({ example: 'project 1', description: 'Project name (unique)' })
   @Column({ nullable: false })
-  projectname: string;
+  name: string;
 
   @ApiProperty({
     example: 'Project for ...',
