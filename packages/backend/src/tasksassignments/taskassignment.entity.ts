@@ -21,9 +21,9 @@ export class TaskAssignment {
   @ManyToOne(() => UserProject, (userproject) => userproject.id, {
     nullable: false,
   })
-  userproject: string;
+  userproject: UserProject;
 
   @ApiProperty({ example: 'a uuid...', description: 'Task id' })
   @ManyToOne(() => Task, (task) => task.id, { nullable: false })
-  task: string;
+  task: Task;
 }

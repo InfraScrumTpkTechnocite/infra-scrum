@@ -31,7 +31,7 @@ export class ProjectsService {
   }
 
   async findOneByName(name: string): Promise<Project> {
-    return await this.projectsRepository.findOneBy({ projectname: name });
+    return await this.projectsRepository.findOneBy({ name: name });
   }
 
   async findSprints(projectid: string): Promise<Project[]> {

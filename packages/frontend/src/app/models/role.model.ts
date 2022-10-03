@@ -1,9 +1,8 @@
 export class Role {
-    id? : string;
-    name: string;
+  id?: string;
+  name: string;
 
-    constructor(){
-        this.name = '';
-    }
-
+  constructor() {
+    this.name = '';
+  }
 }
