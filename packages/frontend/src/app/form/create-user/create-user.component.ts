@@ -24,7 +24,7 @@ export class CreateUserComponent{
   onSubmit() {
     this.userService.createUser(this.user).subscribe(
       (user: User) => {
-        if(user) this.router.navigate(['/login'])
+        //if(user) this.router.navigate(['/login']); ==> return to login when user created
       });
   }
 }
