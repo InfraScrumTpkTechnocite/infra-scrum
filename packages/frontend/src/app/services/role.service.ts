@@ -28,6 +28,14 @@ export class RoleService {
     private httpClient : HttpClient 
   ) { }
 
+  getRoleByName(name: string): Observable<Role> {
+    return this.httpClient.get<Role>("/backend/roles/name/" + name, this.httpOptions)
+    .pipe(
+        tap((response) => this.log(response)),
+        catchError((error) => this.handleError(error,null))
+      );
+  }
+
   getAllRoles(): Observable<Role[]> {
     return this.httpClient.get<Role[]>("/backend/roles", this.httpOptions)
     .pipe(
