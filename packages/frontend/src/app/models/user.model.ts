@@ -8,7 +8,7 @@ export class User {
     firstname?: string;
     lastname?: string;
     picture?: string;
-    role?: Role;
+    role: string;
 
     constructor(){
 
@@ -18,7 +18,7 @@ export class User {
         this.firstname= '';
         this.lastname= '';
         this.picture= '';
-    
+        this.role ='';
     }
 
 }
