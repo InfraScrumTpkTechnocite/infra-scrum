@@ -36,7 +36,7 @@ export class UserService {
         tap((response) => {
           this.log(`role-service-createUser- response = ${response}`);
         }),
-        catchError((error) => this.handleError(error, null))
+        //catchError((error) => this.handleError(error, null))
       );
   }
 }

@@ -118,6 +118,12 @@
                     Password required
                 </p>
 
+                <div *ngIf="showErrorMessage">
+                    <h1 class="text-tpkerror text-sm text-center">
+                        Username or email already exists.
+                    </h1>
+                </div>
+
                 <button
                     class="transform text-white rounded-sm bg-primary py-2 font-bold duration-300 disabled:bg-grey2 hover:bg-secondary"
                     type="submit"

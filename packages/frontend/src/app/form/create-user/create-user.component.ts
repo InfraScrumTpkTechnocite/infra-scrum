@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class CreateUserComponent implements OnInit {
   user: User = new User();
   @Input() verifPassword: string;
+  showErrorMessage: boolean = false;
 
   constructor(
       private userService: UserService,
@@ -27,36 +28,32 @@ export class CreateUserComponent implements OnInit {
   }
 
   onSubmit() {
-    let roleid;
-    let router = this.router;
+    const userObserver = {
+      next: (user: User) => {
+        if(user) this.router.navigate(['/login']);
+      },
+      error: (err: Error) => {
+        this.showErrorMessage = true;
+        console.log(`Erreur création user : ${err}`);
+      },
+      complete: () => {
+        console.log(`create-user - onSubmit - createuser terminé.`)
+      },
+    };
 
-    this.roleService.getRoleByName('guest').subscribe({
-      next(value) {
-        roleid = value.id;
-        console.log(`create-user-onSubmit role = ${value.id} ${value.name}`)    
+    const roleObserver = {
+      next: (roleid: any) => {
+        this.user.role = roleid;
+        this.userService.createUser(this.user).subscribe(userObserver);
       },
-      error(err) {
-        
+      error: (err: Error) => {
+        console.log(`Erreur récupération role : ${err}`);
       },
-      complete() {
-        
+      complete: () => {
+        console.log(`create-user - onSubmit - get role terminé.`)
       },
-    })
-    
-    this.user.role = roleid;
-
-    this.userService.createUser(this.user).subscribe(
-      {
-        next(value) {
-          roleid = value.id;
-          console.log(`create-user-onSubmit role = ${value.id} ${value.username}`); 
-          router.navigate(['/login']); //==> return to login when user created
-        },
-        error(err) {
-          
-        },
-        complete() {
-        },
-      })   
+    };
+  
+    this.roleService.getRoleByName("guest").subscribe(roleObserver);
   }
 }
