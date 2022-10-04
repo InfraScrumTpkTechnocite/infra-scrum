@@ -53,7 +53,7 @@ export class RolesController {
   }
 
   @Get('/name/:name')
-  async findOneByName(@Param('rolename') rolename: string): Promise<Role> {
-    return await this.roleService.findOneByName(rolename);
+  async findOneByName(@Param('name') name: string): Promise<Role> {
+    return await this.roleService.findOneByName(name);
   }
 }

@@ -3,18 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { User } from './user.entity';
 import { hash } from 'bcrypt';
-import { RolesService } from '../roles/roles.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private roleService: RolesService
   ) {}
 
   async create(user: User): Promise<User> {
-    user.role = (await this.roleService.findOneByName("guest"));
     user.password = await hash(user.password, 10);
     return await this.usersRepository.save(user);
   }

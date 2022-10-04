@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { catchError } from 'rxjs/operators';
 import { Observable, of, tap } from 'rxjs';
+import { RoleService } from './role.service';
+import { Role } from '../models/role.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,10 @@ export class UserService {
     })
   };
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private roleService: RoleService
+  ) { }
 
   private handleError(error: Error, errorValue: any) {
     console.error(error);
@@ -27,11 +32,25 @@ export class UserService {
     console.table(response);
   }
 
-  createUser(user: User): Observable<User> {
-    return this.httpClient.post<User>("/backend/users", JSON.stringify(user), this.httpOptions)
-      .pipe(
-        tap((response) => this.log(response)),
-        catchError((error) => this.handleError(error, null))
-      );
+  createUser(user: User){
+    
+    const roleObserver = {
+      next: (role: Role) => {
+        user.role = role;
+      },
+      error: (err: Error) => {
+         this.handleError(err, null);
+      },
+      complete: () => {
+        this.httpClient.post<User>("/backend/users/", JSON.stringify(user), this.httpOptions)
+          .pipe(
+            tap((response) => this.log(response)),
+            catchError((error) => this.handleError(error, null))
+          ).subscribe();
+      },
+    };
+  
+    this.roleService.getRoleByName("guest").subscribe(roleObserver);
+  
   }
 }
