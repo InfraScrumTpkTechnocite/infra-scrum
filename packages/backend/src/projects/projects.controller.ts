@@ -16,7 +16,7 @@ import { ProjectsService } from './projects.service';
 import { QueryFailedExceptionFilter } from '../query-failed-exceptions.filter';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { KanbanstatusService } from '../kanbanstatus/kanbanstatus.service';
-import { defaultKanbanstatus } from '../kanbanstatus/default-kanbanstatus';
+//import { defaultKanbanstatus } from '../kanbanstatus/default-kanbanstatus';
 import { KanbanStatus } from 'src/kanbanstatus/kanbanstatus.entity';
 
 @UseGuards(JwtAuthGuard)
@@ -32,8 +32,31 @@ export class ProjectsController {
 
   @Post()
   async create(@Body() project: Project): Promise<Project> {
+    const defaultKanbanstatus: any[] = [
+      {
+        name: 'Backlog',
+        kanbancolor: '#1F71A5',
+        project: '',
+      },
+      {
+        name: 'In progress',
+        kanbancolor: '#1F71A5',
+        project: '',
+      },
+      {
+        name: 'Urgent',
+        kanbancolor: '#1F71A5',
+        project: '',
+      },
+      {
+        name: 'Done',
+        kanbancolor: '#1F71A5',
+        project: '',
+      },
+    ];
     const new_project: Project = await this.projectService.create(project);
 
+    //create 4 default kanbans (Backlog, In progress, Urgent and Done)
     defaultKanbanstatus.forEach((kanbanstatus) => {
       kanbanstatus.project = new_project.id;
       this.kanbanStatusService.create(kanbanstatus)
