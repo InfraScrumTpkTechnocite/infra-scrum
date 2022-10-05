@@ -21,13 +21,13 @@ export class UserProject {
 
   @ApiProperty({ example: 'a uuid...', description: 'User id' })
   @ManyToOne(() => User, (user) => user.id, { nullable: false })
-  user: string;
+  user: User;
 
   @ApiProperty({ example: 'a uuid...', description: 'Project id' })
   @ManyToOne(() => Project, (project) => project.id, {
     nullable: false,
   })
-  project: string;
+  project: Project;
 
   @ApiProperty({
     example: 'true/false',

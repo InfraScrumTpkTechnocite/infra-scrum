@@ -30,9 +30,9 @@ export class RolesService {
     return await this.rolesRepository.findOneBy({ id });
   }
 
-  async findOneByName(rolename: string): Promise<Role> {
+  async findOneByName(name: string): Promise<Role> {
     //console.log("ProjectsService - findOneByProjectname");
-    return await this.rolesRepository.findOneBy({ name: rolename });
+    return await this.rolesRepository.findOne({where: { "name": name }});
   }
 
   async remove(id: string): Promise<void> {

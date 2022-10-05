@@ -1,0 +1,45 @@
+<div class="w-screen h-screen">
+    <form
+        class="bg-tpkwhite text-secondary mt-12 m-auto max-w-lg max-h-max md:max-w-2xl xl:h-50   xl:w-5/6 rounded-md shadow-lg shadow-primary"
+    >
+        <h1
+            class=" text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-center pt-4"
+        >
+            Edit Project
+        </h1>
+        <div class="mt-10">
+            <div class="flex flex-col md:flex-row">
+                <div
+                    class=" w-50 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
+                    <label class="font-bold">Name</label>
+                    <input
+                        type="text"
+                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"/>
+                </div>
+            </div>
+            <div
+                class="upload flex flex-col w-50 mt-3 md:mt-4 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
+                <label class="font-bold mr-3 mb-3">
+                    Choose an image/file</label>
+                <input type="file">
+            </div>
+            
+            <div class="flex flex-col mt-8 md:flex-row">
+               
+                <div
+                    class="w-50 mx-12 mt-3 md:mt-0 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                >
+                    <label class="font-bold">Delivery date</label>
+                    <input
+                        type="date"
+                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                    />
+                </div>
+            </div>
+            <div class="mt-10 flex justify-center w-full">
+                <button class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-4 w-24 mb-8">Cancel</button>
+                <button class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8">Register</button>
+            </div>
+        </div>
+    </form>
+</div>

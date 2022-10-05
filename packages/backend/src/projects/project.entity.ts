@@ -4,20 +4,18 @@ import {
   Column,
   Entity,
   ManyToOne,
-
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 
 @Entity()
-@Unique(['name', 'project']) //no duplicate Sprint in one project !
 @Unique(['githuburl'])
 export class Project {
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ApiProperty({ example: 'project 1', description: 'Project name (unique)' })
+  @ApiProperty({ example: 'project 1', description: 'Project name' })
   @Column({ nullable: false })
   name: string;
 
@@ -30,12 +28,12 @@ export class Project {
 
   @ApiProperty({
     example: '00000000-0000-0000-0000-000000000000',
-    description: 'Sprint : reference to a project (unique in a project)',
+    description: 'Sprint : reference to a project',
   })
   @ManyToOne(() => Project, (project) => project.id, {
     nullable: true,
   })
-  project: string;
+  project: Project;
 
   @ApiProperty({
     example: 'https://github....',

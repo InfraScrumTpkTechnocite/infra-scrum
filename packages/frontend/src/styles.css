@@ -77,3 +77,23 @@
     box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
 }
 
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    opacity: 0.5;
+  }
+  
+  ::-webkit-scrollbar:hover {
+    width: 12px;
+    opacity: 1;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #1f71a5;
+    border-radius: 10px;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1f71a5;
+  }
+  

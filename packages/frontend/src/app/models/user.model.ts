@@ -1,3 +1,5 @@
+import { Role } from "./role.model";
+
 export class User {
     id? : string;
     username: string;
@@ -16,8 +18,7 @@ export class User {
         this.firstname= '';
         this.lastname= '';
         this.picture= '';
-        this.role= '30490934-0e02-4378-8f08-87a23ee20ac5'; //Logique des Roles à mettre en place
-    
+        this.role ='';
     }
 
 }

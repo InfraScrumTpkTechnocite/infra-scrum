@@ -14,5 +14,5 @@ export class TimeEntry {
 
   @ApiProperty({ example: 'a uuid', description: 'Task id' })
   @ManyToOne(() => Task, (task) => task.id, { nullable: false })
-  task: string;
+  task: Task;
 }
