@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatchPasswordDirective } from './directives/password-pattern.directive';
 import { ProjectsComponent } from './projects/projects.component';
+import { OutsideClickDirective } from './directives/outside-click.directive';
 import { ProjectComponent } from './form/edit-project/project.component';
 
 
@@ -26,6 +27,8 @@ import { ProjectComponent } from './form/edit-project/project.component';
     EditNewTasksComponent,
     ProjectsComponent,
     ProjectComponent,
+    OutsideClickDirective
+
   ],
   imports: [
     BrowserModule,
