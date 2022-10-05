@@ -13,7 +13,6 @@ export class UserService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('jwt-token')
     })
   };
 
@@ -31,6 +30,9 @@ export class UserService {
   }
 
   createUser(user: User): Observable<User> {
+    this.httpOptions.headers = this.httpOptions.headers.append("Authorization", "Bearer " + localStorage.getItem('jwt-token'));
+
+    console.log(this.httpOptions);
       return this.httpClient.post<User>("/backend/users", JSON.stringify(user), this.httpOptions)
       .pipe(
         tap((response) => {

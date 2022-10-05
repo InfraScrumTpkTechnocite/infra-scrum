@@ -41,6 +41,7 @@ import { TaskType } from './tasktypes/tasktype.entity';
 import { TasktypesController } from './tasktypes/tasktypes.controller';
 import { TasktypesService } from './tasktypes/tasktypes.service';
 import { SearchModule } from './search/search.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -75,6 +76,7 @@ import { SearchModule } from './search/search.module';
     TimeentriesModule,
     TasktypesModule,
     SearchModule,
+    MailModule,
   ],
   controllers: [
     AppController,
