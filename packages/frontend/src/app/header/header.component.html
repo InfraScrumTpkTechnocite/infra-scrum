@@ -1,13 +1,19 @@
 <div
-    class="fixed top-0 bg-primary flex justify-between h-20 sm:h-28 md:h-32 w-screen drop-shadow-xl"
+    class="fixed top-0 bg-primary flex justify-between h-20 md:h-32 w-screen drop-shadow-xl"
 >
-    <img
-        routerLink=""
-        class="w-16 h-24 md:w-24 md:h-36 ml-6 md:ml-8 mr-6 md:mr-24 flex pb-3 hover:cursor-pointer"
-        src="./../../assets/img/logos/tpk-logo-white.png"
-        alt=""
-    />
-    <div class="flex items-center w-1/6">
+    <div class="w-1/8">
+        <img
+            routerLink=""
+            class="w-16 h-24 md:w-24 md:h-36 ml-6 md:ml-8 mr-6 md:mr-20 flex pb-3 hover:cursor-pointer"
+            src="./../../assets/img/logos/tpk-logo-white.png"
+            alt=""
+        />
+    </div>
+    <!-- w-auto quand logout, w-96 quand connecté  -->
+    <div
+        class="flex items-center justify-auto-center"
+        [style.width.px]="loggedIn() ? '350' : '220'"
+    >
         <h1 class="text-white text-xl sm:text-2xl md:text-5xl font-bold">
             {{ title }}
         </h1>
@@ -15,7 +21,7 @@
     <div class="flex items-center text-white mr-6 md:mr-8">
         <div
             *ngIf="!loggedIn()"
-            class="<text-md sm:text-xl md:text-2xl flex items-center"
+            class="<text-md sm:text-xl md:text-2xl flex items-center ml-1"
         >
             <a
                 routerLink="create-user"
@@ -34,60 +40,9 @@
                 Login
             </button>
         </div>
-        <!-- <button
-            *ngIf="loggedIn()"
-            routerLink="/index"
-            (click)="logOut()"
-            type="button"
-            routerLink="/"
-            class="btn-hover tpkErrorBtn rounded-2xl px-3 py-2 md:px-4 md:py-3 text-md sm:text-xl md:text-2xl md:ml-16"
-        >
-            Logout
-        </button> -->
-
-        <!-- <button
-            *ngIf="loggedIn()"
-            routerLink="/index"
-            (click)="logOut()"
-            type="button"
-            routerLink="/"
-            class="btn-hover tpkErrorBtn rounded-2xl px-3 py-2 md:px-4 md:py-3 text-md sm:text-xl md:text-2xl md:ml-16"
-        >
-            Logout
-        </button> -->
-
-        <!-- Si user connecté, pastille utilisateur avec select liens au hover (profil, logout - et users administration si superdamin) -->
-        <!-- <div
-            *ngIf="loggedIn()"
-            class="group bg-secondary hover:rounded md:ml-16 hover:ml-10 rounded-full"
-        >
-            <div
-                class="userChip relative w-16 h-16 rounded-full bg-secondary hover:cursor-s-resize flex items-center justify-center group-hover:w-36 group-hover:rounded-t-lg"
-            >
-
-                <span class="text-2xl uppercase font-bold">JD</span>
-            </div>
-            <div
-                class="userMenu invisible group-hover:visible group-hover:rounded-b-lg absolute flex flex-col bg-secondary right-8 w-36"
-            >
-                <option
-                    value="userProfile"
-                    class="hover:bg-blue-300 hover:cursor-pointer focus:border-2 focus:border-secondary flex items-center justify-center p-2"
-                >
-                    <a href="">John Doe</a>
-                </option>
-                <option
-                    value="logout"
-                    class="hover:bg-tpkerror hover:cursor-pointer hover:rounded-b-lg flex items-center justify-center p-2"
-                >
-                    <a href="">Logout</a>
-                </option>
-            </div>
-        </div> -->
 
         <!-- Pastille user si login -->
         <div
-            #toggleButton
             *ngIf="loggedIn()"
             (click)="toggleMenu()"
             class="rounded-full hover:cursor-pointer"
@@ -95,30 +50,48 @@
             <div
                 class="userChip relative w-16 h-16 rounded-full bg-secondary flex items-center justify-center"
             >
-                <span class="text-2xl uppercase font-bold">JD</span>
+                <!-- condition si photo, sinon span avec premiere lettre username -->
+                <img
+                    class="rounded-full"
+                    src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                    alt=""
+                />
+                <!-- <span class="text-2xl uppercase font-bold">A</span> -->
             </div>
             <!-- Sous-menu user -->
             <div
-                *ngIf="isShownMenu"
-                #menu
+                *ngIf="isMenuOpen"
+                (outsideClick)="isMenuOpen = false"
                 class="sub-menu-wrapper absolute top-auto right-6 w-64 max-h-0 drop-shadow-lg"
             >
-                <div class="sub-menu bg-grey1 p-5 m-3">
+                <div
+                    class="sub-menu bg-secondary rounded-b-lg rounded-tl-lg p-5 m-3"
+                >
                     <div
                         class="user-info flex items-center justify-center text-center cursor-default"
                     >
-                        <div
-                            class="userChip relative w-12 h-12 mr-10 rounded-full bg-primary flex items-center justify-center"
-                        >
-                            <span class="text-2xl uppercase font-bold">JD</span>
+                        <div class="w-1/3">
+                            <div
+                                class="userChip w-12 h-12 mr-10 rounded-full bg-primary flex items-center justify-center"
+                            >
+                                <!-- condition si photo, sinon span avec première lettre  -->
+
+                                <span class="text-2xl uppercase font-bold"
+                                    >A</span
+                                >
+                            </div>
                         </div>
-                        <h3 class="text-xl text-primary font-bold">John Doe</h3>
+                        <div class="w-2/3">
+                            <h3 class="text-lg text-white font-bold">
+                                Andy Tierce
+                            </h3>
+                        </div>
                     </div>
-                    <hr class="border-none h-0.5 w-full bg-primary mt-2 mb-2" />
+                    <hr class="border-none h-0.5 w-full bg-white mt-2 mb-2" />
                     <!-- Lien profil / venir ajouter lien vers porfil user au lieu de index -->
                     <a
                         routerLink="/index"
-                        class="sub-menu-link flex items-center justify-between text-primary my-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +113,7 @@
                     <!-- Lien management users uniquement visible pour superadmin  -->
                     <a
                         routerLink="/admin"
-                        class="sub-menu-link flex items-center justify-between text-primary my-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +137,7 @@
                     <a
                         routerLink="/index"
                         (click)="logOut()"
-                        class="sub-menu-link flex text-primary my-2 p-2 items-center hover:bg-tpkerror hover:text-white rounded-md"
+                        class="sub-menu-link flex text-white my-2 p-2 items-center hover:bg-tpkerror hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatchPasswordDirective } from './directives/password-pattern.directive';
 import { ProjectsComponent } from './projects/projects.component';
+import { OutsideClickDirective } from './directives/outside-click.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ProjectsComponent } from './projects/projects.component';
     CreateUserComponent,
     MatchPasswordDirective,
     EditNewTasksComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    OutsideClickDirective
   ],
   imports: [
     BrowserModule,
