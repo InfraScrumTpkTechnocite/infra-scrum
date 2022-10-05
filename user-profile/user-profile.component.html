@@ -1,0 +1,73 @@
+<body>
+    <br><br><br>
+    <!---------------------------------------------------------------------------Header"2"------------------------------------------------------------------------------------------->
+    <div class="flex w-full justify-between">
+        &#160;&nbsp;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&nbsp;&#160;&#160;&nbsp;&#160;&nbsp;&#160;<img src="assets/img/logos/tpk-logo.png" width=5%>
+        <!--select project-->
+        <label>
+    <select>
+      <option>Select Projects</option>
+      <option>Project1</option>
+      <option>Project2</option>
+      <option>Project3</option>
+    </select>
+</label>
+        <!--titre-->
+        <h1 class="text-3xl text-secondary font-bold underline underline-offset-8 text-center pt-4">My Profil</h1>
+        <!--barre de recherche-->
+        <form>
+            <input type="text" name="text" class="search" placeholder="Recherche">
+            <!--<input type="submit" name="submit" class="submit" value="Search">-->
+        </form>
+        <!--insertion avatar-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <img src="assets/img/avatar2.png" alt="Avatar" class="avatar">&#160;&nbsp;&#160;&nbsp;&#160;&#160;&nbsp;&#160;&nbsp;&#160;&#160;&nbsp;&#160;&nbsp;&#160;&#160;
+    </div>
+
+    <!--------------------------------------------------------------------button avatar ("test")------------------------------------------------------------------------------------->
+
+
+    <!---------------------------------------------------------------------------Body------------------------------------------------------------------------------------------------>
+    <div class class="w-screen h-screen">
+        <div class="bg-tpkwhite text-secondary mt-12 m-auto w-1/2 h-4/6 rounded-md shadow-lg shadow-primary">
+            <div class="w-50 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"><br><br>&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;
+                <!--Zone profile-->
+                <div class="flex mx-12">
+                    <img src="assets/img/avatar2.png" alt="Avatar" class="avatar">&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;
+
+                    <!--button ("+" ) test-->
+                    <div>
+                        <input style="border:1px solid #7697a8;" class="border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" id="loadFileXml" value="+" accept="image/png, image/jpeg" onclick="document.getElementById('file').click();"
+                        /><input type="file" style="display:none;" id="file" name="file" />
+                    </div>
+                </div><br><br>
+
+                <!--input rôle-->
+                <label for="textInput"></label>&#160;&nbsp; &#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;
+                <input id="text" class="custom" placeholder="Rôle" size="2" value="" required><br><br>
+
+                <!-------------------------------------------------------zone formulaire profile1------------------------------------------------------------------------>
+                <div class="flex w-full justify-between">
+                    <input type="text" placeholder="Usersname" class="custom" id="Username" name="username" size="35" value="" required/><br><br>
+                    <!--^[a-zA-Z0-9àéèç]{1,25}$-->
+                    <input id="email" formControlName="email" type="text" placeholder="Email" size="35" class="custom" value="" required />
+                </div><br><br>
+
+                <!-------------------------------------------------------zone formulaire profile2------------------------------------------------------------------------>
+                <div class="flex w-full justify-between">
+                    <input type="text" placeholder="Password" class="custom" id="Password" name="password" size="35" value="" required /><br><br>
+                    <!--"^[a-zA-Z0-9àéèç]{1,25}$"-->
+                    <input type="text" placeholder="Confir-Password" class="custom" id="Confirm-Password" name="password" size="35" value="" required />
+                    <!--[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$-->
+                </div><br><br><br>
+
+                <!-------------------------------------------------------input edit loging------------------------------------------------------------------------------->
+                <div class="flex w-full justify-center">
+                    <button class="bouton3" type="submit">Edit</button>
+                </div><br><br><br><br> <br><br><br><br> <br><br><br><br> <br><br><br><br><br>
+
+                <!--------------------------------------------------------zone formulaire edit--------------------------------------------------------------------------->
+            </div>
+        </div>
+    </div>
+</body>

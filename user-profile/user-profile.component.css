@@ -1,0 +1,37 @@
+    /*css barre de recherche*/
+
+    .input {
+        padding: 10px 10px;
+        border: 0;
+        font-size: 18px;
+    }
+
+    .search {
+        width: 150%;
+    }
+
+    .submit {
+        width: 70px;
+        background-color: #1c87c9;
+        color: #ffffff;
+    }
+    /*css avatar*/
+
+    .avatar {
+        vertical-align: middle;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 2px solid #464747;
+    }
+    /*css buton edit*/
+
+    .bouton3 {
+        padding: 15px 35px;
+        background: #3eec50;
+        color: #ffffff;
+        -webkit-border-radius: 11px;
+        -moz-border-radius: 11px;
+        border-radius: 11px;
+        border: 2px solid #78ebd0;
+    }
