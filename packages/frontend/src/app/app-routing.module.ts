@@ -11,6 +11,7 @@ import { IndexComponent } from './index/index.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { ProjectComponent } from './form/edit-project/project.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
     },
 
     { path: 'edit-new-tasks', component: EditNewTasksComponent },
+    { path: 'project', component: ProjectComponent },
     { path: 'create-user', component: CreateUserComponent },
 
     { path: '**', component: PageNotFoundComponent }
