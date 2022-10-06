@@ -20,7 +20,7 @@ export class AppController {
     private usersService: UsersService,
     private projectsService: ProjectsService,
     private rolesService: RolesService,
-  ) {}
+  ) { }
 
   @Get()
   getHello(): string {
@@ -44,7 +44,8 @@ export class AppController {
     console.log(`app.controller - confirm - username=${username}, token=${token}`);
     //return this.authService.login(req.user);
     let user: User = await this.usersService.findOneByUsername(username);
-    if(user && user.token == token) {
+    delete user.password;//to avoid password modification
+    if (user && user.token == token) {
       user.active = true;
       user.token = null;
     }
