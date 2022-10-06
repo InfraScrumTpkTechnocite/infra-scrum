@@ -42,6 +42,7 @@ import { TasktypesController } from './tasktypes/tasktypes.controller';
 import { TasktypesService } from './tasktypes/tasktypes.service';
 import { SearchModule } from './search/search.module';
 import { MailModule } from './mail/mail.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -77,6 +78,9 @@ import { MailModule } from './mail/mail.module';
     TasktypesModule,
     SearchModule,
     MailModule,
+    ConfigModule.forRoot({
+      isGlobal: true, // no need to import into other modules
+    }),
   ],
   controllers: [
     AppController,
@@ -106,4 +110,4 @@ import { MailModule } from './mail/mail.module';
     //  },
   ],
 })
-export class AppModule {}
+export class AppModule { }
