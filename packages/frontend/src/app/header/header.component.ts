@@ -9,6 +9,8 @@ import { HeaderTitleService } from '../services/header-title.service';
 })
 export class HeaderComponent implements OnInit {
     title: string = '';
+    isMenuOpen: boolean = false;
+
     constructor(
         public authService: AuthService,
         private headerTitleService: HeaderTitleService
@@ -24,6 +26,11 @@ export class HeaderComponent implements OnInit {
     }
 
     logOut() {
+        this.isMenuOpen = false;
         localStorage.removeItem('jwt-token');
+    }
+
+    toggleMenu() {
+        this.isMenuOpen = !this.isMenuOpen;
     }
 }
