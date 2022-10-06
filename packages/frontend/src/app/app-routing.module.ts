@@ -12,6 +12,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
 import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
+import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -22,7 +23,7 @@ const routes: Routes = [
     },
     { path: 'index', component: IndexComponent },
     { path: 'login', component: LoginComponent },
-
+    { path: 'email-confirm', component: EmailConfirmComponent },
     {
         path: 'projects',
         component: ProjectsComponent,
@@ -45,4 +46,4 @@ const routes: Routes = [
         JwtHelperService
     ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

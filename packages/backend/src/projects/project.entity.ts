@@ -51,7 +51,7 @@ export class Project {
     example: 'a date',
     description: 'Foreseen start date of a project',
   })
-  @Column({ nullable: true, type: 'timestamp' })
+  @Column({ nullable: true, type: 'timestamptz' })
   @IsDateString()
   startdate: string;
 
@@ -59,7 +59,7 @@ export class Project {
     example: 'a date',
     description: 'Foreseen start date of a project',
   })
-  @Column({ nullable: true, type: 'timestamp' })
+  @Column({ nullable: true, type: 'timestamptz' })
   @IsDateString()
   enddate: string;
 
