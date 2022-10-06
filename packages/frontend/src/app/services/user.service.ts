@@ -13,12 +13,13 @@ export class UserService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('jwt-token')
     })
   };
 
   constructor(
     private httpClient: HttpClient
-    ) { }
+  ) { }
 
   private handleError(error: Error, errorValue: any) {
     console.error(error);
@@ -30,10 +31,8 @@ export class UserService {
   }
 
   createUser(user: User): Observable<User> {
-    this.httpOptions.headers = this.httpOptions.headers.append("Authorization", "Bearer " + localStorage.getItem('jwt-token'));
-
-    console.log(this.httpOptions);
-      return this.httpClient.post<User>("/backend/users", JSON.stringify(user), this.httpOptions)
+    return this.httpClient.post<User>("/backend/users", JSON.stringify(user), this.httpOptions)
+      //return this.httpClient.post<User>("/backend/registeruser", JSON.stringify(user), this.httpOptions)
       .pipe(
         tap((response) => {
           this.log(`role-service-createUser- response = ${response}`);
