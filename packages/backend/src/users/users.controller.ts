@@ -52,7 +52,7 @@ export class UsersController {
     return await this.userService.findOne(id);
   }
 
-  @Get('/:username')
+  @Get('/username/:username')
   async findOneByUsername(@Param('username') username: string): Promise<User> {
     return await this.userService.findOneByUsername(username);
   }
