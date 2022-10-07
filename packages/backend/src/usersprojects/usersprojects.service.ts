@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult, DeleteResult } from 'typeorm';
+import { Repository, UpdateResult, DeleteResult, Equal } from 'typeorm';
 import { UserProject } from './userproject.entity';
 
 @Injectable()
@@ -30,5 +30,13 @@ export class UsersprojectsService {
 
   async findOne(id: string): Promise<UserProject> {
     return await this.usersProjectsRepository.findOneBy({ id });
+  }
+
+  async findUserProjects(userid: string): Promise<UserProject[]> {
+    return await this.usersProjectsRepository.find({
+      select: ['user', 'project'],
+      relations: ['project'],
+      where: { user: Equal(userid) },
+    });
   }
 }

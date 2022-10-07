@@ -1,10 +1,9 @@
-import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../users/user.entity';
 import {
   Column,
   Entity,
   Index,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
@@ -19,11 +18,11 @@ export class UserProject {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ApiProperty({ example: 'a uuid...', description: 'User id' })
+  @ApiProperty({ example: 'a user uuid...', description: 'User id' })
   @ManyToOne(() => User, (user) => user.id, { nullable: false })
   user: User;
 
-  @ApiProperty({ example: 'a uuid...', description: 'Project id' })
+  @ApiProperty({ example: 'a project uuid...', description: 'Project id' })
   @ManyToOne(() => Project, (project) => project.id, {
     nullable: false,
   })
