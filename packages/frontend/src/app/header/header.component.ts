@@ -27,7 +27,8 @@ export class HeaderComponent implements OnInit {
 
     logOut() {
         this.isMenuOpen = false;
-        localStorage.removeItem('jwt-token');
+        localStorage.removeItem('jwt-token'); //force token delete
+        localStorage.removeItem('user');
     }
 
     toggleMenu() {
