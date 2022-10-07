@@ -1,45 +1,67 @@
 <body>
-    <br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
 
-    <!---------------------------------------------------------------------------Body------------------------------------------------------------------------------------------------->
-    <div class="w-screen h-screen">
-        <div class="bg-tpkwhite text-secondary mt-12 m-auto w-1/2 h-4/6 rounded-md shadow-lg shadow-primary"><br><br>
+    <!--Body-->
+    <div class="bg-tpkwhite text-secondary mt-15 m-auto w-1/2 h-18/9 rounded-md shadow-lg shadow-primary"><br>
 
-            <!--Zone profile-->
-            <div class="flex mx-12">
-                <img src="assets/img/avatar2.png" alt="Avatar" class="avatar">&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;
+        <!--titre ("My Profil")-->
+        <h1 class=" text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-center pt-4">My Profile</h1>
 
-                <!--button ("+" ) test-->
-                <div>
-                    <input style="border:1px solid #7697a8;" class="border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" id="loadFileXml" value="+" accept="image/png, image/jpeg" onclick="document.getElementById('file').click();"
-                    /><input type="file" style="display:none;" id="file" name="file" />
-                </div>&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;
+        <!--Zone avatar-->
+        <div class="flex mx-12">
+            <img src="assets/img/avatar2.png" alt="Avatar" class="avatar"><br>&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;
 
-                <!--titre ("My Profil")-->
-                <h1 class=" text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-center pt-4">My Profil</h1>
-            </div><br><br>
+            <!--button ("+")-->
+            <input style="border:1px solid #7697a8;" class="border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" id="loadFileXml" value="+" accept="image/png, image/jpeg" onclick="document.getElementById('file').click();"
+            /><input type="file" style="display:none;" id="file" name="file" />
+        </div><br>
 
-            <!--input rôle-->
-            <label for="textInput"></label>&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&#160;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;<input id="text" class="custom" placeholder="Rôle" size="4" value="" required><br><br><br>
+        <!--input Rôle-->
+        <form>
+            <div class="flex w-full justify-start">
+                &#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;&#160;&nbsp;
+                <input style="text-align:center" id="text" class="custom" placeholder="Rôle" size="8" value="" required="required"><br><br>
+            </div>
+        </form>
 
-            <!--------------------------------------------------------zone formulaire profile1----------------------------------------------------------------------------------->
-            <form>
-                <div class="flex w-full justify-between">
-                    &nbsp;<input type="text" placeholder="Usersname" class="custom" id="name" name="username" size="40" required="required" /><br><br>
-                    <input type="text" id="email" placeholder="Email" size="40" class="custom" required="required" />&nbsp;
-                </div><br><br>
+        <!--zone formulaire profile1-->
+        <!--input Username-->
+        <form>
+            <div class="flex w-full justify-center">
+                <input style="text-align:center" type="text" placeholder="Usersname" class="custom" id="name" name="username" size="60" required="required" /><br><br>
+            </div>
+        </form><br>
 
-                <!--------------------------------------------------------zone formulaire profile2----------------------------------------------------------------------------------->
-                <div class="flex w-full justify-between">
-                    <label for="pass"></label><br><br><input type="password" placeholder="Password" class="" id="password" size="40" name="Password" minlength="8" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label for="pass"></label><input type="password" placeholder="Confitm-Password" class="" id="confirm-password" size="40" name="Confir-Password" minlength="8" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br><br><br><br><br><br>
+        <!--input Email-->
+        <form>
+            <div class="flex w-full justify-center">
+                <input style="text-align:center" type="text" id="email" placeholder="Email" size="60" class="custom" required="required" /><br><br>
+            </div>
+        </form>
+        <br><br>
 
-                <!----------------------------------------------------------input edit loging---------------------------------------------------------------------------------------->
-                <div class="flex w-full justify-center">
-                    <input type="submit" class="bouton3" value="Edit">&#160;&nbsp;&#160;&nbsp;&#160;
-                </div>
-            </form>
-        </div>
+        <!--zone formulaire profile2-->
+        <form>
+            <div class="flex w-full justify-between">
+                &nbsp;<input style="text-align:center" type="text" placeholder="Firstname" class="custom" id="name" name="Firstname" size="50" required="required" /><br><br>
+                <input style="text-align:center" type="text" id="email" name="Lastname" placeholder="Lastname" size="50" class="custom" required="required" />&nbsp;
+            </div>
+        </form><br>
+
+        <!--zone formulaire Password-->
+        <form>
+            <div class="flex w-full justify-between">
+                <label for="pass"></label><br><br><input style="text-align:center" type="password" placeholder="Password" class="" id="password" size="50" name="Password" minlength="8" required="required">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="pass"></label><input style="text-align:center" type="password" placeholder="Confitm-Password" class="" id="confirm-password" size="50" name="Confir-Password" minlength="8" required="required" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+        </form><br><br><br>
+
+        <!--input edit-->
+        <form>
+            <div class="flex w-full justify-center">
+                <input type="submit" class="submit" value="Edit">&#160;&nbsp;&#160;&nbsp;&#160;
+            </div>
+        </form>
+        <br><br>
     </div>
 </body>
