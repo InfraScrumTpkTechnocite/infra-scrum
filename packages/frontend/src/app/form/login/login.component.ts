@@ -29,8 +29,23 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         // console.log(`username : ${this.profileForm.controls.username.value}`);
         // console.log(`password : ${this.profileForm.controls.password.value}`);
+        if(this.profileForm.controls.username.value) localStorage.setItem('username', this.profileForm.controls.username.value);
 
         localStorage.removeItem('jwt-token'); //force token delete
+        localStorage.removeItem('user');
+
+        const authObserver = {
+            next: (response: any) => {
+                this.router.navigate(['projects']);
+            },
+            error: (error: Error) => {
+                this.showErrorMessage = true;
+                //console.log(`Error : ${error.message}`);
+            },
+            complete: () => {
+                console.log(`login process completed.`);
+            }
+        }
 
         if (
             this.profileForm.controls.username.value &&
@@ -41,18 +56,7 @@ export class LoginComponent implements OnInit {
                     this.profileForm.controls.username.value,
                     this.profileForm.controls.password.value
                 )
-                .subscribe({
-                    next: (response) => {
-                        this.router.navigate(['projects']);
-                    },
-                    error: (error) => {
-                        this.showErrorMessage = true;
-                        //console.log(`Error : ${error.message}`);
-                    },
-                    complete: () => {
-                        console.log(`login process completed.`);
-                    }
-                });
+                .subscribe(authObserver);
         //this.authService.isLoggedIn = true;
-    }
+}
 }

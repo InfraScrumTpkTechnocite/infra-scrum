@@ -12,26 +12,32 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatchPasswordDirective } from './directives/password-pattern.directive';
 import { ProjectsComponent } from './projects/projects.component';
+import { OutsideClickDirective } from './directives/outside-click.directive';
+import { EditProjectComponent } from './form/edit-project/edit-project.component';
+import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    IndexComponent,
-    HeaderComponent,
-    LoginComponent,
-    CreateUserComponent,
-    MatchPasswordDirective,
-    EditNewTasksComponent,
-    ProjectsComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    ReactiveFormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        IndexComponent,
+        HeaderComponent,
+        LoginComponent,
+        CreateUserComponent,
+        MatchPasswordDirective,
+        EditNewTasksComponent,
+        ProjectsComponent,
+        EditProjectComponent,
+        OutsideClickDirective,
+        EmailConfirmComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

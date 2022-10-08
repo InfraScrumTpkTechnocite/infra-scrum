@@ -3,14 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
-import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
-
 import { CreateUserComponent } from './form/create-user/create-user.component';
 import { LoginComponent } from './form/login/login.component';
 import { IndexComponent } from './index/index.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { AuthGuardService } from './services/auth-guard.service';
+
+import { EditProjectComponent } from './form/edit-project/edit-project.component';
+import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
+import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -21,7 +23,7 @@ const routes: Routes = [
     },
     { path: 'index', component: IndexComponent },
     { path: 'login', component: LoginComponent },
-
+    { path: 'email-confirm', component: EmailConfirmComponent },
     {
         path: 'projects',
         component: ProjectsComponent,
@@ -29,6 +31,7 @@ const routes: Routes = [
     },
 
     { path: 'edit-new-tasks', component: EditNewTasksComponent },
+    { path: 'edit-project', component: EditProjectComponent },
     { path: 'create-user', component: CreateUserComponent },
 
     { path: '**', component: PageNotFoundComponent }
@@ -43,4 +46,4 @@ const routes: Routes = [
         JwtHelperService
     ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

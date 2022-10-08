@@ -1,4 +1,4 @@
-import { Controller, Request, Get, Post, UseGuards } from '@nestjs/common';
+import { Controller, Request, Get, Post, UseGuards, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 //import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './auth/local-auth.guard';
@@ -20,7 +20,7 @@ export class AppController {
     private usersService: UsersService,
     private projectsService: ProjectsService,
     private rolesService: RolesService,
-  ) {}
+  ) { }
 
   @Get()
   getHello(): string {
@@ -34,6 +34,22 @@ export class AppController {
     //return req.user;
     console.log('app.controller - login');
     return this.authService.login(req.user);
+  }
+
+  //@UseGuards(LocalAuthGuard)
+  //@ApiBody({ type: User })
+  @Get('auth/confirm/:username/:token')
+  async confirm(@Param('username') username: string, @Param('token') token: string) {
+    //return req.user;
+    console.log(`app.controller - confirm - username=${username}, token=${token}`);
+    //return this.authService.login(req.user);
+    let user: User = await this.usersService.findOneByUsername(username);
+    delete user.password;//to avoid password modification
+    if (user && user.token == token) {
+      user.active = true;
+      user.token = null;
+    }
+    return await this.usersService.update(user.id, user);
   }
 
   @ApiBearerAuth()

@@ -9,33 +9,44 @@ import { Observable, of, tap } from 'rxjs';
 })
 export class UserService {
 
-  //bearerToken à changer
-  //bearerToken :string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpbGxlcyIsInN1YiI6IjYzNWUwMDBhLTUyOTEtNGMwOS05MmViLTQxZWU2OTRkZWI3MiIsImlhdCI6MTY2NDI2MzUwMSwiZXhwIjoxNjY5NDQ3NTAxfQ.ChkBQt-6jZ3xLBPexdSIjwU--PaUJ0qoLQMXVuaqvNw";
   httpOptions = {
-    headers : new HttpHeaders({
+    headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization : 'Bearer ' + localStorage.getItem('jwt-token')
+      Authorization: 'Bearer ' + localStorage.getItem('jwt-token')
     })
   };
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(
+    private httpClient: HttpClient
+  ) { }
 
-  private handleError(error: Error, errorValue: any){
+  private handleError(error: Error, errorValue: any) {
     console.error(error);
     return of(errorValue);
   }
 
-  private log(response: any){
+  private log(response: any) {
     console.table(response);
   }
 
   createUser(user: User): Observable<User> {
-    user.role = "f5e44de5-4cfb-42af-8609-0d8d9867f517";
-    
-    return this.httpClient.post<any>("/backend/users", JSON.stringify(user), this.httpOptions)
-    .pipe(
-        tap((response) => this.log(response)),
-        catchError((error) => this.handleError(error,null))
+    return this.httpClient.post<User>("/backend/users", JSON.stringify(user), this.httpOptions)
+      //return this.httpClient.post<User>("/backend/registeruser", JSON.stringify(user), this.httpOptions)
+      .pipe(
+        tap((response) => {
+          this.log(`role-service-createUser- response = ${response}`);
+        }),
+        //catchError((error) => this.handleError(error, null))
       );
+  }
+
+  findUserByUsername(username: string): Observable<any> {
+    return this.httpClient.get(`/backend/users/username/${username}`, this.httpOptions)
+     .pipe(
+      tap((response) => {
+        console.log(`user.service.ts - findUserByUsername - response = ${response}`);
+      }),
+      catchError((error) => this.handleError(error,null))
+    );
   }
 }

@@ -10,6 +10,6 @@ export class OverviewComponent implements OnInit {
     constructor(private headerTitleService: HeaderTitleService) {}
 
     ngOnInit(): void {
-        this.headerTitleService.setTitle('Users administration');
+        this.headerTitleService.setTitle('Administration');
     }
 }
