@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         // console.log(`username : ${this.profileForm.controls.username.value}`);
         // console.log(`password : ${this.profileForm.controls.password.value}`);
+        if(this.profileForm.controls.username.value) localStorage.setItem('username', this.profileForm.controls.username.value);
 
         localStorage.removeItem('jwt-token'); //force token delete
         localStorage.removeItem('user');
