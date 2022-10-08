@@ -58,5 +58,4 @@ export class UsersprojectsController {
   ): Promise<UserProject[]> {
     return await this.usersProjectsService.findUserProjects(userid);
   }
-
 }

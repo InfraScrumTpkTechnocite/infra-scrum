@@ -26,10 +26,10 @@ export class ProjectsComponent implements OnInit {
         const userProjectsObserver = {
             next: (value: any) => {
                 this.userProjects = value;
-                this.userProjects.forEach((userproject: { id: string, isprojectadmin: boolean, project: { name: string; }; }) => {
-                    //console.log(`id: ${userproject.id}, projet : ${userproject.project.name}, isprojectadmin : ${userproject.isprojectadmin}`);
-                    console.table(userproject.project);
-                });
+                // this.userProjects.forEach((userproject: { id: string, isprojectadmin: boolean, project: { name: string; }; }) => {
+                //     console.log(`id: ${userproject.id}, projet : ${userproject.project.name}, isprojectadmin : ${userproject.isprojectadmin}`);
+                //     console.table(userproject.project);
+                // });
             },
             error: (err: Error) => {
                 console.log(`${err}`);
@@ -55,8 +55,9 @@ export class ProjectsComponent implements OnInit {
                 console.log(`login.component.ts - get user completed.`);
             }
         }
-        console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
-        this.userService.findUserByUsername('gilles').subscribe(userObserver);
+        //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
+        var username = localStorage.getItem('username');
+        if(username) this.userService.findUserByUsername(username).subscribe(userObserver);
 
     }
 
