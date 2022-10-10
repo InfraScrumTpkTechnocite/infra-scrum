@@ -15,6 +15,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { OutsideClickDirective } from './directives/outside-click.directive';
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
 import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 @NgModule({
     declarations: [
@@ -35,9 +36,10 @@ import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
         AppRoutingModule,
         FormsModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HotToastModule.forRoot(),
     ],
     providers: [],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
