@@ -17,7 +17,7 @@ export class ProjectsComponent implements OnInit {
 
     constructor(private headerTitleService: HeaderTitleService,
         private userProjectService: UserprojectService,
-        private userService: UserService) {}
+        private userService: UserService) { }
 
     ngOnInit(): void {
         this.headerTitleService.setTitle('My projects');
@@ -25,11 +25,7 @@ export class ProjectsComponent implements OnInit {
         //exemple pour récupérer les projets d'un user...
         const userProjectsObserver = {
             next: (value: any) => {
-                this.userProjects = value;
-                // this.userProjects.forEach((userproject: { id: string, isprojectadmin: boolean, project: { name: string; }; }) => {
-                //     console.log(`id: ${userproject.id}, projet : ${userproject.project.name}, isprojectadmin : ${userproject.isprojectadmin}`);
-                //     console.table(userproject.project);
-                // });
+                this.userProjects = value;//tous les user-projects (contenants toutes les infos du projet)
             },
             error: (err: Error) => {
                 console.log(`${err}`);
@@ -46,7 +42,7 @@ export class ProjectsComponent implements OnInit {
                 localStorage.setItem('user', JSON.stringify(response));
                 //pour lire le localStorage : 
                 //var user = JSON.parse(localStorage.getItem('user'));
-                if(response.id) this.userProjectService.findUserProjects(response.id).subscribe(userProjectsObserver);
+                if (response.id) this.userProjectService.findUserProjects(response.id).subscribe(userProjectsObserver);
             },
             error: (err: Error) => {
                 console.log(`Error: ${err}`);
@@ -57,7 +53,7 @@ export class ProjectsComponent implements OnInit {
         }
         //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
         var username = localStorage.getItem('username');
-        if(username) this.userService.findUserByUsername(username).subscribe(userObserver);
+        if (username) this.userService.findUserByUsername(username).subscribe(userObserver);
 
     }
 
