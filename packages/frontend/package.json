@@ -24,6 +24,8 @@
     "@angular/platform-browser-dynamic": "^14.2.2",
     "@angular/router": "^14.2.2",
     "@auth0/angular-jwt": "^5.0.2",
+    "@ngneat/hot-toast": "^4.1.0",
+    "@ngneat/overview": "^3.0.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "rxjs": "~7.5.0",

@@ -15,9 +15,9 @@ import { ProjectsComponent } from './projects/projects.component';
 import { OutsideClickDirective } from './directives/outside-click.directive';
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
 import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
+import { HotToastModule } from '@ngneat/hot-toast';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -43,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
+        HotToastModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
               provide: TranslateLoader,
@@ -54,4 +55,4 @@ export function HttpLoaderFactory(http: HttpClient) {
     providers: [],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

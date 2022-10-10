@@ -11,7 +11,7 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private mailService: MailService
-  ) {}
+  ) { }
 
   async create(user: User): Promise<User> {
     user.password = await hash(user.password, 10);
