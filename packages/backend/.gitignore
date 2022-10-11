@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # divers
 erd.mdj
+
+#Mailer env parameters
+.env

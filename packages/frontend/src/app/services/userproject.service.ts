@@ -37,4 +37,13 @@ export class UserprojectService {
     );
   }
 
+  findUserProjects(userid: string): Observable<any> {
+    return this.httpClient.get(`/backend/usersprojects/userprojects/${userid}`, this.httpOptions)
+     .pipe(
+      tap((response) => {
+        console.log(`userproject.service.ts - findUserProjects - response = ${response}`);
+      }),
+      catchError((error) => this.handleError(error,null))
+    );
+  }
 }

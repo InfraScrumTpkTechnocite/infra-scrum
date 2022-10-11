@@ -51,4 +51,11 @@ export class UsersprojectsController {
   async findOne(@Param('id') id: string): Promise<UserProject> {
     return await this.usersProjectsService.findOne(id);
   }
+
+  @Get('/userprojects/:userid')
+  async findUserProjects(
+    @Param('userid') userid: string,
+  ): Promise<UserProject[]> {
+    return await this.usersProjectsService.findUserProjects(userid);
+  }
 }

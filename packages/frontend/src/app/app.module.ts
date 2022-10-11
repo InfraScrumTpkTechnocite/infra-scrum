@@ -8,7 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './form/login/login.component';
 import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
 import { CreateUserComponent } from './form/create-user/create-user.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatchPasswordDirective } from './directives/password-pattern.directive';
 import { ProjectsComponent } from './projects/projects.component';
@@ -18,7 +18,16 @@ import { ProjectComponent } from './project/project.component';
 import { KanbanStatusComponent } from './kanban-status/kanban-status.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TaskComponent } from './task/task.component';
+import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
+import { HotToastModule } from '@ngneat/hot-toast';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+  }
 @NgModule({
     declarations: [
         AppComponent,
@@ -34,6 +43,7 @@ import { TaskComponent } from './task/task.component';
         ProjectComponent,
         KanbanStatusComponent,
         TaskComponent
+        EmailConfirmComponent
     ],
     imports: [
         BrowserModule,
@@ -42,8 +52,17 @@ import { TaskComponent } from './task/task.component';
         HttpClientModule,
         ReactiveFormsModule,
         DragDropModule
+
+        HotToastModule.forRoot(),
+        TranslateModule.forRoot({
+            loader: {
+              provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+          }),
     ],
     providers: [],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
