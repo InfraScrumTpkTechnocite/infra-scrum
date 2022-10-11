@@ -14,6 +14,10 @@ import { MatchPasswordDirective } from './directives/password-pattern.directive'
 import { ProjectsComponent } from './projects/projects.component';
 import { OutsideClickDirective } from './directives/outside-click.directive';
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
+import { ProjectComponent } from './project/project.component';
+import { KanbanStatusComponent } from './kanban-status/kanban-status.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TaskComponent } from './task/task.component';
 
 @NgModule({
     declarations: [
@@ -26,14 +30,18 @@ import { EditProjectComponent } from './form/edit-project/edit-project.component
         EditNewTasksComponent,
         ProjectsComponent,
         EditProjectComponent,
-        OutsideClickDirective
+        OutsideClickDirective,
+        ProjectComponent,
+        KanbanStatusComponent,
+        TaskComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         FormsModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        DragDropModule
     ],
     providers: [],
     bootstrap: [AppComponent]
