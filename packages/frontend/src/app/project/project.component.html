@@ -1,0 +1,202 @@
+<div class="pt-32 flex h-screen">
+    <!-- COLONNE SPRINTS -->
+
+    <div
+        id="sprintsCol"
+        *ngIf="isSprintsOpen"
+        class="bg-primary text-white h-full w-1/6 xl:w-1/12 p-5 py-6 shadow-md shadow-secondary rounded-r-md"
+    >
+        <div class="flex flex-col justify-start items-center text-center mt-2">
+            <button
+                class="bg-primary hover:bg-secondary border-2 border-white text-white text-center text-[10px] xl:text-sm p-2 rounded-xl h-20 xl:h-10"
+                title="Add a sprint"
+            >
+                Add sprint
+            </button>
+            <!-- Boucler sur le nombre de sprints  -->
+            <div class="flex justify-center items-center mt-8">
+                <button
+                    class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs lg:text-sm font-bold justify-center"
+                >
+                    Sprint 1
+                </button>
+                <!-- Si sprint terminé, icône V coché  -->
+                <div class="">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-5 h-5 text-tpkvalidate"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                    </svg>
+                </div>
+            </div>
+            <!-- 2eme sprint à effacer, juste pour exemple css  -->
+            <div class="flex justify-center items-center">
+                <button
+                    class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs lg:text-sm font-bold justify-center"
+                >
+                    Sprint 2
+                </button>
+            </div>
+            <!--  -->
+        </div>
+    </div>
+
+    <!-- KANBAN DASHBOARD -->
+
+    <div
+        id="kanbanDashboard"
+        [ngClass]="{
+            'w-11/12': isSprintsOpen,
+            'w-full': !isSprintsOpen
+        }"
+        class="overflow-y-hidden"
+    >
+        <!-- Header  -->
+        <div
+            id="kanbanHeader"
+            class="flex items-stretch h-3/12 py-4 bg-grey1 w-full"
+        >
+            <div class="flex justify-start items-center pl-4 w-1/3">
+                <button routerLink="edit-project" title="Edit project">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-10 h-10 text-white bg-primary border-2 border-primary hover:border-secondary hover:text-white hover:bg-secondary font-bold mr-8 rounded"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
+                        />
+                    </svg>
+                </button>
+
+                <button
+                    class="bg-primary hover:bg-secondary text-white p-2 rounded-xl h-10 text-sm"
+                    title="Add a new task"
+                >
+                    New task
+                </button>
+            </div>
+            <div class="flex justify-center items-end w-1/3">
+                <button
+                    (click)="closeSprintBar()"
+                    [ngClass]="{
+                        'text-primary': isSprintsOpen,
+                        'bg-secondary text-white': !isSprintsOpen
+                    }"
+                    class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xl font-bold"
+                >
+                    Global
+                </button>
+                <button
+                    (click)="openSprintBar()"
+                    [ngClass]="{
+                        'text-primary': !isSprintsOpen,
+                        'bg-secondary text-white': isSprintsOpen
+                    }"
+                    class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xl font-bold"
+                >
+                    Sprints
+                </button>
+            </div>
+            <div class="flex justify-end pr-4 w-1/3">
+                <!-- Users assignés au project  -->
+                <div class="flex items-center">
+                    <div
+                        class="userChipSmall w-9 h-9 md:w-10 md:h-10 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                    >
+                        <!-- condition si photo, sinon span avec premiere lettre username -->
+                        <img
+                            class="rounded-full"
+                            src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                            alt="profile picture"
+                        />
+                        <!-- <span class="text-2xl uppercase font-bold">A</span> -->
+                    </div>
+                    <div
+                        class="userChipSmall w-9 h-9 md:w-10 md:h-10 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                    >
+                        <!-- condition si photo, sinon span avec premiere lettre username -->
+                        <!-- <img
+                            class="rounded-full"
+                            src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                            alt="profile picture"
+                        /> -->
+                        <span class="text-2xl uppercase font-bold">O</span>
+                    </div>
+                    <div
+                        class="userChipSmall w-9 h-9 md:w-10 md:h-10 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                    >
+                        <!-- condition si photo, sinon span avec premiere lettre username -->
+                        <!-- <img
+                            class="rounded-full"
+                            src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                            alt="profile picture"
+                        /> -->
+                        <span class="text-2xl uppercase font-bold">B</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kanban columns  -->
+
+        <div id="kanban" class="flex px-12 pb-12 pt-6">
+            <!-- boucler sur les kanbanstatus du projet  -->
+            <div class="flex">
+                <div class="flex flex-col">
+                    <kanban-status></kanban-status>
+                    <!-- tâches du kanbanstatus  -->
+                    <div class="tasksContainer w-64 mx-4 mt-2 flex flex-col">
+                        <task></task>
+                    </div>
+                </div>
+
+                <!-- BOUTON NEW COLUMN  -->
+
+                <div class="w-36 mx-4 mt-6">
+                    <button
+                        class="bg-grey1 rounded-md hover:shadow-sm hover:shadow-secondary"
+                    >
+                        <div
+                            class="w-full bg-primary text-white h-6 rounded-t-lg p-2 flex items-center justify-center"
+                        >
+                            <h3 class="text-center font-bold text-xs">
+                                Add column
+                            </h3>
+                        </div>
+                        <div class="h-12 items-center flex justify-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5 font-extrabold"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 4.5v15m7.5-7.5h-15"
+                                />
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

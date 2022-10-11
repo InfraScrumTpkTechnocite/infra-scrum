@@ -14,10 +14,15 @@ import { MatchPasswordDirective } from './directives/password-pattern.directive'
 import { ProjectsComponent } from './projects/projects.component';
 import { OutsideClickDirective } from './directives/outside-click.directive';
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
+import { ProjectComponent } from './project/project.component';
+import { KanbanStatusComponent } from './kanban-status/kanban-status.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TaskComponent } from './task/task.component';
 import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -35,6 +40,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProjectsComponent,
         EditProjectComponent,
         OutsideClickDirective,
+        ProjectComponent,
+        KanbanStatusComponent,
+        TaskComponent
         EmailConfirmComponent
     ],
     imports: [
@@ -43,6 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
+        DragDropModule
+
         HotToastModule.forRoot(),
         TranslateModule.forRoot({
             loader: {

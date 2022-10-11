@@ -8,6 +8,7 @@ import { LoginComponent } from './form/login/login.component';
 import { IndexComponent } from './index/index.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { ProjectComponent } from './project/project.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
@@ -27,6 +28,11 @@ const routes: Routes = [
     {
         path: 'projects',
         component: ProjectsComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'project',
+        component: ProjectComponent,
         canActivate: [AuthGuardService]
     },
 
