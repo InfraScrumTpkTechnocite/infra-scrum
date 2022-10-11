@@ -42,11 +42,11 @@ export class UserService {
 
   findUserByUsername(username: string): Observable<any> {
     return this.httpClient.get(`/backend/users/username/${username}`, this.httpOptions)
-     .pipe(
-      tap((response) => {
-        console.log(`user.service.ts - findUserByUsername - response = ${response}`);
-      }),
-      catchError((error) => this.handleError(error,null))
-    );
+      .pipe(
+        tap((response) => {
+          console.log(`user.service.ts - findUserByUsername - response = ${response}`);
+        }),
+        catchError((error) => this.handleError(error, null))
+      );
   }
 }
