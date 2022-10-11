@@ -13,18 +13,22 @@ import { AuthGuardService } from './services/auth-guard.service';
 
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
 import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
-import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
+//import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     {
         path: 'admin',
+        canActivate: [AuthGuardService],
         loadChildren: () =>
             import('./admin/admin.module').then((m) => m.AdminModule)
     },
-    { path: 'index', component: IndexComponent },
+    {
+        path: 'index', component: IndexComponent,
+        canActivate: [AuthGuardService]
+    },
     { path: 'login', component: LoginComponent },
-    { path: 'email-confirm', component: EmailConfirmComponent },
+    //{ path: 'email-confirm', component: EmailConfirmComponent },
     {
         path: 'projects',
         component: ProjectsComponent,
@@ -36,11 +40,23 @@ const routes: Routes = [
         canActivate: [AuthGuardService]
     },
 
-    { path: 'edit-new-tasks', component: EditNewTasksComponent },
-    { path: 'edit-project', component: EditProjectComponent },
-    { path: 'create-user', component: CreateUserComponent },
+    {
+        path: 'edit-new-tasks', component: EditNewTasksComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'edit-project', component: EditProjectComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'create-user', component: CreateUserComponent,
+        canActivate: [AuthGuardService]
+    },
 
-    { path: '**', component: PageNotFoundComponent }
+    {
+        path: '**', component: PageNotFoundComponent,
+        canActivate: [AuthGuardService]
+    }
 ];
 
 @NgModule({

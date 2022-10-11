@@ -1,4 +1,4 @@
-import { Controller, Request, Get, Post, UseGuards, Param } from '@nestjs/common';
+import { Controller, Request, Get, Post, UseGuards, Param, Body } from '@nestjs/common';
 import { AppService } from './app.service';
 //import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './auth/local-auth.guard';
@@ -38,19 +38,20 @@ export class AppController {
 
   //@UseGuards(LocalAuthGuard)
   //@ApiBody({ type: User })
-  @Get('auth/confirm/:username/:token')
-  async confirm(@Param('username') username: string, @Param('token') token: string) {
-    //return req.user;
-    console.log(`app.controller - confirm - username=${username}, token=${token}`);
-    //return this.authService.login(req.user);
-    let user: User = await this.usersService.findOneByUsername(username);
-    delete user.password;//to avoid password modification
-    if (user && user.token == token) {
-      user.active = true;
-      user.token = null;
-    }
-    return await this.usersService.update(user.id, user);
-  }
+  // @Get('auth/confirm/:username/:token')
+  // async confirm(@Param('username') username: string, @Param('token') token: string) {
+  //   //return req.user;
+  //   console.log(`app.controller - confirm - username=${username}, token=${token}`);
+  //   //return this.authService.login(req.user);
+  //   let user: User = await this.usersService.findOneByUsername(username);
+  //   console.log(`app.controller - user=${user.username}, token=${user.token}`);
+  //   delete user.password;//to avoid password modification
+  //   if (user && user.token == token) {
+  //     user.active = true;
+  //     user.token = null;
+  //   }
+  //   return await this.usersService.update(user.id, user);
+  // }
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
