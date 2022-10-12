@@ -32,12 +32,13 @@ export class UserService {
   createUser(user: User): Observable<User> {
     return this.httpClient.post<User>("/backend/users", JSON.stringify(user), this.httpOptions)
       //return this.httpClient.post<User>("/backend/registeruser", JSON.stringify(user), this.httpOptions)
-      .pipe(
-        tap((response) => {
-          this.log(`role-service-createUser- response = ${response}`);
-        }),
-        //catchError((error) => this.handleError(error, null))
-      );
+      
+      // .pipe(
+      //   tap((response) => {
+      //     this.log(`role-service-createUser- response = ${response}`);
+      //   }),
+      //   catchError((error) => this.handleError(error, null))
+      // );
   }
 
   findUserByUsername(username: string): Observable<any> {

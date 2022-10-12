@@ -1,4 +1,4 @@
-import { Controller, Request, Get, Post, UseGuards, Param, Body } from '@nestjs/common';
+import { Controller, Request, Get, Post, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 //import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './auth/local-auth.guard';
@@ -7,7 +7,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from './users/user.entity';
 import { UsersService } from './users/users.service';
-import { seederUser, seederProjects, seederRoles } from './seeder/seeder';
+import { seederUser, seederRoles } from './seeder/seeder';
 import { ProjectsService } from './projects/projects.service';
 import { RolesService } from './roles/roles.service';
 
@@ -77,15 +77,6 @@ export class AppController {
               .catch((error) => console.log(error.driverError.detail));
           }
         })
-        .catch((error) => console.log(error.driverError.detail));
-    });
-
-    seederProjects.forEach((project) => {
-      this.projectsService
-        .create(project)
-        .then((project) =>
-          console.log(`Project ${project.name} created`),
-        )
         .catch((error) => console.log(error.driverError.detail));
     });
   }

@@ -59,11 +59,11 @@ export class User {
   @Column()
   picture: string;
 
-  @ApiProperty({ example: 'true or false', description: 'User active' })
-  @Column({ default: false })
-  active: boolean;
+  // @ApiProperty({ example: 'true or false', description: 'User active' })
+  // @Column({ default: false })
+  // active: boolean;
 
-  @ApiProperty({ example: '1111', description: '4 digits token' })
-  @Column({ default: null })
-  token: string;
+  // @ApiProperty({ example: '1111', description: '4 digits token' })
+  // @Column({ default: null })
+  // token: string;
 }
