@@ -49,8 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        DragDropModule
-
+        DragDropModule,
         HotToastModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
