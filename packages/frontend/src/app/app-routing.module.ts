@@ -13,26 +13,29 @@ import { AuthGuardService } from './services/auth-guard.service';
 
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
 import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
-//import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     {
         path: 'admin',
         canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin']
+        },
         loadChildren: () =>
             import('./admin/admin.module').then((m) => m.AdminModule)
     },
     {
         path: 'index', component: IndexComponent,
-        canActivate: [AuthGuardService]
+        /*canActivate: [AuthGuardService]*/
     },
     { path: 'login', component: LoginComponent },
-    //{ path: 'email-confirm', component: EmailConfirmComponent },
     {
         path: 'projects',
         component: ProjectsComponent,
-        canActivate: [AuthGuardService]
+        data: {
+            role: ['superadmin', 'admin', 'employee', 'intern', 'guest']
+        },
     },
     {
         path: 'project',
@@ -42,17 +45,25 @@ const routes: Routes = [
 
     {
         path: 'edit-new-tasks', component: EditNewTasksComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin', 'admin', 'employee', 'intern']
+        },
     },
     {
         path: 'edit-project', component: EditProjectComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin', 'admin']
+        },
     },
     {
         path: 'create-user', component: CreateUserComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin']
+        },
     },
-
     {
         path: '**', component: PageNotFoundComponent,
         canActivate: [AuthGuardService]

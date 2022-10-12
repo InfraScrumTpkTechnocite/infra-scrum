@@ -18,7 +18,6 @@ import { ProjectComponent } from './project/project.component';
 import { KanbanStatusComponent } from './kanban-status/kanban-status.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TaskComponent } from './task/task.component';
-import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -43,7 +42,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProjectComponent,
         KanbanStatusComponent,
         TaskComponent
-        EmailConfirmComponent
     ],
     imports: [
         BrowserModule,
