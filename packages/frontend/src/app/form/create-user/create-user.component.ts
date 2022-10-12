@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
 import { RoleService } from 'src/app/services/role.service';
@@ -42,8 +43,8 @@ export class CreateUserComponent implements OnInit {
     };
 
     const roleObserver = {
-      next: (roleid: any) => {
-        this.user.role = roleid;
+      next: (role: Role) => {
+        this.user.role = role;
         this.userService.createUser(this.user).subscribe(userObserver);
       },
       error: (err: Error) => {

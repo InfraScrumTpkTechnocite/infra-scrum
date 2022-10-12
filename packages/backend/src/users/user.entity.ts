@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../roles/roles.entity';
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, ValidateIf } from 'class-validator';
 
 @Entity()
 @Unique(['username'])
@@ -46,6 +46,7 @@ export class User {
   //  @Column({select: false})
   @Column()
   @IsNotEmpty()
+  @ValidateIf( value => value === "" )
   password: string;
 
   @ApiProperty({ example: 'a uuid...', description: 'Role id' })
