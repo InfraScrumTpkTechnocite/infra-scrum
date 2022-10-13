@@ -40,7 +40,10 @@
                         <option *ngFor="let role of roleList" [ngValue]="role">{{role.name}}</option>
                 </select>
                 <!-- Bouton edit role of user -->
-                <div *ngIf="userRoleList.length >= index">
+                <div 
+                    *ngIf="userRoleList.length >= index"
+                    class="w-1/6 grid justify-items-center"
+                    >
                     <button
                         *ngIf="user.id == userRoleList[index].userId &&user.role.id != userRoleList[index].roleId"
                         (click)="setRole(user)"
