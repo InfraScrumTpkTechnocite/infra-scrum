@@ -45,9 +45,39 @@ export class UserService {
     return this.httpClient.get(`/backend/users/username/${username}`, this.httpOptions)
       .pipe(
         tap((response) => {
-          console.log(`user.service.ts - findUserByUsername - response = ${response}`);
+          this.log(`user-service-createUser- response = ${response}`);
         }),
         catchError((error) => this.handleError(error, null))
       );
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>("/backend/users", this.httpOptions)
+      .pipe(
+        tap((response) => {
+          this.log(`user-service-getallusers- response = ${response}`);
+        }),
+        catchError((error) => this.handleError(error, null))
+      );
+  }
+
+  getUserbyId(userId : string): Observable<User>{
+    return this.httpClient.get<User>("/backend/users/" + userId,this.httpOptions)
+    .pipe(
+      tap((response) => {
+        this.log(`user-service-getuserbyid- response = ${response}`);
+      }),
+      catchError((error) => this.handleError(error, null))
+    );
+  }
+
+  editUser(user: User): Observable<User>{
+    return this.httpClient.put<User>("/backend/users/" + user.id, JSON.stringify(user), this.httpOptions)
+    .pipe(
+      tap((response) => {
+        this.log(`user-service-edituser- response = ${response}`);
+      }),
+      catchError((error) => this.handleError(error, null))
+    );
   }
 }
