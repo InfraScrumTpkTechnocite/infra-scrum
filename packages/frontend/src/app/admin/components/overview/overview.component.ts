@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HotToastService } from '@ngneat/hot-toast';
 import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
@@ -15,11 +16,14 @@ export class OverviewComponent implements OnInit {
     userList: User[] = [];
     roleList: Role[] = [];
     userRoleList: Array<any> = [];
+    showErrorMessage: boolean = false;
+    errorMessage: string = '';
 
     constructor(
         private headerTitleService: HeaderTitleService,
         private userService: UserService,
-        private roleService: RoleService,    
+        private roleService: RoleService,
+        private toastService: HotToastService
     ) {}
 
     ngOnInit(): void {
@@ -50,6 +54,17 @@ export class OverviewComponent implements OnInit {
     }
     
     setRole(user: User): void{
-        this.userService.editUser(user).subscribe(() => console.log("role edited"));
+        const observer = { 
+            error : (err : any) => {
+                this.showErrorMessage = true;
+                this.errorMessage = err.error.driverError.detail;
+                console.log(`Erreur édition user : ${err.error['driverError'].detail}`);
+                this.toastService.error(`Error during user creation<br><br>${err.error.driverError.detail}`);
+            },
+            complete : () => {
+                this.toastService.success(`User's role edited !`);
+            }
+        };
+        this.userService.editUser(user).subscribe(observer);
     }
 }
