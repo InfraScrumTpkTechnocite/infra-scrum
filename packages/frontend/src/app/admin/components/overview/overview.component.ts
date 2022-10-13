@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
@@ -14,6 +14,7 @@ export class OverviewComponent implements OnInit {
     
     userList: User[] = [];
     roleList: Role[] = [];
+    userRoleList: Array<any> = [];
 
     constructor(
         private headerTitleService: HeaderTitleService,
@@ -22,10 +23,22 @@ export class OverviewComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        const observer = { 
+            next : (userList : User[]) => {
+                this.userList = userList;
+            },
+            complete : () => {
+                this.userList.map(user => {
+                    this.userRoleList.push({
+                        userId: user.id,
+                        roleId: user.role.id});
+                });
+            }
+        };
+
         this.headerTitleService.setTitle('Administration');
 
-        this.userService.getAllUsers().subscribe(
-            userList => this.userList = userList );
+        this.userService.getAllUsers().subscribe(observer);
 
         this.roleService.getAllRoles().subscribe(
             roleList => this.roleList = roleList

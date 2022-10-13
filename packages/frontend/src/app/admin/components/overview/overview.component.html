@@ -10,7 +10,7 @@
         <!-- LISTE USERS -->
         <!-- Quand liste users disponible, boucler dans les users et utiliser ce modèle -->
         <ul>
-            <li *ngFor="let user of userList" class="flex justify-between items-center mb-4 last:mb-6">
+            <li *ngFor="let user of userList; let index = index" class="flex justify-between items-center mb-4 last:mb-6">
                 <!-- TODO : Lien vers page profil quand clique sur pastille ou username/name -->
                 <!-- Pastille initiales ou photo profil -->
                 <div
@@ -32,13 +32,17 @@
                         <option *ngFor="let role of roleList" [ngValue]="role">{{role.name}}</option>
                 </select> -->
                 <select 
-                    class="w-2/6 text-sm sm:text-base md:text-lg lg:text-xl text-secondary"
+                    class="w-2/6 text-sm sm:text-base md:text-lg lg:text-xl text-secondary" 
+                    [(ngModel)]="user.role"
+                    name="role"
+                    [compareWith]="compareByName"
                 >
-                        <option *ngFor="let role of roleList" [selected]="role.id == user.role.id">{{role.name}}</option>
+                        <option *ngFor="let role of roleList" [ngValue]="role">{{role.name}}</option>
                 </select>
                 <!-- Bouton edit role of user -->
-                <div>
+                <div *ngIf="userRoleList.length >= index">
                     <button
+                        *ngIf="user.id == userRoleList[index].userId &&user.role.id != userRoleList[index].roleId"
                         (click)="setRole(user)"
                         class="text-secondary hover:text-blue-900 transition ease-in-out delay-150"
                     >
