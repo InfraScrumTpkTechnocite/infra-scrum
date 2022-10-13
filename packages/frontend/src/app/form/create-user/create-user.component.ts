@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user.model';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
 import { RoleService } from 'src/app/services/role.service';
 import { UserService } from 'src/app/services/user.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-create-user',
@@ -15,15 +16,18 @@ export class CreateUserComponent implements OnInit {
   user: User = new User();
   @Input() verifPassword: string;
   showErrorMessage: boolean = false;
+  errorMessage: string = '';
 
   constructor(
       private userService: UserService,
       private roleService: RoleService,
       private router: Router,
-      private headerTitleService: HeaderTitleService
+      private headerTitleService: HeaderTitleService,
+      private toast: HotToastService,
   ) {
       this.verifPassword = '';
   }
+
   ngOnInit(): void {
       this.headerTitleService.setTitle('InfraScrum');
   }
@@ -31,11 +35,14 @@ export class CreateUserComponent implements OnInit {
   onSubmit() {
     const userObserver = {
       next: (user: User) => {
-        if(user) this.router.navigate(['/login']);
+        //if(user) this.router.navigate(['/login']);
+        this.toast.success('User created ! User needs to be activated.');
       },
-      error: (err: Error) => {
+      error: (err: any) => {
         this.showErrorMessage = true;
-        console.log(`Erreur création user : ${err}`);
+        this.errorMessage = err.error.driverError.detail;
+        console.log(`Erreur création user : ${err.error['driverError'].detail}`);
+        this.toast.error(`Error during user creation<br><br>${err.error.driverError.detail}`);
       },
       complete: () => {
         console.log(`create-user - onSubmit - createuser terminé.`)

@@ -8,6 +8,7 @@ import { LoginComponent } from './form/login/login.component';
 import { IndexComponent } from './index/index.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { ProjectComponent } from './project/project.component';
 import { AuthGuardService } from './services/auth-guard.service';
 
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
@@ -17,23 +18,56 @@ const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     {
         path: 'admin',
+        canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin']
+        },
         loadChildren: () =>
             import('./admin/admin.module').then((m) => m.AdminModule)
     },
-    { path: 'index', component: IndexComponent },
+    {
+        path: 'index', component: IndexComponent,
+        /*canActivate: [AuthGuardService]*/
+    },
     { path: 'login', component: LoginComponent },
-
     {
         path: 'projects',
         component: ProjectsComponent,
+        data: {
+            role: ['superadmin', 'admin', 'employee', 'intern', 'guest']
+        },
+    },
+    {
+        path: 'project',
+        component: ProjectComponent,
         canActivate: [AuthGuardService]
     },
 
-    { path: 'edit-new-tasks', component: EditNewTasksComponent },
-    { path: 'edit-project', component: EditProjectComponent },
-    { path: 'create-user', component: CreateUserComponent },
-
-    { path: '**', component: PageNotFoundComponent }
+    {
+        path: 'edit-new-tasks', component: EditNewTasksComponent,
+        canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin', 'admin', 'employee', 'intern']
+        },
+    },
+    {
+        path: 'edit-project', component: EditProjectComponent,
+        canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin', 'admin']
+        },
+    },
+    {
+        path: 'create-user', component: CreateUserComponent,
+        canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin']
+        },
+    },
+    {
+        path: '**', component: PageNotFoundComponent,
+        canActivate: [AuthGuardService]
+    }
 ];
 
 @NgModule({
@@ -45,4 +79,4 @@ const routes: Routes = [
         JwtHelperService
     ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

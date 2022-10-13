@@ -2,7 +2,14 @@
   "dependencies": {
     "@angular/animations": "^14.2.3",
     "@material/form-field": "^14.0.0",
+    "@nestjs-modules/mailer": "^1.8.1",
+    "@ngx-translate/core": "^14.0.0",
+    "handlebars": "^4.7.7",
     "material": "^0.4.3",
+    "nodemailer": "^6.8.0",
     "save": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.6"
   }
 }

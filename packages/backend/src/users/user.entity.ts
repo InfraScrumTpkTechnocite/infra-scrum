@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../roles/roles.entity';
-import { IsEmail, IsNotEmpty, IsOptional, ValidateIf } from 'class-validator';
+import { IsEmail, IsNotEmpty, ValidateIf } from 'class-validator';
 
 @Entity()
 @Unique(['username'])
@@ -31,6 +31,7 @@ export class User {
 
   @ApiProperty({ example: 'aze@rty.com', description: 'User email (unique)' })
   @Column()
+  @ValidateIf(value => value === "")
   @IsEmail()
   email: string;
 
@@ -45,8 +46,8 @@ export class User {
   @ApiProperty({ example: 'gilles', description: 'Hashed password' })
   //  @Column({select: false})
   @Column()
+  @ValidateIf(value => value === "")
   @IsNotEmpty()
-  @ValidateIf( value => value === "" )
   password: string;
 
   @ApiProperty({ example: 'a uuid...', description: 'Role id' })
@@ -57,4 +58,12 @@ export class User {
   @ApiProperty({ example: 'some image', description: 'User picture' })
   @Column()
   picture: string;
+
+  // @ApiProperty({ example: 'true or false', description: 'User active' })
+  // @Column({ default: false })
+  // active: boolean;
+
+  // @ApiProperty({ example: '1111', description: '4 digits token' })
+  // @Column({ default: null })
+  // token: string;
 }

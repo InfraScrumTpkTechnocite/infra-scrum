@@ -16,8 +16,11 @@ export class AuthService {
       `auth.service - validateUser username=${username}, pass=${pass}, user.password=${user.password}`,
     );
     console.log(`comparaison passwords=${await compare(pass, user.password)}`);
-    if (user && (await compare(pass, user.password))) {
-      console.log(`user ${user.username} exists and passwords comparaison is ok.`);
+    //console.log(`User ${user.username} active : ${user.active}`);
+    if (user && (await compare(pass, user.password)) /*&& user.active*/) {
+      console.log(
+        `user ${user.username} exists, is active and passwords comparaison is ok.`,
+      );
       const { password, ...result } = user;
       return result;
     }

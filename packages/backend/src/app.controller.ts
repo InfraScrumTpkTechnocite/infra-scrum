@@ -7,7 +7,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from './users/user.entity';
 import { UsersService } from './users/users.service';
-import { seederUser, seederProjects, seederRoles } from './seeder/seeder';
+import { seederUser, seederRoles } from './seeder/seeder';
 import { ProjectsService } from './projects/projects.service';
 import { RolesService } from './roles/roles.service';
 
@@ -20,7 +20,7 @@ export class AppController {
     private usersService: UsersService,
     private projectsService: ProjectsService,
     private rolesService: RolesService,
-  ) {}
+  ) { }
 
   @Get()
   getHello(): string {
@@ -35,6 +35,23 @@ export class AppController {
     console.log('app.controller - login');
     return this.authService.login(req.user);
   }
+
+  //@UseGuards(LocalAuthGuard)
+  //@ApiBody({ type: User })
+  // @Get('auth/confirm/:username/:token')
+  // async confirm(@Param('username') username: string, @Param('token') token: string) {
+  //   //return req.user;
+  //   console.log(`app.controller - confirm - username=${username}, token=${token}`);
+  //   //return this.authService.login(req.user);
+  //   let user: User = await this.usersService.findOneByUsername(username);
+  //   console.log(`app.controller - user=${user.username}, token=${user.token}`);
+  //   delete user.password;//to avoid password modification
+  //   if (user && user.token == token) {
+  //     user.active = true;
+  //     user.token = null;
+  //   }
+  //   return await this.usersService.update(user.id, user);
+  // }
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -60,15 +77,6 @@ export class AppController {
               .catch((error) => console.log(error.driverError.detail));
           }
         })
-        .catch((error) => console.log(error.driverError.detail));
-    });
-
-    seederProjects.forEach((project) => {
-      this.projectsService
-        .create(project)
-        .then((project) =>
-          console.log(`Project ${project.name} created`),
-        )
         .catch((error) => console.log(error.driverError.detail));
     });
   }

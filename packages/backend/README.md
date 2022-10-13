@@ -31,6 +31,20 @@
 ```bash
 $ npm install
 ```
+## Email SMTP configuration (email confirmation)
+Create .env file in "backend" directory like :
+
+```bash
+MAIL_HOST=smtp.example.com
+MAIL_PORT=25
+MAIL_USER=user@example.com
+MAIL_PASSWORD=
+MAIL_FROM="No Reply" <noreply@example.com>
+
+# optional
+MAIL_TRANSPORT=smtp://${MAIL_USER}:${MAIL_PASSWORD}@${MAIL_HOST}
+```
+
 
 ## Running the app
 

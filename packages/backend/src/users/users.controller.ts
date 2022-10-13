@@ -17,12 +17,12 @@ import { QueryFailedExceptionFilter } from '../query-failed-exceptions.filter';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @UseFilters(new QueryFailedExceptionFilter())
-@UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private userService: UsersService) {}
+  constructor(private userService: UsersService) { }
 
   @Post()
   async create(@Body() user: User): Promise<User> {
@@ -52,7 +52,7 @@ export class UsersController {
     return await this.userService.findOne(id);
   }
 
-  @Get('/:username')
+  @Get('/username/:username')
   async findOneByUsername(@Param('username') username: string): Promise<User> {
     return await this.userService.findOneByUsername(username);
   }
