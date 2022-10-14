@@ -15,6 +15,8 @@ export class ProjectsComponent implements OnInit {
     dateToday: number = Date.now();
     userProjects: any;
 
+    selectedPictureFile: File | null = null;
+
     constructor(private headerTitleService: HeaderTitleService,
         private userProjectService: UserprojectService,
         private userService: UserService) { }
@@ -54,10 +56,5 @@ export class ProjectsComponent implements OnInit {
         //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
         var username = localStorage.getItem('username');
         if (username) this.userService.findUserByUsername(username).subscribe(userObserver);
-
-    }
-
-    editProjectModel() {
-        this.isEditNewProject = !this.isEditNewProject;
     }
 }

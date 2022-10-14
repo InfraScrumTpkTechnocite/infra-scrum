@@ -1,10 +1,13 @@
+import { Project } from "./project.model";
+import { User } from "./user.model";
+
 export class UserProject {
   id?: string;
-  userid: string;
-  projectid: string;
+  user: User;
+  project: Project;
 
   constructor() {
-    this.userid = '';
-    this.projectid = '';
+    this.user = new User();
+    this.project = new Project();
   }
 }
