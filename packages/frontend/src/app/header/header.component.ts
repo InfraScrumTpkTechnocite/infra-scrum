@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
     title: string = '';
     isMenuOpen: boolean = false;
     user: User = new User();
+    userProjects = [];
 
     constructor(
         public authService: AuthService,
@@ -22,9 +23,13 @@ export class HeaderComponent implements OnInit {
         this.headerTitleService.title.subscribe((updatedTitle) => {
             this.title = updatedTitle;
         });
-        
+
         this.headerTitleService.user.subscribe((user: User) => {
             this.user = user;
+        });
+
+        this.headerTitleService.userProjects.subscribe((userProjects: any) => {
+            this.userProjects = userProjects;
         });
     }
 
