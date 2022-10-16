@@ -28,6 +28,9 @@ export class ProjectsComponent implements OnInit {
         const userProjectsObserver = {
             next: (value: any) => {
                 this.userProjects = value;//tous les user-projects (contenants toutes les infos du projet)
+                var usertmp: any = localStorage.getItem('user');
+                var user: User = JSON.parse(usertmp);
+                if(user) this.headerTitleService.setUsername(user);
             },
             error: (err: Error) => {
                 console.log(`${err}`);
