@@ -18,9 +18,12 @@
                 name="projects"
                 id="selectMyProjects"
                 class="w-36 h-6 md:w-40 md:h-8 lg:w-48 lg:h-10 text-secondary text-xs md:text-sm lg:text-lg bg-tpkwhite p-1 font-semibold rounded-md focus:ring-2 focus:ring-secondary"
+                (change)="onChange($event)"
             >
                 <option *ngFor="let userProject of userProjects ; index as i; first as isFirst"
-                 [value]="userProject['project']['id']">{{ userProject['project']['name'] }}</option>
+                 [value]="userProject['project']['id']">
+                 {{ userProject['project']['name'] }}
+                </option>
             </select>
         </div>
     </div>

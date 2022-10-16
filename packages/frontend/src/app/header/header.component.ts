@@ -53,4 +53,8 @@ export class HeaderComponent implements OnInit {
     isSuperadmin() {
         return this.user.role.name === 'superadmin';
     }
+
+    onChange(event: any) {
+        console.log(`header.component - onChange - ${event.target.value}`);//id du projet sélectionné
+    }
 }
