@@ -10,12 +10,12 @@ export class Project {
     picture: string;
 
     constructor() {
-        this.name = '';
+        this.name = "New Project";
         this.description = '';
-        this.githuburl = '';
+        this.githuburl = "https://github.com";
         this.githubtoken = '';
-        this.startdate = '';
-        this.enddate = '';
+        this.startdate = new Date().toISOString();
+        this.enddate = new Date().toISOString();;
         this.picture = '';
     }
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Project } from '../models/project.model';
 import { User } from '../models/user.model';
+import { UserProject } from '../models/userproject.model';
 import { HeaderTitleService } from '../services/header-title.service';
+import { ProjectService } from '../services/project.service';
 import { UserService } from '../services/user.service';
 import { UserprojectService } from '../services/userproject.service';
 
@@ -17,7 +20,8 @@ export class ProjectsComponent implements OnInit {
 
     constructor(private headerTitleService: HeaderTitleService,
         private userProjectService: UserprojectService,
-        private userService: UserService) { }
+        private userService: UserService,
+        private projectService: ProjectService) { }
 
     ngOnInit(): void {
         this.headerTitleService.setTitle('My projects');
@@ -59,5 +63,43 @@ export class ProjectsComponent implements OnInit {
 
     editProjectModel() {
         this.isEditNewProject = !this.isEditNewProject;
+    }
+    
+    addProject() {
+
+        const newProject = new Project();
+
+        const projectObserver = {
+            next: (project: Project) => {
+                var userProject = new UserProject()
+                if (project.id) userProject.project = project.id;
+                userProject.user = JSON.parse( localStorage.getItem('user') || "")?.id || "{}";
+                userProject.isprojectadmin = true;
+                this.userProjectService.create(userProject).subscribe(userProjectObserver);
+            },
+            error: (err: any) => {
+                console.log(`Error: ${err}`);
+            },
+            complete: () => {
+                console.log(`projects.component.ts - add project completed.`);
+            }
+        }
+
+        const userProjectObserver = {
+            next: (userProject: UserProject) => {
+                this.userProjectService.findUserProjects(userProject.user).subscribe(
+                    userProjects => {
+                        this.userProjects = userProjects;
+                    })
+            },
+            error: (err: any) => {
+                console.log(`Error: ${err}`);
+            },
+            complete: () => {
+                console.log(`projects.component.ts - add userproject completed.`);
+            }
+        }
+
+        this.projectService.create(newProject).subscribe(projectObserver);
     }
 }

@@ -1,10 +1,12 @@
 export class UserProject {
   id?: string;
-  userid: string;
-  projectid: string;
+  user: string;
+  project: string;
+  isprojectadmin: boolean;
 
   constructor() {
-    this.userid = '';
-    this.projectid = '';
+    this.user = '';
+    this.project = '';
+    this.isprojectadmin = false;
   }
 }
