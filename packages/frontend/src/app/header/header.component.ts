@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { HeaderTitleService } from '../services/header-title.service';
 
@@ -10,6 +11,8 @@ import { HeaderTitleService } from '../services/header-title.service';
 export class HeaderComponent implements OnInit {
     title: string = '';
     isMenuOpen: boolean = false;
+    user: User = new User();
+    userProjects = [];
 
     constructor(
         public authService: AuthService,
@@ -20,7 +23,16 @@ export class HeaderComponent implements OnInit {
         this.headerTitleService.title.subscribe((updatedTitle) => {
             this.title = updatedTitle;
         });
+
+        this.headerTitleService.user.subscribe((user: User) => {
+            this.user = user;
+        });
+
+        this.headerTitleService.userProjects.subscribe((userProjects: any) => {
+            this.userProjects = userProjects;
+        });
     }
+
     loggedIn() {
         return this.authService.isAuthenticated();
     }
@@ -29,9 +41,20 @@ export class HeaderComponent implements OnInit {
         this.isMenuOpen = false;
         localStorage.removeItem('jwt-token'); //force token delete
         localStorage.removeItem('user');
+        this.headerTitleService.user.subscribe((user: User) => {
+            this.user = user;
+        });
     }
 
     toggleMenu() {
         this.isMenuOpen = !this.isMenuOpen;
+    }
+
+    isSuperadmin() {
+        return this.user.role.name === 'superadmin';
+    }
+
+    onChange(event: any) {
+        console.log(`header.component - onChange - ${event.target.value}`);//id du projet sélectionné
     }
 }

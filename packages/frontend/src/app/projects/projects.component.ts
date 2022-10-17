@@ -15,6 +15,8 @@ export class ProjectsComponent implements OnInit {
     dateToday: number = Date.now();
     userProjects: any;
 
+    selectedPictureFile: File | null = null;
+
     constructor(private headerTitleService: HeaderTitleService,
         private userProjectService: UserprojectService,
         private userService: UserService) { }
@@ -26,6 +28,10 @@ export class ProjectsComponent implements OnInit {
         const userProjectsObserver = {
             next: (value: any) => {
                 this.userProjects = value;//tous les user-projects (contenants toutes les infos du projet)
+                this.headerTitleService.setUserProjects(value);
+                var usertmp: any = localStorage.getItem('user');
+                var user: User = JSON.parse(usertmp);
+                if (user) this.headerTitleService.setUsername(user);
             },
             error: (err: Error) => {
                 console.log(`${err}`);
@@ -42,7 +48,7 @@ export class ProjectsComponent implements OnInit {
                 localStorage.setItem('user', JSON.stringify(response));
                 //pour lire le localStorage : 
                 //var user = JSON.parse(localStorage.getItem('user'));
-                if (response.id) this.userProjectService.findUserProjects(response.id).subscribe(userProjectsObserver);
+                if (response.id) this.userProjectService.findCurrentUserProjects(response.id).subscribe(userProjectsObserver);
             },
             error: (err: Error) => {
                 console.log(`Error: ${err}`);
@@ -54,10 +60,5 @@ export class ProjectsComponent implements OnInit {
         //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
         var username = localStorage.getItem('username');
         if (username) this.userService.findUserByUsername(username).subscribe(userObserver);
-
-    }
-
-    editProjectModel() {
-        this.isEditNewProject = !this.isEditNewProject;
     }
 }

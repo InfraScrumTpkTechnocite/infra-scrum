@@ -18,7 +18,6 @@ export class User {
         this.firstname= '';
         this.lastname= '';
         this.picture= '';
-        this.role= new Role;
+        this.role = new Role();
     }
-
 }

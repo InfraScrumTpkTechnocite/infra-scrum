@@ -1,12 +1,14 @@
+import { Project } from "./project.model";
+
 export class Kanbanstatus {
   id?: string;
   name: string;
   color: string;
-  projectid: string;
+  project: Project;
 
   constructor() {
     this.name = '';
     this.color = '#1F71A5';
-    this.projectid = '';
+    this.project = new Project();
   }
 }
