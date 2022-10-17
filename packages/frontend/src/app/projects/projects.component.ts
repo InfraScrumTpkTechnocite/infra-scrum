@@ -31,7 +31,7 @@ export class ProjectsComponent implements OnInit {
                 this.headerTitleService.setUserProjects(value);
                 var usertmp: any = localStorage.getItem('user');
                 var user: User = JSON.parse(usertmp);
-                if(user) this.headerTitleService.setUsername(user);
+                if (user) this.headerTitleService.setUsername(user);
             },
             error: (err: Error) => {
                 console.log(`${err}`);
@@ -48,7 +48,7 @@ export class ProjectsComponent implements OnInit {
                 localStorage.setItem('user', JSON.stringify(response));
                 //pour lire le localStorage : 
                 //var user = JSON.parse(localStorage.getItem('user'));
-                if (response.id) this.userProjectService.findUserProjects(response.id).subscribe(userProjectsObserver);
+                if (response.id) this.userProjectService.findCurrentUserProjects(response.id).subscribe(userProjectsObserver);
             },
             error: (err: Error) => {
                 console.log(`Error: ${err}`);

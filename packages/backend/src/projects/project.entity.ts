@@ -51,16 +51,16 @@ export class Project {
     example: 'a date',
     description: 'Foreseen start date of a project',
   })
-  @Column({ nullable: true, type: 'timestamptz' })
-  @IsDateString()
+  @Column({ nullable: false, type: 'timestamptz' })
+  //@IsDateString()
   startdate: string;
 
   @ApiProperty({
     example: 'a date',
     description: 'Foreseen start date of a project',
   })
-  @Column({ nullable: true, type: 'timestamptz' })
-  @IsDateString()
+  @Column({ nullable: true, type: 'timestamptz', default: null })
+  //@IsDateString()
   enddate: string;
 
   @ApiProperty({ example: 'url? blob?', description: 'User picture' })
