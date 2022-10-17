@@ -1,16 +1,21 @@
 <div class="h-full flex items-center">
     <div
-        class="w-full sm:w-4/5 xl:2/3 2xl:w-1/2 m-auto bg-tpkwhite mt-20 sm:mt-40 md:mt-44 p-4 rounded-lg shadow-md shadow-primary"
+        class="w-full sm:w-4/5 xl:2/3 2xl:w-1/2 m-auto pt-8 bg-tpkwhite mt-20 sm:mt-40 md:mt-44 p-4 rounded-lg shadow-md shadow-primary"
     >
-        <h1
+        <!-- <h1
             class="text-primary text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center pt-4 pb-6 sm:pb-8 uppercase font-extrabold underline underline-offset-8"
         >
             Users administration
-        </h1>
+        </h1> -->
+
         <!-- LISTE USERS -->
+
         <!-- Quand liste users disponible, boucler dans les users et utiliser ce modèle -->
         <ul>
-            <li *ngFor="let user of userList; let index = index" class="flex justify-between items-center mb-4 last:mb-6">
+            <li
+                *ngFor="let user of userList; let index = index"
+                class="flex justify-between items-center mb-4 last:mb-6"
+            >
                 <!-- TODO : Lien vers page profil quand clique sur pastille ou username/name -->
                 <!-- Pastille initiales ou photo profil -->
                 <div
@@ -19,47 +24,59 @@
                     <p
                         class="text-white font-semibold text-xs sm:text-base md:text-lg min-w-max"
                     >
-                        {{ user.firstname && user.lastname ? user.firstname[0] + user.lastname[0] : user.username[0] | uppercase }}
+                        {{
+                            user.firstname && user.lastname
+                                ? user.firstname[0] + user.lastname[0]
+                                : (user.username[0] | uppercase)
+                        }}
                     </p>
                 </div>
                 <!-- Prénom + nom utilisateur, si vide ==> username à la place -->
-                <p class="w-2/6 text-sm ml-1 sm:text-base md:text-lg lg:text-xl font-bold text-primary">
-                    {{ user.firstname && user.lastname ? user.firstname + " " + user.lastname : user.username }}
+                <p
+                    class="w-2/6 text-sm ml-1 sm:text-base md:text-lg lg:text-xl font-bold text-primary"
+                >
+                    {{
+                        user.firstname && user.lastname
+                            ? user.firstname + ' ' + user.lastname
+                            : user.username
+                    }}
                 </p>
                 <!-- Rôle user -->
                 <!-- <select class="w-2/6 text-sm sm:text-base md:text-lg lg:text-xl text-secondary"
                      [(ngModel)]="user.role" name="role" [compareWith]="compareByName">
                         <option *ngFor="let role of roleList" [ngValue]="role">{{role.name}}</option>
                 </select> -->
-                <select 
-                    class="w-2/6 text-sm sm:text-base md:text-lg lg:text-xl text-secondary" 
+                <select
+                    class="w-2/6 text-sm sm:text-base md:text-lg lg:text-xl text-secondary"
                     [(ngModel)]="user.role"
                     name="role"
                     [compareWith]="compareByName"
                 >
-                        <option *ngFor="let role of roleList" [ngValue]="role">{{role.name}}</option>
+                    <option *ngFor="let role of roleList" [ngValue]="role">
+                        {{ role.name }}
+                    </option>
                 </select>
                 <!-- Bouton edit role of user -->
-                <div 
+                <div
                     *ngIf="userRoleList.length >= index"
                     class="w-1/6 grid justify-items-center"
-                    >
+                >
                     <button
-                        *ngIf="user.id == userRoleList[index].userId &&user.role.id != userRoleList[index].roleId"
+                        *ngIf="
+                            user.id == userRoleList[index].userId &&
+                            user.role.id != userRoleList[index].roleId
+                        "
                         (click)="setRole(user)"
                         class="text-secondary hover:text-blue-900 transition ease-in-out delay-150"
                     >
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            width="48" 
-                            height="48" 
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="48"
+                            height="48"
                             viewBox="0 0 48 48"
                             class="w-5 h-5 md:w-6 md:h-6 lg:w-9 lg:h-9"
                         >
-                            <path 
-                                d="M0 0h48v48h-48z" 
-                                fill="currentColor"
-                            />
+                            <path d="M0 0h48v48h-48z" fill="currentColor" />
                             <path
                                 d="M18 32.34l-8.34-8.34-2.83 2.83 11.17 11.17 24-24-2.83-2.83z"
                                 fill="#FFFFFF"
@@ -73,7 +90,7 @@
             <!-- BOUTON ADD NEW USER -->
             <a routerLink="/create-user">
                 <button
-                    class="ml-4 mb-6 font-extrabold text-secondary rounded-full border-2 border-secondary p-1 sm:p-1.5 md:p-2 hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-sm"
+                    class="mb-6 font-extrabold text-secondary rounded-full border-2 border-secondary p-1 sm:p-1.5 md:p-2 hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-sm"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

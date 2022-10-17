@@ -17,9 +17,11 @@ export class ProjectsComponent implements OnInit {
 
     selectedPictureFile: File | null = null;
 
-    constructor(private headerTitleService: HeaderTitleService,
+    constructor(
+        private headerTitleService: HeaderTitleService,
         private userProjectService: UserprojectService,
-        private userService: UserService) { }
+        private userService: UserService
+    ) {}
 
     ngOnInit(): void {
         this.headerTitleService.setTitle('My projects');
@@ -27,7 +29,7 @@ export class ProjectsComponent implements OnInit {
         //exemple pour récupérer les projets d'un user...
         const userProjectsObserver = {
             next: (value: any) => {
-                this.userProjects = value;//tous les user-projects (contenants toutes les infos du projet)
+                this.userProjects = value; //tous les user-projects (contenants toutes les infos du projet)
                 this.headerTitleService.setUserProjects(value);
                 var usertmp: any = localStorage.getItem('user');
                 var user: User = JSON.parse(usertmp);
@@ -38,7 +40,7 @@ export class ProjectsComponent implements OnInit {
             },
             complete: () => {
                 console.log(`get user's projects completed.`);
-            },
+            }
         };
         //...et attention : le userid n'est certainement pas le bon !
         //this.userProjectService.findUserProjects('32e5d252-51ea-48d6-aed3-a8cd4bf06e90').subscribe(userProjectsObserver);
@@ -46,9 +48,12 @@ export class ProjectsComponent implements OnInit {
         const userObserver = {
             next: (response: User) => {
                 localStorage.setItem('user', JSON.stringify(response));
-                //pour lire le localStorage : 
+                //pour lire le localStorage :
                 //var user = JSON.parse(localStorage.getItem('user'));
-                if (response.id) this.userProjectService.findCurrentUserProjects(response.id).subscribe(userProjectsObserver);
+                if (response.id)
+                    this.userProjectService
+                        .findCurrentUserProjects(response.id)
+                        .subscribe(userProjectsObserver);
             },
             error: (err: Error) => {
                 console.log(`Error: ${err}`);
@@ -56,9 +61,12 @@ export class ProjectsComponent implements OnInit {
             complete: () => {
                 console.log(`login.component.ts - get user completed.`);
             }
-        }
+        };
         //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
         var username = localStorage.getItem('username');
-        if (username) this.userService.findUserByUsername(username).subscribe(userObserver);
+        if (username)
+            this.userService
+                .findUserByUsername(username)
+                .subscribe(userObserver);
     }
 }
