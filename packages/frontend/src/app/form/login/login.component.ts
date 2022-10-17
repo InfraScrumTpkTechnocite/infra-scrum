@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit {
 
         const authObserver = {
             next: (response: any) => {
+                //console.log(`response = ${JSON.stringify(response)}`)
                 this.router.navigate(['projects']);
             },
             error: (error: Error) => {

@@ -1,12 +1,15 @@
+import { Project } from "./project.model";
+import { User } from "./user.model";
+
 export class UserProject {
   id?: string;
-  user: string;
-  project: string;
+  user: User;
+  project: Project;
   isprojectadmin: boolean;
 
   constructor() {
-    this.user = '';
-    this.project = '';
+    this.user = new User();
+    this.project = new Project();
     this.isprojectadmin = false;
   }
 }

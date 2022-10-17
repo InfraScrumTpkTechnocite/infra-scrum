@@ -2,7 +2,7 @@ export class Project {
     id?: string;
     name: string;
     description: string;
-    project?: string;
+    project?: Project;
     githuburl: string;
     githubtoken: string;
     startdate: string;
