@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsDateString, IsUrl } from 'class-validator';
+import { IsDate, IsDateString, IsOptional, IsUrl } from 'class-validator';
 import {
   Column,
   Entity,
@@ -41,6 +41,7 @@ export class Project {
   })
   @Column({ nullable: true })
   @IsUrl()
+  @IsOptional()
   githuburl: string;
 
   @ApiProperty({ example: 'a token...', description: 'Github token' })
