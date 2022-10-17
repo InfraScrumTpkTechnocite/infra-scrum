@@ -22,12 +22,12 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProjectinfoComponent } from './projectinfo/projectinfo.component';
-
+import { InitialsNamePipe } from './pipes/initials-name.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
-  }
+}
 @NgModule({
     declarations: [
         AppComponent,
@@ -43,7 +43,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ProjectComponent,
         KanbanStatusComponent,
         TaskComponent,
-        ProjectinfoComponent
+        ProjectinfoComponent,
+        InitialsNamePipe
     ],
     imports: [
         BrowserModule,
@@ -55,13 +56,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         HotToastModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
-              provide: TranslateLoader,
+                provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
             }
-          }),
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
