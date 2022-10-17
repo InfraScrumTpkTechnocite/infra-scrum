@@ -3,7 +3,7 @@ import { Role } from "./role.model";
 export class User {
     id? : string;
     username: string;
-    password: string;
+    password?: string;
     email: string;
     firstname?: string;
     lastname?: string;
@@ -20,5 +20,4 @@ export class User {
         this.picture= '';
         this.role = new Role();
     }
-
 }
