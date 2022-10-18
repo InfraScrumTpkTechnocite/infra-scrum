@@ -17,6 +17,7 @@ import { EditProjectComponent } from './form/edit-project/edit-project.component
 import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 // AoT requires an exported function for factories
@@ -42,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppRoutingModule,
         FormsModule,
         HttpClientModule,
+        MatSlideToggleModule,
         ReactiveFormsModule,
         TranslateModule.forRoot({
             loader: {
