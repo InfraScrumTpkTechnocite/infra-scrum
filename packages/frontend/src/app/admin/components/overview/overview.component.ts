@@ -15,9 +15,6 @@ export class OverviewComponent implements OnInit {
     
     userList: User[] = [];
     roleList: Role[] = [];
-    userRoleList: Array<any> = [];
-    showErrorMessage: boolean = false;
-    errorMessage: string = '';
 
     constructor(
         private headerTitleService: HeaderTitleService,
@@ -31,12 +28,9 @@ export class OverviewComponent implements OnInit {
             next : (userList : User[]) => {
                 this.userList = userList;
             },
-            complete : () => {
-                this.userList.map(user => {
-                    this.userRoleList.push({
-                        userId: user.id,
-                        roleId: user.role.id});
-                });
+            error : (err : any) => {
+                console.log(`Erreur édition user : ${err.error['driverError'].detail}`);
+                this.toastService.error(`Error during user creation<br><br>${err.error.driverError.detail}`);
             }
         };
 
@@ -47,24 +41,5 @@ export class OverviewComponent implements OnInit {
         this.roleService.getAllRoles().subscribe(
             roleList => this.roleList = roleList
             );
-    }
-
-    compareByName(roleUser: Role, roleOption: Role): boolean{
-        return roleUser.id === roleOption.id;
-    }
-    
-    setRole(user: User): void{
-        const observer = { 
-            error : (err : any) => {
-                this.showErrorMessage = true;
-                this.errorMessage = err.error.driverError.detail;
-                console.log(`Erreur édition user : ${err.error['driverError'].detail}`);
-                this.toastService.error(`Error during user creation<br><br>${err.error.driverError.detail}`);
-            },
-            complete : () => {
-                this.toastService.success(`User's role edited !`);
-            }
-        };
-        this.userService.editUser(user).subscribe(observer);
     }
 }
