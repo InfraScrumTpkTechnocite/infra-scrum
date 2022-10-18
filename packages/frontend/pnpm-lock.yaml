@@ -20,6 +20,10 @@ specifiers:
   '@angular/platform-browser-dynamic': ^14.2.2
   '@angular/router': ^14.2.2
   '@auth0/angular-jwt': ^5.0.2
+  '@ngneat/hot-toast': ^4.1.0
+  '@ngneat/overview': ^3.0.0
+  '@ngx-translate/core': ^14.0.0
+  '@ngx-translate/http-loader': ^7.0.0
   '@types/jasmine': ~3.10.0
   '@types/node': ^12.11.1
   '@typescript-eslint/eslint-plugin': 5.37.0
@@ -28,6 +32,7 @@ specifiers:
   eslint: ^8.23.1
   eslint-config-prettier: ^8.5.0
   eslint-plugin-prettier: ^4.2.1
+  hammerjs: ^2.0.8
   jasmine-core: ~4.0.0
   karma: ~6.3.0
   karma-chrome-launcher: ~3.1.0
@@ -54,6 +59,11 @@ dependencies:
   '@angular/platform-browser-dynamic': 14.2.2_317e089fc40062231b94e3e4b216deee
   '@angular/router': 14.2.2_49360450ff21caba8807f1b713db5b4c
   '@auth0/angular-jwt': 5.0.2_@angular+common@14.2.2
+  '@ngneat/hot-toast': 4.1.0_658bf1d0cb6c0848d2338610b82ffa8e
+  '@ngneat/overview': 3.0.4_@angular+core@14.2.2
+  '@ngx-translate/core': 14.0.0_@angular+core@14.2.2+rxjs@7.5.6
+  '@ngx-translate/http-loader': 7.0.0_709e7de2e7411b3bf9ece7e858376196
+  hammerjs: 2.0.8
   rxjs: 7.5.6
   tslib: 2.4.0
   zone.js: 0.11.8
@@ -2057,6 +2067,26 @@ packages:
     resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
     dev: true
 
+  /@ngneat/hot-toast/4.1.0_658bf1d0cb6c0848d2338610b82ffa8e:
+    resolution: {integrity: sha512-5QgxYXAGNmg0J10QjHOBu8Go5SZ9WIg5TDFm60ecMK/BUcuaHB7QeVfY/YFUPsw1iXaO3IVb81w9LdqXz2GNsg==}
+    peerDependencies:
+      '@angular/core': '>=13.0.0'
+      '@ngneat/overview': '>=3.0.0'
+    dependencies:
+      '@angular/core': 14.2.2_rxjs@7.5.6+zone.js@0.11.8
+      '@ngneat/overview': 3.0.4_@angular+core@14.2.2
+      tslib: 2.4.0
+    dev: false
+
+  /@ngneat/overview/3.0.4_@angular+core@14.2.2:
+    resolution: {integrity: sha512-w5cyli3goDBegN1G/v9dCGDOQIecDN78C83nUs1STuarS/ry9kjgAp/W9IJSQhqrcVhvHhOVPIkhZ4Pj3Yw9Xg==}
+    peerDependencies:
+      '@angular/core': '>=13'
+    dependencies:
+      '@angular/core': 14.2.2_rxjs@7.5.6+zone.js@0.11.8
+      tslib: 2.4.0
+    dev: false
+
   /@ngtools/webpack/14.2.3_6cdcf339ab2121818445e3f376fd5fe2:
     resolution: {integrity: sha512-/9bOlmpx7a5P8QhjmggxEJ6LX5qvfkBZhxM8Orjr6ZjJcmAfm+3wiUDzU3EM+5M0YV3y3+dvQpn6Jrwy9y4rfQ==}
     engines: {node: ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -2069,6 +2099,30 @@ packages:
       typescript: 4.6.4
       webpack: 5.74.0_esbuild@0.15.5
     dev: true
+
+  /@ngx-translate/core/14.0.0_@angular+core@14.2.2+rxjs@7.5.6:
+    resolution: {integrity: sha512-UevdwNCXMRCdJv//0kC8h2eSfmi02r29xeE8E9gJ1Al4D4jEJ7eiLPdjslTMc21oJNGguqqWeEVjf64SFtvw2w==}
+    peerDependencies:
+      '@angular/core': '>=13.0.0'
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      '@angular/core': 14.2.2_rxjs@7.5.6+zone.js@0.11.8
+      rxjs: 7.5.6
+      tslib: 2.4.0
+    dev: false
+
+  /@ngx-translate/http-loader/7.0.0_709e7de2e7411b3bf9ece7e858376196:
+    resolution: {integrity: sha512-j+NpXXlcGVdyUNyY/qsJrqqeAdJdizCd+GKh3usXExSqy1aE9866jlAIL+xrfDU4w+LiMoma5pgE4emvFebZmA==}
+    peerDependencies:
+      '@angular/common': '>=13.0.0'
+      '@ngx-translate/core': '>=14.0.0'
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      '@angular/common': 14.2.2_@angular+core@14.2.2+rxjs@7.5.6
+      '@ngx-translate/core': 14.0.0_@angular+core@14.2.2+rxjs@7.5.6
+      rxjs: 7.5.6
+      tslib: 2.4.0
+    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -4620,6 +4674,11 @@ packages:
   /grapheme-splitter/1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
     dev: true
+
+  /hammerjs/2.0.8:
+    resolution: {integrity: sha512-tSQXBXS/MWQOn/RKckawJ61vvsDpCom87JgxiYdGwHdOa0ht0vzUWDlfioofFCRU0L+6NGDt6XzbgoJvZkMeRQ==}
+    engines: {node: '>=0.8.0'}
+    dev: false
 
   /handle-thing/2.0.1:
     resolution: {integrity: sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==}
