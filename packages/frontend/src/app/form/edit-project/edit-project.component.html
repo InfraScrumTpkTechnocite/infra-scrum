@@ -1,45 +1,109 @@
-<div class="w-screen h-screen">
-    <form
-        class="bg-tpkwhite text-secondary mt-12 m-auto max-w-lg max-h-max md:max-w-2xl xl:h-50   xl:w-5/6 rounded-md shadow-lg shadow-primary"
+<div class=" mt-60 w-screen h-screen">
+    <form #editProjectForm="ngForm"
+        class="bg-tpkwhite text-secondary mt-12 m-auto max-w-lg max-h-max md:max-w-2xl xl:max-h-max xl:max-w-screen-lg rounded-md shadow-lg shadow-primary"
     >
         <h1
             class=" text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-center pt-4"
         >
             Edit Project
         </h1>
-        <div class="mt-10">
-            <div class="flex flex-col md:flex-row">
-                <div
-                    class=" w-50 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
-                    <label class="font-bold">Name</label>
-                    <input
-                        type="text"
-                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"/>
+        <div class="flex xl:mt-6 flex-col xl:flex-row items-center">
+            <div class="w-160 h-40 xl:w-72 xl:h-128 border-2 border-b-primary border-x-0 xl:border-x-2 xl:border-r-primary border-t-0 xl:border-y-0 xl:mt-6 flex xl:flex-col xl:space-y-12 space-x-6 justify-center items-center">
+                <button class="bg-primary hover:bg-secondary p-4 rounded-xl xl:ml-6 text-white font-semibold w-40">Edit project</button>
+                <button class="bg-primary hover:bg-secondary p-4 rounded-xl text-white w-40 font-semibold">Users</button>
+                <button class="bg-primary hover:bg-secondary p-4 rounded-xl text-white w-52 xl:w-40 font-semibold">Intermediate date</button>
+            </div>
+            <div class="w-160 h-128 mt-4 xl:mt-6 ml-8 overflow-x-hidden">
+                    <!-- 
+                         <div class="space-y-1 text-lg font-medium"> -->
+                        <!-- <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Andy Tierce</p>
+                            <mat-slide-toggle>Slide me !</mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Simo Rico Olivia</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2  border-b-primary border-x-0 border-t-0">Nathan Khain</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Andre Delattre</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Vincent Smultz</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Max Hubert</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Benoît Dégénére</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Lorena Mascotte</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Jérémy Leboucher</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Monsieur Lechat</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        <div class="flex w-128 justify-between items-center">
+                            <p class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0">Axelle Lepont</p>
+                            <mat-slide-toggle></mat-slide-toggle>
+                        </div>
+                        
+                    </div> -->
+                <!-- <div>
+                    <div class="w-50 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
+                        <label class="font-bold">Name</label>
+                        <input
+                            type="text"
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        />
+                    </div>
+                    <div class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
+                        <label class="font-bold">Choose an image/file</label>
+                        <input
+                            type="file"
+                            class="w-full mt-6 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        />
+                    </div>
+                    <div class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
+                        <label class="font-bold">Delivery date</label>
+                        <input
+                            type="date"
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        />
+                    </div>
+                   </div>  -->
+                 <!-- <div class="ml-10 xl:ml-0  transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
+                    <select name="Intermediate" id="intermediate" class="w-128 xl:w-160 mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none">
+                        <option value="#">Intermediate date</option>
+                        <option value="date">Date 1</option>
+                        <option value="date">Date 2</option>
+                        <option value="date">Date 3</option>
+                        <option value="date">Date 4</option>
+                        <option value="date">Date 5</option>
+                    </select>
                 </div>
-            </div>
-            <div
-                class="upload flex flex-col w-50 mt-3 md:mt-4 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
-                <label class="font-bold mr-3 mb-3">
-                    Choose an image/file</label>
-                <input type="file">
-            </div>
-            
-            <div class="flex flex-col mt-8 md:flex-row">
-               
-                <div
-                    class="w-50 mx-12 mt-3 md:mt-0 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                >
-                    <label class="font-bold">Delivery date</label>
-                    <input
-                        type="date"
-                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                    />
-                </div>
-            </div>
-            <div class="mt-10 flex justify-center w-full">
-                <button class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-4 w-24 mb-8">Cancel</button>
-                <button class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8">Register</button>
+                <div class="w-160 border-2 border-b-primary mt-48 overflow-x-hidden"></div>
+                <p class="mt-2 text-lg font-semibold">Description</p>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident repellendus illum aperiam sit nobis dolor atque quae rerum minima a quos eligendi, soluta quibusdam ipsum sequi, dolorum quaerat cum nesciunt repellat laudantium unde? Assumenda fugiat commodi sapiente molestiae doloribus sequi officia cum veniam praesentium culpa sed repudiandae ipsam quibusdam enim aut libero fuga cumque, ullam voluptatem accusantium consequatur optio! Quasi alias, ducimus saepe sit magnam unde nostrum dolorum expedita ut dignissimos, velit ipsam odit totam incidunt acc</p> -->
             </div>
         </div>
+        
+            <div class="mt-8 xl:ml-20 mx-auto flex justify-center w-full">
+                <button [routerLink]="['/projects']" class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-12 w-24 mb-8">Cancel</button>
+                <button type="submit" [disabled]="!editProjectForm.valid" class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8 disabled:bg-grey2">Register</button>
+            </div>
     </form>
 </div>
