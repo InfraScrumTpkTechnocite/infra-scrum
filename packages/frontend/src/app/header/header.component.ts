@@ -55,6 +55,6 @@ export class HeaderComponent implements OnInit {
     }
 
     onChange(event: any) {
-        console.log(`header.component - onChange - ${event.target.value}`);//id du projet sélectionné
+        console.log(`header.component - onChange - ${event.target.value}`); //id du projet sélectionné
     }
 }

@@ -1,27 +1,44 @@
 <div class="w-full lg:w-11/12 m-auto mt-20 sm:mt-28 md:mt-32 p-4">
     <div class="bg-tpkwhite bg-opacity-40 p-4 lg:p-6 rounded-xl">
-        <h1
+        <!-- <h1
             class="text-primary text-2xl sm-text-2xl md:text-3xl lg:text-4xl text-center pt-4 pb-6 sm:pb-8 uppercase font-extrabold underline underline-offset-8">
             My projects
-        </h1>
+        </h1> -->
+
         <!-- BOUTON CREATE NEW PROJECT (uniquement visible et utilisable par superadmin et admin) -->
         <div class="flex items-center justify-center mb-6">
             <button (click)="addProject()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                <svg 
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-16 sm:w-24 h-16 sm:h-24 text-primary rounded-full hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-md hover:cursor-pointer">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    class="w-16 sm:w-24 h-16 sm:h-24 text-primary rounded-full hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-md hover:cursor-pointer"
+                >
+                    <path
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" 
+                    />
                 </svg>
             </button>
         </div>
         <!-- CONTAINER PROJETS-->
         <!-- [venir boucler sur les projets assignés au user ou créé par lui (admin dans ce cas)] -->
 
-        <div class="mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div
+            class="mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+        >
             <!-- PROJET MODEL- -->
-            <app-projectinfo *ngFor="let userProject of userProjects ; index as i; first as isFirst"
-                [userProject]="userProject">
+            <app-projectinfo
+                *ngFor="
+                    let userProject of userProjects;
+                    index as i;
+                    first as isFirst
+                "
+                [userProject]="userProject"
+            >
             </app-projectinfo>
         </div>
     </div>
