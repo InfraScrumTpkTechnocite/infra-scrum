@@ -22,7 +22,7 @@ import { UsersprojectsService } from './usersprojects.service';
 @ApiTags('users-projects')
 @Controller('usersprojects')
 export class UsersprojectsController {
-  constructor(private usersProjectsService: UsersprojectsService) {}
+  constructor(private usersProjectsService: UsersprojectsService) { }
 
   @Post()
   async create(@Body() userproject: UserProject): Promise<UserProject> {
@@ -52,10 +52,10 @@ export class UsersprojectsController {
     return await this.usersProjectsService.findOne(id);
   }
 
-  @Get('/userprojects/:userid')
-  async findUserProjects(
+  @Get('/currentuserprojects/:userid')
+  async findCurrentUserProjects(
     @Param('userid') userid: string,
   ): Promise<UserProject[]> {
-    return await this.usersProjectsService.findUserProjects(userid);
+    return await this.usersProjectsService.findCurrentUserProjects(userid);
   }
 }

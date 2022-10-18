@@ -3,21 +3,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { User } from './user.entity';
 import { hash } from 'bcrypt';
-import { MailService } from '../mail/mail.service';
+//import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private mailService: MailService
-  ) {}
+    //private mailService: MailService
+  ) { }
 
   async create(user: User): Promise<User> {
     user.password = await hash(user.password, 10);
-    const token = Math.floor(1000 + Math.random() * 9000).toString();
-    user.token = token;
-    await this.mailService.sendUserConfirmation(user, token);
+    // const token = Math.floor(1000 + Math.random() * 9000).toString();
+    // user.token = token;
+    // await this.mailService.sendUserConfirmation(user, token);
     return await this.usersRepository.save(user);
   }
 
@@ -42,10 +42,20 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User> {
-    return await this.usersRepository.findOneBy({ id });
+    return await this.usersRepository.findOne({
+      where: {
+        id: id,
+      },
+      relations: {
+        role: true,
+      }
+    });
   }
 
   async findOneByUsername(username: string): Promise<User> {
-    return await this.usersRepository.findOneBy({ username: username });
+    return await this.usersRepository.findOne({
+      relations: ['role'],
+      where: { username },
+    });
   }
 }

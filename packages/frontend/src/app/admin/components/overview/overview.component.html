@@ -1,149 +1,50 @@
 <div class="h-full flex items-center">
     <div
-        class="w-4/5 xl:2/3 2xl:w-1/2 m-auto bg-tpkwhite mt-32 sm:mt-40 md:mt-44 p-4 rounded-lg shadow-md shadow-primary"
+        class="w-full sm:w-4/5 xl:2/3 2xl:w-1/2 m-auto pt-8 bg-tpkwhite mt-20 sm:mt-40 md:mt-44 p-4 rounded-lg shadow-md shadow-primary"
     >
-        <h1
-            class="text-primary text-xl sm-text-2xl md:text-3xl lg:text-4xl text-center pt-4 pb-6 sm:pb-8 uppercase font-extrabold underline underline-offset-8"
+        <!-- <h1
+            class="text-primary text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center pt-4 pb-6 sm:pb-8 uppercase font-extrabold underline underline-offset-8"
         >
             Users administration
-        </h1>
+        </h1> -->
+
         <!-- LISTE USERS -->
+
         <!-- Quand liste users disponible, boucler dans les users et utiliser ce modèle -->
         <ul>
-            <li class="flex justify-between items-center mb-4 last:mb-6">
-                <!-- Pastille initiales ou photo profil -->
-                <div
-                    class="profileBubble bg-primary rounded-full px-2 md:px-3 py-2 md:py-2.5 ml-4"
+            <li class="justify-between items-center mb-4 last:mb-6"
+                *ngFor="let user of userList"
+            >
+                <app-user-overview 
+                    [user]="user"
+                    [roleList]="roleList"
+                    class="w-full"
                 >
-                    <p
-                        class="text-white font-semibold text-xs sm:text-base md:text-lg"
-                    >
-                        JD
-                    </p>
-                </div>
-                <!-- Prénom + nom utilisateur -->
-                <p class="w-1/4 md:text-lg lg:text-xl font-bold text-primary">
-                    John Doe
-                </p>
-                <!-- Rôle user -->
-                <p class="w-1/6 md:text-lg lg:text-xl text-secondary">Admin</p>
-                <!-- Bouton edit user - lien vers profil user  -->
-                <button
-                    class="text-secondary mr-4 hover:text-blue-900 transition ease-in-out delay-150"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-5 h-5 md:w-6 md:h-6 lg:w-9 lg:h-9"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                        />
-                    </svg>
-                </button>
-            </li>
-            <li class="flex justify-between items-center mb-4 last:mb-6">
-                <!-- Pastille initiales ou photo profil -->
-                <div
-                    class="profileBubble bg-primary rounded-full px-2 md:px-3 py-2 md:py-2.5 ml-4"
-                >
-                    <p
-                        class="text-white font-semibold text-xs sm:text-base md:text-lg"
-                    >
-                        AT
-                    </p>
-                </div>
-                <!-- Prénom + nom utilisateur -->
-                <p class="w-1/4 md:text-lg lg:text-xl font-bold text-primary">
-                    Andy Tierce
-                </p>
-                <!-- Rôle user -->
-                <p class="w-1/6 md:text-lg lg:text-xl text-secondary">
-                    Employee
-                </p>
-                <!-- Bouton edit user - lien vers profil user  -->
-                <button
-                    class="text-secondary mr-4 hover:text-blue-900 transition ease-in-out delay-150"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-5 h-5 md:w-6 md:h-6 lg:w-9 lg:h-9"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                        />
-                    </svg>
-                </button>
-            </li>
-            <li class="flex justify-between items-center mb-4 last:mb-6">
-                <!-- Pastille initiales ou photo profil -->
-                <div
-                    class="profileBubble bg-primary rounded-full px-2 md:px-3 py-2 md:py-2.5 ml-4"
-                >
-                    <p
-                        class="text-white font-semibold text-xs sm:text-base md:text-lg"
-                    >
-                        OS
-                    </p>
-                </div>
-                <!-- Prénom + nom utilisateur -->
-                <p class="w-1/4 md:text-lg lg:text-xl font-bold text-primary">
-                    Olivia Simo Rico
-                </p>
-                <!-- Rôle user -->
-                <p class="w-1/6 md:text-lg lg:text-xl text-secondary">Intern</p>
-                <!-- Bouton edit user - lien vers profil user  -->
-                <button
-                    class="text-secondary mr-4 hover:text-blue-900 transition ease-in-out delay-150"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-5 h-5 md:w-6 md:h-6 lg:w-9 lg:h-9"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                        />
-                    </svg>
-                </button>
+                </app-user-overview>
             </li>
         </ul>
         <div class="flex justify-center mt-8">
-            <!-- BOUTON CREATE NEW USER -->
-            <button
-                class="ml-4 mb-6 font-extrabold text-secondary rounded-full border-2 border-secondary p-1 sm:p-1.5 md:p-2 hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-sm"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-5 h-5 md:w-6 md:h-6"
+            <!-- BOUTON ADD NEW USER -->
+            <a routerLink="/create-user">
+                <button
+                    class="mb-6 font-extrabold text-secondary rounded-full border-2 border-secondary p-1 sm:p-1.5 md:p-2 hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-sm"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                    />
-                </svg>
-            </button>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-5 h-5 md:w-6 md:h-6"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                        />
+                    </svg>
+                </button>
+            </a>
         </div>
     </div>
 </div>

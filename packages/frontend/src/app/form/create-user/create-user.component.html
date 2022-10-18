@@ -21,7 +21,6 @@
                         type="text"
                         placeholder="Username"
                         class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                        id="username"
                         [(ngModel)]="user.username"
                         name="username"
                         #username="ngModel"
@@ -51,7 +50,6 @@
                         type="email"
                         placeholder="Email"
                         class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                        id="email"
                         [(ngModel)]="user.email"
                         name="user.email"
                         #email="ngModel"
@@ -105,7 +103,7 @@
                 </div>
 
                 <p
-                    *ngIf="!password.errors?.['required'] && password.dirty && confirmPassword.dirty && confirmPassword.errors?.['matching']"
+                    *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
                     class="text-tpkerror text-sm italic"
                 >
                     Passwords doesn't match
@@ -120,7 +118,7 @@
 
                 <div *ngIf="showErrorMessage">
                     <h1 class="text-tpkerror text-sm text-center">
-                        Username or email already exists.
+                        {{errorMessage}}
                     </h1>
                  </div>
 

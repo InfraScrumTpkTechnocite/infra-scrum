@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsDateString, IsUrl } from 'class-validator';
+import { IsDateString, IsOptional, IsUrl } from 'class-validator';
 import {
   Column,
   Entity,
@@ -30,6 +30,7 @@ export class Project {
     example: '00000000-0000-0000-0000-000000000000',
     description: 'Sprint : reference to a project',
   })
+  @IsOptional()
   @ManyToOne(() => Project, (project) => project.id, {
     nullable: true,
   })
@@ -41,17 +42,19 @@ export class Project {
   })
   @Column({ nullable: true })
   @IsUrl()
+  @IsOptional()
   githuburl: string;
 
   @ApiProperty({ example: 'a token...', description: 'Github token' })
   @Column({ nullable: true })
+  @IsOptional()
   githubtoken: string;
 
   @ApiProperty({
     example: 'a date',
     description: 'Foreseen start date of a project',
   })
-  @Column({ nullable: true, type: 'timestamptz' })
+  @Column({ nullable: false, type: 'timestamptz' })
   @IsDateString()
   startdate: string;
 
@@ -59,11 +62,13 @@ export class Project {
     example: 'a date',
     description: 'Foreseen start date of a project',
   })
-  @Column({ nullable: true, type: 'timestamptz' })
+  @Column({ nullable: true, type: 'timestamptz', default: null })
   @IsDateString()
+  @IsOptional()
   enddate: string;
 
   @ApiProperty({ example: 'url? blob?', description: 'User picture' })
   @Column({ nullable: true })
+  @IsOptional()
   picture: string;
 }

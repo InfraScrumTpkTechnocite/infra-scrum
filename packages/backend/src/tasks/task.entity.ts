@@ -9,6 +9,7 @@ import {
   Unique,
 } from 'typeorm';
 import { KanbanStatus } from '../kanbanstatus/kanbanstatus.entity';
+import { IsHexColor, IsOptional } from 'class-validator';
 
 @Entity()
 @Unique(['task', 'kanbanstatus']) //no duplicate task in a kanban !
@@ -29,11 +30,13 @@ export class Task {
   kanbanstatus: KanbanStatus;
 
   @ApiProperty({ example: 'task id', description: 'Task id (subtask)' })
+  @IsOptional()
   @ManyToOne(() => Task, (task) => task.id, { nullable: true })
   task: Task;
 
   @ApiProperty({ example: 'task 1 is...', description: 'Task description' })
   @Column({ nullable: true })
+  @IsOptional()
   description: string;
 
   @ApiProperty({
@@ -48,7 +51,8 @@ export class Task {
   estimatedtime: number;
 
   @ApiProperty({ example: 'File', description: 'File URL ?' })
-  @Column({ nullable: true, default: 'No description' })
+  @Column({ nullable: true, default: 'no file' })
+  @IsOptional()
   file: string;
 
   @ApiProperty({ example: 'true/false', description: 'Is task done ?' })
@@ -58,4 +62,9 @@ export class Task {
   @ApiProperty({ example: 'a uuid...', description: 'Task type id' })
   @ManyToOne(() => TaskType, (tasktype) => tasktype.id, { nullable: false })
   tasktype: TaskType;
+
+  @ApiProperty({ example: 'blue, #1AB2C3', description: 'Kanban color' })
+  @Column({ nullable: false, default: '#1F71A5' })
+  @IsHexColor()
+  color: string;
 }

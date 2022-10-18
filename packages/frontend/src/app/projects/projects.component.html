@@ -1,108 +1,45 @@
 <div class="w-full lg:w-11/12 m-auto mt-20 sm:mt-28 md:mt-32 p-4">
     <div class="bg-tpkwhite bg-opacity-40 p-4 lg:p-6 rounded-xl">
-        <h1
+        <!-- <h1
             class="text-primary text-2xl sm-text-2xl md:text-3xl lg:text-4xl text-center pt-4 pb-6 sm:pb-8 uppercase font-extrabold underline underline-offset-8">
             My projects
-        </h1>
+        </h1> -->
+
         <!-- BOUTON CREATE NEW PROJECT (uniquement visible et utilisable par superadmin et admin) -->
         <div class="flex items-center justify-center mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor"
-                class="w-16 sm:w-24 h-16 sm:h-24 text-primary rounded-full hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-md hover:cursor-pointer">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <button (click)="addProject()">
+                <svg 
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-16 sm:w-24 h-16 sm:h-24 text-primary rounded-full hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-md hover:cursor-pointer"
+                >
+                    <path
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" 
+                    />
+                </svg>
+            </button>
         </div>
         <!-- CONTAINER PROJETS-->
         <!-- [venir boucler sur les projets assignés au user ou créé par lui (admin dans ce cas)] -->
 
-        <div class="mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div
+            class="mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+        >
             <!-- PROJET MODEL- -->
-            <div *ngFor="let userProfect of userProjects ; index as i; first as isFirst"
-                class="flex flex-col bg-primary h-auto rounded-md shadow-md shadow-secondary hover:shadow-lg hover:shadow-primary transition ease-in-out delay-125 hover:cursor-pointer">
-                <!-- DIV PROJET NON EDITé -->
-
-                <div class="flex flex-col" *ngIf="!isEditNewProject">
-                    <!-- bouton icône edit -->
-                    <div class="text-right">
-                        <button (click)="editProjectModel()" class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6 md:w-8 md:h-8">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="h-2/3">
-                        <!-- titre projet-->
-                        <div
-                            class="flex items-center justify-center border-4 border-secondary text-secondary text-xl md:text-2xl font-extrabold bg-tpkwhite rounded-md max-w-1 mx-4 p-4 lg:p-8 h-1/4 xl:h-1/3">
-                            <h2 class="text-center">{{ userProfect.project.name }}</h2>
-                        </div>
-                        <!-- image + delivery date -->
-                        <div
-                            class="flex items-center justify-around border-4 border-secondary bg-tpkwhite rounded-md mx-4 mt-1 sm:mt-2 p-8 sm:p-5 h-5/6">
-                            <!-- image -->
-                            <div class="w-16 h-16 lg:w-28 lg:h-28 rounded-sm flex items-center">
-                                <img src="../../assets/img/logos/tpk-logo.png" alt="projet" />
-                            </div>
-                            <!-- delivery date -->
-                            <div
-                                class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 flex flex-col text-secondary items-center justify-center">
-                                <h3 class="font-semibold text-xl lg:text-2xl">
-                                    Delivery date:
-                                </h3>
-                                <p class="text-xl">{{ userProfect.project.startdate | date }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DIV EDITION PROJET -->
-
-                <form class="flex flex-col" *ngIf="isEditNewProject">
-                    <!-- bouton icône edit -->
-                    <div class="text-right">
-                        <button (click)="editProjectModel()" class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6 md:w-8 md:h-8 text-tpkvalidate font-extrabold">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="h-2/3">
-                        <!-- titre projet-->
-                        <div
-                            class="flex items-center justify-center border-4 border-secondary text-secondary text-xl md:text-2xl font-extrabold bg-tpkwhite rounded-md max-w-1 mx-4 p-4 lg:p-8 h-1/4 xl:h-1/3">
-                            <input
-                                class="text-center border-secondary border-2 focus-visible:outline-none focus-visible:ring-secondary focus-visible:ring-2"
-                                type="text" value="" />
-                        </div>
-                        <!-- image + delivery date -->
-                        <div
-                            class="flex flex-col items-center justify-around border-4 border-secondary bg-tpkwhite rounded-md mx-4 mt-1 sm:mt-2 p-8 sm:p-5 h-5/6">
-                            <!-- image -->
-                            <div class="w-16 h-16 lg:w-28 lg:h-28 rounded-sm flex flex-col items-center justify-left">
-                                <label for="projectImage" class="text-secondary text-md font-bold">Add a
-                                    picture:</label>
-                                <input #projectImage type="file" />
-                            </div>
-                            <!-- delivery date -->
-                            <div
-                                class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 flex flex-col text-secondary items-center justify-center">
-                                <h3 class="text-md font-bold">
-                                    Delivery date:
-                                </h3>
-                                <input type="date"
-                                    class="border-secondary border-2 focus-visible:outline-none focus-visible:ring-secondary focus-visible:ring-2"
-                                    value="{{ dateToday | date }}" />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <app-projectinfo
+                *ngFor="
+                    let userProject of userProjects;
+                    index as i;
+                    first as isFirst
+                "
+                [userProject]="userProject"
+            >
+            </app-projectinfo>
         </div>
     </div>
 </div>
