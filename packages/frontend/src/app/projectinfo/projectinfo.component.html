@@ -7,11 +7,11 @@
     <div class="flex flex-col" *ngIf="!isEditNewProject">
         <!-- bouton icône edit -->
         <div class="text-right">
-            <button [disabled]="!userProject.isprojectadmin && userProject.user.role.name != 'superadmin'"
+            <button [disabled]="!userProject.isprojectadmin && user.role.name != 'superadmin'"
                 (click)="openEditionProject()"
                 class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
             >
-                <div *ngIf="userProject.isprojectadmin || userProject.user.role.name == 'superadmin';then mayedit else maynotedit"></div>
+                <div *ngIf="userProject.isprojectadmin || user.role.name == 'superadmin';then mayedit else maynotedit"></div>
                 <ng-template #mayedit>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg"

@@ -37,7 +37,7 @@ export class UsersprojectsService {
   async findCurrentUserProjects(userid: string): Promise<UserProject[]> {
     return await this.usersProjectsRepository.find({
       select: ['project'],
-      relations: { project: true, user: { role: true } },
+      relations: { project: true },
       where: { user: Equal(userid), project: { enddate: IsNull() } },
       order: {
         project: { startdate: 'ASC' },

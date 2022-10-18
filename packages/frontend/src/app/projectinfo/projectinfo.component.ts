@@ -16,6 +16,8 @@ import { UserprojectService } from '../services/userproject.service';
 })
 export class ProjectinfoComponent {
     @Input() userProject!: UserProject;
+    @Input() user: User = new User();
+
     isEditNewProject: boolean = false;
     // selectedPictureFile?: File;
     showErrorMessage: boolean = false;
@@ -31,7 +33,10 @@ export class ProjectinfoComponent {
         private router: Router
     ) {}
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        let user: any = localStorage.getItem('user');
+        this.user = JSON.parse(user);
+    }
 
     openEditionProject() {
         this.isEditNewProject = true;
