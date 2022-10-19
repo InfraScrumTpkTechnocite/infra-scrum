@@ -7,7 +7,7 @@
 
         <!-- BOUTON CREATE NEW PROJECT (uniquement visible et utilisable par superadmin et admin) -->
         <div class="flex items-center justify-center mb-6">
-            <button (click)="addProject()">
+            <button (click)="addProject()" *ngIf="user.role.name == 'superadmin' || user.role.name == 'admin'">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

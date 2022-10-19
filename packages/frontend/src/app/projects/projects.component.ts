@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Project } from '../models/project.model';
@@ -19,6 +19,7 @@ export class ProjectsComponent implements OnInit {
 
     dateToday: number = Date.now();
     userProjects: any;
+    @Input() user: User = new User();
 
     selectedPictureFile: File | null = null;
     showErrorMessage: boolean = false;
@@ -48,7 +49,7 @@ export class ProjectsComponent implements OnInit {
                 console.log(`${err}`);
             },
             complete: () => {
-                console.log(`get user's projects completed.`);
+                console.log(`projects.component - ngOnInit - get user's projects completed.`);
             }
         };
         //...et attention : le userid n'est certainement pas le bon !
@@ -57,6 +58,7 @@ export class ProjectsComponent implements OnInit {
         const userObserver = {
             next: (response: User) => {
                 localStorage.setItem('user', JSON.stringify(response));
+                this.user = response;
                 //pour lire le localStorage :
                 //var user = JSON.parse(localStorage.getItem('user'));
                 if (response.id)
@@ -68,7 +70,7 @@ export class ProjectsComponent implements OnInit {
                 console.log(`Error: ${err}`);
             },
             complete: () => {
-                console.log(`login.component.ts - get user completed.`);
+                console.log(`projects.component - ngOnInit - get user completed.`);
             }
         };
         //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);

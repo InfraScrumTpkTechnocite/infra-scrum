@@ -3,6 +3,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { HeaderTitleService } from '../services/header-title.service';
+import { UserService } from '../services/user.service';
+import { UserprojectService } from '../services/userproject.service';
 
 @Component({
     selector: 'app-header',
@@ -19,7 +21,9 @@ export class HeaderComponent implements OnInit {
     constructor(
         public authService: AuthService,
         private headerTitleService: HeaderTitleService,
-        private router: Router,private activatedRoute: ActivatedRoute
+        private router: Router,private activatedRoute: ActivatedRoute,
+        private userService: UserService,
+        private userProjectService: UserprojectService
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.mySubscription = this.router.events.subscribe((event) => {
@@ -42,6 +46,49 @@ export class HeaderComponent implements OnInit {
         this.headerTitleService.userProjects.subscribe((userProjects: any) => {
             this.userProjects = userProjects;
         });
+
+        //exemple pour récupérer les projets d'un user...
+        const userProjectsObserver = {
+            next: (value: any) => {
+                this.userProjects = value; //tous les user-projects (contenants toutes les infos du projet)
+                this.headerTitleService.setUserProjects(value);
+                var usertmp: any = localStorage.getItem('user');
+                var user: User = JSON.parse(usertmp);
+                if (user) this.headerTitleService.setUsername(user);
+            },
+            error: (err: Error) => {
+                console.log(`${err}`);
+            },
+            complete: () => {
+                console.log(`get user's projects completed.`);
+            }
+        };
+        //...et attention : le userid n'est certainement pas le bon !
+        //this.userProjectService.findUserProjects('32e5d252-51ea-48d6-aed3-a8cd4bf06e90').subscribe(userProjectsObserver);
+
+        const userObserver = {
+            next: (response: User) => {
+                localStorage.setItem('user', JSON.stringify(response));
+                //pour lire le localStorage :
+                //var user = JSON.parse(localStorage.getItem('user'));
+                if (response.id)
+                    this.userProjectService
+                        .findCurrentUserProjects(response.id)
+                        .subscribe(userProjectsObserver);
+            },
+            error: (err: Error) => {
+                console.log(`Error: ${err}`);
+            },
+            complete: () => {
+                console.log(`login.component.ts - get user completed.`);
+            }
+        };
+        //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
+        var username = localStorage.getItem('username');
+        if (username)
+            this.userService
+                .findUserByUsername(username)
+                .subscribe(userObserver);
     }
 
     loggedIn() {
