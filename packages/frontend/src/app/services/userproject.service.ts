@@ -41,16 +41,24 @@ export class UserprojectService {
     findCurrentUserProjects(userid: string): Observable<any> {
         return this.httpClient
             .get(
-                `/backend/usersprojects/currentuserprojects/${userid}`,
+                `/backend/usersprojects/currentuserprojects/user/${userid}`,
                 this.httpOptions
             )
-            .pipe(
-                tap((response) => {
-                    console.log(
-                        `userproject.service.ts - findUserProjects - response = ${response}`
-                    );
-                }),
-                catchError((error) => this.handleError(error, null))
-            );
+            // .pipe(
+            //     tap((response) => {
+            //         console.log(
+            //             `userproject.service.ts - findUserProjects - response = ${response}`
+            //         );
+            //     }),
+            //     catchError((error) => this.handleError(error, null))
+            // );
+    }
+
+    findCurrentProjectUsers(projectid: string): Observable<any> {
+        return this.httpClient
+            .get(
+                `/backend/usersprojects/currentuserprojects/project/${projectid}`,
+                this.httpOptions
+            )
     }
 }
