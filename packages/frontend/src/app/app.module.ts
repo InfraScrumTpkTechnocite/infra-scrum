@@ -21,6 +21,8 @@ import { TaskComponent } from './task/task.component';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { UserProfileComponent } from './form/user-profile/user-profile.component';
+
 
 
 // AoT requires an exported function for factories
@@ -41,7 +43,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         OutsideClickDirective,
         ProjectComponent,
         KanbanStatusComponent,
-        TaskComponent
+        TaskComponent,
+        UserProfileComponent
     ],
     imports: [
         BrowserModule,

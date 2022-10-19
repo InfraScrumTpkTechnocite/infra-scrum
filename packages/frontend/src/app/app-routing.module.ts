@@ -13,9 +13,11 @@ import { AuthGuardService } from './services/auth-guard.service';
 
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
 import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
+import { UserProfileComponent } from './form/user-profile/user-profile.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
+    {path: 'user-profile', component: UserProfileComponent},
     {
         path: 'admin',
         canActivate: [AuthGuardService],

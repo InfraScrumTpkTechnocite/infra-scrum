@@ -1,6 +1,10 @@
 import { Role } from "./role.model";
 
 export class User {
+  name: any;
+
+  static Form() {}
+
     id? : string;
     username: string;
     password: string;
@@ -8,17 +12,17 @@ export class User {
     firstname?: string;
     lastname?: string;
     picture?: string;
-    role: string;
+    role: Role;
 
     constructor(){
 
         this.username = '';
-        this.password = '';    
+        this.password = '';
         this.email = '';
         this.firstname= '';
         this.lastname= '';
         this.picture= '';
-        this.role ='';
+        this.role = new Role();
     }
 
 }
