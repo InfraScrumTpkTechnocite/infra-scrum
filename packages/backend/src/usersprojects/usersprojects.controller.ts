@@ -52,10 +52,17 @@ export class UsersprojectsController {
     return await this.usersProjectsService.findOne(id);
   }
 
-  @Get('/currentuserprojects/:userid')
+  @Get('/currentuserprojects/user/:userid')
   async findCurrentUserProjects(
     @Param('userid') userid: string,
   ): Promise<UserProject[]> {
     return await this.usersProjectsService.findCurrentUserProjects(userid);
+  }
+
+  @Get('/currentuserprojects/project/:projectid')
+  async findCurrentProjectUsers(
+    @Param('projectid') projectid: string,
+  ): Promise<UserProject[]> {
+    return await this.usersProjectsService.findCurrentProjectUsers(projectid);
   }
 }
