@@ -36,4 +36,8 @@ export class KanbanstatusService {
       catchError((error) => this.handleError(error,null))
     );
   }
+
+  findAllOfProject(projectid: string): Observable<Kanbanstatus[]> {
+    return this.httpClient.get<any>("/backend/kanbanstatus/of/project/" + projectid, this.httpOptions);
+  }
 }

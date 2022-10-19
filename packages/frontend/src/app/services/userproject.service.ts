@@ -41,7 +41,7 @@ export class UserprojectService {
     findCurrentUserProjects(userid: string): Observable<any> {
         return this.httpClient
             .get(
-                `/backend/usersprojects/currentuserprojects/user/${userid}`,
+                `/backend/usersprojects/currentuserprojects/${userid}`,
                 this.httpOptions
             )
             // .pipe(
@@ -57,7 +57,7 @@ export class UserprojectService {
     findCurrentProjectUsers(projectid: string): Observable<any> {
         return this.httpClient
             .get(
-                `/backend/usersprojects/currentuserprojects/project/${projectid}`,
+                `/backend/usersprojects/currentprojectusers/${projectid}`,
                 this.httpOptions
             )
     }
