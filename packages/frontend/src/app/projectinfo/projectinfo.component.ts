@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Project } from '../models/project.model';
 import { User } from '../models/user.model';
@@ -15,6 +16,8 @@ import { UserprojectService } from '../services/userproject.service';
 })
 export class ProjectinfoComponent {
     @Input() userProject!: UserProject;
+    @Input() user: User = new User();
+
     isEditNewProject: boolean = false;
     // selectedPictureFile?: File;
     showErrorMessage: boolean = false;
@@ -26,48 +29,13 @@ export class ProjectinfoComponent {
         private userProjectService: UserprojectService,
         private userService: UserService,
         private projectService: ProjectService,
-        private toastService: HotToastService
+        private toastService: HotToastService,
+        private router: Router
     ) {}
 
-    ngOnInit(): void {
-        const userProjectsObserver = {
-            next: (value: any) => {
-                this.userProjects = value; //tous les user-projects (contenants toutes les infos du projet)
-                this.headerTitleService.setUserProjects(value);
-                var usertmp: any = localStorage.getItem('user');
-                var user: User = JSON.parse(usertmp);
-                if (user) this.headerTitleService.setUsername(user);
-            },
-            error: (err: Error) => {
-                console.log(`${err}`);
-            },
-            complete: () => {
-                console.log(`get user's projects completed.`);
-            }
-        };
-
-        const userObserver = {
-            next: (response: User) => {
-                localStorage.setItem('user', JSON.stringify(response));
-
-                if (response.id)
-                    this.userProjectService
-                        .findCurrentUserProjects(response.id)
-                        .subscribe(userProjectsObserver);
-            },
-            error: (err: Error) => {
-                console.log(`Error: ${err}`);
-            },
-            complete: () => {
-                console.log(`login.component.ts - get user completed.`);
-            }
-        };
-
-        var username = localStorage.getItem('username');
-        if (username)
-            this.userService
-                .findUserByUsername(username)
-                .subscribe(userObserver);
+    ngOnInit(): void { 
+        let user: any = localStorage.getItem('user');
+        this.user = JSON.parse(user);
     }
 
     openEditionProject() {
@@ -82,6 +50,7 @@ export class ProjectinfoComponent {
         const projectObserver = {
             next: (project: Project) => {
                 console.log('project edition');
+                this.router.navigate([this.router.url]);
             },
             error: (err: any) => {
                 this.showErrorMessage = true;

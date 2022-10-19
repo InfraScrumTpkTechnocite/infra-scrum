@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
     title = 'frontend';
 
+
     //   user!: { firstName: string; lastName: string; };
     // welcome!: string;
     // usernameLabel!: string;
@@ -18,6 +19,7 @@ export class AppComponent {
         translate.addLangs(['en', 'klingon']);
         translate.setDefaultLang('en');
         translate.use('en');
+
     }
 
     ngOnInit() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Project } from '../models/project.model';
 import { User } from '../models/user.model';
@@ -21,14 +22,15 @@ export class ProjectsComponent implements OnInit {
 
     selectedPictureFile: File | null = null;
     showErrorMessage: boolean = false;
-    errorMessage:string = '';
+    errorMessage: string = '';
 
     constructor(
         private headerTitleService: HeaderTitleService,
         private userProjectService: UserprojectService,
         private userService: UserService,
         private projectService: ProjectService,
-        private toastService: HotToastService) { }
+        private toastService: HotToastService,
+        private router: Router,) { }
 
     ngOnInit(): void {
         this.headerTitleService.setTitle('My projects');
@@ -76,15 +78,15 @@ export class ProjectsComponent implements OnInit {
                 .findUserByUsername(username)
                 .subscribe(userObserver);
     }
-    
+
     addProject() {
         const newProject = new Project();
-        
+
         const projectObserver = {
             next: (project: Project) => {
                 var userProject = new UserProject()
                 userProject.project = project;
-                userProject.user = JSON.parse( localStorage.getItem('user') || "")?.id;
+                userProject.user = JSON.parse(localStorage.getItem('user') || "")?.id;
                 userProject.isprojectadmin = true;
                 this.userProjectService.create(userProject).subscribe(userProjectObserver);
             },
@@ -105,6 +107,7 @@ export class ProjectsComponent implements OnInit {
                     (userProjects: UserProject[]) => {
                         this.userProjects = userProjects;
                     })
+                this.router.navigate([this.router.url]);
             },
             error: (err: any) => {
                 this.showErrorMessage = true;
