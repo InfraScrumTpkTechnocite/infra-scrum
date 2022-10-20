@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Equal, Repository, UpdateResult } from 'typeorm';
 import { Task } from './task.entity';
 
 @Injectable()
@@ -35,5 +35,13 @@ export class TasksService {
   async findOneByName(name: string): Promise<Task> {
     //console.log("ProjectsService - findOneByProjectname");
     return await this.tasksRepository.findOneBy({ name: name });
+  }
+
+  async findAllOfKanbanstatusid(kanbanstatusid: string): Promise<Task[]>{
+    return await this.tasksRepository.find({
+      select: ['kanbanstatus'],
+      relations: { kanbanstatus: true, tasktype: true },
+      where: { kanbanstatus: Equal(kanbanstatusid) },
+    });
   }
 }

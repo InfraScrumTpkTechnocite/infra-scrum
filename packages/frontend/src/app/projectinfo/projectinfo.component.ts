@@ -4,10 +4,7 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { Project } from '../models/project.model';
 import { User } from '../models/user.model';
 import { UserProject } from '../models/userproject.model';
-import { HeaderTitleService } from '../services/header-title.service';
 import { ProjectService } from '../services/project.service';
-import { UserService } from '../services/user.service';
-import { UserprojectService } from '../services/userproject.service';
 
 @Component({
     selector: 'app-projectinfo',
@@ -25,9 +22,6 @@ export class ProjectinfoComponent {
     userProjects: any;
 
     constructor(
-        private headerTitleService: HeaderTitleService,
-        private userProjectService: UserprojectService,
-        private userService: UserService,
         private projectService: ProjectService,
         private toastService: HotToastService,
         private router: Router
@@ -47,9 +41,9 @@ export class ProjectinfoComponent {
             `project name = ${this.userProject.project.name}, projet id = ${this.userProject.project.id}`
         );
 
-        const projectObserver = {
+       const projectObserver = {
             next: (project: Project) => {
-                console.log('project edition');
+                console.log(`projectinfo.component - updateProjectModel - projectid = ${project.id}`);
                 this.router.navigate([this.router.url]);
             },
             error: (err: any) => {
