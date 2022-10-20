@@ -37,4 +37,7 @@ export class TaskassignmentService {
     );
   }
 
+  findAllUsersOfTask(taskid: string): Observable<TaskAssignment[]> {
+    return this.httpClient.get<any>("/backend/tasksassignments/taskusers/" + taskid, this.httpOptions);
+  }
 }
