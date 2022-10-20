@@ -30,7 +30,7 @@ export class TimeentriesService {
     return await this.timeEntriesRepository.findOneBy({ id });
   }
 
-  async totalWorkedTimeOfTask(taskid: string): Promise<number> {
+  async totalWorkedTimeOfTask(taskid: string): Promise<any> {
     return await this.timeEntriesRepository
       .createQueryBuilder('timeentry')
       .select('SUM(workedtime)', 'total_minutes')
@@ -45,11 +45,5 @@ export class TimeentriesService {
       .addGroupBy('kanbanstatus.name')
       .addGroupBy('project.name')
       .getRawOne();
-
-    // .findOne({
-    //   select: ['workedtime'],
-    //   relations: { task: true },
-    //   where: { task: { id: Equal(taskid) } },
-    // });
   }
 }
