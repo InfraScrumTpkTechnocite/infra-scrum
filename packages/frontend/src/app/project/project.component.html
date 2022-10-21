@@ -110,17 +110,22 @@
             </div>
             <div class="flex justify-end pr-4 w-1/3">
                 <!-- Users assignés au project  -->
-                <div class="flex items-center">
+                <div class="flex items-center" *ngFor="let user of userList">
                     <div
                         class="userChipSmall w-9 h-9 md:w-10 md:h-10 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
                     >
                         <!-- condition si photo, sinon span avec premiere lettre username -->
                         <img
+                            *ngIf="user.picture"
                             class="rounded-full"
-                            src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                            [src]="user.picture"
                             alt="profile picture"
                         />
-                        <!-- <span class="text-2xl uppercase font-bold">A</span> -->
+                        <span 
+                            *ngIf="!user.picture"
+                            class="text-2xl uppercase font-bold">
+                            {{ user.username | initialsName }}
+                        </span>
                     </div>
                     <div
                         class="userChipSmall w-9 h-9 md:w-10 md:h-10 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"

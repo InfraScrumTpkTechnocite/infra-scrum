@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { Project } from '../models/project.model';
 import { HotToastService } from '@ngneat/hot-toast';
+import { User } from '../models/user.model';
+import { UserprojectService } from '../services/userproject.service';
 
 @Component({
     selector: 'app-project',
@@ -18,32 +20,35 @@ export class ProjectComponent implements OnInit {
 
     project!: Project;
     sprintList!: Project[];
-
     display! : Project;
 
     kanbanStatus!: Kanbanstatus;
     kanbanList!: Kanbanstatus[];
+
+    userList!: User[];
 
     dateToday: string = "";
     constructor(
         private route : ActivatedRoute,
         private projectService : ProjectService,
         private kanbanstatusService : KanbanstatusService,
-        private toastService: HotToastService
+        private toastService: HotToastService,
+        private userProjectService: UserprojectService
     ) {}
 
     ngOnInit(): void {
         this.dateToday = new Date(new Date().setUTCHours(0,0,0,0)).toISOString();
 
         this.route.paramMap.subscribe(params => {
-            const id = params.get('id');
+            const id = params.get('projectid');
             if(id){
+                    
                 this.projectService.findOne(id).subscribe(
                     (project : Project) => {
                         this.project = project;
                         this.display = project;
                     }
-                )
+                );
                 this.projectService.findSprints(id).subscribe(
                     (sprintList : Project[]) => {
                         this.sprintList =  sprintList.map( sprint => {
@@ -52,9 +57,11 @@ export class ProjectComponent implements OnInit {
                         })
                     }
                 )
-                this.kanbanstatusService.getKanbansfromProjectId(id).subscribe(
-                    ( kanbanList : Kanbanstatus[] ) => this.kanbanList = kanbanList
-            );}
+                this.kanbanstatusService.findAllOfProject(id).subscribe(
+                    ( kanbanList : Kanbanstatus[] ) => this.kanbanList = kanbanList );
+                this.userProjectService.findCurrentProjectUsers(id).subscribe(
+                    ( userList : User[] ) => this.userList = userList );
+            }
         });
     }
 

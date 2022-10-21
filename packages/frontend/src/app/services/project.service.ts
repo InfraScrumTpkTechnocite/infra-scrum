@@ -52,13 +52,12 @@ export class ProjectService {
             // );
     }
 
-    findOne(id: string) {
+    findOne(id: string): Observable<Project> {
         return this.httpClient.get<any>("/backend/projects/" + id, this.httpOptions);
     }
     
-    findSprints(id: string){
+    findSprints(id: string): Observable<Project[]>{
         return this.httpClient.get<any>(`/backend/projects/${id}/sprints`, this.httpOptions);
     }
-        
 }
 
