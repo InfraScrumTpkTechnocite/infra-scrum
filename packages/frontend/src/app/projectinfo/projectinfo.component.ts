@@ -36,15 +36,17 @@ export class ProjectinfoComponent {
         this.isEditNewProject = true;
     }
 
-    updateProjectModel() {
+    updateProjectModel(projectForm: any) {
+        console.log(`projectinfo.component - updateProjectModel - form = ${JSON.stringify(projectForm.value)}`);
+
         console.log(
             `project name = ${this.userProject.project.name}, projet id = ${this.userProject.project.id}`
         );
 
        const projectObserver = {
-            next: (project: Project) => {
-                console.log(`projectinfo.component - updateProjectModel - projectid = ${project.id}`);
-                this.router.navigate([this.router.url]);
+            next: (updateresponse: any) => {
+                console.log(`projectinfo.component - updateProjectModel - update row affected = ${updateresponse.affected}`);
+                this.router.navigate([this.router.url]);//reload header component !
             },
             error: (err: any) => {
                 this.showErrorMessage = true;

@@ -90,11 +90,11 @@
 
     <!-- DIV EDITION PROJET -->
 
-    <form #projectForm="ngForm" class="flex flex-col" *ngIf="isEditNewProject">
+    <form #projectForm="ngForm"  id="ngFormUserProject" class="flex flex-col" *ngIf="isEditNewProject" (ngSubmit)="updateProjectModel(projectForm)">
         <!-- bouton icône edit -->
         <div class="text-right">
             <button
-                (click)="updateProjectModel()"
+                form="ngFormUserProject"                
                 class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
             >
                 <svg
