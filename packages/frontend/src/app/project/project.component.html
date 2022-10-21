@@ -8,20 +8,25 @@
     >
         <div class="flex flex-col justify-start items-center text-center mt-2">
             <button
+                (click)="addSprint()"
                 class="bg-primary hover:bg-secondary border-2 border-white text-white text-center text-[10px] xl:text-sm p-2 rounded-xl h-20 xl:h-10"
                 title="Add a sprint"
             >
                 Add sprint
             </button>
             <!-- Boucler sur le nombre de sprints  -->
-            <div class="flex justify-center items-center mt-8">
+            <div class="flex justify-center items-center mt-8" *ngFor="let sprint of sprintList">
                 <button
+                    (click)="changeSprintDisplay(sprint.id)"
                     class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs lg:text-sm font-bold justify-center"
+                    [ngClass]="{
+                        'bg-secondary text-white': sprint.id == display.id
+                    }"
                 >
-                    Sprint 1
+                    {{sprint.name}}
                 </button>
                 <!-- Si sprint terminé, icône V coché  -->
-                <div class="">
+                <div *ngIf="sprint.enddate && sprint.enddate < dateToday" class="">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -38,15 +43,6 @@
                     </svg>
                 </div>
             </div>
-            <!-- 2eme sprint à effacer, juste pour exemple css  -->
-            <div class="flex justify-center items-center">
-                <button
-                    class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs lg:text-sm font-bold justify-center"
-                >
-                    Sprint 2
-                </button>
-            </div>
-            <!--  -->
         </div>
     </div>
 
@@ -157,11 +153,11 @@
         <div id="kanban" class="flex px-12 pb-12 pt-6">
             <!-- boucler sur les kanbanstatus du projet  -->
             <div class="flex">
-                <div class="flex flex-col">
-                    <kanban-status></kanban-status>
+                <div *ngFor="let kanbanstatus of kanbanList" class="flex flex-col">
+                    <app-kanban-status [kanbanstatus]="kanbanstatus" (kanbanDeleted)="onKanbanDeleted(kanbanstatus)"></app-kanban-status>
                     <!-- tâches du kanbanstatus  -->
                     <div class="tasksContainer w-64 mx-4 mt-2 flex flex-col">
-                        <task></task>
+                        <app-task></app-task>
                     </div>
                 </div>
 
@@ -169,6 +165,7 @@
 
                 <div class="w-36 mx-4 mt-6">
                     <button
+                        (click)="addnewKanbanStatus()"
                         class="bg-grey1 rounded-md hover:shadow-sm hover:shadow-secondary"
                     >
                         <div

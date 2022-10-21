@@ -7,7 +7,7 @@ export class Kanbanstatus {
   project: Project;
 
   constructor() {
-    this.name = '';
+    this.name = 'New Column';
     this.color = '#1F71A5';
     this.project = new Project();
   }
