@@ -28,18 +28,19 @@ export class KanbanstatusService {
         console.table(response);
     }
 
-    getKanbansfromProjectId(projectId: string){
-        return this.httpClient.get<any>("/backend/kanbanstatus/all/from/project/" + projectId, this.httpOptions)
-    }
-
+    
     create(kanbanstatus: Kanbanstatus): Observable<Kanbanstatus> {
         return this.httpClient.post<any>("/backend/kanbanstatus", JSON.stringify(kanbanstatus), this.httpOptions)
             .pipe(
                 tap((response) => this.log(response)),
                 catchError((error) => this.handleError(error, null))
-            );
+                );
+            }
+            
+    findAllOfProject(projectid: string): Observable<Kanbanstatus[]> {
+        return this.httpClient.get<any>("/backend/kanbanstatus/of/project/" + projectid, this.httpOptions);
     }
-
+    
     edit(kanbanstatus: Kanbanstatus): Observable<any> {
         return this.httpClient.put<any>("/backend/kanbanstatus/"+ kanbanstatus.id, JSON.stringify(kanbanstatus), this.httpOptions)
             .pipe(

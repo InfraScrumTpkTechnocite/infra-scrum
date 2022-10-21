@@ -100,9 +100,4 @@ export class ProjectsController {
   async findSprints(@Param('id') id: string): Promise<Project[]> {
     return this.projectService.findSprints(id);
   }
-
-  @Get('/:id/kanbanstatus/')
-  async findKanbanStatus(@Param('id') id: string): Promise<KanbanStatus[]> {
-    return this.kanbanStatusService.findAllByProject(id);
-  }
 }

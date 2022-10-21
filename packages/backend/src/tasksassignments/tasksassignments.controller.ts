@@ -51,4 +51,11 @@ export class TasksAssignmentsController {
   async findOne(@Param('id') id: string): Promise<TaskAssignment> {
     return await this.taskAssignmentService.findOne(id);
   }
+
+  @Get('taskusers/:taskid')
+  async findAllUsersOfTask(
+    @Param('taskid') taskid: string,
+  ): Promise<TaskAssignment[]> {
+    return await this.taskAssignmentService.findAllUsersOfTask(taskid);
+  }
 }

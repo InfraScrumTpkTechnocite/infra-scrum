@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Equal, Repository, UpdateResult } from 'typeorm';
 import { TaskAssignment } from './taskassignment.entity';
 
 @Injectable()
@@ -37,5 +37,15 @@ export class TasksAssignmentsService {
 
   async remove(id: string): Promise<void> {
     await this.tasksAssignmentsRepository.delete(id);
+  }
+
+  async findAllUsersOfTask(taskid: string): Promise<TaskAssignment[]> {
+    return await this.tasksAssignmentsRepository.find({
+      select: ['userproject'],
+      relations: {
+        userproject: { user: { role: true } },
+      },
+      where: { task: { id: Equal(taskid) } },
+    });
   }
 }

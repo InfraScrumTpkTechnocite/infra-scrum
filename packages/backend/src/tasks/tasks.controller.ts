@@ -56,4 +56,11 @@ export class TasksController {
   async findOneByName(@Param('name') name: string): Promise<Task> {
     return await this.taskService.findOneByName(name);
   }
+
+  @Get('of/kanbanstatus/:kanbanstatusid')
+  async findAllOfKanbanstatus(
+    @Param('kanbanstatusid') kanbanstatusid: string,
+  ): Promise<Task[]> {
+    return await this.taskService.findAllOfKanbanstatusid(kanbanstatusid);
+  }
 }

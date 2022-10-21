@@ -38,9 +38,12 @@ const routes: Routes = [
         }
     },
     {
-        path: 'project/:id',
+        path: 'project/:projectid',
         component: ProjectComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin', 'admin', 'employee', 'intern']
+        }
     },
 
     {

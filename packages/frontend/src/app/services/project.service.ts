@@ -15,9 +15,7 @@ export class ProjectService {
         })
     };
 
-    constructor(
-        private httpClient: HttpClient
-    ) { }
+    constructor(private httpClient: HttpClient) {}
 
     private handleError(error: Error, errorValue: any) {
         console.error(error);
@@ -27,12 +25,33 @@ export class ProjectService {
     private log(response: any) {
         console.table(response);
     }
-    
+
     create(project: Project): Observable<Project> {
-        
-        return this.httpClient.post<any>("/backend/projects", JSON.stringify(project), this.httpOptions);
+        return this.httpClient
+            .post<any>(
+                '/backend/projects',
+                JSON.stringify(project),
+                this.httpOptions
+            )
+            .pipe(
+                tap((response) => this.log(response)),
+                catchError((error) => this.handleError(error, null))
+            );
     }
-    
+
+    update(project: Project): Observable<Project> {
+        return this.httpClient
+            .put<Project>(
+                '/backend/projects/' + project.id,
+                JSON.stringify(project),
+                this.httpOptions
+            )
+            // .pipe(
+            //     tap((response) => this.log(response)),
+            //     catchError((error) => this.handleError(error, null))
+            // );
+    }
+
     findOne(id: string) {
         return this.httpClient.get<any>("/backend/projects/" + id, this.httpOptions);
     }
@@ -42,3 +61,4 @@ export class ProjectService {
     }
         
 }
+
