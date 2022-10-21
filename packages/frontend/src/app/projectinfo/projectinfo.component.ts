@@ -70,6 +70,11 @@ export class ProjectinfoComponent {
         this.isEditNewProject = false;
     }
 
+    userProjectClicked(event: any) {
+        console.log(`projectinfo.component - userProjectClicked - user project clicked - projectid = ${this.userProject.project.id}`);
+        this.router.navigate(['project/' + this.userProject.project.id]);
+    }
+
     // onFileSelected(event: any) {
     //     this.selectedPictureFile = event.target.files[0];
     //     console.log(
