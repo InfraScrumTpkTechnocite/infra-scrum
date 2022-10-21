@@ -10,17 +10,18 @@ import { ActivatedRoute } from '@angular/router';
 export class ProjectComponent implements OnInit {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
-    paramsObject: any;
+    
+    projectid: string = ''
 
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit(): void {
         this.route.queryParamMap
         .subscribe((params) => {
-            this.paramsObject = { ...params.keys, ...params };
-            console.log(this.paramsObject);
-        }
-        );
+            let paramsObject: any = { ...params.keys, ...params };
+            this.projectid = paramsObject.params.projectid;
+            console.log(`project.component - projectid = ${this.projectid}`);
+        });
     }
 
     openSprintBar() {
