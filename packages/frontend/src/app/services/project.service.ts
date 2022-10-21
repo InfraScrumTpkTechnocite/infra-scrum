@@ -45,9 +45,9 @@ export class ProjectService {
                 JSON.stringify(project),
                 this.httpOptions
             )
-            .pipe(
-                tap((response) => this.log(response)),
-                catchError((error) => this.handleError(error, null))
-            );
+            // .pipe(
+            //     tap((response) => this.log(response)),
+            //     catchError((error) => this.handleError(error, null))
+            // );
     }
 }
