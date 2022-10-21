@@ -114,6 +114,7 @@ export class HeaderComponent implements OnInit {
 
     onChange(event: any) {
         console.log(`header.component - onChange - ${event.target.value}`); //id du projet sélectionné
+        this.router.navigate(['project/' + event.target.value]);
     }
 
     ngOnDestroy() {

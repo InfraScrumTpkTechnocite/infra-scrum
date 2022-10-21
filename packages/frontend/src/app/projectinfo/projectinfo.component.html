@@ -4,7 +4,7 @@
 >
     <!-- DIV PROJET NON EDITé -->
 
-    <div class="flex flex-col" *ngIf="!isEditNewProject">
+    <div class="flex flex-col" *ngIf="!isEditNewProject" (click)="userProjectClicked($event)">
         <!-- bouton icône edit -->
         <div class="text-right">
             <button [disabled]="!userProject.isprojectadmin && user.role.name != 'superadmin'"
