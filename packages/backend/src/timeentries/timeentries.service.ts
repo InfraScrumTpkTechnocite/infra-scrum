@@ -30,20 +30,21 @@ export class TimeentriesService {
     return await this.timeEntriesRepository.findOneBy({ id });
   }
 
-  async totalWorkedTimeOfTask(taskid: string): Promise<any> {
+  async totalUsersWorkedTimeOnTask(taskid: string): Promise<any> {
     return await this.timeEntriesRepository
       .createQueryBuilder('timeentry')
       .select('SUM(workedtime)', 'total_minutes')
       .addSelect('task.name')
-      .addSelect('kanbanstatus.name')
-      .addSelect('project.name')
-      .innerJoin('timeentry.task', 'task')
-      .innerJoin('task.kanbanstatus', 'kanbanstatus')
-      .innerJoin('kanbanstatus.project', 'project')
-      .where('timeentry.task = :taskid', { taskid })
+      .addSelect('user.username')
+      .innerJoin('timeentry.taskassignment', 'taskassignment')
+      .innerJoin('taskassignment.task', 'task')
+      .innerJoin('taskassignment.userproject', 'userproject')
+      .innerJoin('userproject.user', 'user')
+      .where('task.id = :taskid', {
+        taskid,
+      })
       .groupBy('task.name')
-      .addGroupBy('kanbanstatus.name')
-      .addGroupBy('project.name')
-      .getRawOne();
+      .addGroupBy('user.username')
+      .getRawMany();
   }
 }

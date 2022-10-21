@@ -38,7 +38,7 @@ export class TimeentryService {
   }
 
   totalWorkedTimeOfTask(taskid: string): Observable<any> {
-    return this.httpClient.get<any>("/backend/timeentries/totalworkedtimeoftask/" + taskid, this.httpOptions);
+    return this.httpClient.get<any>("/backend/timeentries/totalusersworkedtimeontask/" + taskid, this.httpOptions);
   }
 
 }
