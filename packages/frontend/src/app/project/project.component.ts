@@ -6,8 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { Project } from '../models/project.model';
 import { HotToastService } from '@ngneat/hot-toast';
-import { User } from '../models/user.model';
 import { UserprojectService } from '../services/userproject.service';
+import { UserProject } from '../models/userproject.model';
 
 @Component({
     selector: 'app-project',
@@ -27,7 +27,7 @@ export class ProjectComponent implements OnInit {
     kanbanStatus!: Kanbanstatus;
     kanbanList!: Kanbanstatus[];
 
-    userList!: User[];
+    userProjects!: UserProject[];
 
     dateToday: string = "";
     constructor(
@@ -52,6 +52,7 @@ export class ProjectComponent implements OnInit {
                         this.display = project;
                     }
                 );
+                
                 this.projectService.findSprints(this.projectid).subscribe(
                     (sprintList : Project[]) => {
                         this.sprintList =  sprintList.map( sprint => {
@@ -60,10 +61,12 @@ export class ProjectComponent implements OnInit {
                         })
                     }
                 )
+
                 this.kanbanstatusService.findAllOfProject(this.projectid).subscribe(
                     ( kanbanList : Kanbanstatus[] ) => this.kanbanList = kanbanList );
+
                 this.userProjectService.findCurrentProjectUsers(this.projectid).subscribe(
-                    ( userList : User[] ) => this.userList = userList );
+                    ( userProjects : UserProject[] ) => this.userProjects = userProjects );
             }
         });
     }
