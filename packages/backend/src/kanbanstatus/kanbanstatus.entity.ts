@@ -6,12 +6,10 @@ import {
   Index,
   ManyToOne,
   PrimaryGeneratedColumn,
-  Unique,
 } from 'typeorm';
 import { IsHexColor } from 'class-validator';
 
 @Entity()
-@Unique(['name', 'project'])
 @Index(['name', 'project'])
 export class KanbanStatus {
   @ApiProperty()
