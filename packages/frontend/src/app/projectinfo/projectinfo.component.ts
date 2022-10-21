@@ -74,7 +74,7 @@ export class ProjectinfoComponent {
 
     userProjectClicked(event: any) {
         console.log(`projectinfo.component - userProjectClicked - user project clicked - projectid = ${this.userProject.project.id}`);
-        this.router.navigate(['project/' + this.userProject.project.id]);
+        this.router.navigate(['/project'], { queryParams: { projectid:  this.userProject.project.id } });
     }
 
     // onFileSelected(event: any) {
