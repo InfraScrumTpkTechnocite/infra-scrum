@@ -38,7 +38,7 @@ const routes: Routes = [
         }
     },
     {
-        path: 'project/:projectid',
+        path: 'project',
         component: ProjectComponent,
         canActivate: [AuthGuardService],
         data: {

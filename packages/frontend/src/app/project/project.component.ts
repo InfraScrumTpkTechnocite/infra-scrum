@@ -12,11 +12,13 @@ import { UserprojectService } from '../services/userproject.service';
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',
-    styleUrls: ['./project.component.css']
+    styleUrls: ['./project.component.css'],
 })
 export class ProjectComponent implements OnInit {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
+
+    projectid: string = ''
 
     project!: Project;
     sprintList!: Project[];
@@ -39,17 +41,18 @@ export class ProjectComponent implements OnInit {
     ngOnInit(): void {
         this.dateToday = new Date(new Date().setUTCHours(0,0,0,0)).toISOString();
 
-        this.route.paramMap.subscribe(params => {
-            const id = params.get('projectid');
-            if(id){
-                    
-                this.projectService.findOne(id).subscribe(
+        this.route.queryParamMap.subscribe(params => {
+            let paramsObject: any = { ...params.keys, ...params };
+            this.projectid = paramsObject.params.projectid;
+            console.log(`project.component - projectid = ${this.projectid}`);
+            if(this.projectid){
+                this.projectService.findOne(this.projectid).subscribe(
                     (project : Project) => {
                         this.project = project;
                         this.display = project;
                     }
                 );
-                this.projectService.findSprints(id).subscribe(
+                this.projectService.findSprints(this.projectid).subscribe(
                     (sprintList : Project[]) => {
                         this.sprintList =  sprintList.map( sprint => {
                             sprint.enddate = new Date(new Date(sprint.enddate!).setUTCHours(0,0,0,0)).toISOString();
@@ -57,9 +60,9 @@ export class ProjectComponent implements OnInit {
                         })
                     }
                 )
-                this.kanbanstatusService.findAllOfProject(id).subscribe(
+                this.kanbanstatusService.findAllOfProject(this.projectid).subscribe(
                     ( kanbanList : Kanbanstatus[] ) => this.kanbanList = kanbanList );
-                this.userProjectService.findCurrentProjectUsers(id).subscribe(
+                this.userProjectService.findCurrentProjectUsers(this.projectid).subscribe(
                     ( userList : User[] ) => this.userList = userList );
             }
         });
