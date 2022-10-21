@@ -7,6 +7,7 @@ import { Project } from '../models/project.model';
     providedIn: 'root'
 })
 export class ProjectService {
+
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -50,4 +51,13 @@ export class ProjectService {
             //     catchError((error) => this.handleError(error, null))
             // );
     }
+
+    findOne(id: string): Observable<Project> {
+        return this.httpClient.get<any>("/backend/projects/" + id, this.httpOptions);
+    }
+    
+    findSprints(id: string): Observable<Project[]>{
+        return this.httpClient.get<any>(`/backend/projects/${id}/sprints`, this.httpOptions);
+    }
 }
+
