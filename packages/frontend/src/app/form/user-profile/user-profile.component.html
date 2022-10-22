@@ -1,5 +1,5 @@
 <!--espacement "margin"-->
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br>
 <form #userForm="ngForm" (ngSubmit)="onFormSubmit()" [appMatchPassword]="['password', 'confirmPassword']">
 
     <!--div header-->
@@ -31,7 +31,7 @@
 
         <!--zone formulaire username-->
         <div class="flex w-full justify-center">
-            <label for="username"></label><input style="text-align:left" type="text" placeholder="usersname" value="{{user.username}}" formControlUsername="username" required class="input-username form-control bg-transparent placeholder:italic" id="username"
+            <label for="username"></label><input style="text-align:left" type="text" placeholder="username" value="{{user.username}}" formControlUsername="username" required class="input-username form-control bg-transparent placeholder:italic" id="username"
                 name="username" size="30" #username="ngModel" [(ngModel)]="user.username" required="required" pattern="^[a-zA-Z0-9àéèç]{1,25}$" />
         </div>
         <br>
@@ -49,8 +49,8 @@
         <!--zone formulaire firstname/lastname-->
         <div>
             <label for="firstname"></label><input style="text-align:start" type="text" placeholder="firstname" value="{{user.firstname}}" formControlFirstname="firstname" required class="input-firstname form-control bg-transparent placeholder:italic"
-                id="firstname" size="30" name="lirstname" minlength="8" #firstname="ngModel" [(ngModel)]="user.firstname" required="required">
-            <label for="lastname"></label><input style="text-align:start" type="text" placeholder="lastname" value="{{user.lastname}}" formControllastname="lastname" required class="lastname form-control bg-transparent placeholder:italic " id="lastname"
+                id="firstname" size="30" name="firstname" minlength="8" #firstname="ngModel" [(ngModel)]="user.firstname" required="required">
+            <label for="lastname"></label><input style="text-align:start" type="text" placeholder="lastname" value="{{user.lastname}}" formControllastname="lastname" required class="input-lastname form-control bg-transparent placeholder:italic " id="lastname"
                 size="30" name="lastname" minlength="8" #lastname="ngModel" [(ngModel)]="user.lastname" required="required">
         </div>
 
