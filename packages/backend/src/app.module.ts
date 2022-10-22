@@ -51,7 +51,7 @@ import { ConfigModule } from '@nestjs/config';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'postgres',
+      password: 'moi1971moi',
       database: 'postgres',
       entities: [
         User,
