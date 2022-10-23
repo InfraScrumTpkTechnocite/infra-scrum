@@ -37,21 +37,25 @@ export class ProjectsController {
         name: 'Backlog',
         kanbancolor: '#1F71A5',
         project: '',
+        order: 1,
       },
       {
         name: 'In progress',
         kanbancolor: '#1F71A5',
         project: '',
+        order: 2,
       },
       {
         name: 'Urgent',
         kanbancolor: '#1F71A5',
         project: '',
+        order: 3,
       },
       {
         name: 'Done',
         kanbancolor: '#1F71A5',
         project: '',
+        order: 4,
       },
     ];
     const new_project: Project = await this.projectService.create(project);
@@ -59,7 +63,7 @@ export class ProjectsController {
     //create 4 default kanbans (Backlog, In progress, Urgent and Done)
     defaultKanbanstatus.forEach((kanbanstatus) => {
       kanbanstatus.project = new_project.id;
-      this.kanbanStatusService.create(kanbanstatus)
+      this.kanbanStatusService.create(kanbanstatus);
       // .catch((err) => {
       //   throw err;
       // });
