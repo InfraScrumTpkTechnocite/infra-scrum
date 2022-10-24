@@ -21,7 +21,7 @@ export class KanbanStatus {
   name: string;
 
   @ApiProperty({ example: '11', description: 'Kanban status order number' })
-  @Column({ type: 'integer', nullable: false, default: -1 })
+  @Column({ type: 'integer', nullable: false })
   order: number;
 
   @ApiProperty({ example: 'blue, #1AB2C3', description: 'Kanban color' })

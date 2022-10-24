@@ -1,6 +1,4 @@
-<div
-    class="fixed top-0 bg-primary flex justify-between h-20 md:h-32 w-screen drop-shadow-xl"
->
+<div class="fixed top-0 bg-primary flex justify-between h-20 md:h-32 w-screen">
     <div class="w-1/3 flex justify-left ml-6 md:ml-8">
         <!-- logo triptyk -->
         <img
@@ -119,7 +117,7 @@
             <div
                 *ngIf="isMenuOpen"
                 (outsideClick)="isMenuOpen = false"
-                class="sub-menu-wrapper absolute top-auto right-6 w-64 max-h-0 drop-shadow-lg"
+                class="sub-menu-wrapper absolute top-auto right-6 w-64 max-h-0 drop-shadow-lg z-50"
             >
                 <div
                     class="sub-menu bg-secondary rounded-b-lg rounded-tl-lg p-5 m-3"
