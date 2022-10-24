@@ -8,11 +8,12 @@ import { Project } from '../models/project.model';
 import { HotToastService } from '@ngneat/hot-toast';
 import { UserprojectService } from '../services/userproject.service';
 import { UserProject } from '../models/userproject.model';
+import { HeaderTitleService } from '../services/header-title.service';
 
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',
-    styleUrls: ['./project.component.css'],
+    styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
     isSprintsOpen: boolean = false;
@@ -33,18 +34,20 @@ export class ProjectComponent implements OnInit {
     dateToday: string = "";
     
     constructor(
-        private route : ActivatedRoute,
-        private projectService : ProjectService,
-        private kanbanstatusService : KanbanstatusService,
+        private route: ActivatedRoute,
+        private projectService: ProjectService,
+        private kanbanstatusService: KanbanstatusService,
         private toastService: HotToastService,
         private userProjectService: UserprojectService,
         private router: Router
     ) {}
 
     ngOnInit(): void {
-        this.dateToday = new Date(new Date().setUTCHours(0,0,0,0)).toISOString();
+        this.dateToday = new Date(
+            new Date().setUTCHours(0, 0, 0, 0)
+        ).toISOString();
 
-        this.route.queryParamMap.subscribe(params => {
+        this.route.queryParamMap.subscribe((params) => {
             let paramsObject: any = { ...params.keys, ...params };
             this.projectid = paramsObject.params.projectid;
 
@@ -97,13 +100,15 @@ export class ProjectComponent implements OnInit {
                 this.projectService.findOne(this.projectid).subscribe(projectObserver);
             }   
         });
+
+        // this.headerTitleService.setTitle('project name');
     }
 
     // SPRINTS //
 
     openSprintBar() {
         this.isSprintsOpen = true;
-        if(this.sprintList) this.display = this.sprintList[0]; //--> afficher premier sprint au lieu de global
+        if (this.sprintList) this.display = this.sprintList[0]; //--> afficher premier sprint au lieu de global
     }
 
     closeSprintBar() {
@@ -129,9 +134,9 @@ export class ProjectComponent implements OnInit {
         //   })
     }
 
-    addSprint(){
+    addSprint() {
         var newSprint = new Project();
-        newSprint.name = "Sprint " + (this.sprintList.length + 1);
+        newSprint.name = 'Sprint ' + (this.sprintList.length + 1);
         newSprint.project = this.project;
 
         const sprintObserver = {
@@ -140,44 +145,54 @@ export class ProjectComponent implements OnInit {
                 this.sprintList.push(sprint);
                 this.display = sprint;//afficher celui qu'on vient de créer
             },
-            error : (err: any) => {
-                console.log(`Erreur création sprint : ${err.error['driverError'].detail}`);
-                this.toastService.error(`Error during sprint creation<br><br>${err.error.driverError.detail}`);
+            error: (err: any) => {
+                console.log(
+                    `Erreur création sprint : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during sprint creation<br><br>${err.error.driverError.detail}`
+                );
             },
-            complete : () => {
-                this.toastService.success("New Sprint Added !");
+            complete: () => {
+                this.toastService.success('New Sprint Added !');
             }
-        }
+        };
 
         this.projectService.create(newSprint).subscribe(sprintObserver);
     }
 
     // KANBANS //
 
-    addnewKanbanStatus(){
+    addnewKanbanStatus() {
         var newKanbanStatus = new Kanbanstatus();
         newKanbanStatus.project.id = this.project.id;
         newKanbanStatus.order = this.kanbanList.length + 1;
 
         const kanbanObserver = {
-            next : (kanban : Kanbanstatus) => {
+            next: (kanban: Kanbanstatus) => {
                 this.kanbanList.push(kanban);
             },
-            error : (err: any) => {
-                console.log(`Erreur création kanbanstatus : ${err.error['driverError'].detail}`);
-                this.toastService.error(`Error during kanban creation<br><br>${err.error.driverError.detail}`);
+            error: (err: any) => {
+                console.log(
+                    `Erreur création kanbanstatus : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during kanban creation<br><br>${err.error.driverError.detail}`
+                );
             },
-            complete : () => {
-                this.toastService.success("New Column Added !");
+            complete: () => {
+                this.toastService.success('New Column Added !');
             }
-        }
-        this.kanbanstatusService.create(newKanbanStatus).subscribe(kanbanObserver);
+        };
+        this.kanbanstatusService
+            .create(newKanbanStatus)
+            .subscribe(kanbanObserver);
     }
 
     onKanbanDeleted(kanban: Kanbanstatus) {
-        var index = this.kanbanList.findIndex((knb) => (knb === kanban));
+        var index = this.kanbanList.findIndex((knb) => knb === kanban);
         if (index != -1) {
-          this.kanbanList.splice(index, 1);
+            this.kanbanList.splice(index, 1);
         }
     }
 }
