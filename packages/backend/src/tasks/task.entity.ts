@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { KanbanStatus } from '../kanbanstatus/kanbanstatus.entity';
 import { IsHexColor, IsOptional } from 'class-validator';
+import { Project } from '../projects/project.entity';
 
 @Entity()
 @Unique(['task', 'kanbanstatus']) //no duplicate task in a kanban !
@@ -62,6 +63,10 @@ export class Task {
   @ApiProperty({ example: 'a uuid...', description: 'Task type id' })
   @ManyToOne(() => TaskType, (tasktype) => tasktype.id, { nullable: false })
   tasktype: TaskType;
+
+  @ApiProperty({ example: 'a uuid...', description: 'Sprint id' })
+  @ManyToOne(() => Project, (project) => project.id, { nullable: true })
+  sprint: Project;
 
   @ApiProperty({ example: 'blue, #1AB2C3', description: 'Kanban color' })
   @Column({ nullable: false, default: '#1F71A5' })

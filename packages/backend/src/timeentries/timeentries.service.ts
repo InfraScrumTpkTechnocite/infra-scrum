@@ -29,4 +29,22 @@ export class TimeentriesService {
   async findOne(id: string): Promise<TimeEntry> {
     return await this.timeEntriesRepository.findOneBy({ id });
   }
+
+  async totalUsersWorkedTimeOnTask(taskid: string): Promise<any> {
+    return await this.timeEntriesRepository
+      .createQueryBuilder('timeentry')
+      .select('SUM(workedtime)', 'total_minutes')
+      .addSelect('task.name')
+      .addSelect('user.username')
+      .innerJoin('timeentry.taskassignment', 'taskassignment')
+      .innerJoin('taskassignment.task', 'task')
+      .innerJoin('taskassignment.userproject', 'userproject')
+      .innerJoin('userproject.user', 'user')
+      .where('task.id = :taskid', {
+        taskid,
+      })
+      .groupBy('task.name')
+      .addGroupBy('user.username')
+      .getRawMany();
+  }
 }

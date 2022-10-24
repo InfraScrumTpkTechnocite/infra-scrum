@@ -1,3 +1,4 @@
+import { Project } from "./project.model";
 import { TaskType } from "./tasktype.model";
 
 export class Task {
@@ -11,6 +12,8 @@ export class Task {
   file: string;
   done: boolean;
   tasktype: TaskType;
+  color: string;
+  sprint: Project;
 
   constructor() {
     this.name = '';
@@ -21,5 +24,7 @@ export class Task {
     this.file = '';
     this.done = false;
     this.tasktype = new TaskType();
+    this.color = '#1F71A5';
+    this.sprint = new Project();
   }
 }

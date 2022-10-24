@@ -5,10 +5,12 @@ export class Kanbanstatus {
   name: string;
   color: string;
   project: Project;
+  order: number;
 
   constructor() {
-    this.name = '';
+    this.name = 'New Column';
     this.color = '#1F71A5';
     this.project = new Project();
+    this.order = 0;
   }
 }

@@ -42,30 +42,24 @@ import { TasktypesController } from './tasktypes/tasktypes.controller';
 import { TasktypesService } from './tasktypes/tasktypes.service';
 import { SearchModule } from './search/search.module';
 import { MailModule } from './mail/mail.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'postgres',
-      entities: [
-        User,
-        Project,
-        Task,
-        Role,
-        UserProject,
-        KanbanStatus,
-        TaskAssignment,
-        TimeEntry,
-        TaskType,
-      ],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: async (config: ConfigService) => ({
+        type: config.get<any>('DATABASE_TYPE'),
+        database: config.get<string>('DATABASE_NAME'),
+        username: config.get<string>('DATABASE_USERNAME'),
+        password: config.get<string>('DATABASE_PASSWORD'),
+        host: config.get<string>('DATABASE_HOST'),
+        port: parseInt(config.get('DATABASE_PORT')),
+        autoLoadEntities: config.get<boolean>('TYPEORM_AUTOLOADENTITIES'),
+        synchronize: config.get<boolean>('TYPEORM_SYNCHRONIZE'),
+      }),
+      inject: [ConfigService],
     }),
+
     UsersModule,
     AuthModule,
     ProjectsModule,
@@ -110,4 +104,8 @@ import { ConfigModule } from '@nestjs/config';
     //  },
   ],
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private configService: ConfigService) {
+    console.log(this.configService.get<string>('DATABASE_HOST'));
+  }
+}

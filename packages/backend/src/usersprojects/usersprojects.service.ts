@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { notEqual } from 'assert';
-import { isDateString, isNotEmpty } from 'class-validator';
 import { Repository, UpdateResult, DeleteResult, Equal, IsNull } from 'typeorm';
 import { UserProject } from './userproject.entity';
 
@@ -39,6 +37,17 @@ export class UsersprojectsService {
       select: ['project'],
       relations: { project: true },
       where: { user: Equal(userid), project: { enddate: IsNull() } },
+      order: {
+        project: { startdate: 'ASC' },
+      },
+    });
+  }
+
+  async findCurrentProjectUsers(projectid: string): Promise<UserProject[]> {
+    return await this.usersProjectsRepository.find({
+      select: ['user'],
+      relations: { project: true, user: true },
+      where: { project: { id: Equal(projectid), enddate: IsNull() } },
       order: {
         project: { startdate: 'ASC' },
       },

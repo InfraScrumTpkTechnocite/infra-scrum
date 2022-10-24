@@ -45,7 +45,7 @@ export class UserService {
     return this.httpClient.get(`/backend/users/username/${username}`, this.httpOptions)
       .pipe(
         tap((response) => {
-          this.log(`user-service-createUser- response = ${response}`);
+          this.log(`user.service - findUserByUsername - response = ${response}`);
         }),
         catchError((error) => this.handleError(error, null))
       );
@@ -55,7 +55,7 @@ export class UserService {
     return this.httpClient.get<User[]>("/backend/users", this.httpOptions)
       .pipe(
         tap((response) => {
-          this.log(`user-service-getallusers- response = ${response}`);
+          this.log(`user.service - getAllUsers - response = ${response}`);
         }),
         catchError((error) => this.handleError(error, null))
       );
