@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Role } from 'c:/Users/szmul/Desktop/Infrascrum/infra-scrum/packages/frontend/src/app/models/role.model';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,6 +22,8 @@ export class UserProfileComponent{
   @Input() verifPassword: string | undefined;
   showErrorMessage: boolean = false;
   toast: any;
+  toastService: any;
+  defaultUserProfile: any;
 
   constructor(
     private userService: UserService,
@@ -33,15 +36,18 @@ export class UserProfileComponent{
 
 /*function register profile*/
 
-onFormSubmit() {
+onFormSubmit(user: User): void {
 
     const userObserver = {
-      next: (user: User) => {
-
+      error: (err: any) => {
+        console.log(`Erreur édition user : ${err.error['driverError'].detail}`);
+        this.toastService.error(`Error during user creation<br><br>${err.error.driverError.detail}`);
+  
         this.toast.success('Update user-profile!');
       },
       complete: () => {
-        console.log(`Update profile - onSubmit - update terminé.`)
+        this.toastService.success(`User-profile edited !`);
+        this.defaultUserProfile = user.userprofile;
       },
     };
 

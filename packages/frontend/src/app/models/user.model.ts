@@ -2,6 +2,7 @@ import { Role } from "./role.model";
 
 export class User {
   name: any;
+  userprofile: any;
 
   static Form() {}
 

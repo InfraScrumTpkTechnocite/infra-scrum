@@ -1,6 +1,6 @@
 <!--espacement "margin"-->
 <br><br><br><br><br><br><br><br><br><br><br>
-<form #userForm="ngForm" (ngSubmit)="onFormSubmit()" [appMatchPassword]="['password', 'confirmPassword']">
+<form #userForm="ngForm" (ngSubmit)="onFormSubmit" [appMatchPassword]="['password', 'confirmPassword']">
 
     <!--div header-->
     <div class="bg-tpkwhite text-secondary mt-15 m-auto w-1/2 h-18/9 rounded-md shadow-lg shadow-primary">
@@ -73,7 +73,7 @@
         <!--button Update/Delete-->
         <div class="flex w-full justify-center">
             <input class="update" value="update" type="submit" onclick="alert ('Update profile ok!'), onFormSubmit()"> &nbsp;&nbsp;&nbsp;
-            <input class="delete" value="delete" type="reset" onclick="alert ('profile data deleted.'), resetForm()">
+            <input class="delete" value="delete" type="reset" onclick="alert ('Profile data deleted.'), resetForm()">
         </div>
         <br><br>
     </div>
