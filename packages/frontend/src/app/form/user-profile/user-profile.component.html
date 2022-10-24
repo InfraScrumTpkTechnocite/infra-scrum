@@ -65,10 +65,11 @@
                 id="confirmPassword" size="30" #confirmPassword="ngModel" [(ngModel)]="verifPassword" name="ConfirPassword" minlength="8" required="required">
         </div>
 
-        <!--"message erreur password/confirm-password"-->
-        <p *ngIf="!password.errors?.['required'] && password.dirty && confirmPassword.dirty && confirmPassword.errors?.['matching']" style="text-align:start" class="alert password-message-erreur text-sm italic">Passwords doesn't match</p>
-        <p *ngIf="password.errors?.['required'] && password.dirty" style="text-align:start" class="alert password-message-erreur text-sm italic">password required</p><br><br>
-
+         <!--"message erreur password/confirm-password"-->
+        <div>
+            <p *ngIf="password.errors?.['required'] && password.dirty" style="text-align:start" class="alert password-message-erreur text-sm italic">password required&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;confir-password required</p>
+        </div><br><br>
+        
         <!--button update/delete-->
         <div class="flex w-full justify-center">
             <input class="update" value="update" type="submit" onclick="alert ('Update profile ok!'), onFormSubmit()"> &nbsp;&nbsp;&nbsp;

@@ -23,7 +23,7 @@
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 575px;
+    margin-left: 585px;
     font-style: italic;
     font-size: small;
     color: red;
@@ -43,7 +43,7 @@
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
-    margin-left: 315px;
+    margin-left: 295px;
     font-style: italic;
     font-size: small;
     color: red;
@@ -60,10 +60,10 @@
 }
 
 
-/*css input password message erreur*/
+/*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 315px;
+    margin-left: 295px;
     font-style: italic;
     font-size: small;
     color: red;
