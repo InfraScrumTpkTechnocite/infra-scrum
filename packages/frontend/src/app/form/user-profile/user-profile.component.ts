@@ -18,15 +18,6 @@ export class UserProfileComponent{
   /*méthode localstorage de récuperation objet formulaire*/
   user: User = JSON.parse(localStorage.getItem('user') || "{}");
 
-  username = new FormGroup({
-    password: new FormControl(''),
-    email: new FormControl(''),
-    firstname: new FormControl(''),
-    lastname: new FormControl(''),
-    picture: new FormControl(''),
-    role: new FormControl(''),
-  });
-
   @Input() verifPassword: string | undefined;
   showErrorMessage: boolean = false;
   toast: any;
@@ -39,8 +30,6 @@ export class UserProfileComponent{
 ) {
     this.verifPassword = '';
 }
-
-
 
 /*function register profile*/
 
@@ -59,9 +48,7 @@ onFormSubmit() {
     this.userService.updateUserProfile(this.user).subscribe(userObserver)
   }
 
-
-
-  /*function delete profile*/
+/*function delete profile*/
 
 resetForm(form: NgForm) {
 	form.resetForm();

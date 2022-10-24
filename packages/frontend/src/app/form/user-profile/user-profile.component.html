@@ -19,7 +19,7 @@
 
         <!--input Role-->
         <div class="flex w-full justify-start">
-            <label for="role"></label><input id="role" type="text" style="text-align:center" formControlRame="role" required class="input-role form-control bg-transparent placeholder:italic" placeholder="role" value="{{user.role.name}}" size="10" #role="ngModel"
+            <label for="role"></label><input id="role" type="text" style="text-align:center" required class="input-role form-control bg-transparent placeholder:italic" placeholder="role" value="{{user.role.name}}" size="10" #role="ngModel"
                 [(ngModel)]="user.username" required="required">
         </div>
 
@@ -31,14 +31,14 @@
 
         <!--zone formulaire username-->
         <div class="flex w-full justify-center">
-            <label for="username"></label><input style="text-align:left" type="text" placeholder="username" value="{{user.username}}" formControlUsername="username" required class="input-username form-control bg-transparent placeholder:italic" id="username"
+            <label for="username"></label><input style="text-align:left" type="text" placeholder="username" value="{{user.username}}" required class="input-username form-control bg-transparent placeholder:italic" id="username"
                 name="username" size="30" #username="ngModel" [(ngModel)]="user.username" required="required" pattern="^[a-zA-Z0-9àéèç]{1,25}$" />
         </div>
         <br>
 
         <!--input Email-->
         <div class="flex w-full justify-center">
-            <label for="email"></label><input style="text-align:left" type="text" id="email" placeholder="email" value="{{user.email}}" size="30" #email="ngModel" [(ngModel)]="user.email" formControlEmail="email" required class="input-email form-control bg-transparent placeholder:italic"
+            <label for="email"></label><input style="text-align:left" type="text" id="email" placeholder="email" value="{{user.email}}" size="30" #email="ngModel" [(ngModel)]="user.email" required class="input-email form-control bg-transparent placeholder:italic"
                 required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
         </div><br>
 
@@ -48,9 +48,9 @@
 
         <!--zone formulaire firstname/lastname-->
         <div>
-            <label for="firstname"></label><input style="text-align:start" type="text" placeholder="firstname" value="{{user.firstname}}" formControlFirstname="firstname" required class="input-firstname form-control bg-transparent placeholder:italic"
+            <label for="firstname"></label><input style="text-align:start" type="text" placeholder="firstname" value="{{user.firstname}}"  required class="input-firstname form-control bg-transparent placeholder:italic"
                 id="firstname" size="30" name="firstname" minlength="8" #firstname="ngModel" [(ngModel)]="user.firstname" required="required">
-            <label for="lastname"></label><input style="text-align:start" type="text" placeholder="lastname" value="{{user.lastname}}" formControllastname="lastname" required class="input-lastname form-control bg-transparent placeholder:italic " id="lastname"
+            <label for="lastname"></label><input style="text-align:start" type="text" placeholder="lastname" value="{{user.lastname}}" required class="input-lastname form-control bg-transparent placeholder:italic " id="lastname"
                 size="30" name="lastname" minlength="8" #lastname="ngModel" [(ngModel)]="user.lastname" required="required">
         </div>
 
@@ -59,9 +59,9 @@
 
         <!--zone formulaire password-->
         <div>
-            <label for="password"></label><input style="text-align:start" type="password" placeholder="Password" value="{{user.password}}" formControlPasswordame="password" required class="input-password  form-control bg-transparent placeholder:italic "
+            <label for="password"></label><input style="text-align:start" type="password" placeholder="Password" value="{{user.password}}" required class="input-password  form-control bg-transparent placeholder:italic "
                 id="password" size="30" #password="ngModel" [(ngModel)]="user.password" name="Password" minlength="8" required="required" pattern="">
-            <label for="ConfirPassword"></label><input style="text-align:start" type="password" placeholder="Confirm-Password" value="{{user.password}}" formControlConfirmPassword="confirm-password" required class="input-confirm-password form-control bg-transparent placeholder:italic"
+            <label for="ConfirPassword"></label><input style="text-align:start" type="password" placeholder="Confirm-Password" value="{{user.password}}" required class="input-confirm-password form-control bg-transparent placeholder:italic"
                 id="confirmPassword" size="30" #confirmPassword="ngModel" [(ngModel)]="verifPassword" name="ConfirPassword" minlength="8" required="required">
         </div>
 
