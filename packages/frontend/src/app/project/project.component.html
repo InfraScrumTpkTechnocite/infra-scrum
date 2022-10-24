@@ -6,14 +6,15 @@
         class="bg-grey1 text-white h-full w-1/6 xl:w-1/12 px-5 py-3 overflow-x-hidden"
     >
         <div class="flex flex-col justify-start items-center text-center">
-            <button
+            <button *ngIf="parentProject"
                 class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-8 text-xs mb-6"
                 title="Show global view"
+                (click)="closeSprintBar()"
             >
                 Global view
             </button>
 
-            <button
+            <button *ngIf="!parentProject"
                 (click)="addSprint()"
                 class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-8 text-xs"
                 title="Add a sprint"

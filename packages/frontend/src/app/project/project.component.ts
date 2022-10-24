@@ -65,13 +65,11 @@ export class ProjectComponent implements OnInit {
                 };
 
                 const kanbanstatusObserver = {
-                    next: (kanbanList: Kanbanstatus[]) => {
-                        this.kanbanList = kanbanList;
-                        let projectid: any = localStorage.getItem('projectid');
+                    next: ( kanbanList : Kanbanstatus[] ) => {
+                        this.kanbanList = kanbanList
+                        let projectid : string = <string> localStorage.getItem('projectid');
 
-                        this.userProjectService
-                            .findCurrentProjectUsers(JSON.parse(projectid))
-                            .subscribe(userProjectsObserver);
+                        this.userProjectService.findCurrentProjectUsers(projectid).subscribe(userProjectsObserver);
                     },
                     error: () => {},
                     complete: () => {}
@@ -83,32 +81,29 @@ export class ProjectComponent implements OnInit {
                             //sprint.enddate = new Date(new Date(sprint.enddate!).setUTCHours(0,0,0,0)).toISOString();
                             return sprint;
                         });
-                        this.kanbanstatusService
-                            .findAllOfProject(this.projectid)
-                            .subscribe(kanbanstatusObserver);
+                        this.kanbanstatusService.findAllOfProject(<string> localStorage.getItem('projectid')).subscribe(kanbanstatusObserver);
+                        
                     },
                     error: () => {},
                     complete: () => {}
                 };
 
                 const projectObserver = {
-                    next: (project: Project) => {
-                        if (!project.project)
-                            localStorage.setItem(
-                                'projectid',
-                                JSON.stringify(project.id)
-                            );
-                        this.project = project;
-                        this.display = project;
-                        this.parentProject = project.project;
-                        // Nom du projet qui s'affiche dans Header, ne plus supprimer
-                        this.headerTitleService.setTitle(project.name);
-                        console.log(
-                            `project.component - ngOnInit - parentProject = ${this.parentProject}`
-                        );
-                        this.projectService
-                            .findSprints(this.projectid)
-                            .subscribe(sprintObserver);
+                    next: (project : Project) => {
+                        if(!project.project) {//on est dans le projet global
+                            localStorage.setItem('projectid', <string> project.id)
+                            this.project = project;
+                            this.display = project;
+                            this.parentProject = project.project;
+                            
+                        }
+                        else {//on est dans un sprint
+                            this.parentProject = project.project;
+                            this.project = this.parentProject;
+                            this.display = this.parentProject;
+                        }
+                        console.log(`project.component - ngOnInit - parentProject = ${this.parentProject}`);
+                        this.projectService.findSprints(<string> localStorage.getItem('projectid')).subscribe(sprintObserver);
                     },
                     error: () => {},
                     complete: () => {}
@@ -149,11 +144,11 @@ export class ProjectComponent implements OnInit {
             )}`
         );
         this.display = sprint;
-        // this.router.navigate([], {
-        //     skipLocationChange: true,
-        //     queryParamsHandling: 'merge', //== if you need to keep queryParams
-        //     queryParams: { projectid: sprint.id }
-        //   })
+        this.router.navigate([], {
+            skipLocationChange: true,
+            queryParamsHandling: 'merge', //== if you need to keep queryParams
+            queryParams: { projectid: sprint.id }
+          })
     }
 
     addSprint() {
