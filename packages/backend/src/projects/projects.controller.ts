@@ -60,15 +60,16 @@ export class ProjectsController {
     ];
     const new_project: Project = await this.projectService.create(project);
 
-    //create 4 default kanbans (Backlog, In progress, Urgent and Done)
-    defaultKanbanstatus.forEach((kanbanstatus) => {
-      kanbanstatus.project = new_project.id;
-      this.kanbanStatusService.create(kanbanstatus);
-      // .catch((err) => {
-      //   throw err;
-      // });
-    });
-
+    //if not a sprint, create 4 default kanbans (Backlog, In progress, Urgent and Done)
+    if(!project.project) {
+      defaultKanbanstatus.forEach((kanbanstatus) => {
+        kanbanstatus.project = new_project.id;
+        this.kanbanStatusService.create(kanbanstatus);
+        // .catch((err) => {
+        //   throw err;
+        // });
+      });
+    }
     return new_project;
   }
 

@@ -122,11 +122,11 @@ export class ProjectComponent implements OnInit {
         const sprint: Project = this.sprintList.find(sprint => sprint.id == id) || new Project();
         console.log(`project.component - changeSprintDisplay - ${JSON.stringify(sprint)}`);
         this.display = sprint;
-        this.router.navigate([], {
-            skipLocationChange: true,
-            queryParamsHandling: 'merge', //== if you need to keep queryParams
-            queryParams: { projectid: sprint.id }
-          })
+        // this.router.navigate([], {
+        //     skipLocationChange: true,
+        //     queryParamsHandling: 'merge', //== if you need to keep queryParams
+        //     queryParams: { projectid: sprint.id }
+        //   })
     }
 
     addSprint(){
