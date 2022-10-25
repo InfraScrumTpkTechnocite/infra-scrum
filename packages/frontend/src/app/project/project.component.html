@@ -177,7 +177,12 @@
                     ></app-kanban-status>
                     <!-- tâches du kanbanstatus  -->
                     <div class="tasksContainer w-64 mx-4 mt-2 flex flex-col">
-                        <app-task></app-task>
+                        <div *ngFor="let task of taskList">
+                            <app-task 
+                                [task]="task"
+                                *ngIf="kanbanstatus.id == task.kanbanstatus.id"
+                            ></app-task>
+                        </div>
                     </div>
                 </div>
 

@@ -5,16 +5,20 @@
         class="hover:cursor-zoom-out"
     >
         <div
-            class="border-2 border-tpkerror rounded-md bg-grey1 mt-2 flex h-auto"
+            class="border-2 rounded-md bg-grey1 mt-2 flex h-auto"
+            [style.border-color]="task.color"
         >
-            <div class="w-1/12 bg-tpkerror"></div>
+            <div 
+                class="w-1/12"
+                [style.background]="task.color"
+            ></div>
             <div class="w-11/12 bg-grey1 flex flex-col p-2">
                 <!-- task title + edit -->
                 <div
                     class="flex justify-between border-b-2 border-grey2 p-2 ml-2"
                 >
                     <h4 class="text-center font-semibold pr-1">
-                        This is a very long title for a very long task
+                        {{task.name}}
                     </h4>
                     <image
                         routerLink="edit-new-tasks"
@@ -39,42 +43,28 @@
                 </div>
                 <!-- task type + users -->
                 <div class="flex justify-between mt-2 mr-1 p-2 items-center">
-                    <h5 class="text-sm md:text-base items-start">Front-end</h5>
+                    <h5 class="text-sm md:text-base items-start">{{task.tasktype.label}}</h5>
                     <span>|</span>
 
                     <div class="flex items-end ml-4">
                         <div
+                            *ngFor="let taskassignment of taskassignmentList"
                             class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
                         >
                             <!-- condition si photo, sinon span avec premiere lettre username -->
                             <img
-                                class="rounded-full"
-                                src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                                *ngIf="taskassignment.userproject.user.picture"
+                                class="rounded-full hover:cursor-default"
+                                [src]="taskassignment.userproject.user.picture"
                                 alt="profile picture"
+                                title="{{ taskassignment.userproject.user.username }}"
                             />
-                            <!-- <span class="text-lg uppercase font-bold">A</span> -->
-                        </div>
-                        <div
-                            class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
-                        >
-                            <!-- condition si photo, sinon span avec premiere lettre username -->
-                            <!-- <img
-                                            class="rounded-full"
-                                            src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
-                                            alt="profile picture"
-                                        /> -->
-                            <span class="text-lg uppercase font-bold">O</span>
-                        </div>
-                        <div
-                            class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
-                        >
-                            <!-- condition si photo, sinon span avec premiere lettre username -->
-                            <!-- <img
-                                            class="rounded-full"
-                                            src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
-                                            alt="profile picture"
-                                        /> -->
-                            <span class="text-lg uppercase font-bold">B</span>
+                            <span
+                                *ngIf="!taskassignment.userproject.user.picture"
+                                class="text-2xl uppercase font-bold"
+                            >
+                                {{ taskassignment.userproject.user.username | initialsName }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -83,16 +73,7 @@
                     class="h-32 overflow-y-scroll mt-1 p-2 border-2 border-grey2 border-opacity-50"
                 >
                     <p class="overflow-y-scroll text-sm">
-                        Ceci est une longue description à base de lorem ipsum et
-                        tutti quanti Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Molestiae rem sunt voluptatem qui iure
-                        quod ipsum nam, quas excepturi ab doloremque et aliquam,
-                        praesentium fugit laudantium nesciunt numquam sit quos?
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Alias deserunt mollitia possimus architecto rem ipsam
-                        obcaecati, quisquam ullam aspernatur corrupti optio
-                        inventore commodi aliquam veritatis, doloremque a dicta
-                        earum et?
+                        {{task.description}}
                     </p>
                 </div>
 
@@ -112,11 +93,11 @@
                 <div class="flex justify-between mt-3 p-1">
                     <div class="flex flex-col items-center">
                         <p class="text-xs">Start date:</p>
-                        <p class="text-sm">{{ dateToday | date }}</p>
+                        <p class="text-sm">{{ task.startdate | date }}</p>
                     </div>
                     <div class="flex flex-col items-center">
                         <p class="text-xs">Estimated time:</p>
-                        <p class="text-sm">02h30</p>
+                        <p class="text-sm">{{ task.estimatedtime }}</p>
                     </div>
                 </div>
             </div>
@@ -128,62 +109,69 @@
         class="hover:cursor-zoom-in"
     >
         <div
-            class="border-2 border-tpkerror rounded-sm bg-grey1 mt-2 flex h-auto"
+            class="border-2 rounded-sm bg-grey1 mt-2 flex h-auto"
+            [style.border-color]="task.color"
         >
-            <div class="w-1/12 bg-tpkerror"></div>
+            <div 
+                class="w-1/12"
+                [style.background]="task.color"
+            ></div>
             <div class="w-11/12 bg-grey1 flex flex-col px-2 py-1">
                 <!-- titre tâche -->
                 <div
                     class="flex justify-center items-center border-b-2 border-grey2 p-1"
                 >
                     <h4 class="text-center font-semibold">
-                        This is a very long title for a very long task
+                        {{task.name}}
                     </h4>
                 </div>
                 <!-- users  -->
                 <div>
                     <div class="flex justify-between items-center p-1">
                         <!-- créateur tâche -->
-                        <div
-                            class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
-                        >
-                            <!-- condition si photo, sinon span avec premiere lettre username -->
-                            <img
-                                class="rounded-full"
-                                src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
-                                alt="profile picture"
-                            />
-                            <!-- <span class="text-lg uppercase font-bold">A</span> -->
+                        <div *ngFor="let taskassignment of taskassignmentList">
+                            <div *ngIf="taskassignment.isTaskCreator"
+                                class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                            >
+                                <!-- condition si photo, sinon span avec premiere lettre username -->
+                                <img
+                                    *ngIf="taskassignment.userproject.user.picture"
+                                    class="rounded-full hover:cursor-default"
+                                    [src]="taskassignment.userproject.user.picture"
+                                    alt="profile picture"
+                                    title="{{ taskassignment.userproject.user.username }}"
+                                />
+                                <span
+                                    *ngIf="!taskassignment.userproject.user.picture"
+                                    class="text-2xl uppercase font-bold"
+                                >
+                                    {{ taskassignment.userproject.user.username | initialsName }}
+                            </span>
+                            </div>
                         </div>
                         <span>|</span>
-
                         <!-- autres users assignés -->
                         <div class="flex items-end">
-                            <div
-                                class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
-                            >
-                                <!-- condition si photo, sinon span avec premiere lettre username -->
-                                <!-- <img
-                                                class="rounded-full"
-                                                src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
-                                                alt="profile picture"
-                                            /> -->
-                                <span class="text-lg uppercase font-bold"
-                                    >O</span
+                            <div *ngFor="let taskassignment of taskassignmentList">
+                                <div
+                                    *ngIf="!taskassignment.isTaskCreator"
+                                    class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
                                 >
-                            </div>
-                            <div
-                                class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
-                            >
-                                <!-- condition si photo, sinon span avec premiere lettre username -->
-                                <!-- <img
-                                                class="rounded-full"
-                                                src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
-                                                alt="profile picture"
-                                            /> -->
-                                <span class="text-lg uppercase font-bold"
-                                    >B</span
-                                >
+                                    <!-- condition si photo, sinon span avec premiere lettre username -->
+                                    <img
+                                        *ngIf="taskassignment.userproject.user.picture"
+                                        class="rounded-full hover:cursor-default"
+                                        [src]="taskassignment.userproject.user.picture"
+                                        alt="profile picture"
+                                        title="{{ taskassignment.userproject.user.username }}"
+                                    />
+                                    <span
+                                        *ngIf="!taskassignment.userproject.user.picture"
+                                        class="text-2xl uppercase font-bold"
+                                    >
+                                        {{ taskassignment.userproject.user.username | initialsName }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>

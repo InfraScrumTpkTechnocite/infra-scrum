@@ -9,6 +9,8 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { UserprojectService } from '../services/userproject.service';
 import { UserProject } from '../models/userproject.model';
 import { HeaderTitleService } from '../services/header-title.service';
+import { Task } from '../models/task.model';
+import { TaskService } from '../services/task.service';
 
 @Component({
     selector: 'app-project',
@@ -33,6 +35,8 @@ export class ProjectComponent implements OnInit {
 
     dateToday: string = '';
 
+    taskList: Task[] = [];
+    
     constructor(
         private route: ActivatedRoute,
         private projectService: ProjectService,
@@ -40,6 +44,7 @@ export class ProjectComponent implements OnInit {
         private toastService: HotToastService,
         private userProjectService: UserprojectService,
         private headerTitleService: HeaderTitleService,
+        private taskService: TaskService,
         private router: Router
     ) {}
 
@@ -56,7 +61,15 @@ export class ProjectComponent implements OnInit {
                 `project.component - ngOnInit - projectid = ${this.projectid}`
             );
 
-            if (this.projectid) {
+            if (this.projectid) {                
+                const tasksObserver = {
+                    next: ( taskList : Task[] ) => {
+                        taskList.map(task => this.taskList.push(task));
+                    },
+                    error: () => {},
+                    complete: () => {}
+                }
+
                 const userProjectsObserver = {
                     next: (userProjects: UserProject[]) =>
                         (this.userProjects = userProjects),
@@ -70,6 +83,9 @@ export class ProjectComponent implements OnInit {
                         let projectid : string = <string> localStorage.getItem('projectid');
 
                         this.userProjectService.findCurrentProjectUsers(projectid).subscribe(userProjectsObserver);
+                        kanbanList.map(kanbanstatus => {
+                            this.taskService.findAllOfKanbanstatus(kanbanstatus.id!).subscribe(tasksObserver)
+                        });
                     },
                     error: () => {},
                     complete: () => {}

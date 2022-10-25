@@ -68,7 +68,7 @@ export class Task {
   @ManyToOne(() => Project, (project) => project.id, { nullable: true })
   sprint: Project;
 
-  @ApiProperty({ example: 'blue, #1AB2C3', description: 'Kanban color' })
+  @ApiProperty({ example: 'blue, #1f71a5', description: 'Kanban color' })
   @Column({ nullable: false, default: '#1F71A5' })
   @IsHexColor()
   color: string;
