@@ -58,11 +58,19 @@
                                 required
                                 class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
                             >
-                                <option selected disabled hidden>Type</option>
+                                <option selected disabled hidden value="#">Type</option>
                                 <option value="front">Front-end</option>
+                                <option value="front">Amélioration</option>
+                                <option value="front">Correction</option>
+                                <option value="front">Bug</option>
+                                <option value="front">Analyse</option>
                                 <option value="back">back-end</option>
-                                <option value="desig">Designer</option>
+                                <option value="back">Intégration design</option>
+                                <option value="back">Liaison-front-back</option>
+                                <option value="desig">Design</option>
+                                <option value="full">UX</option>
                                 <option value="full">Fullstack</option>
+                                <option value=""></option>
                             </select>
                         </div>
                         <div
@@ -77,7 +85,7 @@
                                 class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
                             >
                                 <option value="#">Sprints</option>
-                                <option value="date">Sprint 1</option>
+                                <option value="">Sprint 1</option>
                                 <option value="date">Sprints 2</option>
                                 <option value="date">Sprints 3</option>
                                 <option value="date">Sprints 4</option>
@@ -145,14 +153,9 @@
                             class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                         >
                             <label class="font-bold">Start date</label>
-                            <input
-                                type="date"
-                                name="startdate"
-                                #startdate="ngModel"
-                                [(ngModel)]="task.startdate"
-                                required
-                                class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                            />
+                            <p class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none">
+                                {{ dateToday | date }}
+                            </p>
                         </div>
                     </div>
                     <div
