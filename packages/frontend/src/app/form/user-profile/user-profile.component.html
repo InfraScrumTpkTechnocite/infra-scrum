@@ -10,17 +10,14 @@
 
         <!--Zone avatar-->
         <div class="flex mx-12">
-            <!--<img src="assets/img/avatar2.png" alt="Avatar" class="avatar"><br>-->
-
-            <!--button ("+")-->
-            <!--<input style="border:1px solid #7697a8;" class="border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" id="loadFileXml" value="+" accept="image/png, image/jpeg" onclick="document.getElementById('file').click();"
-            /><input type="file" style="display:none;" id="file" name="file" />-->
             <div class="image-container">
+            <!--button ("+")-->
+            <input style="border:1px solid #7697a8;" class="button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" id="loadFileXml" value="+"/>
                 <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" class=""> <br/>
                 <input type='file' (change)="onSelectFile($event)" class="select-profile-picture">
                 <span class="message"> Choose avatar profile</span>
-               </div>
-               </div>
+            </div>
+        </div>
 
         <!--input Role-->
         <div class="flex w-full justify-start">

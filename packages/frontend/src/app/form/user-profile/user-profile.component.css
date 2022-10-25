@@ -43,7 +43,7 @@ p {
     position: absolute;
     width: 90%;
     top: 50%;
-    left: 50%;
+    left: 32%;
     transform: translate(-50%, 100%);
     transition: all 1s;
     opacity: 0;
@@ -53,6 +53,11 @@ p {
   .image-container:hover .message {
     transform: translate(-50%, -50%);
     opacity: 1;
+  }
+
+  /*css button"ajouter" avatar*/
+  .button-ajouter-avatar{
+    margin-left: 150px;
   }
 
 /*css input role message erreur*/
