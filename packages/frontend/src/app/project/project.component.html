@@ -12,7 +12,7 @@
 
                 class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs font-semibold justify-center"
                     [ngClass]="{
-                        'bg-primary text-white': display.id == projectid, 'text-primary': display.id != projectid
+                        'bg-primary text-white': !parentProject, 'text-primary': parentProject
                     }"
             >
                 Global view
@@ -184,7 +184,7 @@
                         <div *ngFor="let task of taskList">
                             <app-task 
                                 [task]="task"
-                                *ngIf="kanbanstatus.id == task.kanbanstatus.id"
+                                *ngIf="(kanbanstatus.id == task.kanbanstatus.id && (projectid == project.id)) || ((kanbanstatus.id == task.kanbanstatus.id) && task.sprint && (task.sprint.id == projectid))"
                             ></app-task>
                         </div>
                     </div>
