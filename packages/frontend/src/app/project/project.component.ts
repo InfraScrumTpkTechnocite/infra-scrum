@@ -26,7 +26,6 @@ export class ProjectComponent implements OnInit {
 
     project!: Project;
     sprintList!: Project[];
-    @Input() display!: Project;
 
     kanbanStatus!: Kanbanstatus;
     kanbanList!: Kanbanstatus[];
@@ -109,14 +108,12 @@ export class ProjectComponent implements OnInit {
                         if(!project.project) {//on est dans le projet global
                             localStorage.setItem('projectid', <string> project.id)
                             this.project = project;
-                            this.display = project;
                             this.parentProject = project.project;
                             
                         }
                         else {//on est dans un sprint
                             this.parentProject = project.project;
                             this.project = this.parentProject;
-                            this.display = this.parentProject;
                         }
                         this.headerTitleService.setTitle(this.project.name);
                         console.log(`project.component - ngOnInit - parentProject = ${this.parentProject}`);
@@ -137,12 +134,11 @@ export class ProjectComponent implements OnInit {
 
     openSprintBar() {
         this.isSprintsOpen = true;
-        if (this.sprintList) this.display = this.sprintList[0]; //--> afficher premier sprint au lieu de global
+        if (this.sprintList) this.project = this.sprintList[0]; //--> afficher premier sprint au lieu de global
     }
 
     closeSprintBar() {
         this.isSprintsOpen = false;
-        this.display = this.project; //--> afficher global
         this.router.navigate([], {
             skipLocationChange: true,
             queryParamsHandling: 'merge', //== if you need to keep queryParams
@@ -160,7 +156,6 @@ export class ProjectComponent implements OnInit {
                 sprint
             )}`
         );
-        this.display = sprint;
         this.router.navigate([], {
             skipLocationChange: true,
             queryParamsHandling: 'merge', //== if you need to keep queryParams
@@ -181,7 +176,6 @@ export class ProjectComponent implements OnInit {
                     )}`
                 );
                 this.sprintList.push(sprint);
-                this.display = sprint; //afficher celui qu'on vient de créer
             },
             error: (err: any) => {
                 console.log(
