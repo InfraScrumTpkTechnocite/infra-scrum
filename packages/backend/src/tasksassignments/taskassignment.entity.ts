@@ -31,6 +31,13 @@ export class TaskAssignment {
   @Column({ type: 'boolean', default: true })
   isActiveOnTask: boolean;
 
+  @ApiProperty({
+    example: 'true/false',
+    description: 'Is user the task creator ?',
+  })
+  @Column({ type: 'boolean', default: true })
+  isTaskCreator: boolean;
+
   @ApiProperty({ example: 'a uuid...', description: 'Task id' })
   @ManyToOne(() => Task, (task) => task.id, { nullable: false })
   task: Task;
