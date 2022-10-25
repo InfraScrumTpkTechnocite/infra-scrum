@@ -4,7 +4,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
 import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
@@ -32,35 +31,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.headerTitleService.setTitle('InfraScrum');
-
-        // if (this.route.queryParams)
-        //     this.route.queryParams
-        //         .subscribe(params => {
-        //             console.log(params);
-        //             this.username = params['username'];
-        //             this.token = params['token'];
-        //             console.log(`login.component.ts - ngOnInit - username/token : ${this.username}/${this.token}`); // price
-        //             if (this.username && this.token) {
-        //                 this.httpClient.get(`backend/auth/confirm/${this.username}/${this.token}`)
-        //                     //return this.httpClient.post<User>("/backend/registeruser", JSON.stringify(user), this.httpOptions)
-        //                     // .pipe(
-        //                     //     tap((response) => {
-        //                     //         console.log(`index.component.ts - onInit - get email confirmation = ${response}`);
-        //                     //     }),
-        //                     //     //catchError((error) => console.log(`index.component.ts - onInit - erreur - ${error}`))
-        //                     // ).subscribe();
-        //                     .pipe(
-        //                         this.toast.observe({
-        //                             loading: 'Confirming email...',
-        //                             success: 'Email confirmed ! Use your credentials to log in.',
-        //                             error: 'Email confirmation link sent to your mail box. Please confirm your email first.',
-        //                         })
-        //                     )
-        //                     .subscribe();
-        //             }
-        //         }
-        //         );
-
     }
 
     onSubmit() {
@@ -73,6 +43,7 @@ export class LoginComponent implements OnInit {
 
         const authObserver = {
             next: (response: any) => {
+                //console.log(`response = ${JSON.stringify(response)}`)
                 this.router.navigate(['projects']);
             },
             error: (error: Error) => {

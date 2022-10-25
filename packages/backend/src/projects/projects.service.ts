@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Equal, Repository, UpdateResult } from 'typeorm';
 import { Project } from './project.entity';
 
 @Injectable()
@@ -27,7 +27,11 @@ export class ProjectsService {
   }
 
   async findOne(id: string): Promise<Project> {
-    return await this.projectsRepository.findOneBy({ id });
+    return await this.projectsRepository.findOne({
+      select: ['project'],
+      relations: { project: true },
+      where: { id: Equal(id) },
+    });
   }
 
   async findOneByName(name: string): Promise<Project> {
@@ -38,6 +42,7 @@ export class ProjectsService {
     return await this.projectsRepository
       .createQueryBuilder('project')
       .where('project.project = :projectid', { projectid })
+      .orderBy('project.startdate', 'ASC')
       .getMany();
   }
 }

@@ -1,14 +1,19 @@
+import { Project } from "./project.model";
+import { TaskType } from "./tasktype.model";
+
 export class Task {
   id?: string;
   name: string;
   kanbanstatus: string;
-  task?: string;
+  task?: Task;
   description: string;
   startdate: string;
   estimatedTime: number;
   file: string;
   done: boolean;
-  tasktype: string;
+  tasktype: TaskType;
+  color: string;
+  sprint: Project;
 
   constructor() {
     this.name = '';
@@ -18,6 +23,8 @@ export class Task {
     this.estimatedTime = 0;
     this.file = '';
     this.done = false;
-    this.tasktype = '';
+    this.tasktype = new TaskType();
+    this.color = '#1F71A5';
+    this.sprint = new Project();
   }
 }

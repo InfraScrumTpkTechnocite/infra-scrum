@@ -1,21 +1,16 @@
 export class Project {
     id?: string;
     name: string;
-    description: string;
-    project?: string;
-    githuburl: string;
-    githubtoken: string;
+    description?: string;
+    project?: Project;
+    githuburl?: string;
+    githubtoken?: string;
     startdate: string;
-    enddate: string;
-    picture: string;
+    enddate?: string;
+    picture?: string;
 
     constructor() {
-        this.name = '';
-        this.description = '';
-        this.githuburl = '';
-        this.githubtoken = '';
-        this.startdate = '';
-        this.enddate = '';
-        this.picture = '';
+        this.name = "New Project";
+        this.startdate = new Date().toISOString();
     }
 }

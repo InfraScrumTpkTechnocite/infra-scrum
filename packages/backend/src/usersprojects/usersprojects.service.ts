@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult, DeleteResult, Equal } from 'typeorm';
+import { Repository, UpdateResult, DeleteResult, Equal, IsNull } from 'typeorm';
 import { UserProject } from './userproject.entity';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class UsersprojectsService {
   constructor(
     @InjectRepository(UserProject)
     private usersProjectsRepository: Repository<UserProject>,
-  ) {}
+  ) { }
 
   async create(userproject: UserProject): Promise<UserProject> {
     return await this.usersProjectsRepository.save(userproject);
@@ -32,11 +32,22 @@ export class UsersprojectsService {
     return await this.usersProjectsRepository.findOneBy({ id });
   }
 
-  async findUserProjects(userid: string): Promise<UserProject[]> {
+  async findCurrentUserProjects(userid: string): Promise<UserProject[]> {
     return await this.usersProjectsRepository.find({
       select: ['project'],
       relations: { project: true },
-      where: { user: Equal(userid) },
+      where: { user: Equal(userid), project: { enddate: IsNull() } },
+      order: {
+        project: { startdate: 'ASC' },
+      },
+    });
+  }
+
+  async findCurrentProjectUsers(projectid: string): Promise<UserProject[]> {
+    return await this.usersProjectsRepository.find({
+      select: ['user'],
+      relations: { project: true, user: true },
+      where: { project: { id: Equal(projectid), enddate: IsNull() } },
       order: {
         project: { startdate: 'ASC' },
       },

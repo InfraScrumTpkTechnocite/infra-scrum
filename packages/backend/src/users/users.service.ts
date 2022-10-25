@@ -42,7 +42,14 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User> {
-    return await this.usersRepository.findOneBy({ id });
+    return await this.usersRepository.findOne({
+      where: {
+        id: id,
+      },
+      relations: {
+        role: true,
+      }
+    });
   }
 
   async findOneByUsername(username: string): Promise<User> {

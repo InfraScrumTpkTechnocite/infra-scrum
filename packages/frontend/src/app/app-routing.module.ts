@@ -28,8 +28,8 @@ const routes: Routes = [
             import('./admin/admin.module').then((m) => m.AdminModule)
     },
     {
-        path: 'index', component: IndexComponent,
-        /*canActivate: [AuthGuardService]*/
+        path: 'index',
+        component: IndexComponent
     },
     { path: 'login', component: LoginComponent },
     {
@@ -37,37 +37,44 @@ const routes: Routes = [
         component: ProjectsComponent,
         data: {
             role: ['superadmin', 'admin', 'employee', 'intern', 'guest']
-        },
+        }
     },
     {
         path: 'project',
         component: ProjectComponent,
-        canActivate: [AuthGuardService]
-    },
-
-    {
-        path: 'edit-new-tasks', component: EditNewTasksComponent,
         canActivate: [AuthGuardService],
         data: {
             role: ['superadmin', 'admin', 'employee', 'intern']
-        },
+        }
+    },
+
+    {
+        path: 'edit-new-tasks',
+        component: EditNewTasksComponent,
+        canActivate: [AuthGuardService],
+        data: {
+            role: ['superadmin', 'admin', 'employee', 'intern']
+        }
     },
     {
-        path: 'edit-project', component: EditProjectComponent,
+        path: 'edit-project',
+        component: EditProjectComponent,
         canActivate: [AuthGuardService],
         data: {
             role: ['superadmin', 'admin']
-        },
+        }
     },
     {
-        path: 'create-user', component: CreateUserComponent,
+        path: 'create-user',
+        component: CreateUserComponent,
         canActivate: [AuthGuardService],
         data: {
             role: ['superadmin']
-        },
+        }
     },
     {
-        path: '**', component: PageNotFoundComponent,
+        path: '**',
+        component: PageNotFoundComponent,
         canActivate: [AuthGuardService]
     }
 ];
@@ -81,4 +88,4 @@ const routes: Routes = [
         JwtHelperService
     ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

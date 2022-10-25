@@ -37,4 +37,7 @@ export class TaskService {
     );
   }
 
+  findAllOfKanbanstatus(kanbanstatusid: string): Observable<Task[]> {
+    return this.httpClient.get<any>("/backend/tasks/of/kanbanstatus/" + kanbanstatusid, this.httpOptions);
+  }
 }

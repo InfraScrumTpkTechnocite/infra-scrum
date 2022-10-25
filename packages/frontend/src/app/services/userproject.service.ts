@@ -4,46 +4,61 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { UserProject } from '../models/userproject.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserprojectService {
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('jwt-token')
+        })
+    };
 
-  httpOptions = {
-    headers : new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization : 'Bearer ' + localStorage.getItem('jwt-token')
-    })
-  };
+    constructor(private httpClient: HttpClient) {}
 
-  constructor(
-    private httpClient : HttpClient
-  ) { }
+    private handleError(error: Error, errorValue: any) {
+        console.error(error);
+        return of(errorValue);
+    }
 
-  private handleError(error: Error, errorValue: any){
-    console.error(error);
-    return of(errorValue);
-  }
+    private log(response: any) {
+        console.table(response);
+    }
 
-  private log(response: any){
-    console.table(response);
-  }
+    create(userproject: UserProject): Observable<UserProject> {
+        return this.httpClient
+            .post<any>(
+                '/backend/usersprojects',
+                JSON.stringify(userproject),
+                this.httpOptions
+            )
+            .pipe(
+                tap((response) => this.log(response)),
+                catchError((error) => this.handleError(error, null))
+            );
+    }
 
-  create(userproject: UserProject): Observable<UserProject> {
+    findCurrentUserProjects(userid: string): Observable<any> {
+        return this.httpClient
+            .get(
+                `/backend/usersprojects/currentuserprojects/${userid}`,
+                this.httpOptions
+            )
+            // .pipe(
+            //     tap((response) => {
+            //         console.log(
+            //             `userproject.service.ts - findUserProjects - response = ${response}`
+            //         );
+            //     }),
+            //     catchError((error) => this.handleError(error, null))
+            // );
+    }
 
-    return this.httpClient.post<any>("/backend/usersprojects", JSON.stringify(userproject), this.httpOptions)
-    .pipe(
-      tap((response) => this.log(response)),
-      catchError((error) => this.handleError(error,null))
-    );
-  }
-
-  findUserProjects(userid: string): Observable<any> {
-    return this.httpClient.get(`/backend/usersprojects/userprojects/${userid}`, this.httpOptions)
-     .pipe(
-      tap((response) => {
-        console.log(`userproject.service.ts - findUserProjects - response = ${response}`);
-      }),
-      catchError((error) => this.handleError(error,null))
-    );
-  }
+    findCurrentProjectUsers(projectid: string): Observable<any> {
+        return this.httpClient
+            .get(
+                `/backend/usersprojects/currentprojectusers/${projectid}`,
+                this.httpOptions
+            )
+    }
 }
