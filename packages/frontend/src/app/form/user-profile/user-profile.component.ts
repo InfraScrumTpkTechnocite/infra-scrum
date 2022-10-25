@@ -36,7 +36,7 @@ export class UserProfileComponent{
 
 /*function update profile*/
 
-onFormSubmit(user: User): void {
+onSubmit(user: User): void {
 
     const userObserver = {
       error: (err: any) => {
@@ -47,11 +47,11 @@ onFormSubmit(user: User): void {
       },
       complete: () => {
         this.toastService.success(`User-profile edited !`);
-        this.defaultUserProfile = user.userprofile;
+        this.defaultUserProfile = user;
       },
     };
 
-    this.userService.updateUserProfile(this.user).subscribe(userObserver)
+    this.userService.editUser(this.user).subscribe(userObserver)
   }
 
 /*function delete profile*/

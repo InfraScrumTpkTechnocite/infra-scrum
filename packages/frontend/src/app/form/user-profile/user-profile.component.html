@@ -1,6 +1,6 @@
 <!--espacement "margin"-->
 <br><br><br><br><br><br><br><br><br><br><br>
-<form #userForm="ngForm" (ngSubmit)="onFormSubmit" [appMatchPassword]="['password', 'confirmPassword']">
+<form #userForm="ngForm" (ngSubmit)="onSubmit" [appMatchPassword]="['password', 'confirmPassword']">
 
     <!--div header-->
     <div class="bg-tpkwhite text-secondary mt-15 m-auto w-1/2 h-18/9 rounded-md shadow-lg shadow-primary">
@@ -24,7 +24,7 @@
         </div>
 
         <!--"message erreur Role"-->
-        <p *ngIf="username.errors?.['required'] && username.dirty" style="text-align:start" class="alert role-message-erreur">role required</p>
+        <p *ngIf="role.errors?.['required'] && role.dirty" style="text-align:start" class="alert role-message-erreur">role required</p>
         <!--"message erreur Username"-->
         <p *ngIf="username.errors?.['required'] && username.dirty" style="text-align:start" class="alert username-message-erreur text-sm italic">username required</p>
 
@@ -44,7 +44,7 @@
 
         <!--"message erreur Email"-->
         <p *ngIf="!email.errors?.['required'] && email.invalid && password.dirty" class="alert email-message-erreur text-sm italic">email invalid</p>
-        <p *ngIf="username.errors?.['required'] && username.dirty" style="text-align:center" class="alert email-message-erreur text-sm italic">email required</p><br>
+        <p *ngIf="email.errors?.['required'] && email.dirty" style="text-align:center" class="alert email-message-erreur text-sm italic">email required</p><br>
 
         <!--zone formulaire Firstname/Lastname-->
         <div>
@@ -72,8 +72,8 @@
         
         <!--button Update/Delete-->
         <div class="flex w-full justify-center">
-            <input class="update" value="update" type="submit" onclick="alert ('Update profile ok!'), onFormSubmit()"> &nbsp;&nbsp;&nbsp;
-            <input class="delete" value="delete" type="reset" onclick="alert ('Profile data deleted.'), resetForm()">
+            <button class="update" type="submit" (click)="onSubmit(user)">Update</button> &nbsp;&nbsp;&nbsp;
+            <button class="delete" type="reset" onclick="alert ('Profile data deleted.'), resetForm()">Clear</button>
         </div>
         <br><br>
     </div>

@@ -82,16 +82,16 @@ export class UserService {
     );
   }
 
-  updateUserProfile(user: User): Observable<User> {
+  /*updateUserProfile(user: User): Observable<User> {
     return this.httpClient.put<User>("/backend/users", JSON.stringify(user), this.httpOptions)
     .pipe(
       tap((response) => {
         this.log(`user-service-edituser- response = ${response}`);
       }),
       catchError((error) => this.handleError(error, null))
-    );
+    );*/
   }
-}
+
 
 
 
