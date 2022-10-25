@@ -6,10 +6,14 @@
         class="bg-grey1 text-white h-full w-1/6 xl:w-1/12 px-5 py-3 overflow-x-hidden"
     >
         <div class="flex flex-col justify-start items-center text-center">
-            <button *ngIf="parentProject"
-                class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-8 text-xs mb-6"
+            <button
                 title="Show global view"
                 (click)="closeSprintBar()"
+
+                class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs font-semibold justify-center"
+                    [ngClass]="{
+                        'bg-primary text-white': display.id == projectid, 'text-primary': display.id != projectid
+                    }"
             >
                 Global view
             </button>
