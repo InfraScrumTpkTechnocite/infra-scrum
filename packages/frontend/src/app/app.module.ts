@@ -25,7 +25,7 @@ import { TaskComponent } from './task/task.component';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ProjectinfoComponent } from './projectinfo/projectinfo.component';
 import { InitialsNamePipe } from './pipes/initials-name.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
