@@ -28,9 +28,9 @@
             >
                 <button
                     (click)="changeSprintDisplay(sprint.id)"
-                    class="hover:bg-secondary hover:text-white text-primary p-3 rounded-xl m-2 text-xs font-semibold justify-center"
+                    class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs font-semibold justify-center"
                     [ngClass]="{
-                        'bg-secondary text-white': sprint.id == display.id
+                        'bg-primary text-white': sprint.id == projectid, 'text-primary': sprint.id != projectid
                     }"
                 >
                     {{ sprint.name }}

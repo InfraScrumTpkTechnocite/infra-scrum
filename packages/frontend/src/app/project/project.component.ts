@@ -102,6 +102,7 @@ export class ProjectComponent implements OnInit {
                             this.project = this.parentProject;
                             this.display = this.parentProject;
                         }
+                        this.headerTitleService.setTitle(this.project.name);
                         console.log(`project.component - ngOnInit - parentProject = ${this.parentProject}`);
                         this.projectService.findSprints(<string> localStorage.getItem('projectid')).subscribe(sprintObserver);
                     },
