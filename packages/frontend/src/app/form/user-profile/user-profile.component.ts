@@ -24,6 +24,8 @@ export class UserProfileComponent{
   toast: any;
   toastService: any;
   defaultUserProfile: any;
+url: any;
+event: any;
 
   constructor(
     private userService: UserService,
@@ -52,6 +54,20 @@ onSubmit(user: User): void {
     };
 
     this.userService.editUser(this.user).subscribe(userObserver)
+  }
+
+  /*function "ajouter" avatar profile*/
+
+  onSelectFile(event:any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.url = event.target?.result;
+      }
+    }
   }
 
 /*function delete profile*/

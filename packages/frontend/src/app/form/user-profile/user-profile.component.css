@@ -10,6 +10,50 @@
 }
 
 
+/*css avatar button "ajouter" image*/
+p {
+    font-family: Lato;
+  }
+  
+  .image-container {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  img {
+    height: 160px;
+    width: 160px;
+    border: 5px solid #000;
+    border-radius: 50%;
+  }
+  
+  .select-profile-picture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  
+  .message {
+    position: absolute;
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    transition: all 1s;
+    opacity: 0;
+  }
+  
+  .image-container:hover .message {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
 /*css input role message erreur*/
 
 .role-message-erreur {
@@ -73,7 +117,7 @@
 /*css role*/
 
 .input-role {
-    margin-left: 85px;
+    margin-left: 70px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -151,7 +195,7 @@
 
 /*css buton cancel*/
 
-.delete {
+.clear {
     padding: 6px 15px;
     background: #e66565;
     color: #ffffff;
@@ -178,3 +222,5 @@
     font-size: 20px;
     font-style: italic;
 }
+
+

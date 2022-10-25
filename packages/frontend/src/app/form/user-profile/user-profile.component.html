@@ -10,18 +10,23 @@
 
         <!--Zone avatar-->
         <div class="flex mx-12">
-            <img src="assets/img/avatar2.png" alt="Avatar" class="avatar"><br>
+            <!--<img src="assets/img/avatar2.png" alt="Avatar" class="avatar"><br>-->
 
             <!--button ("+")-->
-            <input style="border:1px solid #7697a8;" class="border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" id="loadFileXml" value="+" accept="image/png, image/jpeg" onclick="document.getElementById('file').click();"
-            /><input type="file" style="display:none;" id="file" name="file" />
-        </div>
+            <!--<input style="border:1px solid #7697a8;" class="border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" id="loadFileXml" value="+" accept="image/png, image/jpeg" onclick="document.getElementById('file').click();"
+            /><input type="file" style="display:none;" id="file" name="file" />-->
+            <div class="image-container">
+                <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" class=""> <br/>
+                <input type='file' (change)="onSelectFile($event)" class="select-profile-picture">
+                <span class="message"> Choose avatar profile</span>
+               </div>
+               </div>
 
         <!--input Role-->
         <div class="flex w-full justify-start">
             <label for="role"></label><input id="role" type="text" style="text-align:center" required class="input-role form-control bg-transparent placeholder:italic" placeholder="role" value="{{user.role.name}}" size="10" #role="ngModel"
                 [(ngModel)]="user.username" required="required">
-        </div>
+        </div><br>
 
         <!--"message erreur Role"-->
         <p *ngIf="role.errors?.['required'] && role.dirty" style="text-align:start" class="alert role-message-erreur">role required</p>
@@ -73,8 +78,8 @@
         <!--button Update/Delete-->
         <div class="flex w-full justify-center">
             <button class="update" type="submit" (click)="onSubmit(user)">Update</button> &nbsp;&nbsp;&nbsp;
-            <button class="delete" type="reset" onclick="alert ('Profile data deleted.'), resetForm()">Clear</button>
+            <button class="clear" type="reset" onclick="alert ('Profile data deleted.'), resetForm()">Clear</button>
         </div>
-        <br><br>
+        <br><br><br>
     </div>
 </form>
