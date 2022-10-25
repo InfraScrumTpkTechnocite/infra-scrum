@@ -35,8 +35,11 @@
                                 <div class="flex">
                                     <input
                                         name="color"
+                                        #color="ngModel"
+                                        [(ngModel)]="task.color"
                                         type="color"
                                         class="h-10 w-10 mr-2"
+                                        required
                                     />
                                     
                                 </div>
@@ -48,11 +51,14 @@
                         class="xl:w-50 mt-12 mx-8 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                         >
                             <select
-                                name="sprints"
-                                id="sprints"
+                                name="type"
+                                #type="ngModel"
+                                [(ngModel)]="task.tasktype"
+                                id="type"
+                                required
                                 class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
                             >
-                                <option value="#">Type</option>
+                                <option selected disabled hidden>Type</option>
                                 <option value="front">Front-end</option>
                                 <option value="back">back-end</option>
                                 <option value="desig">Designer</option>
@@ -64,7 +70,10 @@
                         >
                             <select
                                 name="sprints"
+                                #sprints="ngModel"
+                                [(ngModel)]="task.sprint"
                                 id="sprints"
+                                required
                                 class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
                             >
                                 <option value="#">Sprints</option>
@@ -79,7 +88,6 @@
                             class="w-48 xl:w-50 mt-12 mx-6 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
                             <label class="font-bold"
                             >Estimate time</label>
-                            <!-- <input type="datetime-local"> -->
                                 <div class="flex">
                                     <div class="flex flex-col w-12 mr-3">
                                         <h3>Jours</h3>
@@ -126,6 +134,10 @@
                             <label class="font-bold">Name</label>
                             <input
                                 type="text"
+                                name="name"
+                                #name="ngModel"
+                                [(ngModel)]="task.name"
+                                required
                                 class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
                             />
                         </div>
@@ -135,6 +147,10 @@
                             <label class="font-bold">Start date</label>
                             <input
                                 type="date"
+                                name="startdate"
+                                #startdate="ngModel"
+                                [(ngModel)]="task.startdate"
+                                required
                                 class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
                             />
                         </div>
@@ -144,8 +160,11 @@
                     >
                         <label class="font-bold">Description</label>
                         <textarea
-                            name=""
-                            id=""
+                            name="description"
+                            id="description"
+                            #description="ngModel"
+                            [(ngModel)]="task.description"
+                            required
                             cols="30"
                             rows="2"
                             class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
@@ -157,6 +176,10 @@
                         <label class="font-bold">Choose an capture/file</label>
                         <input
                             type="file"
+                            name="file"
+                            #file="ngModel"
+                            [(ngModel)]="task.file"
+                            required
                             class="w-full mt-6 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
                         />
                     </div>
@@ -170,10 +193,10 @@
                     Cancel
                 </button>
                 <button type="submit"
-                [disabled]="!formEditTask.valid"
+                [disabled]="formEditTask.valid"
                     class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8"
                 >
-                    Enregister
+                    Register
                 </button>
             </div>
         </div>
