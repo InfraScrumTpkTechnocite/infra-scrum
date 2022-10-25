@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Task } from '../models/task.model';
+import { TaskAssignment } from '../models/taskassignment.model';
+import { User } from '../models/user.model';
+import { TaskassignmentService } from '../services/taskassignment.service';
 
 @Component({
     selector: 'app-task',
@@ -10,9 +14,16 @@ export class TaskComponent implements OnInit {
 
     isTaskOverview: boolean = false;
 
-    constructor() {}
+    @Input() task!: Task;
+    taskassignmentList!: TaskAssignment[];
 
-    ngOnInit(): void {}
+    constructor(
+        private taskassignmentService: TaskassignmentService
+    ) {}
+
+    ngOnInit(): void {
+        this.taskassignmentService.findAllUsersOfTask(this.task.id!).subscribe((taskassignmentList: TaskAssignment[]) => this.taskassignmentList = taskassignmentList)
+    }
 
     toggleTaskOverview() {
         this.isTaskOverview = !this.isTaskOverview;

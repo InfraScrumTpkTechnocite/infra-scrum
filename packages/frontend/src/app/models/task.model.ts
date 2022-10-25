@@ -1,14 +1,15 @@
+import { Kanbanstatus } from "./kanbanstatus.model";
 import { Project } from "./project.model";
 import { TaskType } from "./tasktype.model";
 
 export class Task {
   id?: string;
   name: string;
-  kanbanstatus: string;
+  kanbanstatus: Kanbanstatus;
   task?: Task;
   description: string;
   startdate: string;
-  estimatedTime: number;
+  estimatedtime: number;
   file: string;
   done: boolean;
   tasktype: TaskType;
@@ -17,10 +18,10 @@ export class Task {
 
   constructor() {
     this.name = '';
-    this.kanbanstatus = '';
+    this.kanbanstatus = new Kanbanstatus();
     this.description = '';
     this.startdate = '';
-    this.estimatedTime = 0;
+    this.estimatedtime = 0;
     this.file = '';
     this.done = false;
     this.tasktype = new TaskType();
