@@ -40,8 +40,8 @@ onFormSubmit(user: User): void {
 
     const userObserver = {
       error: (err: any) => {
-        console.log(`Erreur édition user : ${err.error['driverError'].detail}`);
-        this.toastService.error(`Error during user creation<br><br>${err.error.driverError.detail}`);
+        console.log(`Erreur édition profile : ${err.error['driverError'].detail}`);
+        this.toastService.error(`Error during profile creation<br><br>${err.error.driverError.detail}`);
   
         this.toast.success('Update user-profile!');
       },
