@@ -36,7 +36,7 @@ export class UsersprojectsService {
     return await this.usersProjectsRepository.find({
       select: ['project'],
       relations: { project: true },
-      where: { user: Equal(userid), project: { enddate: IsNull() } },
+      where: { user: Equal(userid) },
       order: {
         project: { startdate: 'ASC' },
       },
