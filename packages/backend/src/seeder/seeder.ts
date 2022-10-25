@@ -11,9 +11,9 @@ export const seederRoles: any = [
 export const seederUser: any = {
   username: 'gilles',
   email: 'gilles@triptyk.eu',
-  firstname: 'Gilles',
-  lastname: '',
+  firstname: 'gilles',
+  lastname: 'bertrand',
   password: 'gilles',
   picture: 'zrzerzer',
-  role: 'acf42287-aaaa-48b5-ae6e-ebc75e2a275f',
+  role: 'f5d033ee-d60d-4d52-8366-e3295cd71ef3',
 };
