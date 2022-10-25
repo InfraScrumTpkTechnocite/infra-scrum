@@ -34,7 +34,7 @@ export class UserProfileComponent{
     this.verifPassword = '';
 }
 
-/*function register profile*/
+/*function update profile*/
 
 onFormSubmit(user: User): void {
 
