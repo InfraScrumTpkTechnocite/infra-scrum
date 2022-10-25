@@ -21,19 +21,19 @@ export class ProjectComponent implements OnInit {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
 
-    projectid: string = ''
+    projectid: string = '';
     parentProject: any;
 
     project!: Project;
     sprintList!: Project[];
-    @Input() display! : Project;
+    @Input() display!: Project;
 
     kanbanStatus!: Kanbanstatus;
     kanbanList!: Kanbanstatus[];
 
     userProjects!: UserProject[];
 
-    dateToday: string = "";
+    dateToday: string = '';
 
     taskList: Task[] = [];
     
@@ -43,6 +43,7 @@ export class ProjectComponent implements OnInit {
         private kanbanstatusService: KanbanstatusService,
         private toastService: HotToastService,
         private userProjectService: UserprojectService,
+        private headerTitleService: HeaderTitleService,
         private taskService: TaskService,
         private router: Router
     ) {}
@@ -56,10 +57,11 @@ export class ProjectComponent implements OnInit {
             let paramsObject: any = { ...params.keys, ...params };
             this.projectid = paramsObject.params.projectid;
 
-            console.log(`project.component - ngOnInit - projectid = ${this.projectid}`);
-            
-            if(this.projectid){
-                
+            console.log(
+                `project.component - ngOnInit - projectid = ${this.projectid}`
+            );
+
+            if (this.projectid) {                
                 const tasksObserver = {
                     next: ( taskList : Task[] ) => {
                         taskList.map(task => this.taskList.push(task));
@@ -69,56 +71,66 @@ export class ProjectComponent implements OnInit {
                 }
 
                 const userProjectsObserver = {
-                    next: ( userProjects : UserProject[] ) => this.userProjects = userProjects,
+                    next: (userProjects: UserProject[]) =>
+                        (this.userProjects = userProjects),
                     error: () => {},
                     complete: () => {}
-                }
-
+                };
 
                 const kanbanstatusObserver = {
                     next: ( kanbanList : Kanbanstatus[] ) => {
                         this.kanbanList = kanbanList
-                        let projectid: any = localStorage.getItem('projectid');
+                        let projectid : string = <string> localStorage.getItem('projectid');
 
-                        this.userProjectService.findCurrentProjectUsers(JSON.parse(projectid)).subscribe(userProjectsObserver);
+                        this.userProjectService.findCurrentProjectUsers(projectid).subscribe(userProjectsObserver);
                         kanbanList.map(kanbanstatus => {
                             this.taskService.findAllOfKanbanstatus(kanbanstatus.id!).subscribe(tasksObserver)
                         });
                     },
                     error: () => {},
                     complete: () => {}
-                }
+                };
 
                 const sprintObserver = {
-                    next: (sprintList : Project[]) => {
-                        this.sprintList =  sprintList.map( sprint => {
+                    next: (sprintList: Project[]) => {
+                        this.sprintList = sprintList.map((sprint) => {
                             //sprint.enddate = new Date(new Date(sprint.enddate!).setUTCHours(0,0,0,0)).toISOString();
                             return sprint;
                         });
-                        this.kanbanstatusService.findAllOfProject(this.projectid).subscribe(kanbanstatusObserver);
+                        this.kanbanstatusService.findAllOfProject(<string> localStorage.getItem('projectid')).subscribe(kanbanstatusObserver);
+                        
                     },
                     error: () => {},
                     complete: () => {}
-                }
+                };
 
                 const projectObserver = {
                     next: (project : Project) => {
-                        if(!project.project) localStorage.setItem('projectid', JSON.stringify(project.id))
-                        this.project = project;
-                        this.display = project;
-                        this.parentProject = project.project;
+                        if(!project.project) {//on est dans le projet global
+                            localStorage.setItem('projectid', <string> project.id)
+                            this.project = project;
+                            this.display = project;
+                            this.parentProject = project.project;
+                            
+                        }
+                        else {//on est dans un sprint
+                            this.parentProject = project.project;
+                            this.project = this.parentProject;
+                            this.display = this.parentProject;
+                        }
+                        this.headerTitleService.setTitle(this.project.name);
                         console.log(`project.component - ngOnInit - parentProject = ${this.parentProject}`);
-                        this.projectService.findSprints(this.projectid).subscribe(sprintObserver);
+                        this.projectService.findSprints(<string> localStorage.getItem('projectid')).subscribe(sprintObserver);
                     },
                     error: () => {},
-                    complete: () => {},
-                }
+                    complete: () => {}
+                };
 
-                this.projectService.findOne(this.projectid).subscribe(projectObserver);
-            }   
+                this.projectService
+                    .findOne(this.projectid)
+                    .subscribe(projectObserver);
+            }
         });
-
-        // this.headerTitleService.setTitle('project name');
     }
 
     // SPRINTS //
@@ -135,20 +147,25 @@ export class ProjectComponent implements OnInit {
             skipLocationChange: true,
             queryParamsHandling: 'merge', //== if you need to keep queryParams
             queryParams: { projectid: this.parentProject.id }
-          })
+        });
     }
 
-    //Afficher Sprint en fonction de celui sélectionner 
-    changeSprintDisplay(id? : string){
+    //Afficher Sprint en fonction de celui sélectionner
+    changeSprintDisplay(id?: string) {
         console.log(`project.component - changeSprintDisplay - id = ${id}`);
-        const sprint: Project = this.sprintList.find(sprint => sprint.id == id) || new Project();
-        console.log(`project.component - changeSprintDisplay - ${JSON.stringify(sprint)}`);
+        const sprint: Project =
+            this.sprintList.find((sprint) => sprint.id == id) || new Project();
+        console.log(
+            `project.component - changeSprintDisplay - ${JSON.stringify(
+                sprint
+            )}`
+        );
         this.display = sprint;
-        // this.router.navigate([], {
-        //     skipLocationChange: true,
-        //     queryParamsHandling: 'merge', //== if you need to keep queryParams
-        //     queryParams: { projectid: sprint.id }
-        //   })
+        this.router.navigate([], {
+            skipLocationChange: true,
+            queryParamsHandling: 'merge', //== if you need to keep queryParams
+            queryParams: { projectid: sprint.id }
+          })
     }
 
     addSprint() {
@@ -157,10 +174,14 @@ export class ProjectComponent implements OnInit {
         newSprint.project = this.project;
 
         const sprintObserver = {
-            next : (sprint: Project) => {
-                console.log(`project.component - addSprint - new sprint = ${JSON.stringify(sprint)}`);
+            next: (sprint: Project) => {
+                console.log(
+                    `project.component - addSprint - new sprint = ${JSON.stringify(
+                        sprint
+                    )}`
+                );
                 this.sprintList.push(sprint);
-                this.display = sprint;//afficher celui qu'on vient de créer
+                this.display = sprint; //afficher celui qu'on vient de créer
             },
             error: (err: any) => {
                 console.log(
