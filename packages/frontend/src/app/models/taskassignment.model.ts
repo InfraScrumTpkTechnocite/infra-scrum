@@ -1,10 +1,15 @@
+import { Task } from "./task.model";
+import { UserProject } from "./userproject.model";
+
 export class TaskAssignment {
   id?: string;
-  userprojectid: string;
-  taskid: string;
+  userproject: UserProject;
+  task: Task;
+  isTaskCreator: boolean;
 
   constructor() {
-    this.userprojectid = '';
-    this.taskid = '';
+    this.userproject = new UserProject();
+    this.task = new Task();
+    this.isTaskCreator = true;
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Equal, Repository, UpdateResult } from 'typeorm';
 import { KanbanStatus } from './kanbanstatus.entity';
 
 @Injectable()
@@ -34,17 +34,15 @@ export class KanbanstatusService {
     projectid: string,
     name: string,
   ): Promise<KanbanStatus> {
-    return await this.kanbanStatusRepository
-      .createQueryBuilder('kanbanstatus')
-      .where('kanbanstatus.project = :projectid', { projectid })
-      .andWhere('kanbanstatus.name = :name', { name })
-      .getOneOrFail();
+    return await this.kanbanStatusRepository.findOne({
+      where: { name: Equal(name), project: Equal(projectid) },
+    });
   }
 
-  async findAllByProject(projectid: string): Promise<KanbanStatus[]> {
-    return await this.kanbanStatusRepository
-      .createQueryBuilder('kanbanstatus')
-      .where('kanbanstatus.project = :projectid', { projectid })
-      .getMany();
+  async findAllOfProject(projectid: string): Promise<KanbanStatus[]> {
+    return await this.kanbanStatusRepository.find({
+      where: { project: Equal(projectid) },
+      order: { order: 'ASC' }
+    });
   }
 }

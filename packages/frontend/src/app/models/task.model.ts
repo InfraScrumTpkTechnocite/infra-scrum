@@ -1,23 +1,31 @@
+import { Kanbanstatus } from "./kanbanstatus.model";
+import { Project } from "./project.model";
+import { TaskType } from "./tasktype.model";
+
 export class Task {
   id?: string;
   name: string;
-  kanbanstatus: string;
-  task?: string;
+  kanbanstatus: Kanbanstatus;
+  task?: Task;
   description: string;
   startdate: string;
-  estimatedTime: number;
+  estimatedtime: number;
   file: string;
   done: boolean;
-  tasktype: string;
+  tasktype: TaskType;
+  color: string;
+  sprint: Project;
 
   constructor() {
     this.name = '';
-    this.kanbanstatus = '';
+    this.kanbanstatus = new Kanbanstatus();
     this.description = '';
     this.startdate = '';
-    this.estimatedTime = 0;
+    this.estimatedtime = 0;
     this.file = '';
     this.done = false;
-    this.tasktype = '';
+    this.tasktype = new TaskType();
+    this.color = '#1F71A5';
+    this.sprint = new Project();
   }
 }

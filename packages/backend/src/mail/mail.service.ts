@@ -8,7 +8,7 @@ export class MailService {
 
     async sendUserConfirmation(user: User, token: string) {
         // const url = `http://localhost:3000/backend/auth/confirm/${user.username}/${token}`;
-        const url = `http://localhost:4200/email-confirm?username=${user.username}&token=${token}`;
+        const url = `http://localhost:4200/login?username=${user.username}&token=${token}`;
         console.log(`mail.service - sendUserConfirmation - user.email=${user.email}, user.username=${user.username}`)
         await this.mailerService.sendMail({
             to: user.email,

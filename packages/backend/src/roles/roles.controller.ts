@@ -17,12 +17,12 @@ import { Role } from './roles.entity';
 import { RolesService } from './roles.service';
 
 @UseFilters(new QueryFailedExceptionFilter())
-@UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @ApiTags('roles')
 @Controller('roles')
 export class RolesController {
-  constructor(private roleService: RolesService) {}
+  constructor(private roleService: RolesService) { }
 
   @Post()
   async create(@Body() role: Role): Promise<Role> {

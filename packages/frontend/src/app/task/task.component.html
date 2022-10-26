@@ -1,0 +1,183 @@
+<div>
+    <div
+        *ngIf="isTaskOverview"
+        (click)="toggleTaskOverview()"
+        class="hover:cursor-zoom-out"
+    >
+        <div
+            class="border-2 rounded-md bg-grey1 mt-2 flex h-auto"
+            [style.border-color]="task.color"
+        >
+            <div 
+                class="w-1/12"
+                [style.background]="task.color"
+            ></div>
+            <div class="w-11/12 bg-grey1 flex flex-col p-2">
+                <!-- task title + edit -->
+                <div
+                    class="flex justify-between border-b-2 border-grey2 p-2 ml-2"
+                >
+                    <h4 class="text-center font-semibold pr-1">
+                        {{task.name}}
+                    </h4>
+                    <image
+                        routerLink="/edit-new-tasks"
+                        class="ml-1 flex justify-start"
+                        title="Edit task"
+                        
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-4 h-4 hover:text-primary"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                            />
+                        </svg>
+                    </image>
+                </div>
+                <!-- task type + users -->
+                <div class="flex justify-between mt-2 mr-1 p-2 items-center">
+                    <h5 class="text-sm md:text-base items-start">{{task.tasktype.label}}</h5>
+                    <span>|</span>
+
+                    <div class="flex items-end ml-4">
+                        <div
+                            *ngFor="let taskassignment of taskassignmentList"
+                            class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                        >
+                            <!-- condition si photo, sinon span avec premiere lettre username -->
+                            <img
+                                *ngIf="taskassignment.userproject.user.picture"
+                                class="rounded-full hover:cursor-default"
+                                [src]="taskassignment.userproject.user.picture"
+                                alt="profile picture"
+                                title="{{ taskassignment.userproject.user.username }}"
+                            />
+                            <span
+                                *ngIf="!taskassignment.userproject.user.picture"
+                                class="text-2xl uppercase font-bold"
+                            >
+                                {{ taskassignment.userproject.user.username | initialsName }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- task description -->
+                <div
+                    class="h-32 overflow-y-scroll mt-1 p-2 border-2 border-grey2 border-opacity-50"
+                >
+                    <p class="overflow-y-scroll text-sm">
+                        {{task.description}}
+                    </p>
+                </div>
+
+                <!-- Files -->
+
+                <!-- <div class="mt-4 flex items-center justify-center"> -->
+                <!-- image de référence visuelle en attendant -->
+                <!-- <img
+                            src="https://img.freepik.com/free-vector/hand-drawn-web-developers_23-2148819604.jpg?w=2000"
+                            alt="image projet"
+                            class="w-10/12"
+                        />
+                    </div> -->
+
+                <!-- date début et temps estimé -->
+
+                <div class="flex justify-between mt-3 p-1">
+                    <div class="flex flex-col items-center">
+                        <p class="text-xs">Start date:</p>
+                        <p class="text-sm">{{ task.startdate | date }}</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <p class="text-xs">Estimated time:</p>
+                        <p class="text-sm">{{ task.estimatedtime }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        *ngIf="!isTaskOverview"
+        (click)="toggleTaskOverview()"
+        class="hover:cursor-zoom-in"
+    >
+        <div
+            class="border-2 rounded-sm bg-grey1 mt-2 flex h-auto"
+            [style.border-color]="task.color"
+        >
+            <div 
+                class="w-1/12"
+                [style.background]="task.color"
+            ></div>
+            <div class="w-11/12 bg-grey1 flex flex-col px-2 py-1">
+                <!-- titre tâche -->
+                <div
+                    class="flex justify-center items-center border-b-2 border-grey2 p-1"
+                >
+                    <h4 class="text-center font-semibold">
+                        {{task.name}}
+                    </h4>
+                </div>
+                <!-- users  -->
+                <div>
+                    <div class="flex justify-between items-center p-1">
+                        <!-- créateur tâche -->
+                        <div *ngFor="let taskassignment of taskassignmentList">
+                            <div *ngIf="taskassignment.isTaskCreator"
+                                class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                            >
+                                <!-- condition si photo, sinon span avec premiere lettre username -->
+                                <img
+                                    *ngIf="taskassignment.userproject.user.picture"
+                                    class="rounded-full hover:cursor-default"
+                                    [src]="taskassignment.userproject.user.picture"
+                                    alt="profile picture"
+                                    title="{{ taskassignment.userproject.user.username }}"
+                                />
+                                <span
+                                    *ngIf="!taskassignment.userproject.user.picture"
+                                    class="text-2xl uppercase font-bold"
+                                >
+                                    {{ taskassignment.userproject.user.username | initialsName }}
+                            </span>
+                            </div>
+                        </div>
+                        <span>|</span>
+                        <!-- autres users assignés -->
+                        <div class="flex items-end">
+                            <div *ngFor="let taskassignment of taskassignmentList">
+                                <div
+                                    *ngIf="!taskassignment.isTaskCreator"
+                                    class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                                >
+                                    <!-- condition si photo, sinon span avec premiere lettre username -->
+                                    <img
+                                        *ngIf="taskassignment.userproject.user.picture"
+                                        class="rounded-full hover:cursor-default"
+                                        [src]="taskassignment.userproject.user.picture"
+                                        alt="profile picture"
+                                        title="{{ taskassignment.userproject.user.username }}"
+                                    />
+                                    <span
+                                        *ngIf="!taskassignment.userproject.user.picture"
+                                        class="text-2xl uppercase font-bold"
+                                    >
+                                        {{ taskassignment.userproject.user.username | initialsName }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
