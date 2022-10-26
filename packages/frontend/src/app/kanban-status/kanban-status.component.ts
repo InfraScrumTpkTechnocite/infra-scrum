@@ -37,13 +37,15 @@ export class KanbanStatusComponent implements OnInit {
         this.kanbanstatus.color = this.newColor;
 
         const kanbanObserver = {
+            next: (response: any) => {
+                console.log(`${response}`);
+                this.toastService.success(" Column edited !");
+            },
             error : (err: any) => {
                 console.log(`Erreur edition kanbanstatus : ${err.error['driverError'].detail}`);
                 this.toastService.error(`Error during kanban edition<br><br>${err.error.driverError.detail}`);
             },
-            complete : () => {
-                this.toastService.success(" Column edited !");
-            }
+            complete : () => {}
         }
         this.kanbanstatusService.edit(this.kanbanstatus).subscribe(kanbanObserver);
 
