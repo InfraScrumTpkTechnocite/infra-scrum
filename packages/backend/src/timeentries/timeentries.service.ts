@@ -23,7 +23,11 @@ export class TimeentriesService {
   }
 
   async findAll(): Promise<TimeEntry[]> {
-    return await this.timeEntriesRepository.find({ relations: ['task'] });
+    return await this.timeEntriesRepository.find({
+      relations: {
+        taskassignment: { userproject: { user: true } },
+      },
+    });
   }
 
   async findOne(id: string): Promise<TimeEntry> {
