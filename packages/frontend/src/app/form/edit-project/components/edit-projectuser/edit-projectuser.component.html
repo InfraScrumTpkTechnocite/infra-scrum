@@ -1,0 +1,8 @@
+<div class="flex w-128 justify-between items-center">
+    <p
+        class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0"
+    >
+        {{ user.username }}
+    </p>
+    <mat-slide-toggle [(ngModel)]="isAssigned" [disabled]="isAdmin" (change)="assignUserToProject()"></mat-slide-toggle>
+</div>

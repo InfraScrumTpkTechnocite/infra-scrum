@@ -30,6 +30,9 @@ import { ProjectinfoComponent } from './projectinfo/projectinfo.component';
 import { InitialsNamePipe } from './pipes/initials-name.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { LoadingInterceptor } from './utils/loading.interceptor';
+import { EditProjectuserComponent } from './form/edit-project/components/edit-projectuser/edit-projectuser.component';
+import { EditDeliverydateComponent } from './form/edit-project/components/edit-deliverydate/edit-deliverydate.component';
+import { EditProjectInfoComponent } from './form/edit-project/components/edit-project-info/edit-project-info.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -52,7 +55,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         TaskComponent,
         ProjectinfoComponent,
         InitialsNamePipe,
-        SpinnerComponent
+        SpinnerComponent,
+        EditProjectuserComponent,
+        EditDeliverydateComponent,
+        EditProjectInfoComponent
     ],
     imports: [
         BrowserModule,
