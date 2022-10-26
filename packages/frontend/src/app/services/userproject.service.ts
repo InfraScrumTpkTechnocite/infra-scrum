@@ -61,4 +61,11 @@ export class UserprojectService {
                 this.httpOptions
             )
     }
+
+    delete(userProjectId: string): Observable<any>{
+        return this.httpClient.delete(
+            `/backend/usersprojects/${userProjectId}`,
+                this.httpOptions
+        )
+    }
 }
