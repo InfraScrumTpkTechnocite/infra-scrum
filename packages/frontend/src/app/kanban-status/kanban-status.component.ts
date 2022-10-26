@@ -52,12 +52,15 @@ export class KanbanStatusComponent implements OnInit {
 
     deleteKanbanStatus(){
         const kanbanObserver = {
+            next: (result: any) => {
+                console.log(`${result}`);
+                this.toastService.success(`Column deleted ! ${result}`);
+            },
             error : (err: any) => {
                 console.log(`Erreur suprresion kanbanstatus : ${err.error['driverError'].detail}`);
                 this.toastService.error(`Error during kanban supression<br><br>${err.error.driverError.detail}`);
             },
             complete : () => {
-                this.toastService.success(" Column deleted !");
                 this.kanbanDeleted.emit(this.kanbanstatus);
             }
         }
