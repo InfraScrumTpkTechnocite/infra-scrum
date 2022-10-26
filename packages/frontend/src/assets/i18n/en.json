@@ -1,7 +1,19 @@
 {
-    "welcomeMessage": "Thanks for joining, {{ firstName }}! It's great to have you!",
-    "login": {
-      "username": "Enter your user name",
-      "password": "Password here"
+    "infrascrum": {
+      "global": {
+        "btn-register": "Register",
+        "btn-cancel": "Cancel",
+        "btn-delete": "Delete"
+      },
+      "create-user": {
+        "title": "Create an account",
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "verif-password": "Confirm Password",
+        "sub-title": "Already have an account ?",
+        "login": "Log in"
+
+      }
     }
   }

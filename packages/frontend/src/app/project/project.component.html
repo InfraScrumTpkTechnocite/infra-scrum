@@ -9,16 +9,17 @@
             <button
                 title="Show global view"
                 (click)="closeSprintBar()"
-
                 class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs font-semibold justify-center"
-                    [ngClass]="{
-                        'bg-primary text-white': display.id == projectid, 'text-primary': display.id != projectid
-                    }"
+                [ngClass]="{
+                    'bg-primary text-white': !parentProject,
+                    'text-primary': parentProject
+                }"
             >
                 Global view
             </button>
 
-            <button *ngIf="!parentProject"
+            <button
+                *ngIf="!parentProject"
                 (click)="addSprint()"
                 class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-8 text-xs"
                 title="Add a sprint"
@@ -34,7 +35,8 @@
                     (click)="changeSprintDisplay(sprint.id)"
                     class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs font-semibold justify-center"
                     [ngClass]="{
-                        'bg-primary text-white': sprint.id == projectid, 'text-primary': sprint.id != projectid
+                        'bg-primary text-white': sprint.id == projectid,
+                        'text-primary': sprint.id != projectid
                     }"
                 >
                     {{ sprint.name }}
@@ -65,7 +67,7 @@
 
     <!-- KANBAN DASHBOARD -->
 
-    <div id="kanbanDashboard" class="w-11/12 overflow-y-hidden">
+    <div id="kanbanDashboard" class="w-11/12 overflow-y-scroll">
         <!-- Header  -->
         <div
             id="kanbanHeader"
@@ -170,22 +172,42 @@
 
         <div id="kanban" class="flex px-12 pb-12 pt-16">
             <!-- boucler sur les kanbanstatus du projet  -->
-            <div class="flex">
+            <div cdkDropListGroup class="flex">
                 <div
-                    *ngFor="let kanbanstatus of kanbanList"
+                    *ngFor="let kanbanstatus of kanbanList; let i = index"
+                    cdkDropList
+                    [cdkDropListData]="i"
                     class="flex flex-col"
                 >
-                    <app-kanban-status
-                        [kanbanstatus]="kanbanstatus"
-                        (kanbanDeleted)="onKanbanDeleted(kanbanstatus)"
-                    ></app-kanban-status>
-                    <!-- tâches du kanbanstatus  -->
-                    <div class="tasksContainer w-64 mx-4 mt-2 flex flex-col">
-                        <div *ngFor="let task of taskList">
-                            <app-task 
-                                [task]="task"
-                                *ngIf="kanbanstatus.id == task.kanbanstatus.id"
-                            ></app-task>
+                    <div
+                        cdkDrag
+                        [cdkDragData]="i"
+                        (cdkDragEntered)="dragEntered($event)"
+                        (cdkDragMoved)="dragMoved($event)"
+                        (cdkDragDropped)="dragDropped($event)"
+                    >
+                        <app-kanban-status
+                            [kanbanstatus]="kanbanstatus"
+                            (kanbanDeleted)="onKanbanDeleted(kanbanstatus)"
+                        ></app-kanban-status>
+                        <!-- tâches du kanbanstatus  -->
+                        <div
+                            class="tasksContainer w-64 mx-4 mt-2 flex flex-col"
+                        >
+                            <div *ngFor="let task of taskList">
+                                <app-task
+                                    [task]="task"
+                                    *ngIf="
+                                        (kanbanstatus.id ==
+                                            task.kanbanstatus.id &&
+                                            projectid == project.id) ||
+                                        (kanbanstatus.id ==
+                                            task.kanbanstatus.id &&
+                                            task.sprint &&
+                                            task.sprint.id == projectid)
+                                    "
+                                ></app-task>
+                            </div>
                         </div>
                     </div>
                 </div>
