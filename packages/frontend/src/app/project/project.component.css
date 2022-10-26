@@ -1,0 +1,5 @@
+/* DRAG AND DROP KANBANSTATUS */
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}
