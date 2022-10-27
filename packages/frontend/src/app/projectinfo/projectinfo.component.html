@@ -166,12 +166,26 @@
                         class="text-secondary text-md font-bold"
                         >Add a picture:</label
                     >
-                    <input
+                    <img
+                        (click)="PictureUploader.click()"
+                        *ngIf="userProject.project.picture"
+                        src="data:image/*;base64, {{
+                            userProject.project.picture
+                        }}"
+                        alt="{{ userProject.project.name }}"
+                    />
+                    <!-- <input
                         [(ngModel)]="userProject.project.picture"
                         name="picture"
                         #ProjectPicture
                         type="text"
                         placeholder="Image url pour l'instant"
+                    /> -->
+                    <input
+                        #PictureUploader
+                        type="file"
+                        class="w-full mt-6 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        (change)="onFileSelected($event)"
                     />
                 </div>
                 <!-- delivery date -->

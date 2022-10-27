@@ -7,6 +7,9 @@ import {
   UseInterceptors,
   UploadedFile,
   Param,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 //import { AuthGuard } from '@nestjs/passport';
@@ -119,7 +122,16 @@ export class AppController {
     },
   })
   async uploadFile(
-    @UploadedFile()
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 50000 }),
+          new FileTypeValidator({
+            fileType: new RegExp('(.jpeg|.JPEG|.gif|.GIF|.png|.PNG)$'),
+          }),
+        ],
+      }),
+    )
     file: Express.Multer.File,
     @Param('id') id: string,
   ) {
@@ -134,9 +146,12 @@ export class AppController {
 
     readFile(file.path, (err, data) => {
       if (err) throw err;
-      console.log(data.toString('base64'));
+
+      //console.log(data.toString('base64'));
+
       project.picture = data.toString('base64');
       this.projectsService.update(id, project);
+
       unlink(file.path, (error) => {
         console.log(error);
       });

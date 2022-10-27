@@ -42,7 +42,7 @@ export class KanbanstatusService {
   async findAllOfProject(projectid: string): Promise<KanbanStatus[]> {
     return await this.kanbanStatusRepository.find({
       where: { project: Equal(projectid) },
-      order: { order: 'ASC' }
+      order: { order: 'ASC' },
     });
   }
 }
