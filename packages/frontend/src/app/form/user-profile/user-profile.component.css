@@ -41,7 +41,7 @@ p {
   
   .message {
     position: absolute;
-    width: 65%;
+    width: 35%;
     top: 50%;
     left: 40%;
     transform: translate(-50%, 100%);
