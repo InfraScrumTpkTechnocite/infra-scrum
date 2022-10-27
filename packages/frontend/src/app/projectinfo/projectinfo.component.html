@@ -78,7 +78,7 @@
                     class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 flex flex-col text-secondary items-center justify-center"
                 >
                     <h3 class="font-semibold text-xl lg:text-2xl">
-                        Start date:
+                       {{"infrascrum.project-info.start-date" | translate}}
                     </h3>
                     <p class="text-xl">
                         {{ userProject.project.startdate | date : 'dd-MMM-yyyy'}}
@@ -139,7 +139,7 @@
                     <label
                         for="#ProjectPicture"
                         class="text-secondary text-md font-bold"
-                        >Add a picture:</label
+                        >{{"infrascrum.project-info.picture" | translate}}</label
                     >
                     <input
                         [(ngModel)]="userProject.project.picture"
@@ -153,7 +153,7 @@
                 <div
                     class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 flex flex-col text-secondary items-center justify-center"
                 >
-                    <h3 class="text-md font-bold">Start date:</h3>
+                    <h3 class="text-md font-bold">{{"infrascrum.project-info.start-date" | translate}}</h3>
                     <input
                         [(ngModel)]="userProject.project.startdate"
                         name="startdate"
