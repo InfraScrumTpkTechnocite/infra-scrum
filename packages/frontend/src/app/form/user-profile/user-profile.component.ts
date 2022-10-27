@@ -72,12 +72,25 @@ onSubmit(user: User): void {
     }
   }
 
-/*function delete profile*/
+  /*function delete profile*/
 
-resetForm(form: NgForm) {
-	form.resetForm();
-  this.user.role.name = 'delete data profile';
-}
+  onDeleteSubmit(user: User): void {
+
+    const userObserver = {
+      error: (err: any) => {
+        console.log(`Erreur delete profile : ${err.error['driverError'].detail}`);
+        this.toastService.error(`Error during profile delete<br><br>${err.error.driverError.detail}`);
+  
+        this.toast.success('Profile data deleted');
+      },
+      complete: () => {
+        this.toastService.success(`Profile data deleted!`);
+        this.defaultUserProfile = user;
+      },
+    };
+
+    this.userService.editUser(this.user).subscribe(userObserver)
+  }
 
 /*funtion ngOnInit*/
 

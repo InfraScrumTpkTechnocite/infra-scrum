@@ -75,7 +75,7 @@
         <!--button Update/Delete-->
         <div class="flex w-full justify-center">
             <button class="update" type="submit" (click)="onSubmit(user)">Update</button> &nbsp;&nbsp;&nbsp;
-            <button class="clear" type="reset" onclick="alert ('Profile data deleted.'), resetForm()">Clear</button>
+            <button class="clear" type="reset" (click)="onDeleteSubmit(user)">Clear</button>
         </div>
         <br><br><br>
     </div>
