@@ -5,6 +5,9 @@
         "btn-cancel": "Cancel",
         "btn-delete": "Delete"
       },
+      "admin": {
+        "title": "Super admin"
+      },
       "create-user": {
         "title": "Create an account",
         "username": "Username",
@@ -13,7 +16,43 @@
         "verif-password": "Confirm Password",
         "sub-title": "Already have an account ?",
         "login": "Log in"
-
+      },
+      "edit-new-task": {
+        "title": "Edit task",
+        "title-user": "Users",
+        "title-etiquette": "Etiquette",
+        "option-type-title": "Type",
+        "option-front": "Font-end",
+        "option-back": "Back-end",
+        "option-bug": "Bug",
+        "option-full": "Fullstack",
+        "option-design": "Designer",
+        "option-improvement": "Improvement",
+        "option-liaison-bf": "Liaison Back-Front",
+        "option-ux": "UX",
+        "option-correction": "Correction",
+        "option-analyse": "Analyse",
+        "option-integration": "Intégration design",
+        "option-sprint-title": "Sprint",
+        "option-one": "Sprint 1",
+        "option-two": "Sprint 2",
+        "option-three": "Sprint 3",
+        "option-four": "Sprint 4",
+        "option-five": "Sprint 5",
+        "estimate-time": "Estimate Time",
+        "estimate-day": "Day",
+        "estimate-hours": "Hours",
+        "estimate-minute": "Minute",
+        "name": "Name",
+        "start-date": "Start date",
+        "description": "Description",
+        "file": "Choose an file/capture"
+      },
+      "edit-projet":  {
+        "title": "Edit projet",
+        "btn-edit-projet": "Edit projet",
+        "btn-user": "Users",
+        "btn-inter-date": "Intermediate date"
       }
     }
   }

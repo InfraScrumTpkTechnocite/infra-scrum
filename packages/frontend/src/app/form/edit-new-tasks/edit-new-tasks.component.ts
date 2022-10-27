@@ -7,6 +7,7 @@ import { TaskassignmentService } from 'src/app/services/taskassignment.service';
 import { TaskAssignment } from 'src/app/models/taskassignment.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { TaskType } from 'src/app/models/tasktype.model';
 
 @Component({
   selector: 'app-edit-new-tasks',
@@ -15,10 +16,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EditNewTasksComponent implements OnInit {
   @Input() taskAssignment!: TaskAssignment
+
+
   task: Task = new Task(); 
   user: User = new User();
   dateToday: number = Date.now();
 
+  selectedType = '';
+  selectedSprint= '';
   
 
   constructor(
@@ -34,9 +39,17 @@ export class EditNewTasksComponent implements OnInit {
     }
   
   onSubmit() {
+    if (this.isValid()) {
+      this.task.tasktype = {
+        label: this.selectedType
+      } as TaskType;
     console.log(this.task);
     // console.log(formEditTask.valid);
     
-    
+    }
+  }
+
+  isValid(): boolean {
+    return true;
   }
 }
