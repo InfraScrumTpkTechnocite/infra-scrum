@@ -47,7 +47,12 @@
         "start-date": "Start date",
         "description": "Description",
         "file": "Choose an file/capture"
-
+      },
+      "edit-projet":  {
+        "title": "Edit projet",
+        "btn-edit-projet": "Edit projet",
+        "btn-user": "Users",
+        "btn-inter-date": "Intermediate date"
       }
     }
   }
