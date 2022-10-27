@@ -64,8 +64,8 @@ p {
 
 .role-message-erreur {
     margin-left: 105px;
-    font-style: italic;
-    font-size: small;
+    font-style: normal;
+    font-size: 14pt;
     color: red;
 }
 
@@ -74,8 +74,8 @@ p {
 
 .username-message-erreur {
     margin-left: 585px;
-    font-style: italic;
-    font-size: small;
+    font-style: normal;
+    font-size: 14pt;
     color: red;
 }
 
@@ -84,8 +84,8 @@ p {
 
 .email-message-erreur {
     margin-left: 190px;
-    font-style: italic;
-    font-size: small;
+    font-style: normal;
+    font-size: 14pt;
     color: red;
 }
 
@@ -94,8 +94,8 @@ p {
 
 .firstname-message-erreur {
     margin-left: 295px;
-    font-style: italic;
-    font-size: small;
+    font-style: normal;
+    font-size: 14pt;
     color: red;
 }
 
@@ -104,8 +104,8 @@ p {
 
 .lastname-message-erreur {
     margin-left: 100px;
-    font-style: italic;
-    font-size: small;
+    font-style: normal;
+    font-size: 14pt;
     color: red;
 }
 
@@ -114,8 +114,8 @@ p {
 
 .password-message-erreur {
     margin-left: 295px;
-    font-style: italic;
-    font-size: small;
+    font-style: normal;
+    font-size: 14pt;
     color: red;
 }
 
@@ -195,7 +195,7 @@ p {
     border-radius: 6px;
     border: 2px solid #78ebd0;
     font-size: 20px;
-    font-style: italic;
+    font-style: normal;
 }
 
 
@@ -210,7 +210,7 @@ p {
     border-radius: 6px;
     border: 2px solid #ffffff;
     font-size: 20px;
-    font-style: italic;
+    font-style: normal;
 }
 
 
@@ -226,7 +226,7 @@ p {
     border-radius: 6px;
     border: 2px solid #ffffff;
     font-size: 20px;
-    font-style: italic;
+    font-style: normal;
 }
 
 
