@@ -4,16 +4,31 @@
 >
     <!-- DIV PROJET NON EDITé -->
 
-    <div class="flex flex-col" *ngIf="!isEditNewProject" (click)="userProjectClicked($event)">
+    <div
+        class="flex flex-col"
+        *ngIf="!isEditNewProject"
+        (click)="userProjectClicked($event)"
+    >
         <!-- bouton icône edit -->
         <div class="text-right">
-            <button [disabled]="!userProject.isprojectadmin && user.role.name != 'superadmin'"
+            <button
+                [disabled]="
+                    !userProject.isprojectadmin &&
+                    user.role.name != 'superadmin'
+                "
                 (click)="openEditionProject()"
                 class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
             >
-                <div *ngIf="userProject.isprojectadmin || user.role.name == 'superadmin';then mayedit else maynotedit"></div>
+                <div
+                    *ngIf="
+                        userProject.isprojectadmin ||
+                            user.role.name == 'superadmin';
+                        then mayedit;
+                        else maynotedit
+                    "
+                ></div>
                 <ng-template #mayedit>
-                    <svg 
+                    <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -29,7 +44,7 @@
                     </svg>
                 </ng-template>
                 <ng-template #maynotedit>
-                    <svg 
+                    <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -69,7 +84,9 @@
                     />
                     <img
                         *ngIf="userProject.project.picture"
-                        src="{{ userProject.project.picture }}"
+                        src="data:image/*;base64, {{
+                            userProject.project.picture
+                        }}"
                         alt="{{ userProject.project.name }}"
                     />
                 </div>
@@ -81,7 +98,9 @@
                        {{"infrascrum.project-info.start-date" | translate}}
                     </h3>
                     <p class="text-xl">
-                        {{ userProject.project.startdate | date : 'dd-MMM-yyyy'}}
+                        {{
+                            userProject.project.startdate | date: 'dd-MMM-yyyy'
+                        }}
                     </p>
                 </div>
             </div>
@@ -90,11 +109,17 @@
 
     <!-- DIV EDITION PROJET -->
 
-    <form #projectForm="ngForm"  id="ngFormUserProject" class="flex flex-col" *ngIf="isEditNewProject" (ngSubmit)="updateProjectModel(projectForm)">
+    <form
+        #projectForm="ngForm"
+        id="ngFormUserProject"
+        class="flex flex-col"
+        *ngIf="isEditNewProject"
+        (ngSubmit)="updateProjectModel(projectForm)"
+    >
         <!-- bouton icône edit -->
         <div class="text-right">
             <button
-                form="ngFormUserProject"                
+                form="ngFormUserProject"
                 class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
             >
                 <svg

@@ -23,6 +23,7 @@ import { UserProject } from '../models/userproject.model';
 import { HeaderTitleService } from '../services/header-title.service';
 import { Task } from '../models/task.model';
 import { TaskService } from '../services/task.service';
+import { webSocket } from 'rxjs/webSocket';
 
 @Component({
     selector: 'app-project',
@@ -48,6 +49,8 @@ export class ProjectComponent implements OnInit {
 
     taskList: Task[] = [];
 
+    subject = webSocket('');
+
     constructor(
         private route: ActivatedRoute,
         private projectService: ProjectService,
@@ -60,6 +63,27 @@ export class ProjectComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        const subjectObserver = {
+            next: (message: any) => {
+                const method = message.method
+                var kanban: Kanbanstatus = new Kanbanstatus;
+                var task: Task = new Task;
+                if (message.kanban) kanban = message.kanban as Kanbanstatus;
+                if (message.task) task = message.task as Task;
+                console.log(message);
+                switch (method){
+                    case 'edit': 
+                        this.kanbanList.splice(kanban.order-1, 1, kanban);
+                        break;
+                    case 'delete':
+                        this.kanbanList.splice(kanban.order-1, 1);
+                        break;
+                    case 'add':
+                        this.kanbanList.push(kanban);
+                }
+            },
+        }
+
         this.dateToday = new Date(
             new Date().setUTCHours(0, 0, 0, 0)
         ).toISOString();
@@ -73,6 +97,10 @@ export class ProjectComponent implements OnInit {
             );
 
             if (this.projectid) {
+
+                this.subject = webSocket(`ws://localhost:8080?projectid=${this.projectid}`);
+                this.subject.subscribe(subjectObserver);
+                
                 const tasksObserver = {
                     next: (taskList: Task[]) => {
                         taskList.map((task) => this.taskList.push(task));
@@ -233,6 +261,7 @@ export class ProjectComponent implements OnInit {
         const kanbanObserver = {
             next: (kanban: Kanbanstatus) => {
                 this.kanbanList.push(kanban);
+                this.subject.next({method: 'add', kanban: kanban});
             },
             error: (err: any) => {
                 console.log(
@@ -322,7 +351,9 @@ export class ProjectComponent implements OnInit {
                 error: (err) => {
                     console.log(err);
                 },
-                complete: () => {}
+                complete: () => {
+                    this.subject.next({method: 'edit',kanban: kanban});
+                }
             });
         });
 

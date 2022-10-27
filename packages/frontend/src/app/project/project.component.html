@@ -76,7 +76,7 @@
             <!-- boutons edit project, add task et add column -->
 
             <div class="flex items-center justify-start pl-6">
-                <button routerLink="edit-project" [queryParams]="{projectid: project.id}"  title="Edit project">
+                <button *ngIf="project" routerLink="edit-project" [queryParams]="{projectid: project.id}"  title="Edit project">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -187,6 +187,7 @@
                         (cdkDragDropped)="dragDropped($event)"
                     >
                         <app-kanban-status
+                            [subject]="subject"
                             [kanbanstatus]="kanbanstatus"
                             (kanbanDeleted)="onKanbanDeleted(kanbanstatus)"
                         ></app-kanban-status>
