@@ -62,7 +62,6 @@ export class User {
   @Column({ nullable: true })
   @IsOptional()
   picture: string;
-  donnees: ObjectID;
 
   // @ApiProperty({ example: 'true or false', description: 'User active' })
   // @Column({ default: false })

@@ -1,5 +1,5 @@
 <!--espacement "margin"-->
-<br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
 <form #userForm="ngForm" (ngSubmit)="onSubmit" [appMatchPassword]="['password', 'confirmPassword']">
 
     <!--div header-->
@@ -74,9 +74,11 @@
         
         <!--button Update/Delete-->
         <div class="flex w-full justify-center">
-            <button class="update" type="submit" (click)="onSubmit(user)">Update</button> &nbsp;&nbsp;&nbsp;
+            <button class="update" type="submit" (click)="onSubmit(user)">Update</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="clear" type="reset" (click)="onDeleteSubmit(user)">Clear</button>
         </div>
-        <br><br><br>
+        <br>
+        <button class="cancel" type="submit" onclick= "window.location.href = 'http://localhost:4200/projects';">Cancel</button>&nbsp;&nbsp;&nbsp; 
+        <br><br><br><br>
     </div>
 </form>
