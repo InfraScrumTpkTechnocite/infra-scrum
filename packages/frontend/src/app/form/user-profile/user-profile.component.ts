@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Role } from 'c:/Users/szmul/Desktop/Infrascrum/infra-scrum/packages/frontend/src/app/models/role.model';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +23,6 @@ export class UserProfileComponent{
   @Input() verifPassword: string | undefined;
   showErrorMessage: boolean = false;
   toast: any;
-  toastService: any;
   defaultUserProfile: any;
   url: any;
   event: any;
@@ -32,7 +32,8 @@ export class UserProfileComponent{
     private userService: UserService,
     private roleService: RoleService,
     private router: Router,
-    private headerTitleService: HeaderTitleService
+    private headerTitleService: HeaderTitleService,
+    private toastService: HotToastService,
 ) {
     this.verifPassword = '';
 }
