@@ -6,6 +6,7 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  Param,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 //import { AuthGuard } from '@nestjs/passport';
@@ -19,6 +20,10 @@ import { seederUser, seederRoles } from './seeder/seeder';
 import { ProjectsService } from './projects/projects.service';
 import { RolesService } from './roles/roles.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { Observable } from 'rxjs';
+import { readFile, readFileSync, unlink } from 'fs';
+import { Project } from './projects/project.entity';
 
 @ApiTags('app')
 @Controller()
@@ -93,7 +98,13 @@ export class AppController {
   @Post('image-upload/:id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './images',
+      }),
+    }),
+  )
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -107,7 +118,33 @@ export class AppController {
       },
     },
   })
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
+  async uploadFile(
+    @UploadedFile()
+    file: Express.Multer.File,
+    @Param('id') id: string,
+  ) {
+    // console.log(file);
+    // console.log(`project id : ${id}`);
+
+    let project: Project = new Project();
+
+    this.projectsService.findOne(id).then((result) => {
+      project = result;
+    });
+
+    readFile(file.path, (err, data) => {
+      if (err) throw err;
+      console.log(data.toString('base64'));
+      project.picture = data.toString('base64');
+      this.projectsService.update(id, project);
+      unlink(file.path, (error) => {
+        console.log(error);
+      });
+    });
+
+    return new Observable((subscriber) => {
+      subscriber.next(file);
+      subscriber.complete();
+    });
   }
 }

@@ -54,7 +54,7 @@ export class EditProjectInfoComponent implements OnInit {
         const file: File = event.target.files[0];
         const formData = new FormData();
 
-        formData.append('thumbnail', file);
+        formData.append('file', file, this.project.id);
 
         console.table(event.target.files[0]);
 
