@@ -70,10 +70,6 @@ onSubmit(user: User): void {
       }
     }
   }
-     
-
-
-  
 
 /*function delete profile*/
 
