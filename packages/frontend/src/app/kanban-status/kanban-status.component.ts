@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
+import { WebSocketSubject } from 'rxjs/webSocket';
 import { Kanbanstatus } from '../models/kanbanstatus.model';
 import { KanbanstatusService } from '../services/kanbanstatus.service';
 
@@ -12,6 +13,8 @@ import { KanbanstatusService } from '../services/kanbanstatus.service';
 export class KanbanStatusComponent implements OnInit {
 
     @Input() kanbanstatus!:Kanbanstatus;
+
+    @Input() subject!:WebSocketSubject<any>;
 
     @Output() kanbanDeleted: EventEmitter<any> = new EventEmitter();
 
@@ -43,6 +46,7 @@ export class KanbanStatusComponent implements OnInit {
             },
             complete : () => {
                 this.toastService.success(" Column edited !");
+                this.subject.next({method: "edit", kanban: this.kanbanstatus});
             }
         }
         this.kanbanstatusService.edit(this.kanbanstatus).subscribe(kanbanObserver);
@@ -55,6 +59,7 @@ export class KanbanStatusComponent implements OnInit {
             next: (result: any) => {
                 console.log(`${result}`);
                 this.toastService.success(`Column deleted ! ${result}`);
+                this.subject.next({method: "delete", kabanstatus: this.kanbanstatus});
             },
             error : (err: any) => {
                 console.log(`Erreur suprresion kanbanstatus : ${err.error['driverError'].detail}`);
