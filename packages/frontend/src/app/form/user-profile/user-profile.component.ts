@@ -24,8 +24,9 @@ export class UserProfileComponent{
   toast: any;
   toastService: any;
   defaultUserProfile: any;
-url: any;
-event: any;
+  url: any;
+  event: any;
+  connect: any;
 
   constructor(
     private userService: UserService,
@@ -69,6 +70,10 @@ onSubmit(user: User): void {
       }
     }
   }
+     
+
+
+  
 
 /*function delete profile*/
 
