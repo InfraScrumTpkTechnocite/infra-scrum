@@ -43,7 +43,7 @@ p {
     position: absolute;
     width: 35%;
     top: 50%;
-    left: 40%;
+    left: 45%;
     transform: translate(-50%, 100%);
     transition: all 1s;
     opacity: 0;
