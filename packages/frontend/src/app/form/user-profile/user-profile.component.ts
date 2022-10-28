@@ -61,6 +61,16 @@ onSubmit(user: User): void {
   /*function "ajouter" avatar profile*/
 
   onSelectFile(event:any) {
+
+    const userObserver = {
+      complete: () => {
+        this.toastService.success(`Avatar added !`);
+        this.defaultUserProfile = this.user;
+      },
+    };
+
+    this.userService.editUser(this.user).subscribe(userObserver)
+
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 

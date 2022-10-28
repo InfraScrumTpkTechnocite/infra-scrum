@@ -23,7 +23,7 @@
         <div class="flex w-full justify-start">
             <label for="role"></label><input id="role" type="text" style="text-align:center" required class="input-role form-control bg-transparent placeholder:normal" placeholder="role" value="{{user.role.name}}" size="10" #role="ngModel"
                 [(ngModel)]="user.username" required="required">
-        </div><br>
+        </div>
 
         <!--"message erreur Role"-->
         <p *ngIf="role.errors?.['required'] && role.dirty" style="text-align:start" class="alert role-message-erreur normal">role required</p>
