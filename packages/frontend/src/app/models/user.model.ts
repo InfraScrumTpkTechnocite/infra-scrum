@@ -3,6 +3,7 @@ import { Role } from "./role.model";
 export class User {
   name: any;
   userprofile: any;
+  target: any;
 
   static Form() {}
 
