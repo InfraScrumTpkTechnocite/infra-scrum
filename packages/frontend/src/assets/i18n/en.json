@@ -56,8 +56,8 @@
         "file": "Choose an file/capture"
       },
       "edit-projet":  {
-        "title": "Edit projet",
-        "btn-edit-projet": "Edit projet",
+        "title": "Edit project",
+        "btn-edit-projet": "Edit project",
         "btn-user": "Users",
         "btn-inter-date": "Intermediate date",
         "inter-date": "Intermediate date",
