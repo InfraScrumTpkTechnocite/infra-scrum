@@ -33,6 +33,7 @@ const routes: Routes = [
     {
         path: 'projects',
         component: ProjectsComponent,
+        canActivate: [AuthGuardService],
         data: {
             role: ['superadmin', 'admin', 'employee', 'intern', 'guest']
         }

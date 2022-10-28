@@ -31,7 +31,8 @@ export class ProjectsComponent implements OnInit {
         private userService: UserService,
         private projectService: ProjectService,
         private toastService: HotToastService,
-        private router: Router,) { }
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
         this.headerTitleService.setTitle('My projects');
@@ -49,11 +50,11 @@ export class ProjectsComponent implements OnInit {
                 console.log(`${err}`);
             },
             complete: () => {
-                console.log(`projects.component - ngOnInit - get user's projects completed.`);
+                console.log(
+                    `projects.component - ngOnInit - get user's projects completed.`
+                );
             }
         };
-        //...et attention : le userid n'est certainement pas le bon !
-        //this.userProjectService.findUserProjects('32e5d252-51ea-48d6-aed3-a8cd4bf06e90').subscribe(userProjectsObserver);
 
         const userObserver = {
             next: (response: User) => {
@@ -70,7 +71,9 @@ export class ProjectsComponent implements OnInit {
                 console.log(`Error: ${err}`);
             },
             complete: () => {
-                console.log(`projects.component - ngOnInit - get user completed.`);
+                console.log(
+                    `projects.component - ngOnInit - get user completed.`
+                );
             }
         };
         //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
@@ -86,42 +89,57 @@ export class ProjectsComponent implements OnInit {
 
         const projectObserver = {
             next: (project: Project) => {
-                var userProject = new UserProject()
+                var userProject = new UserProject();
                 userProject.project = project;
-                userProject.user = JSON.parse(localStorage.getItem('user') || "")?.id;
+                userProject.user = JSON.parse(
+                    localStorage.getItem('user') || ''
+                )?.id;
                 userProject.isprojectadmin = true;
-                this.userProjectService.create(userProject).subscribe(userProjectObserver);
+                this.userProjectService
+                    .create(userProject)
+                    .subscribe(userProjectObserver);
             },
             error: (err: any) => {
                 this.showErrorMessage = true;
                 this.errorMessage = err.error.driverError.detail;
-                console.log(`Erreur création projet : ${err.error['driverError'].detail}`);
-                this.toastService.error(`Error during project creation<br><br>${err.error.driverError.detail}`);
+                console.log(
+                    `Erreur création projet : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during project creation<br><br>${err.error.driverError.detail}`
+                );
             },
             complete: () => {
                 console.log(`projects.component.ts - add project completed.`);
             }
-        }
+        };
 
         const userProjectObserver = {
             next: (userProject: any) => {
-                this.userProjectService.findCurrentUserProjects(userProject.user).subscribe(
-                    (userProjects: UserProject[]) => {
+                this.userProjectService
+                    .findCurrentUserProjects(userProject.user)
+                    .subscribe((userProjects: UserProject[]) => {
                         this.userProjects = userProjects;
-                    })
+                    });
                 this.router.navigate([this.router.url]);
             },
             error: (err: any) => {
                 this.showErrorMessage = true;
                 this.errorMessage = err.error.driverError.detail;
-                console.log(`Erreur création user_projet : ${err.error['driverError'].detail}`);
-                this.toastService.error(`Error during user_project creation<br><br>${err.error.driverError.detail}`);
+                console.log(
+                    `Erreur création user_projet : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during user_project creation<br><br>${err.error.driverError.detail}`
+                );
             },
             complete: () => {
-                console.log(`projects.component.ts - add userproject completed.`);
-                this.toastService.success("New Project created !");
+                console.log(
+                    `projects.component.ts - add userproject completed.`
+                );
+                this.toastService.success('New Project created !');
             }
-        }
+        };
 
         this.projectService.create(newProject).subscribe(projectObserver);
     }

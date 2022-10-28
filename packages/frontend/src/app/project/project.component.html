@@ -15,7 +15,7 @@
                     'text-primary': parentProject
                 }"
             >
-                {{"infrascrum.project.btn-global" | translate}}
+                {{ 'infrascrum.project.btn-global' | translate }}
             </button>
 
             <button
@@ -24,7 +24,7 @@
                 class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-8 text-xs"
                 title="Add a sprint"
             >
-                {{"infrascrum.project.btn-add" | translate}}
+                {{ 'infrascrum.project.btn-add' | translate }}
             </button>
             <!-- Boucler sur le nombre de sprints  -->
             <div
@@ -76,7 +76,16 @@
             <!-- boutons edit project, add task et add column -->
 
             <div class="flex items-center justify-start pl-6">
-                <button *ngIf="project" routerLink="edit-project" [queryParams]="{projectid: project.id}"  title="Edit project">
+                <button
+                    *ngIf="
+                        project &&
+                        (user.role.name == 'admin' ||
+                            user.role.name == 'superadmin')
+                    "
+                    routerLink="edit-project"
+                    [queryParams]="{ projectid: project.id }"
+                    title="Edit project"
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -96,14 +105,14 @@
                     class="bg-primary hover:bg-secondary text-white p-2 rounded-xl h-8 text-xs mr-6"
                     title="Add a new task"
                 >
-                    {{"infrascrum.project.btn-new-task" | translate}}
+                    {{ 'infrascrum.project.btn-new-task' | translate }}
                 </button>
                 <button
                     (click)="addnewKanbanStatus()"
                     class="bg-primary hover:bg-secondary text-white p-2 rounded-xl h-8 text-xs mr-8"
                     title="Add a new task"
                 >
-                {{"infrascrum.project.btn-new-column" | translate}}
+                    {{ 'infrascrum.project.btn-new-column' | translate }}
                 </button>
                 <div
                     class="flex items-center"
@@ -224,7 +233,10 @@
                             class="w-full bg-primary text-white h-6 rounded-t-lg p-2 flex items-center justify-center"
                         >
                             <h3 class="text-center font-bold text-xs">
-                                A{{"infrascrum.project.btn-add-column" | translate}}
+                                A{{
+                                    'infrascrum.project.btn-add-column'
+                                        | translate
+                                }}
                             </h3>
                         </div>
                         <div class="h-12 items-center flex justify-center">

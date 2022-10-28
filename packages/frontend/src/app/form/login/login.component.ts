@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
 import { HttpClient } from '@angular/common/http';
 import { HotToastService } from '@ngneat/hot-toast';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
     selector: 'app-login',
@@ -24,10 +26,9 @@ export class LoginComponent implements OnInit {
         private authService: AuthService,
         private router: Router,
         private headerTitleService: HeaderTitleService,
-        private route: ActivatedRoute,
-        private httpClient: HttpClient,
-        private toast: HotToastService
-    ) { }
+        private toast: HotToastService,
+        private userService: UserService
+    ) {}
 
     ngOnInit(): void {
         this.headerTitleService.setTitle('InfraScrum');
@@ -36,15 +37,32 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         // console.log(`username : ${this.profileForm.controls.username.value}`);
         // console.log(`password : ${this.profileForm.controls.password.value}`);
-        if (this.profileForm.controls.username.value) localStorage.setItem('username', this.profileForm.controls.username.value);
+        if (this.profileForm.controls.username.value)
+            localStorage.setItem(
+                'username',
+                this.profileForm.controls.username.value
+            );
 
         localStorage.removeItem('jwt-token'); //force token delete
         localStorage.removeItem('user');
 
+        const userObserver = {
+            next: (response: User) => {
+                localStorage.setItem('user', JSON.stringify(response));
+                this.router.navigate(['projects']);
+            },
+            error: (err: any) => {
+                console.log(err);
+            },
+            complete: () => {
+                console.log(`Login - get user complete`);
+            }
+        };
+
         const authObserver = {
             next: (response: any) => {
                 //console.log(`response = ${JSON.stringify(response)}`)
-                this.router.navigate(['projects']);
+                //this.router.navigate(['projects']);
             },
             error: (error: Error) => {
                 this.showErrorMessage = true;
@@ -52,8 +70,13 @@ export class LoginComponent implements OnInit {
             },
             complete: () => {
                 console.log(`login process completed.`);
+                var username = localStorage.getItem('username');
+                if (username)
+                    this.userService
+                        .findUserByUsername(username)
+                        .subscribe(userObserver);
             }
-        }
+        };
 
         if (
             this.profileForm.controls.username.value &&
