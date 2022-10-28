@@ -5,8 +5,7 @@
 export const environment = {
     production: false,
     SERVER_PORT: '4200',
-    BACKEND_URL_PROXY: 'backend',
-    BACKEND_UPLOAD_DIRECTORY: 'image-upload'
+    BACKEND_URL_PROXY: 'backend'
 };
 
 /*

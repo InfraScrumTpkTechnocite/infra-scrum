@@ -113,7 +113,7 @@ export class ProjectsController {
     return this.projectsService.findSprints(id);
   }
 
-  @Post('image-upload/:id')
+  @Post('image-upload/:projectid')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(
@@ -148,14 +148,14 @@ export class ProjectsController {
       }),
     )
     file: Express.Multer.File,
-    @Param('id') id: string,
+    @Param('projectid') projectid: string,
   ) {
     // console.log(file);
-    // console.log(`project id : ${id}`);
+    // console.log(`project id : ${projectid}`);
 
     let project: Project = new Project();
 
-    this.projectsService.findOne(id).then((result) => {
+    this.projectsService.findOne(projectid).then((result) => {
       project = result;
     });
 
@@ -165,7 +165,7 @@ export class ProjectsController {
       //console.log(data.toString('base64'));
 
       project.picture = data.toString('base64');
-      this.projectsService.update(id, project);
+      this.projectsService.update(projectid, project);
 
       unlink(file.path, (error) => {
         console.log(error);
