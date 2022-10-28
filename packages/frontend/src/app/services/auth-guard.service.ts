@@ -20,9 +20,9 @@ export class AuthGuardService implements CanActivate {
         let userObject: User = JSON.parse(user);
         //console.table(userObject);
         let role: any = userObject.role;
-        console.log(
-            `auth-guard.service - canActivate - user=${userObject.username}, role=${role.name}`
-        );
+        // console.log(
+        //     `auth-guard.service - canActivate - user=${userObject.username}, role=${role.name}`
+        // );
 
         // let userRole: string = JSON.parse(user).role.name;
         // console.log(`auth-guard.service - canActivate - user: ${user.username}, role: ${userRole}`);

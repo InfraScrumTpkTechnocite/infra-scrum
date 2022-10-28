@@ -46,6 +46,7 @@ export class ProjectComponent implements OnInit {
 
     userProjects!: UserProject[];
     user!: User;
+    isUserProjectadmin: boolean = false;
 
     dateToday: string = '';
 
@@ -124,8 +125,28 @@ export class ProjectComponent implements OnInit {
                 };
 
                 const userProjectsObserver = {
-                    next: (userProjects: UserProject[]) =>
-                        (this.userProjects = userProjects),
+                    next: (userProjects: UserProject[]) => {
+                        this.userProjects = userProjects;
+                        console.log(this.userProjects);
+                        console.log(this.user.id);
+                        // this.userProjects.forEach((up) => {
+                        //     console.log(up.user.id);
+                        //     if (up.user.id == this.user.id)
+                        //         this.isUserProjectadmin = true;
+                        // });
+                        const userproject: any = this.userProjects.find(
+                            (userproject) => {
+                                return userproject.user.id == this.user.id;
+                            }
+                        );
+                        console.log('userproject = ' + userproject);
+                        if (userproject)
+                            this.isUserProjectadmin =
+                                userproject.isprojectadmin;
+                        console.log(
+                            `project.component - ngOnInit - logged in user project admin ? ${this.isUserProjectadmin} `
+                        );
+                    },
                     error: () => {},
                     complete: () => {}
                 };

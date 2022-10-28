@@ -60,7 +60,7 @@ const routes: Routes = [
         component: EditProjectComponent,
         canActivate: [AuthGuardService],
         data: {
-            role: ['superadmin', 'admin']
+            role: ['superadmin', 'admin', 'employee']
         }
     },
     {
