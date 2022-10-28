@@ -15,7 +15,7 @@
             <input style="border:1px solid #7697a8;" class="button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" id="loadFileXml" placeholder="" value="+" #picture="ngModel" [(ngModel)]="user.picture"/>
                 <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" class="avatar"> <br/>
                 <input type='file' (change)="onSelectFile($event)" class="select-profile-picture" value="{{user.picture}}" #picture="ngModel" [(ngModel)]="user.picture">
-                <span class="message"> add your avatar</span>
+                <span class="message">add your avatar</span>
             </div>
         </div>
 
