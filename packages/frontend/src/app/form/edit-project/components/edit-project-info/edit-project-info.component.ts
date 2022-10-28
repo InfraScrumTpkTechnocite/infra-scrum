@@ -41,6 +41,7 @@ export class EditProjectInfoComponent implements OnInit {
             }
         };
 
+        delete this.project.picture; //no need to update (if any new picture, it's already been posted by upload)
         this.projectService.update(this.project).subscribe(projectObserver);
     }
 
@@ -60,7 +61,8 @@ export class EditProjectInfoComponent implements OnInit {
 
         this.httpClient
             .post<any>(
-                'http://localhost:4200/backend/image-upload/' + this.project.id,
+                'http://localhost:4200/backend/projects/image-upload/' +
+                    this.project.id,
                 formData,
                 httpOptions
             )

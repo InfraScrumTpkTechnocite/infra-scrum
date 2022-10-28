@@ -7,7 +7,12 @@
 
         <!-- BOUTON CREATE NEW PROJECT (uniquement visible et utilisable par superadmin et admin) -->
         <div class="flex items-center justify-center mb-6">
-            <button (click)="addProject()" *ngIf="user.role.name == 'superadmin' || user.role.name == 'admin'">
+            <button
+                (click)="addProject()"
+                *ngIf="
+                    user.role.name == 'superadmin' || user.role.name == 'admin'
+                "
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -31,7 +36,7 @@
             class="mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
         >
             <!-- PROJET MODEL- -->
-            <app-projectinfo 
+            <app-projectinfo
                 *ngFor="
                     let userProject of userProjects;
                     index as i;

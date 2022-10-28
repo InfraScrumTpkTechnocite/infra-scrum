@@ -22,11 +22,7 @@ import { UsersService } from './users/users.service';
 import { seederUser, seederRoles } from './seeder/seeder';
 import { ProjectsService } from './projects/projects.service';
 import { RolesService } from './roles/roles.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { Observable } from 'rxjs';
-import { readFile, readFileSync, unlink } from 'fs';
-import { Project } from './projects/project.entity';
+import { ConfigService } from '@nestjs/config';
 
 @ApiTags('app')
 @Controller()
@@ -37,6 +33,7 @@ export class AppController {
     private usersService: UsersService,
     private projectsService: ProjectsService,
     private rolesService: RolesService,
+    private configService: ConfigService,
   ) {}
 
   @Get()
@@ -84,7 +81,7 @@ export class AppController {
         .create(role)
         .then((role) => {
           console.log(`Role ${role.name} created`);
-          if (role.name == 'superadmin') {
+          if (role.name == this.configService.get<string>('SUPERADMIN_ROLE')) {
             seederUser.role = role.id;
             this.usersService
               .create(seederUser)
@@ -95,71 +92,6 @@ export class AppController {
           }
         })
         .catch((error) => console.log(error.driverError.detail));
-    });
-  }
-
-  @Post('image-upload/:id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './images',
-      }),
-    }),
-  )
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          // 👈 this property
-          type: 'string',
-          format: 'binary',
-        },
-      },
-    },
-  })
-  async uploadFile(
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({ maxSize: 50000 }),
-          new FileTypeValidator({
-            fileType: new RegExp('(.jpeg|.JPEG|.gif|.GIF|.png|.PNG)$'),
-          }),
-        ],
-      }),
-    )
-    file: Express.Multer.File,
-    @Param('id') id: string,
-  ) {
-    // console.log(file);
-    // console.log(`project id : ${id}`);
-
-    let project: Project = new Project();
-
-    this.projectsService.findOne(id).then((result) => {
-      project = result;
-    });
-
-    readFile(file.path, (err, data) => {
-      if (err) throw err;
-
-      //console.log(data.toString('base64'));
-
-      project.picture = data.toString('base64');
-      this.projectsService.update(id, project);
-
-      unlink(file.path, (error) => {
-        console.log(error);
-      });
-    });
-
-    return new Observable((subscriber) => {
-      subscriber.next(file);
-      subscriber.complete();
     });
   }
 }

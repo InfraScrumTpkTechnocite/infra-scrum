@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { environment } from 'src/environments/environment';
 import { Project } from '../models/project.model';
 import { User } from '../models/user.model';
 import { UserProject } from '../models/userproject.model';
@@ -40,21 +41,21 @@ export class ProjectinfoComponent {
     }
 
     updateProjectModel(projectForm: any) {
-        console.log(
-            `projectinfo.component - updateProjectModel - form = ${JSON.stringify(
-                projectForm.value
-            )}`
-        );
+        // console.log(
+        //     `projectinfo.component - updateProjectModel - form = ${JSON.stringify(
+        //         projectForm.value
+        //     )}`
+        // );
 
-        console.log(
-            `project name = ${this.userProject.project.name}, projet id = ${this.userProject.project.id}`
-        );
+        // console.log(
+        //     `project name = ${this.userProject.project.name}, projet id = ${this.userProject.project.id}`
+        // );
 
         const projectObserver = {
             next: (updateresponse: any) => {
-                console.log(
-                    `projectinfo.component - updateProjectModel - update row affected = ${updateresponse.affected}`
-                );
+                // console.log(
+                //     `projectinfo.component - updateProjectModel - update row affected = ${updateresponse.affected}`
+                // );
                 this.router.navigate([this.router.url]); //reload header component !
             },
             error: (err: any) => {
@@ -103,11 +104,15 @@ export class ProjectinfoComponent {
 
         formData.append('file', file, this.userProject.project.id);
 
-        console.table(event.target.files[0]);
+        //console.table(event.target.files[0]);
 
         this.httpClient
             .post<any>(
-                'http://localhost:4200/backend/image-upload/' +
+                'http://localhost:' +
+                    environment.SERVER_PORT +
+                    '/' +
+                    environment.BACKEND_URL_PROXY +
+                    '/projects/image-upload/' +
                     this.userProject.project.id,
                 formData,
                 httpOptions

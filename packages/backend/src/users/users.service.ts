@@ -9,9 +9,8 @@ import { hash } from 'bcrypt';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
-    //private mailService: MailService
-  ) { }
+    private usersRepository: Repository<User>, //private mailService: MailService
+  ) {}
 
   async create(user: User): Promise<User> {
     user.password = await hash(user.password, 10);
@@ -48,13 +47,13 @@ export class UsersService {
       },
       relations: {
         role: true,
-      }
+      },
     });
   }
 
   async findOneByUsername(username: string): Promise<User> {
     return await this.usersRepository.findOne({
-      relations: ['role'],
+      relations: { role: true },
       where: { username },
     });
   }
