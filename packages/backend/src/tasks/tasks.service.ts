@@ -40,7 +40,7 @@ export class TasksService {
   async findAllOfKanbanstatusid(kanbanstatusid: string): Promise<Task[]>{
     return await this.tasksRepository.find({
       select: ['kanbanstatus'],
-      relations: { kanbanstatus: true, tasktype: true },
+      relations: { kanbanstatus: true, tasktype: true, sprint: true },
       where: { kanbanstatus: Equal(kanbanstatusid) },
     });
   }

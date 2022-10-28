@@ -4,16 +4,31 @@
 >
     <!-- DIV PROJET NON EDITé -->
 
-    <div class="flex flex-col" *ngIf="!isEditNewProject" (click)="userProjectClicked($event)">
+    <div
+        class="flex flex-col"
+        *ngIf="!isEditNewProject"
+        (click)="userProjectClicked($event)"
+    >
         <!-- bouton icône edit -->
         <div class="text-right">
-            <button [disabled]="!userProject.isprojectadmin && user.role.name != 'superadmin'"
+            <button
+                [disabled]="
+                    !userProject.isprojectadmin &&
+                    user.role.name != 'superadmin'
+                "
                 (click)="openEditionProject()"
                 class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
             >
-                <div *ngIf="userProject.isprojectadmin || user.role.name == 'superadmin';then mayedit else maynotedit"></div>
+                <div
+                    *ngIf="
+                        userProject.isprojectadmin ||
+                            user.role.name == 'superadmin';
+                        then mayedit;
+                        else maynotedit
+                    "
+                ></div>
                 <ng-template #mayedit>
-                    <svg 
+                    <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -29,7 +44,7 @@
                     </svg>
                 </ng-template>
                 <ng-template #maynotedit>
-                    <svg 
+                    <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -69,7 +84,9 @@
                     />
                     <img
                         *ngIf="userProject.project.picture"
-                        src="{{ userProject.project.picture }}"
+                        src="data:image/*;base64, {{
+                            userProject.project.picture
+                        }}"
                         alt="{{ userProject.project.name }}"
                     />
                 </div>
@@ -78,10 +95,12 @@
                     class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 flex flex-col text-secondary items-center justify-center"
                 >
                     <h3 class="font-semibold text-xl lg:text-2xl">
-                        Start date:
+                       {{"infrascrum.project-info.start-date" | translate}}
                     </h3>
                     <p class="text-xl">
-                        {{ userProject.project.startdate | date : 'dd-MMM-yyyy'}}
+                        {{
+                            userProject.project.startdate | date: 'dd-MMM-yyyy'
+                        }}
                     </p>
                 </div>
             </div>
@@ -90,11 +109,17 @@
 
     <!-- DIV EDITION PROJET -->
 
-    <form #projectForm="ngForm"  id="ngFormUserProject" class="flex flex-col" *ngIf="isEditNewProject" (ngSubmit)="updateProjectModel(projectForm)">
+    <form
+        #projectForm="ngForm"
+        id="ngFormUserProject"
+        class="flex flex-col"
+        *ngIf="isEditNewProject"
+        (ngSubmit)="updateProjectModel(projectForm)"
+    >
         <!-- bouton icône edit -->
         <div class="text-right">
             <button
-                form="ngFormUserProject"                
+                form="ngFormUserProject"
                 class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
             >
                 <svg
@@ -139,21 +164,35 @@
                     <label
                         for="#ProjectPicture"
                         class="text-secondary text-md font-bold"
-                        >Add a picture:</label
+                        >{{"infrascrum.project-info.picture" | translate}}</label
                     >
-                    <input
+                    <img
+                        (click)="PictureUploader.click()"
+                        *ngIf="userProject.project.picture"
+                        src="data:image/*;base64, {{
+                            userProject.project.picture
+                        }}"
+                        alt="{{ userProject.project.name }}"
+                    />
+                    <!-- <input
                         [(ngModel)]="userProject.project.picture"
                         name="picture"
                         #ProjectPicture
                         type="text"
                         placeholder="Image url pour l'instant"
+                    /> -->
+                    <input
+                        #PictureUploader
+                        type="file"
+                        class="w-full mt-6 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        (change)="onFileSelected($event)"
                     />
                 </div>
                 <!-- delivery date -->
                 <div
                     class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 flex flex-col text-secondary items-center justify-center"
                 >
-                    <h3 class="text-md font-bold">Start date:</h3>
+                    <h3 class="text-md font-bold">{{"infrascrum.project-info.start-date" | translate}}</h3>
                     <input
                         [(ngModel)]="userProject.project.startdate"
                         name="startdate"

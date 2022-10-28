@@ -43,17 +43,17 @@ export class KanbanstatusService {
     
     edit(kanbanstatus: Kanbanstatus): Observable<any> {
         return this.httpClient.put<any>("/backend/kanbanstatus/"+ kanbanstatus.id, JSON.stringify(kanbanstatus), this.httpOptions)
-            .pipe(
-                tap((response) => this.log(response)),
-                catchError((error) => this.handleError(error, null))
-            );
+            // .pipe(
+            //     tap((response) => this.log(response)),
+            //     catchError((error) => this.handleError(error, null))
+            // );
     }
 
     delete(kanbanstatusId: string): Observable<any> {
         return this.httpClient.delete<any>("/backend/kanbanstatus/"+ kanbanstatusId, this.httpOptions)
-            .pipe(
-                tap((response) => this.log(response)),
-                catchError((error) => this.handleError(error, null))
-            );
+            // .pipe(
+            //     tap((response) => this.log(response)),
+            //     catchError((error) => this.handleError(error, null))
+            // );
     }
 }

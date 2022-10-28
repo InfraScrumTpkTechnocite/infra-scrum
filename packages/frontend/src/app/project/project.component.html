@@ -7,18 +7,24 @@
     >
         <div class="flex flex-col justify-start items-center text-center">
             <button
-                class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-8 text-xs mb-6"
                 title="Show global view"
+                (click)="closeSprintBar()"
+                class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs font-semibold justify-center"
+                [ngClass]="{
+                    'bg-primary text-white': !parentProject,
+                    'text-primary': parentProject
+                }"
             >
-                Global view
+                {{"infrascrum.project.btn-global" | translate}}
             </button>
 
             <button
+                *ngIf="!parentProject"
                 (click)="addSprint()"
                 class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-8 text-xs"
                 title="Add a sprint"
             >
-                Add sprint
+                {{"infrascrum.project.btn-add" | translate}}
             </button>
             <!-- Boucler sur le nombre de sprints  -->
             <div
@@ -27,9 +33,10 @@
             >
                 <button
                     (click)="changeSprintDisplay(sprint.id)"
-                    class="hover:bg-secondary hover:text-white text-primary p-3 rounded-xl m-2 text-xs font-semibold justify-center"
+                    class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs font-semibold justify-center"
                     [ngClass]="{
-                        'bg-secondary text-white': sprint.id == display.id
+                        'bg-primary text-white': sprint.id == projectid,
+                        'text-primary': sprint.id != projectid
                     }"
                 >
                     {{ sprint.name }}
@@ -60,7 +67,7 @@
 
     <!-- KANBAN DASHBOARD -->
 
-    <div id="kanbanDashboard" class="w-11/12 overflow-y-hidden">
+    <div id="kanbanDashboard" class="w-11/12 overflow-y-scroll">
         <!-- Header  -->
         <div
             id="kanbanHeader"
@@ -69,7 +76,7 @@
             <!-- boutons edit project, add task et add column -->
 
             <div class="flex items-center justify-start pl-6">
-                <button routerLink="edit-project" title="Edit project">
+                <button *ngIf="project" routerLink="edit-project" [queryParams]="{projectid: project.id}"  title="Edit project">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -89,14 +96,14 @@
                     class="bg-primary hover:bg-secondary text-white p-2 rounded-xl h-8 text-xs mr-6"
                     title="Add a new task"
                 >
-                    New task
+                    {{"infrascrum.project.btn-new-task" | translate}}
                 </button>
                 <button
                     (click)="addnewKanbanStatus()"
                     class="bg-primary hover:bg-secondary text-white p-2 rounded-xl h-8 text-xs mr-8"
                     title="Add a new task"
                 >
-                    New column
+                {{"infrascrum.project.btn-new-column" | translate}}
                 </button>
                 <div
                     class="flex items-center"
@@ -165,18 +172,44 @@
 
         <div id="kanban" class="flex px-12 pb-12 pt-16">
             <!-- boucler sur les kanbanstatus du projet  -->
-            <div class="flex">
+            <div cdkDropListGroup class="flex">
                 <div
-                    *ngFor="let kanbanstatus of kanbanList"
+                    *ngFor="let kanbanstatus of kanbanList; let i = index"
+                    cdkDropList
+                    [cdkDropListData]="i"
                     class="flex flex-col"
                 >
-                    <app-kanban-status
-                        [kanbanstatus]="kanbanstatus"
-                        (kanbanDeleted)="onKanbanDeleted(kanbanstatus)"
-                    ></app-kanban-status>
-                    <!-- tâches du kanbanstatus  -->
-                    <div class="tasksContainer w-64 mx-4 mt-2 flex flex-col">
-                        <app-task></app-task>
+                    <div
+                        cdkDrag
+                        [cdkDragData]="i"
+                        (cdkDragEntered)="dragEntered($event)"
+                        (cdkDragMoved)="dragMoved($event)"
+                        (cdkDragDropped)="dragDropped($event)"
+                    >
+                        <app-kanban-status
+                            [subject]="subject"
+                            [kanbanstatus]="kanbanstatus"
+                            (kanbanDeleted)="onKanbanDeleted(kanbanstatus)"
+                        ></app-kanban-status>
+                        <!-- tâches du kanbanstatus  -->
+                        <div
+                            class="tasksContainer w-64 mx-4 mt-2 flex flex-col"
+                        >
+                            <div *ngFor="let task of taskList">
+                                <app-task
+                                    [task]="task"
+                                    *ngIf="
+                                        (kanbanstatus.id ==
+                                            task.kanbanstatus.id &&
+                                            projectid == project.id) ||
+                                        (kanbanstatus.id ==
+                                            task.kanbanstatus.id &&
+                                            task.sprint &&
+                                            task.sprint.id == projectid)
+                                    "
+                                ></app-task>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -191,7 +224,7 @@
                             class="w-full bg-primary text-white h-6 rounded-t-lg p-2 flex items-center justify-center"
                         >
                             <h3 class="text-center font-bold text-xs">
-                                Add column
+                                A{{"infrascrum.project.btn-add-column" | translate}}
                             </h3>
                         </div>
                         <div class="h-12 items-center flex justify-center">

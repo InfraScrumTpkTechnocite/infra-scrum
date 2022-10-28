@@ -19,10 +19,10 @@
                 <h1
                     class="font-black uppercase text-3xl lg:text-5xl text-yellow-500 mb-10"
                 >
-                    You seem to be lost!
+                    {{"infrascrum.page-not-found.title" | translate}}
                 </h1>
-                <p>The page you're looking for isn't available.</p>
-                <p>Try searching again or use the Go Back button below.</p>
+                <p>{{"infrascrum.page-not-found.sub-title-one" | translate}}</p>
+                <p>{{"infrascrum.page-not-found.sub-title-two" | translate}}</p>
             </div>
             <div class="mb-20 md:mb-0">
                 <button
@@ -30,7 +30,7 @@
                     (click)="btnClick()"
                     class="text-lg font-light outline-none focus:outline-none transform transition-all hover:scale-110 text-yellow-500 hover:text-yellow-600"
                 >
-                    <i class="mdi mdi-arrow-left mr-2"></i>Go Back
+                    <i class="mdi mdi-arrow-left mr-2"></i>{{"infrascrum.page-not-found.btn-goback" | translate}}
                 </button>
             </div>
         </div>

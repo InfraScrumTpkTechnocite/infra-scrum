@@ -1,5 +1,17 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+    Component,
+    ElementRef,
+    Input,
+    OnInit,
+    SimpleChanges,
+    ViewChild
+} from '@angular/core';
+import {
+    CdkDragDrop,
+    CdkDragEnter,
+    CdkDragMove,
+    moveItemInArray
+} from '@angular/cdk/drag-drop';
 import { Kanbanstatus } from '../models/kanbanstatus.model';
 import { KanbanstatusService } from '../services/kanbanstatus.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +21,9 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { UserprojectService } from '../services/userproject.service';
 import { UserProject } from '../models/userproject.model';
 import { HeaderTitleService } from '../services/header-title.service';
+import { Task } from '../models/task.model';
+import { TaskService } from '../services/task.service';
+import { webSocket } from 'rxjs/webSocket';
 
 @Component({
     selector: 'app-project',
@@ -24,7 +39,6 @@ export class ProjectComponent implements OnInit {
 
     project!: Project;
     sprintList!: Project[];
-    @Input() display!: Project;
 
     kanbanStatus!: Kanbanstatus;
     kanbanList!: Kanbanstatus[];
@@ -33,6 +47,10 @@ export class ProjectComponent implements OnInit {
 
     dateToday: string = '';
 
+    taskList: Task[] = [];
+
+    subject = webSocket('');
+
     constructor(
         private route: ActivatedRoute,
         private projectService: ProjectService,
@@ -40,10 +58,32 @@ export class ProjectComponent implements OnInit {
         private toastService: HotToastService,
         private userProjectService: UserprojectService,
         private headerTitleService: HeaderTitleService,
+        private taskService: TaskService,
         private router: Router
     ) {}
 
     ngOnInit(): void {
+        const subjectObserver = {
+            next: (message: any) => {
+                const method = message.method
+                var kanban: Kanbanstatus = new Kanbanstatus;
+                var task: Task = new Task;
+                if (message.kanban) kanban = message.kanban as Kanbanstatus;
+                if (message.task) task = message.task as Task;
+                console.log(message);
+                switch (method){
+                    case 'edit': 
+                        this.kanbanList.splice(kanban.order-1, 1, kanban);
+                        break;
+                    case 'delete':
+                        this.kanbanList.splice(kanban.order-1, 1);
+                        break;
+                    case 'add':
+                        this.kanbanList.push(kanban);
+                }
+            },
+        }
+
         this.dateToday = new Date(
             new Date().setUTCHours(0, 0, 0, 0)
         ).toISOString();
@@ -57,6 +97,18 @@ export class ProjectComponent implements OnInit {
             );
 
             if (this.projectid) {
+
+                this.subject = webSocket(`ws://localhost:8080?projectid=${this.projectid}`);
+                this.subject.subscribe(subjectObserver);
+                
+                const tasksObserver = {
+                    next: (taskList: Task[]) => {
+                        taskList.map((task) => this.taskList.push(task));
+                    },
+                    error: () => {},
+                    complete: () => {}
+                };
+
                 const userProjectsObserver = {
                     next: (userProjects: UserProject[]) =>
                         (this.userProjects = userProjects),
@@ -67,11 +119,18 @@ export class ProjectComponent implements OnInit {
                 const kanbanstatusObserver = {
                     next: (kanbanList: Kanbanstatus[]) => {
                         this.kanbanList = kanbanList;
-                        let projectid: any = localStorage.getItem('projectid');
+                        let projectid: string = <string>(
+                            localStorage.getItem('projectid')
+                        );
 
                         this.userProjectService
-                            .findCurrentProjectUsers(JSON.parse(projectid))
+                            .findCurrentProjectUsers(projectid)
                             .subscribe(userProjectsObserver);
+                        kanbanList.map((kanbanstatus) => {
+                            this.taskService
+                                .findAllOfKanbanstatus(kanbanstatus.id!)
+                                .subscribe(tasksObserver);
+                        });
                     },
                     error: () => {},
                     complete: () => {}
@@ -84,7 +143,9 @@ export class ProjectComponent implements OnInit {
                             return sprint;
                         });
                         this.kanbanstatusService
-                            .findAllOfProject(this.projectid)
+                            .findAllOfProject(
+                                <string>localStorage.getItem('projectid')
+                            )
                             .subscribe(kanbanstatusObserver);
                     },
                     error: () => {},
@@ -93,21 +154,27 @@ export class ProjectComponent implements OnInit {
 
                 const projectObserver = {
                     next: (project: Project) => {
-                        if (!project.project)
+                        if (!project.project) {
+                            //on est dans le projet global
                             localStorage.setItem(
                                 'projectid',
-                                JSON.stringify(project.id)
+                                <string>project.id
                             );
-                        this.project = project;
-                        this.display = project;
-                        this.parentProject = project.project;
-                        // Nom du projet qui s'affiche dans Header, ne plus supprimer
-                        this.headerTitleService.setTitle(project.name);
+                            this.project = project;
+                            this.parentProject = project.project;
+                        } else {
+                            //on est dans un sprint
+                            this.parentProject = project.project;
+                            this.project = this.parentProject;
+                        }
+                        this.headerTitleService.setTitle(this.project.name);
                         console.log(
                             `project.component - ngOnInit - parentProject = ${this.parentProject}`
                         );
                         this.projectService
-                            .findSprints(this.projectid)
+                            .findSprints(
+                                <string>localStorage.getItem('projectid')
+                            )
                             .subscribe(sprintObserver);
                     },
                     error: () => {},
@@ -125,12 +192,11 @@ export class ProjectComponent implements OnInit {
 
     openSprintBar() {
         this.isSprintsOpen = true;
-        if (this.sprintList) this.display = this.sprintList[0]; //--> afficher premier sprint au lieu de global
+        if (this.sprintList) this.project = this.sprintList[0]; //--> afficher premier sprint au lieu de global
     }
 
     closeSprintBar() {
         this.isSprintsOpen = false;
-        this.display = this.project; //--> afficher global
         this.router.navigate([], {
             skipLocationChange: true,
             queryParamsHandling: 'merge', //== if you need to keep queryParams
@@ -148,12 +214,11 @@ export class ProjectComponent implements OnInit {
                 sprint
             )}`
         );
-        this.display = sprint;
-        // this.router.navigate([], {
-        //     skipLocationChange: true,
-        //     queryParamsHandling: 'merge', //== if you need to keep queryParams
-        //     queryParams: { projectid: sprint.id }
-        //   })
+        this.router.navigate([], {
+            skipLocationChange: true,
+            queryParamsHandling: 'merge', //== if you need to keep queryParams
+            queryParams: { projectid: sprint.id }
+        });
     }
 
     addSprint() {
@@ -169,7 +234,6 @@ export class ProjectComponent implements OnInit {
                     )}`
                 );
                 this.sprintList.push(sprint);
-                this.display = sprint; //afficher celui qu'on vient de créer
             },
             error: (err: any) => {
                 console.log(
@@ -197,6 +261,7 @@ export class ProjectComponent implements OnInit {
         const kanbanObserver = {
             next: (kanban: Kanbanstatus) => {
                 this.kanbanList.push(kanban);
+                this.subject.next({method: 'add', kanban: kanban});
             },
             error: (err: any) => {
                 console.log(
@@ -220,5 +285,84 @@ export class ProjectComponent implements OnInit {
         if (index != -1) {
             this.kanbanList.splice(index, 1);
         }
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*    DRAG AND DROP KANBANSTATUS   */
+    /* -------------------------------------------------------------------------- */
+
+    @ViewChild('dropListContainer') dropListContainer?: ElementRef;
+
+    dropListReceiverElement?: HTMLElement;
+    dragDropInfo?: {
+        dragIndex: number;
+        dropIndex: number;
+    };
+
+    // Méthode invoquée à chaque mouvement d'un item
+    dragEntered(event: CdkDragEnter<number>) {
+        const drag = event.item;
+        const dropList = event.container;
+        const dragIndex = drag.data;
+        const dropIndex = dropList.data;
+
+        this.dragDropInfo = { dragIndex, dropIndex };
+
+        const phContainer = dropList.element.nativeElement;
+        const phElement = phContainer.querySelector('.cdk-drag-placeholder');
+        if (phElement) {
+            phContainer.removeChild(phElement);
+            phContainer.parentElement?.insertBefore(phElement, phContainer);
+
+            moveItemInArray(this.kanbanList, dragIndex, dropIndex);
+        }
+    }
+
+    // Méthode invoquée à chaque item bougé dans un container différent, qui est un autre element 'cdkDropList'
+    dragMoved(event: CdkDragMove<number>) {
+        if (!this.dropListContainer || !this.dragDropInfo) return;
+
+        const placeholderElement =
+            this.dropListContainer.nativeElement.querySelector(
+                '.cdk-drag-placeholder'
+            );
+
+        const receiverElement =
+            this.dragDropInfo.dragIndex > this.dragDropInfo.dropIndex
+                ? placeholderElement?.nextElementSibling
+                : placeholderElement?.previousElementSibling;
+
+        if (!receiverElement) {
+            return;
+        }
+
+        receiverElement.style.display = 'none';
+        this.dropListReceiverElement = receiverElement;
+    }
+
+    // Méthode invoquée quand l'utilisateur lache l'item dans un element cdkDropList
+    dragDropped(event: CdkDragDrop<number>) {
+        this.kanbanList.forEach((kanban, index) => {
+            kanban.order = index + 1;
+            this.kanbanstatusService.edit(kanban).subscribe({
+                next: (kanban) => {
+                    console.log(kanban);
+                },
+                error: (err) => {
+                    console.log(err);
+                },
+                complete: () => {
+                    this.subject.next({method: 'edit',kanban: kanban});
+                }
+            });
+        });
+
+        if (!this.dropListReceiverElement) {
+            return;
+        }
+
+        this.dropListReceiverElement.style.removeProperty('display');
+        this.dropListReceiverElement = undefined;
+        this.dragDropInfo = undefined;
     }
 }

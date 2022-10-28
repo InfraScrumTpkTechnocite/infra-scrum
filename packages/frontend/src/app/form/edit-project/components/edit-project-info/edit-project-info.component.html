@@ -1,0 +1,43 @@
+<form (ngSubmit)="onSubmit()">
+    <div>
+        <div
+            class="w-50 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+        >
+            <label class="font-bold">{{"infrascrum.edit-projet.edit-projetinfo-name" | translate}}</label>
+            <input
+                type="text"
+                class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                [(ngModel)]="project.name"
+                name="name"
+                required
+            />
+        </div>
+        <div
+            class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+        >
+            <label class="font-bold">{{"infrascrum.edit-projet.edit-projetinfo-file" | translate}}</label>
+            <input
+                type="file"
+                class="w-full mt-6 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                (change)="onFileSelected($event)"
+            />
+        </div>
+
+        <div class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
+            <label class="font-bold">{{"infrascrum.edit-projet.edit-projet-delivery" | translate}}</label>
+
+            <input
+                type="date"
+                class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                [(ngModel)]="project.enddate"
+                [value]="project.enddate | date: 'yyyy-MM-dd'"
+                name="enddate"
+            />
+        </div>
+    </div>
+    <div class="mt-8 xl:ml-12 mx-auto flex justify-center w-full">
+        <button [routerLink]="['/project']" [queryParams]="{projectid: project.id}" class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-12 w-24 mb-8">{{"infrascrum.global.btn-cancel" | translate}}</button>
+        <button type="submit" class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8 disabled:bg-grey2">{{"infrascrum.global.btn-register" | translate}}</button>
+       
+    </div>
+</form>

@@ -1,15 +1,32 @@
-import { Controller, Request, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Get,
+  Post,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  Param,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 //import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { User } from './users/user.entity';
 import { UsersService } from './users/users.service';
 import { seederUser, seederRoles } from './seeder/seeder';
 import { ProjectsService } from './projects/projects.service';
 import { RolesService } from './roles/roles.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { Observable } from 'rxjs';
+import { readFile, readFileSync, unlink } from 'fs';
+import { Project } from './projects/project.entity';
 
 @ApiTags('app')
 @Controller()
@@ -20,7 +37,7 @@ export class AppController {
     private usersService: UsersService,
     private projectsService: ProjectsService,
     private rolesService: RolesService,
-  ) { }
+  ) {}
 
   @Get()
   getHello(): string {
@@ -78,6 +95,71 @@ export class AppController {
           }
         })
         .catch((error) => console.log(error.driverError.detail));
+    });
+  }
+
+  @Post('image-upload/:id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './images',
+      }),
+    }),
+  )
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          // 👈 this property
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  async uploadFile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 50000 }),
+          new FileTypeValidator({
+            fileType: new RegExp('(.jpeg|.JPEG|.gif|.GIF|.png|.PNG)$'),
+          }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+    @Param('id') id: string,
+  ) {
+    // console.log(file);
+    // console.log(`project id : ${id}`);
+
+    let project: Project = new Project();
+
+    this.projectsService.findOne(id).then((result) => {
+      project = result;
+    });
+
+    readFile(file.path, (err, data) => {
+      if (err) throw err;
+
+      //console.log(data.toString('base64'));
+
+      project.picture = data.toString('base64');
+      this.projectsService.update(id, project);
+
+      unlink(file.path, (error) => {
+        console.log(error);
+      });
+    });
+
+    return new Observable((subscriber) => {
+      subscriber.next(file);
+      subscriber.complete();
     });
   }
 }

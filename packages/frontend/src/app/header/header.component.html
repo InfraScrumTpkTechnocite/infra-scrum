@@ -1,4 +1,6 @@
-<div class="fixed top-0 bg-primary flex justify-between h-20 md:h-32 w-screen">
+<div
+    class="fixed top-0 bg-primary flex justify-between h-20 md:h-32 w-screen z-50"
+>
     <div class="w-1/3 flex justify-left ml-6 md:ml-8">
         <!-- logo triptyk -->
         <img
@@ -18,7 +20,7 @@
                 class="w-36 h-6 md:w-40 md:h-8 lg:w-48 lg:h-10 text-secondary text-xs md:text-sm lg:text-lg bg-tpkwhite p-1 font-semibold rounded-md focus:ring-2 focus:ring-secondary"
                 (change)="onChange($event)"
             >
-                <option value="default">My projects:</option>
+                <option selected disabled hidden>{{"infrascrum.header.option-project" | translate}}</option>
                 <option
                     *ngFor="
                         let userProject of userProjects;
@@ -64,7 +66,7 @@
                 class="btn-hover tpkBlueBtn rounded-2xl px-3 py-2 md:px-4 md:py-3"
                 (click)="onLoginClick()"
             >
-                Login
+                {{"infrascrum.header.login" | translate}}
             </button>
         </div>
         <!-- input search -->
@@ -74,7 +76,7 @@
         >
             <input
                 type="text"
-                placeholder="Search"
+                [placeholder]="'infrascrum.header.search' | translate"
                 class="w-36 h-6 md:w-40 md:h-8 lg:w-48 lg:h-10 text-secondary text-xs md:text-sm lg:text-lg bg-tpkwhite p-2 font-semibold rounded-md placeholder-primary focus-visible:outline-none focus-visible:ring-secondary focus-visible:ring-2"
                 list="userprojects"
             />
@@ -164,7 +166,7 @@
                             />
                         </svg>
 
-                        <p class="w-full">My projects</p>
+                        <p class="w-full">{{"infrascrum.header.sub-menu-projects" | translate}}</p>
                         <span>></span>
                     </a>
 
@@ -187,7 +189,7 @@
                                 d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                             />
                         </svg>
-                        <p class="w-full">My profile</p>
+                        <p class="w-full">{{"infrascrum.header.sub-menu-profil" | translate}}</p>
                         <span>></span>
                     </a>
 
@@ -212,7 +214,7 @@
                             />
                         </svg>
 
-                        <p class="w-full">Edit users</p>
+                        <p class="w-full">{{"infrascrum.header.sub-menu-users" | translate}}</p>
                         <span>></span>
                     </a>
                     <!-- Lien déconnexion -->
@@ -236,7 +238,7 @@
                             />
                         </svg>
 
-                        <p class="w-full">Logout</p>
+                        <p class="w-full">{{"infrascrum.header.sub-menu-logout" |translate}}</p>
                         <span><</span>
                     </a>
                 </div>
