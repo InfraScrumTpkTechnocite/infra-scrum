@@ -8,7 +8,7 @@
             {{ "infrascrum.edit-project.title" | translate }}
         </h1>
         <div class="flex xl:mt-6 flex-col xl:flex-row items-center">
-            <div class="w-160 h-40 xl:w-72 xl:h-128 border-2 border-b-primary border-x-0 xl:border-x-2 xl:border-r-primary border-t-0 xl:border-y-0 xl:mt-6 flex xl:flex-col xl:space-y-12 space-x-6 justify-center items-center">
+            <div class="w-128 h-40 xl:w-72 xl:h-128 border-2 border-b-primary border-x-0 xl:border-x-2 xl:border-r-primary border-t-0 xl:border-y-0 xl:mt-6 flex xl:flex-col xl:space-y-8 space-x-6 justify-center items-center">
                 <button 
                     [ngClass]="{
                         'bg-primary text-white': switch == 'default'
@@ -16,7 +16,7 @@
                     class="bg-primary hover:bg-secondary hover:text-white p-4 rounded-xl xl:ml-6 text-white font-semibold w-40"
                     (click)="switch='default'"
                 >
-                    {{"infrascrum.edit-projet.btn-edit-project" | translate}}
+                    {{"infrascrum.edit-project.btn-edit-project" | translate}}
                 </button>
                 <button
                     [ngClass]="{
@@ -25,7 +25,7 @@
                     class="bg-primary hover:bg-secondary hover:text-white p-4 rounded-xl text-white w-40 font-semibold"
                     (click)="switch='users'"    
                 >
-                    {{"infrascrum.edit-projet.btn-user" | translate}}
+                    {{"infrascrum.edit-project.btn-user" | translate}}
                 </button>
                 <button 
                     [ngClass]="{
@@ -34,7 +34,7 @@
                     class="bg-primary hover:bg-secondary hover:text-white p-4 rounded-xl text-white w-52 xl:w-40 font-semibold"
                     (click)="switch='date'"
                 >
-                    {{"infrascrum.edit-projet.btn-inter-date" | translate}}
+                    {{"infrascrum.edit-project.btn-inter-date" | translate}}
                 </button>
             </div>
             <div 
@@ -48,8 +48,26 @@
                         <app-edit-projectuser [projectid]="projectid" [user]="user" [userProjectList]="userProjectList"></app-edit-projectuser>
                     </div>
                 </div>
-                <app-edit-deliverydate *ngSwitchCase="'date'"></app-edit-deliverydate>
+                <app-edit-deliverydate [project]="project" *ngSwitchCase="'date'"></app-edit-deliverydate>
             </div>
         </div>
+        <div class="mt-8 xl:ml-12 mx-auto flex justify-center w-full">
+
+        </div>
+        <!-- <div class="mt-8 xl:ml-12 mx-auto flex justify-center w-full">
+            <button
+                [routerLink]="['/project']"
+                [queryParams]="{ projectid: project.id }"
+                class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-12 w-24 mb-8"
+            >
+                {{ 'infrascrum.global.btn-cancel' | translate }}
+            </button>
+            <button
+                type="submit"
+                class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8 disabled:bg-grey2"
+            >
+                {{ 'infrascrum.global.btn-register' | translate }}
+            </button>
+        </div> -->
     </form>
 </div>
