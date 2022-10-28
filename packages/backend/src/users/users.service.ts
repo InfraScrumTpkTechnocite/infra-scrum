@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Equal, Repository, UpdateResult } from 'typeorm';
 import { User } from './user.entity';
 import { hash } from 'bcrypt';
 //import { MailService } from '../mail/mail.service';
@@ -17,7 +17,35 @@ export class UsersService {
     // const token = Math.floor(1000 + Math.random() * 9000).toString();
     // user.token = token;
     // await this.mailService.sendUserConfirmation(user, token);
-    return await this.usersRepository.save(user);
+    // return await this.usersRepository.save(user);
+    console.log(
+      'backend - users.service - create - user to create = ' +
+        JSON.stringify(user),
+    );
+    return await this.usersRepository.manager.transaction(
+      async (transactionnalEntityManager): Promise<User> => {
+        return transactionnalEntityManager
+          .createQueryBuilder(User, 'user')
+          .setLock('pessimistic_read')
+          .where({ username: Equal(user.username) })
+          .getOne()
+          .then(async (result) => {
+            let newuser: User = result;
+            console.log(
+              `users.service - create - newuser = ${JSON.stringify(newuser)}`,
+            );
+            if (undefined == newuser) {
+              console.log(
+                `users.service - create - newuser = ${JSON.stringify(user)}`,
+              );
+              newuser = user;
+              delete newuser.id;
+              return await transactionnalEntityManager.save(User, newuser);
+            }
+            return newuser;
+          });
+      },
+    );
   }
 
   async update(id: string, user: User): Promise<UpdateResult> {
@@ -56,5 +84,29 @@ export class UsersService {
       relations: { role: true },
       where: { username },
     });
+  }
+
+  async getOrCreate(user: User): Promise<User> {
+    return this.usersRepository.manager.transaction(
+      (transactionnalEntityManager): Promise<User> => {
+        return transactionnalEntityManager
+          .createQueryBuilder(User, 'user')
+          .setLock('pessimistic_read')
+          .where({ user: Equal(user.username) })
+          .getOne()
+          .then(async (result) => {
+            const newuser: User = result;
+
+            if (undefined === newuser) {
+              const newuser: User = transactionnalEntityManager.create(
+                User,
+                user,
+              );
+              return await transactionnalEntityManager.save<User>(newuser);
+            }
+            return newuser;
+          });
+      },
+    );
   }
 }
