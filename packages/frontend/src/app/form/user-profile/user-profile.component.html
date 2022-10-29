@@ -1,5 +1,5 @@
 <!--espacement "margin"-->
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 <form #userForm="ngForm" (ngSubmit)="onSubmit" [appMatchPassword]="['password', 'confirmPassword']">
 
     <!--div header-->
@@ -49,7 +49,7 @@
         <p *ngIf="email.errors?.['required'] && email.dirty" style="text-align:center" class="alert email-message-erreur text-sm normal">email required</p><br>
 
         <!--zone formulaire Firstname/Lastname-->
-        <div>
+        <div class="flex w-full justify-center">
             <label for="firstname"></label><input style="text-align:start" type="text" placeholder="firstname" value="{{user.firstname}}"  required class="input-firstname form-control bg-transparent placeholder:normal"
                 id="firstname" size="30" name="firstname" minlength="8" #firstname="ngModel" [(ngModel)]="user.firstname" required="required">
             <label for="lastname"></label><input style="text-align:start" type="text" placeholder="lastname" value="{{user.lastname}}" required class="input-lastname form-control bg-transparent placeholder:normal" id="lastname"
@@ -60,7 +60,7 @@
         <p *ngIf="firstname.errors?.['required'] && firstname.dirty" style="text-align:start" class="alert firstname-message-erreur text-sm normal">firstname required</p><br>
 
         <!--zone formulaire Password-->
-        <div>
+        <div class="flex w-full justify-center">
             <label for="password"></label><input style="text-align:start" type="password" placeholder="Password" value="{{user.password}}" required class="input-password  form-control bg-transparent placeholder:normal "
                 id="password" size="30" #password="ngModel" [(ngModel)]="user.password" name="Password" minlength="8" required="required" pattern="">
             <label for="ConfirPassword"></label><input style="text-align:start" type="password" placeholder="Confirm-Password" value="{{user.password}}" required class="input-confirm-password form-control bg-transparent placeholder:normal"
@@ -79,6 +79,6 @@
         </div>
         <br>
         <button class="cancel" type="submit" onclick= "window.location.href = 'http://localhost:4200/projects';">Cancel</button>&nbsp;&nbsp;&nbsp; 
-        <br><br><br><br>
+        <br><br>
     </div>
 </form>

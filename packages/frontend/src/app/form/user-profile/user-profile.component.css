@@ -150,7 +150,7 @@ p {
 /*css input firstname*/
 
 .input-firstname {
-    margin-left: 295px;
+    margin-left: 210px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -168,7 +168,7 @@ p {
 /*css input password*/
 
 .input-password {
-    margin-left: 295px;
+    margin-left: 230px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -180,22 +180,6 @@ p {
     margin-right: 120px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
-}
-
-
-/*css buton edit*/
-
-.edit {
-    margin-left: 470px;
-    padding: 6px 15px;
-    background: #3eec50;
-    color: #ffffff;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    border: 2px solid #78ebd0;
-    font-size: 20px;
-    font-style: normal;
 }
 
 
@@ -233,7 +217,7 @@ p {
 
 .cancel
 {
-    margin-left: +475px;
+    margin-left: +420px;
     padding: 6px 15px;
     background: #11df0a;
     color: #ffffff;
