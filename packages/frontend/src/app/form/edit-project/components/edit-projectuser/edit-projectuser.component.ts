@@ -81,7 +81,7 @@ export class EditProjectuserComponent implements OnInit {
                 this.isAssigned = true;
             },
             complete: () => {
-                this.toastService.success(
+                this.toastService.warning(
                     `User is now desassigned of the project !`
                 );
             }
@@ -131,7 +131,12 @@ export class EditProjectuserComponent implements OnInit {
                 this.isAssigned = false;
             },
             complete: () => {
-                this.toastService.success(`User is now project admin !`);
+                if (this.isAdmin) {
+                    this.toastService.success(`User is now project admin !`);
+                } else
+                    this.toastService.warning(
+                        `User is not project admin anymore !`
+                    );
             }
         };
 
