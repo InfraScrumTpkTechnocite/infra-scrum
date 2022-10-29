@@ -76,9 +76,11 @@ export function HttpLoaderFactory(http: HttpClient) {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
-            }
+            },
+            defaultLanguage: navigator.language
         })
     ],
+    exports: [TranslateModule],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
