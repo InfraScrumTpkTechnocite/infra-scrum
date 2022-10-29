@@ -4,15 +4,21 @@
     >
         {{ user.username }}
     </p>
+
     <mat-slide-toggle
+        class="p-5"
+        #isassigned
         [(ngModel)]="isAssigned"
         [disabled]="isAdmin"
         (change)="assignUserToProject()"
-    ></mat-slide-toggle>
-    <label for="isadmin">Administrator</label>
+        >assigned</mat-slide-toggle
+    >
     <mat-slide-toggle
+        class="p-5"
         #isadmin
+        [disabled]="!isAssigned"
         [(ngModel)]="isAdmin"
         (change)="setUserProjectAdmin()"
-    ></mat-slide-toggle>
+        >admin</mat-slide-toggle
+    >
 </div>

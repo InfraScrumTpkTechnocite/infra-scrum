@@ -74,7 +74,7 @@ export class ProjectComponent implements OnInit {
         //         this.user.role.id
         // );
 
-        //messages received from server are processed here
+        //messages received from webSocket server are processed here
         const subjectObserver = {
             next: (message: any) => {
                 const method = message.method;
@@ -127,8 +127,8 @@ export class ProjectComponent implements OnInit {
                 const userProjectsObserver = {
                     next: (userProjects: UserProject[]) => {
                         this.userProjects = userProjects;
-                        console.log(this.userProjects);
-                        console.log(this.user.id);
+                        // console.log(this.userProjects);
+                        // console.log(this.user.id);
                         // this.userProjects.forEach((up) => {
                         //     console.log(up.user.id);
                         //     if (up.user.id == this.user.id)
@@ -139,13 +139,13 @@ export class ProjectComponent implements OnInit {
                                 return userproject.user.id == this.user.id;
                             }
                         );
-                        console.log('userproject = ' + userproject);
+                        // console.log('userproject = ' + userproject);
                         if (userproject)
                             this.isUserProjectadmin =
                                 userproject.isprojectadmin;
-                        console.log(
-                            `project.component - ngOnInit - logged in user project admin ? ${this.isUserProjectadmin} `
-                        );
+                        // console.log(
+                        //     `project.component - ngOnInit - logged in user project admin ? ${this.isUserProjectadmin} `
+                        // );
                     },
                     error: () => {},
                     complete: () => {}

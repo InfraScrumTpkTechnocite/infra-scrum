@@ -23,38 +23,45 @@ export class UsersService {
         JSON.stringify(user),
     );
     return await this.usersRepository.manager.transaction(
+      'SERIALIZABLE',
       async (transactionnalEntityManager): Promise<User> => {
-        return transactionnalEntityManager
-          .createQueryBuilder(User, 'user')
-          .setLock('pessimistic_read')
-          .where({ username: Equal(user.username) })
-          .getOne()
-          .then(async (result) => {
-            let newuser: User = result;
-            console.log(
-              `users.service - create - newuser = ${JSON.stringify(newuser)}`,
-            );
-            if (undefined == newuser) {
-              console.log(
-                `users.service - create - newuser = ${JSON.stringify(user)}`,
-              );
-              newuser = user;
-              delete newuser.id;
-              return await transactionnalEntityManager.save(User, newuser);
-            }
-            return newuser;
-          });
+        return await transactionnalEntityManager.save(User, user);
       },
     );
   }
 
   async update(id: string, user: User): Promise<UpdateResult> {
     if (user.password) user.password = await hash(user.password, 10);
-    return await this.usersRepository.update(id, user);
+    //return await this.usersRepository.update(id, user);
+    return await this.usersRepository.manager.transaction(
+      'SERIALIZABLE',
+      async (transactionnalEntityManager): Promise<UpdateResult> => {
+        console.log(`users.services - update - user = ${JSON.stringify(user)}`);
+        return await transactionnalEntityManager.update(
+          User,
+          { id: id },
+          {
+            username: user.username,
+            email: user.email,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            password: user.password,
+            role: user.role,
+            picture: user.picture,
+          },
+        );
+      },
+    );
   }
 
   async delete(id: string): Promise<DeleteResult> {
-    return await this.usersRepository.delete(id);
+    //return await this.usersRepository.delete(id);
+    return await this.usersRepository.manager.transaction(
+      'SERIALIZABLE',
+      async (transactionnalEntityManager): Promise<DeleteResult> => {
+        return await transactionnalEntityManager.delete(User, id);
+      },
+    );
   }
 
   async findAll(): Promise<User[]> {
@@ -84,29 +91,5 @@ export class UsersService {
       relations: { role: true },
       where: { username },
     });
-  }
-
-  async getOrCreate(user: User): Promise<User> {
-    return this.usersRepository.manager.transaction(
-      (transactionnalEntityManager): Promise<User> => {
-        return transactionnalEntityManager
-          .createQueryBuilder(User, 'user')
-          .setLock('pessimistic_read')
-          .where({ user: Equal(user.username) })
-          .getOne()
-          .then(async (result) => {
-            const newuser: User = result;
-
-            if (undefined === newuser) {
-              const newuser: User = transactionnalEntityManager.create(
-                User,
-                user,
-              );
-              return await transactionnalEntityManager.save<User>(newuser);
-            }
-            return newuser;
-          });
-      },
-    );
   }
 }
