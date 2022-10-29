@@ -69,11 +69,15 @@ p {
     color: red;
 }
 
+.h1{
+    margin-left: -150px;
+}
+
 
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 585px;
+    margin-left: 260px;
     font-style: normal;
     font-size: 14pt;
     color: red;
@@ -93,7 +97,7 @@ p {
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
-    margin-left: 295px;
+    margin-left: 230px;
     font-style: normal;
     font-size: 14pt;
     color: red;
@@ -113,7 +117,7 @@ p {
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 295px;
+    margin-left: 230px;
     font-style: normal;
     font-size: 14pt;
     color: red;
@@ -132,7 +136,7 @@ p {
 /*css username*/
 
 .input-username {
-    margin-left: 400px;
+    margin-left: 260px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -141,7 +145,7 @@ p {
 /*css email*/
 
 .input-email {
-    margin-left: 400px;
+    margin-left: 260px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
