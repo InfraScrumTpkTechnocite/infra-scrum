@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
 import { User } from '../../../../models/user.model';
@@ -14,8 +15,8 @@ export class EditProjectuserComponent implements OnInit {
     @Input() user!: User;
     @Input() userProjectList!: UserProject[];
 
-    isAssigned:boolean = false;
-    isAdmin:boolean = false;
+    isAssigned: boolean = false;
+    isAdmin: boolean = false;
 
     constructor(
         private userProjectService: UserprojectService,
@@ -23,59 +24,122 @@ export class EditProjectuserComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        const userProject = this.userProjectList!.find(userProject => this.user.id == userProject.user.id )
-        if(userProject) {
+        const count = this.userProjectList.filter(
+            (user) => user.isprojectadmin
+        ).length;
+        // console.log(
+        //     `edit-EditProjectuserComponent.component - ngOnInit - ${count}`
+        // );
+
+        const userProject = this.userProjectList!.find(
+            (userProject) => this.user.id == userProject.user.id
+        );
+        if (userProject) {
             this.isAssigned = true;
-            this.isAdmin= userProject.isprojectadmin;
-        }
-        else this.isAssigned = false;
+            this.isAdmin = userProject.isprojectadmin;
+        } else this.isAssigned = false;
     }
 
-    assignUserToProject(){
+    assignUserToProject() {
         const assignObserver = {
-            next:(userProject: UserProject) => {
+            next: (userProject: UserProject) => {
                 this.userProjectList.push(userProject);
             },
             error: (err: any) => {
-                console.log(`Erreur création userProject : ${err.error['driverError'].detail}`);
-                this.toastService.error(`Error during userProject creation<br><br>${err.error.driverError.detail}`);
+                console.log(
+                    `Erreur création userProject : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during userProject creation<br><br>${err.error.driverError.detail}`
+                );
                 this.isAssigned = false;
             },
             complete: () => {
-                this.toastService.success(`User is now assigned to the project !`);
+                this.toastService.success(
+                    `User is now assigned to the project !`
+                );
             }
         };
 
         const desassignObserver = {
-            next:(userProject: UserProject) => {
-                this.userProjectList.splice(this.userProjectList.findIndex(userProjectInList => userProjectInList.id == userProject.id ),1,);
+            next: (userProject: UserProject) => {
+                this.userProjectList.splice(
+                    this.userProjectList.findIndex(
+                        (userProjectInList) =>
+                            userProjectInList.id == userProject.id
+                    ),
+                    1
+                );
             },
             error: (err: any) => {
-                console.log(`Erreur delete userProject : ${err.error['driverError'].detail}`);
-                this.toastService.error(`Error during userProject deletion<br><br>${err.error.driverError.detail}`);
+                console.log(
+                    `Erreur delete userProject : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during userProject deletion<br><br>${err.error.driverError.detail}`
+                );
                 this.isAssigned = true;
             },
             complete: () => {
-                this.toastService.success(`User is now desassigned of the project !`);
+                this.toastService.success(
+                    `User is now desassigned of the project !`
+                );
             }
         };
 
         var newUserProject = new UserProject();
-        if(this.isAssigned) {
+        if (this.isAssigned) {
             newUserProject.project.id = this.projectid;
             newUserProject.user = this.user;
-            this.userProjectService.create(newUserProject).subscribe(assignObserver);
+            this.userProjectService
+                .create(newUserProject)
+                .subscribe(assignObserver);
+        } else {
+            const userProject = this.userProjectList.find(
+                (userProject) => userProject.user.id == this.user.id
+            );
+            if (userProject && !userProject.isprojectadmin) {
+                if (this.user.id == userProject.user.id)
+                    this.userProjectService
+                        .delete(userProject.id!)
+                        .subscribe(desassignObserver);
+            } else {
+                this.toastService.error(
+                    "Admin of project can't be desassigned !"
+                );
+                this.isAssigned = true;
+                console.log('should be true', this.isAssigned);
+            }
         }
-        else {
-            const userProject = this.userProjectList.find(userProject => this.user.id == userProject.user.id) 
-            if(userProject && !userProject.isprojectadmin){
-                if(this.user.id == userProject.user.id) this.userProjectService.delete(userProject.id!).subscribe(desassignObserver);
+    }
+
+    setUserProjectAdmin() {
+        const userProject: any = this.userProjectList.find(
+            (userProject) => userProject.user.id == this.user.id
+        );
+        const setUserProjectAdmin = {
+            next: (userProject: UserProject) => {
+                console.log(`UserProject updated !`);
+            },
+            error: (err: any) => {
+                console.log(
+                    `Erreur mise à jour userProject : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during userProject creation<br><br>${err.error.driverError.detail}`
+                );
+                this.isAssigned = false;
+            },
+            complete: () => {
+                this.toastService.success(`User is now project admin !`);
             }
-            else{
-                this.toastService.error("Admin of project can't be desassigned !");
-                this.isAssigned = true
-                console.log("should be true",this.isAssigned)
-            }
+        };
+
+        if (userProject) {
+            userProject.isprojectadmin = this.isAdmin;
+            this.userProjectService
+                .update(userProject.id, userProject)
+                .subscribe(setUserProjectAdmin);
         }
     }
 }

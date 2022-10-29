@@ -13,14 +13,17 @@
         <div class="text-right">
             <button
                 [disabled]="
-                    user.role.name != 'superadmin' && user.role.name != 'admin'
+                    !userProject.isprojectadmin &&
+                    user.role.name != 'superadmin' &&
+                    user.role.name != 'admin'
                 "
                 (click)="openEditionProject()"
                 class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
             >
                 <div
                     *ngIf="
-                        user.role.name == 'admin' ||
+                        userProject.isprojectadmin ||
+                            user.role.name == 'admin' ||
                             user.role.name == 'superadmin';
                         then mayedit;
                         else maynotedit

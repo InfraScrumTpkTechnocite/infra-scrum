@@ -14,6 +14,7 @@
                     'bg-primary text-white': !parentProject,
                     'text-primary': parentProject
                 }"
+                [disabled]="!parentProject"
             >
                 {{ 'infrascrum.project.btn-global' | translate }}
             </button>
@@ -38,6 +39,7 @@
                         'bg-primary text-white': sprint.id == projectid,
                         'text-primary': sprint.id != projectid
                     }"
+                    [disabled]="sprint.id == projectid"
                 >
                     {{ sprint.name }}
                 </button>
@@ -80,7 +82,8 @@
                     *ngIf="
                         project &&
                         (user.role.name == 'admin' ||
-                            user.role.name == 'superadmin')
+                            user.role.name == 'superadmin' ||
+                            isUserProjectadmin)
                     "
                     routerLink="edit-project"
                     [queryParams]="{ projectid: project.id }"

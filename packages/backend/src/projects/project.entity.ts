@@ -67,7 +67,7 @@ export class Project {
   @IsOptional()
   enddate: string;
 
-  @ApiProperty({ example: 'url? blob?', description: 'User picture' })
+  @ApiProperty({ example: 'base64 encoded', description: 'User picture' })
   @Column({ nullable: true })
   @IsOptional()
   picture: string;
