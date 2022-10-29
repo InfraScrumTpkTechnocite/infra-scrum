@@ -11,7 +11,7 @@
         [(ngModel)]="isAssigned"
         [disabled]="isAdmin"
         (change)="assignUserToProject()"
-        >assigned</mat-slide-toggle
+        >{{ 'infrascrum.edit-project.assigned' | translate }}</mat-slide-toggle
     >
     <mat-slide-toggle
         class="p-5"
@@ -19,6 +19,6 @@
         [disabled]="!isAssigned"
         [(ngModel)]="isAdmin"
         (change)="setUserProjectAdmin()"
-        >admin</mat-slide-toggle
+        >{{ 'infrascrum.edit-project.admin' | translate }}</mat-slide-toggle
     >
 </div>

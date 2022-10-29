@@ -64,7 +64,9 @@
             "inter-date-description": "Description",
             "edit-projectinfo-name": "Nom",
             "edit-projectinfo-file": "Choisir un fichier/image",
-            "edit-project-delivery": "Date de livraison"
+            "edit-project-delivery": "Date de livraison",
+            "assigned": "assigné",
+            "admin": "admin"
         },
         "login": {
             "title": "Connectez-vous",
