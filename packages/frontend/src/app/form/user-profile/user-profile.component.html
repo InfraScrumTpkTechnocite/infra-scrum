@@ -21,14 +21,14 @@
         <h1 class=" h1 text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-center pt-4">My Profile</h1><br><br><br>
            
         <!--zone formulaire Username-->
-        <label for="username"></label><input style="text-align:left" type="text" placeholder="username" value="{{user.username}}" required class="input-username form-control bg-transparent placeholder:normal" id="username"
+        <label for="username"></label><input style="text-align:left" type="text" placeholder="username" value="{{user.username | translate}}" required class="input-username form-control bg-transparent placeholder:normal" id="username"
             name="username" size="30" #username="ngModel" [(ngModel)]="user.username" required="required" pattern="^[a-zA-Z0-9àéèç]{1,25}$" /><br>
 
         <!--"message erreur Username"-->
         <p *ngIf="username.errors?.['required'] && username.dirty" style="text-align:start" class="alert username-message-erreur text-sm normal">username required</p><br>
 
         <!--input Email-->
-        <label for="email"></label><input style="text-align:left" type="text" id="email" placeholder="email" value="{{user.email}}" size="30" #email="ngModel" [(ngModel)]="user.email" required class="input-email form-control bg-transparent placeholder:normal"
+        <label for="email"></label><input style="text-align:left" type="text" id="email" placeholder="email" value="{{user.email | translate}}" size="30" #email="ngModel" [(ngModel)]="user.email" required class="input-email form-control bg-transparent placeholder:normal"
             required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
         </div>
 
@@ -40,7 +40,7 @@
 
     <!--input Role-->
     <div class="flex w-full justify-start">
-        <label for="role"></label><input id="role" type="text" style="text-align:center" required class="input-role form-control bg-transparent placeholder:normal" placeholder="role" value="{{user.role.name}}" size="10" #role="ngModel"
+        <label for="role"></label><input id="role" type="text" style="text-align:center" required class="input-role form-control bg-transparent placeholder:normal" placeholder="role" value="{{user.role.name | translate}}" size="10" #role="ngModel"
             [(ngModel)]="user.username" required="required">
     </div>
 
