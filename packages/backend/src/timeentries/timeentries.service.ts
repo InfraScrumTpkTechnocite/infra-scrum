@@ -25,7 +25,10 @@ export class TimeentriesService {
   async findAll(): Promise<TimeEntry[]> {
     return await this.timeEntriesRepository.find({
       relations: {
-        taskassignment: { userproject: { user: true } },
+        taskassignment: {
+          task: { tasktype: true, kanbanstatus: true },
+          userproject: { user: { role: true }, project: true },
+        },
       },
     });
   }

@@ -23,7 +23,6 @@ export class UsersprojectsService {
     return await this.usersProjectsRepository.manager.transaction(
       'SERIALIZABLE',
       async (transactionnalEntityManager): Promise<UpdateResult> => {
-        console.log(`this.usersProjectsRepository.manager.transaction`);
         return await transactionnalEntityManager.update(
           UserProject,
           id,
