@@ -39,6 +39,20 @@ export class UserprojectService {
             );
     }
 
+    findAll(): Observable<UserProject[]> {
+        return this.httpClient.get<any>(
+            `/backend/usersprojects/`,
+            this.httpOptions
+        );
+    }
+
+    findAllAssignedAtLeastOnce(): Observable<UserProject[]> {
+        return this.httpClient.get<any>(
+            `/backend/usersprojects/findallassignedatleastonce`,
+            this.httpOptions
+        );
+    }
+
     findCurrentUserProjects(userid: string): Observable<any> {
         return this.httpClient.get(
             `/backend/usersprojects/currentuserprojects/${userid}`,

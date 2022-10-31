@@ -72,24 +72,50 @@ export class UsersService {
     //   console.log(`users.controller - findAll - user = ${user.role.id}`);
     // });
     // return users;
-    return await this.usersRepository.find({ relations: ['role'] });
+    return await this.usersRepository.manager.transaction(
+      'SERIALIZABLE',
+      async (transactionnalEntityManager): Promise<User[]> => {
+        return await transactionnalEntityManager.find(User, {
+          relations: ['role'],
+        });
+      },
+    );
   }
 
   async findOne(id: string): Promise<User> {
-    return await this.usersRepository.findOne({
-      where: {
-        id: id,
+    return await this.usersRepository.manager.transaction(
+      'SERIALIZABLE',
+      async (transactionnalEntityManager): Promise<User> => {
+        return await transactionnalEntityManager.findOne(User, {
+          where: {
+            id: id,
+          },
+          relations: {
+            role: true,
+          },
+        });
       },
-      relations: {
-        role: true,
-      },
-    });
+    );
   }
 
   async findOneByUsername(username: string): Promise<User> {
-    return await this.usersRepository.findOne({
-      relations: { role: true },
-      where: { username },
-    });
+    return await this.usersRepository.manager.transaction(
+      'SERIALIZABLE',
+      async (transactionnalEntityManager): Promise<User> => {
+        return await transactionnalEntityManager.findOne(User, {
+          relations: { role: true },
+          where: { username },
+        });
+      },
+    );
+  }
+
+  async select(select: any): Promise<any> {
+    return await this.usersRepository.manager.transaction(
+      'SERIALIZABLE',
+      async (transactionnalEntityManager): Promise<User[]> => {
+        return await transactionnalEntityManager.query(select.select);
+      },
+    );
   }
 }

@@ -9,13 +9,11 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 
-
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
 @NgModule({
     declarations: [OverviewComponent, UserOverviewComponent],
-    imports: [CommonModule, AdminRoutingModule, FormsModule,  
-        TranslateModule]
+    imports: [CommonModule, AdminRoutingModule, FormsModule, TranslateModule]
 })
 export class AdminModule {}

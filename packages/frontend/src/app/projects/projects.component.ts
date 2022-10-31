@@ -57,15 +57,22 @@ export class ProjectsComponent implements OnInit {
         };
 
         const userObserver = {
-            next: (response: User) => {
-                localStorage.setItem('user', JSON.stringify(response));
-                this.user = response;
+            next: (user: User) => {
+                localStorage.setItem('user', JSON.stringify(user));
+                this.user = user;
                 //pour lire le localStorage :
                 //var user = JSON.parse(localStorage.getItem('user'));
-                if (response.id)
-                    this.userProjectService
-                        .findCurrentUserProjects(response.id)
-                        .subscribe(userProjectsObserver);
+                if (user.id) {
+                    if (user.role.name == 'superadmin') {
+                        this.userProjectService
+                            .findAllAssignedAtLeastOnce()
+                            .subscribe(userProjectsObserver);
+                    } else {
+                        this.userProjectService
+                            .findCurrentUserProjects(user.id)
+                            .subscribe(userProjectsObserver);
+                    }
+                }
             },
             error: (err: Error) => {
                 console.log(`Error: ${err}`);
