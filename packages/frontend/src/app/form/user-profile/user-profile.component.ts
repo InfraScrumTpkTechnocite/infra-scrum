@@ -69,8 +69,6 @@ onSubmit(user: User): void {
       },
     };
 
-    this.userService.editUser(this.user).subscribe(userObserver)
-
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
@@ -80,6 +78,7 @@ onSubmit(user: User): void {
         this.url = event.target?.result;
       }
     }
+    this.userService.editUser(this.user).subscribe(userObserver)
   }
 
   /*function delete profile*/
