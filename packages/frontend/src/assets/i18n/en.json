@@ -81,7 +81,8 @@
         "sub-menu-projects": "My projects",
         "sub-menu-profil": "My profile",
         "sub-menu-users": "Edit users",
-        "sub-menu-logout": "Logout"
+        "sub-menu-logout": "Logout",
+        "sub-menu-language": "French"
       },
       "index": {
         "title": "INFRASCRUM",
