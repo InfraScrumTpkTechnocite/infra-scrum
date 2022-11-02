@@ -27,16 +27,15 @@ export class UserprojectService {
     }
 
     create(userproject: UserProject): Observable<UserProject> {
-        return this.httpClient
-            .post<any>(
-                '/backend/usersprojects',
-                JSON.stringify(userproject),
-                this.httpOptions
-            )
-            .pipe(
-                tap((response) => this.log(response)),
-                catchError((error) => this.handleError(error, null))
-            );
+        return this.httpClient.post<any>(
+            '/backend/usersprojects',
+            JSON.stringify(userproject),
+            this.httpOptions
+        );
+        // .pipe(
+        //     tap((response) => this.log(response)),
+        //     catchError((error) => this.handleError(error, null))
+        // );
     }
 
     findAll(): Observable<UserProject[]> {

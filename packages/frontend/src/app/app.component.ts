@@ -9,17 +9,15 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
     title = 'frontend';
 
-
     //   user!: { firstName: string; lastName: string; };
     // welcome!: string;
     // usernameLabel!: string;
     // passwordLabel!: string;
 
     constructor(private translate: TranslateService) {
-        translate.addLangs(['en', 'klingon']);
-        translate.setDefaultLang('en');
-        translate.use('en');
-
+        translate.addLangs(['fr', 'en']);
+        //translate.setDefaultLang(navigator.language.split('-')[0]);
+        translate.use(navigator.language.split('-')[0]);
     }
 
     ngOnInit() {

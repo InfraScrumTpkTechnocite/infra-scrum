@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { HeaderTitleService } from '../services/header-title.service';
@@ -21,7 +22,8 @@ export class HeaderComponent implements OnInit {
     constructor(
         public authService: AuthService,
         private headerTitleService: HeaderTitleService,
-        private router: Router,private activatedRoute: ActivatedRoute,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
         private userService: UserService,
         private userProjectService: UserprojectService
     ) {
@@ -114,7 +116,9 @@ export class HeaderComponent implements OnInit {
 
     onChange(event: any) {
         console.log(`header.component - onChange - ${event.target.value}`); //id du projet sélectionné
-        this.router.navigate(['/project'], { queryParams: { projectid: event.target.value } });
+        this.router.navigate(['/project'], {
+            queryParams: { projectid: event.target.value }
+        });
     }
 
     ngOnDestroy() {

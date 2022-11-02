@@ -51,18 +51,26 @@ async function bootstrap() {
   });
 
   // Creating connection using websocket and loops waiting for client connections...
-  wss.on('connection', (ws, request, client) => {
+  wss.on('connection', (ws, request) => {
     // console.log(
     //   `new client ( origin : ${
     //     request.rawHeaders[request.rawHeaders.indexOf('Origin') + 1]
     //   } ) connected on port ${configEnv.get<number>('WEBSOCKET_SERVER_PORT')}`,
     // );
-    // console.log(request.rawHeaders);
+    //console.log(request.rawHeaders);
+    console.log(
+      `ws : ${ws}, Request: ${request}, ClientIP address : ${request.socket.remoteAddress}`,
+    );
     // sending message
     ws.on('message', (data: any) => {
-      //console.log(`Client with projectid ${ws} has sent us: ${data}`);
-      wss.clients.forEach(function each(client) {
-        if (client.params !== ws) {
+      // console.log(
+      //   `Client with projectid ${JSON.stringify(ws)} has sent us: ${data}`,
+      // );
+      // console.table(wss.clients);
+      wss.clients.forEach(function each(client: any) {
+        // console.log('client : ' + client + ' - ws : ' + ws);
+        if (client !== ws) {
+          console.log(`WebSocket server - sending message : ${data}`);
           client.send(data.toString());
         }
       });

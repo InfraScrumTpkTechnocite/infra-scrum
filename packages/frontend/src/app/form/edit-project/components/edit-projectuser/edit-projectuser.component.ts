@@ -17,6 +17,7 @@ export class EditProjectuserComponent implements OnInit {
 
     isAssigned: boolean = false;
     isAdmin: boolean = false;
+    userProject: any;
 
     constructor(
         private userProjectService: UserprojectService,
@@ -24,26 +25,36 @@ export class EditProjectuserComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        const count = this.userProjectList.filter(
-            (user) => user.isprojectadmin
-        ).length;
-        // console.log(
-        //     `edit-EditProjectuserComponent.component - ngOnInit - ${count}`
-        // );
+        // this.total_users_assigned = this.userProjectList.filter(
+        //     (userProject) => userProject
+        // ).length;
+        console.log(
+            `edit-EditProjectuserComponent.component - ngOnInit - total users : ${this.userProjectList.length}`
+        );
 
-        const userProject = this.userProjectList!.find(
+        this.userProject = this.userProjectList!.find(
             (userProject) => this.user.id == userProject.user.id
         );
-        if (userProject) {
+
+        if (this.userProject) {
             this.isAssigned = true;
-            this.isAdmin = userProject.isprojectadmin;
-        } else this.isAssigned = false;
+            this.isAdmin = this.userProject.isprojectadmin;
+        } else {
+            this.isAssigned = false;
+            this.isAdmin = false;
+        }
     }
 
     assignUserToProject() {
         const assignObserver = {
             next: (userProject: UserProject) => {
                 this.userProjectList.push(userProject);
+                // this.total_users_assigned = this.userProjectList.filter(
+                // (userProject) => userProject
+                // ).length;
+                console.log(
+                    `edit-EditProjectuserComponent.component - ngOnInit - total users : ${this.userProjectList.length}`
+                );
             },
             error: (err: any) => {
                 console.log(
@@ -69,6 +80,9 @@ export class EditProjectuserComponent implements OnInit {
                             userProjectInList.id == userProject.id
                     ),
                     1
+                );
+                console.log(
+                    `edit-EditProjectuserComponent.component - ngOnInit - total users : ${this.userProjectList.length}`
                 );
             },
             error: (err: any) => {
@@ -98,17 +112,25 @@ export class EditProjectuserComponent implements OnInit {
             const userProject = this.userProjectList.find(
                 (userProject) => userProject.user.id == this.user.id
             );
-            if (userProject && !userProject.isprojectadmin) {
-                if (this.user.id == userProject.user.id)
-                    this.userProjectService
-                        .delete(userProject.id!)
-                        .subscribe(desassignObserver);
+
+            if (this.userProjectList.length > 1) {
+                if (userProject && !userProject.isprojectadmin) {
+                    if (this.user.id == userProject.user.id)
+                        this.userProjectService
+                            .delete(userProject.id!)
+                            .subscribe(desassignObserver);
+                } else {
+                    this.toastService.error(
+                        "Admin of project can't be desassigned !"
+                    );
+                    this.isAssigned = true;
+                    console.log('should be true', this.isAssigned);
+                }
             } else {
-                this.toastService.error(
-                    "Admin of project can't be desassigned !"
-                );
                 this.isAssigned = true;
-                console.log('should be true', this.isAssigned);
+                this.toastService.warning(
+                    `There must be at least one user assigned to project !`
+                );
             }
         }
     }
@@ -147,4 +169,12 @@ export class EditProjectuserComponent implements OnInit {
                 .subscribe(setUserProjectAdmin);
         }
     }
+
+    // ngOnChanges() {
+    //     alert('ngonchange');
+    // }
+
+    // ngDoCheck() {
+    //     alert('ngdocheck');
+    // }
 }

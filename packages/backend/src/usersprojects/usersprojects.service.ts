@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult, DeleteResult, Equal, IsNull } from 'typeorm';
+import { Repository, UpdateResult, DeleteResult, Equal } from 'typeorm';
+import { IsolationLevel } from 'typeorm/driver/types/IsolationLevel';
 import { UserProject } from './userproject.entity';
 
 @Injectable()
@@ -8,11 +10,14 @@ export class UsersprojectsService {
   constructor(
     @InjectRepository(UserProject)
     private usersProjectsRepository: Repository<UserProject>,
+    private configService: ConfigService,
   ) {}
 
   async create(userproject: UserProject): Promise<UserProject> {
     return await this.usersProjectsRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<UserProject> => {
         return await transactionnalEntityManager.save(UserProject, userproject);
       },
@@ -21,7 +26,9 @@ export class UsersprojectsService {
 
   async update(id: string, userproject: UserProject): Promise<UpdateResult> {
     return await this.usersProjectsRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<UpdateResult> => {
         return await transactionnalEntityManager.update(
           UserProject,
@@ -34,7 +41,9 @@ export class UsersprojectsService {
 
   async delete(id: string): Promise<DeleteResult> {
     return await this.usersProjectsRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<DeleteResult> => {
         return await transactionnalEntityManager.delete(UserProject, id);
       },
@@ -43,7 +52,9 @@ export class UsersprojectsService {
 
   async findAll(): Promise<UserProject[]> {
     return await this.usersProjectsRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<UserProject[]> => {
         return await transactionnalEntityManager.find(UserProject, {
           relations: ['user', 'project'],
@@ -54,7 +65,9 @@ export class UsersprojectsService {
 
   async findOne(id: string): Promise<UserProject> {
     return await this.usersProjectsRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<UserProject> => {
         return await transactionnalEntityManager.findOneBy(UserProject, { id });
       },
@@ -63,7 +76,9 @@ export class UsersprojectsService {
 
   async findCurrentUserProjects(userid: string): Promise<UserProject[]> {
     return await this.usersProjectsRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<UserProject[]> => {
         return await transactionnalEntityManager.find(UserProject, {
           select: ['project'],
@@ -79,12 +94,14 @@ export class UsersprojectsService {
 
   async findCurrentProjectUsers(projectid: string): Promise<UserProject[]> {
     return await this.usersProjectsRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<UserProject[]> => {
         return await transactionnalEntityManager.find(UserProject, {
           select: ['user'],
           relations: { project: true, user: true },
-          where: { project: { id: Equal(projectid) /*, enddate: IsNull()*/ } },
+          where: { project: { id: Equal(projectid) } },
           order: {
             project: { startdate: 'ASC' },
           },
@@ -97,7 +114,9 @@ export class UsersprojectsService {
   // => list for superadmin only
   async findAllAssignedAtLeastOnce(): Promise<UserProject[]> {
     return await this.usersProjectsRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<UserProject[]> => {
         return await transactionnalEntityManager
           .createQueryBuilder(UserProject, 'userproject')
