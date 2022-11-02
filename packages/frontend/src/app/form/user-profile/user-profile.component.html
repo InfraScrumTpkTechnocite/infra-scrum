@@ -12,7 +12,7 @@
         <!--button ("+")-->
         <input style="border:1px solid #7697a8;" class="button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" alt="profile picture" id="loadFileXml" placeholder="" value="+" *ngIf="user.picture" #picture="ngModel" [(ngModel)]="user.picture"/>
         <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" class="avatar"> <br/>
-        <input type='file' (change)="onSelectFile($event)" class="select-profile-picture" alt="profile picture" *ngIf="user.picture" value="{{user.picture}}" #picture="ngModel" [(ngModel)]="user.picture">
+        <input type='file' (change)="onSelectFile($event)" class="select-profile-picture" alt="profile picture"  *ngIf="user.picture" value="{{user.picture}}" #picture="ngModel" [(ngModel)]="user.picture">
         <span class="message">add your avatar</span>
     </div>
 
@@ -35,7 +35,7 @@
         <!--"message erreur Email"-->
         <p *ngIf="!email.errors?.['required'] && email.invalid && password.dirty" class="alert email-message-erreur text-sm normal">email invalid</p>
         <p *ngIf="email.errors?.['required'] && email.dirty" style="text-align:center" class="alert email-message-erreur text-sm normal">email required</p><br>
-    </div>
+</div>
 </section>
 
     <!--input Role-->
@@ -84,3 +84,8 @@
     <br><br>
     </div>
 </form>
+
+
+<!--<img (click)="PictureUploader.click()" style="border:1px solid #7697a8;" *ngIf="user.picture" src="data:image/*;base64, {{user.picture}}" alt="{{ user.username }}" class="avatar"><br/>
+<input  #PictureUploader type='file' (change)="onFileSelected($event)" class="" alt="profile picture">-->
+

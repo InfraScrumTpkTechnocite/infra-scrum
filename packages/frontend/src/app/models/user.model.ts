@@ -4,6 +4,7 @@ export class User {
   name: any;
   userprofile: any;
   target: any;
+  user: any;
 
   static Form() {}
 
