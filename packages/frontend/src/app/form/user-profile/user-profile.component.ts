@@ -83,72 +83,17 @@ onSelectFile(event:any) {
     }
     this.userService.editUser(this.user).subscribe(userObserver)
   }
-
-/*function select et update "avatar"*/
-
-userProfileClicked(event: any) {
-    console.log(
-        `userprofileinfo.component - userProfileClicked - user-profile clicked - userid = ${this.user.user.id}`
-    );
-    this.router.navigate(['/user'], {
-        queryParams: { userid: this.user.user.id }
-    });
-}
-
-onFileSelected(event: any) {
-    const httpOptions = {
-        headers: new HttpHeaders({
-            Authorization: 'Bearer ' + localStorage.getItem('jwt-token')
-        })
-    };
-
-    const file: File = event.target.files[0];
-    const formData = new FormData();
-
-    formData.append('file', file, this.user.user.id);
-
-    console.table(event.target.files[0]);
-
-    this.httpClient
-        .post<any>(
-            'http://localhost:4200/backend/image-upload/' +
-                this.user.user.id,
-            formData,
-            httpOptions
-        )
-        .subscribe({
-            next: (response) => {
-                //console.log(response);
-                this.projectService
-                    .findOne(<string>this.user.user.id)
-                    .subscribe({
-                        next: (user: User) => {
-                            this.user = user;
-                        },
-                        error: (err: any) => {},
-                        complete: () => {}
-                    });
-                this.toastService.success('Profile picture updated !');
-            },
-            error: (err: any) => {
-                //console.log(err.error.message);
-                this.toastService.error(err.error.message);
-            },
-            complete: () => {}
-        });
-      }
     
-  
 /*function delete profile*/
 
-  onDeleteSubmit(user: User): void {
+onDeleteSubmit(user: User): void {
 
-    const userObserver = {
-      error: (err: any) => {
-        console.log(`Erreur delete profile : ${err.error['driverError'].detail}`);
-        this.toastService.error(`Error during profile delete<br><br>${err.error.driverError.detail}`);
+  const userObserver = {
+    error: (err: any) => {
+      console.log(`Erreur delete profile : ${err.error['driverError'].detail}`);
+      this.toastService.error(`Error during profile delete<br><br>${err.error.driverError.detail}`);
   
-        this.toast.success('Profile data deleted');
+      this.toast.success('Profile data deleted');
       },
       complete: () => {
         this.toastService.success(`Profile data deleted!`);
