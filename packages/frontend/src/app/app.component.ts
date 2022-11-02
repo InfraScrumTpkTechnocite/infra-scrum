@@ -8,15 +8,13 @@ import { Component } from '@angular/core';
 export class AppComponent {
     title = 'frontend';
 
-
     //   user!: { firstName: string; lastName: string; };
     // welcome!: string;
     // usernameLabel!: string;
     // passwordLabel!: string;
-
+    
     constructor() {
         
-    }
 
     ngOnInit() {
         // hardcoded example

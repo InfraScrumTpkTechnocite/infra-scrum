@@ -24,6 +24,7 @@ import { HeaderTitleService } from '../services/header-title.service';
 import { Task } from '../models/task.model';
 import { TaskService } from '../services/task.service';
 import { webSocket } from 'rxjs/webSocket';
+import { User } from '../models/user.model';
 
 @Component({
     selector: 'app-project',
@@ -44,11 +45,14 @@ export class ProjectComponent implements OnInit {
     kanbanList!: Kanbanstatus[];
 
     userProjects!: UserProject[];
+    user!: User;
+    isUserProjectadmin: boolean = false;
 
     dateToday: string = '';
 
     taskList: Task[] = [];
 
+    //https://rxjs.dev/api/webSocket/webSocket
     subject = webSocket('');
 
     constructor(
@@ -63,26 +67,34 @@ export class ProjectComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        let use: any = localStorage.getItem('user');
+        if (use) this.user = JSON.parse(use);
+        // console.log(
+        //     'project.component - ngOnInit - localstorage user = ' +
+        //         this.user.role.id
+        // );
+
+        //messages received from webSocket server are processed here
         const subjectObserver = {
             next: (message: any) => {
-                const method = message.method
-                var kanban: Kanbanstatus = new Kanbanstatus;
-                var task: Task = new Task;
+                const method = message.method;
+                var kanban: Kanbanstatus = new Kanbanstatus();
+                var task: Task = new Task();
                 if (message.kanban) kanban = message.kanban as Kanbanstatus;
                 if (message.task) task = message.task as Task;
-                console.log(message);
-                switch (method){
-                    case 'edit': 
-                        this.kanbanList.splice(kanban.order-1, 1, kanban);
+                //console.log(message);
+                switch (method) {
+                    case 'edit':
+                        this.kanbanList.splice(kanban.order - 1, 1, kanban);
                         break;
                     case 'delete':
-                        this.kanbanList.splice(kanban.order-1, 1);
+                        this.kanbanList.splice(kanban.order - 1, 1);
                         break;
                     case 'add':
                         this.kanbanList.push(kanban);
                 }
-            },
-        }
+            }
+        };
 
         this.dateToday = new Date(
             new Date().setUTCHours(0, 0, 0, 0)
@@ -92,15 +104,18 @@ export class ProjectComponent implements OnInit {
             let paramsObject: any = { ...params.keys, ...params };
             this.projectid = paramsObject.params.projectid;
 
-            console.log(
-                `project.component - ngOnInit - projectid = ${this.projectid}`
-            );
+            // console.log(
+            //     `project.component - ngOnInit - projectid = ${this.projectid}`
+            // );
 
             if (this.projectid) {
-
-                this.subject = webSocket(`ws://localhost:8080?projectid=${this.projectid}`);
+                //message 'connection' to backend (main.ts)...
+                this.subject = webSocket(
+                    `ws://localhost:8080?projectid=${this.projectid}`
+                );
+                //...and subscription (if user is on project page)
                 this.subject.subscribe(subjectObserver);
-                
+
                 const tasksObserver = {
                     next: (taskList: Task[]) => {
                         taskList.map((task) => this.taskList.push(task));
@@ -110,8 +125,28 @@ export class ProjectComponent implements OnInit {
                 };
 
                 const userProjectsObserver = {
-                    next: (userProjects: UserProject[]) =>
-                        (this.userProjects = userProjects),
+                    next: (userProjects: UserProject[]) => {
+                        this.userProjects = userProjects;
+                        // console.log(this.userProjects);
+                        // console.log(this.user.id);
+                        // this.userProjects.forEach((up) => {
+                        //     console.log(up.user.id);
+                        //     if (up.user.id == this.user.id)
+                        //         this.isUserProjectadmin = true;
+                        // });
+                        const userproject: any = this.userProjects.find(
+                            (userproject) => {
+                                return userproject.user.id == this.user.id;
+                            }
+                        );
+                        // console.log('userproject = ' + userproject);
+                        if (userproject)
+                            this.isUserProjectadmin =
+                                userproject.isprojectadmin;
+                        // console.log(
+                        //     `project.component - ngOnInit - logged in user project admin ? ${this.isUserProjectadmin} `
+                        // );
+                    },
                     error: () => {},
                     complete: () => {}
                 };
@@ -126,6 +161,7 @@ export class ProjectComponent implements OnInit {
                         this.userProjectService
                             .findCurrentProjectUsers(projectid)
                             .subscribe(userProjectsObserver);
+
                         kanbanList.map((kanbanstatus) => {
                             this.taskService
                                 .findAllOfKanbanstatus(kanbanstatus.id!)
@@ -168,11 +204,11 @@ export class ProjectComponent implements OnInit {
                             this.project = this.parentProject;
                         }
                         this.headerTitleService.setTitle(this.project.name);
-                        console.log(
-                            `project.component - ngOnInit - parentProject = ${this.parentProject}`
-                        );
+                        // console.log(
+                        //     `project.component - ngOnInit - parentProject = ${this.parentProject}`
+                        // );
                         this.projectService
-                            .findSprints(
+                            .findSprintsOnly(
                                 <string>localStorage.getItem('projectid')
                             )
                             .subscribe(sprintObserver);
@@ -206,14 +242,14 @@ export class ProjectComponent implements OnInit {
 
     //Afficher Sprint en fonction de celui sélectionner
     changeSprintDisplay(id?: string) {
-        console.log(`project.component - changeSprintDisplay - id = ${id}`);
+        //console.log(`project.component - changeSprintDisplay - id = ${id}`);
         const sprint: Project =
             this.sprintList.find((sprint) => sprint.id == id) || new Project();
-        console.log(
-            `project.component - changeSprintDisplay - ${JSON.stringify(
-                sprint
-            )}`
-        );
+        // console.log(
+        //     `project.component - changeSprintDisplay - ${JSON.stringify(
+        //         sprint
+        //     )}`
+        // );
         this.router.navigate([], {
             skipLocationChange: true,
             queryParamsHandling: 'merge', //== if you need to keep queryParams
@@ -228,11 +264,11 @@ export class ProjectComponent implements OnInit {
 
         const sprintObserver = {
             next: (sprint: Project) => {
-                console.log(
-                    `project.component - addSprint - new sprint = ${JSON.stringify(
-                        sprint
-                    )}`
-                );
+                // console.log(
+                //     `project.component - addSprint - new sprint = ${JSON.stringify(
+                //         sprint
+                //     )}`
+                // );
                 this.sprintList.push(sprint);
             },
             error: (err: any) => {
@@ -261,7 +297,11 @@ export class ProjectComponent implements OnInit {
         const kanbanObserver = {
             next: (kanban: Kanbanstatus) => {
                 this.kanbanList.push(kanban);
-                this.subject.next({method: 'add', kanban: kanban});
+
+                // 'next' will send a message to the server once a connection is made
+                // and all subscribed client will receive message right away
+                //Remember value is serialized with JSON.stringify by default!
+                this.subject.next({ method: 'add', kanban: kanban });
             },
             error: (err: any) => {
                 console.log(
@@ -346,13 +386,13 @@ export class ProjectComponent implements OnInit {
             kanban.order = index + 1;
             this.kanbanstatusService.edit(kanban).subscribe({
                 next: (kanban) => {
-                    console.log(kanban);
+                    //console.log(kanban);
                 },
                 error: (err) => {
                     console.log(err);
                 },
                 complete: () => {
-                    this.subject.next({method: 'edit',kanban: kanban});
+                    this.subject.next({ method: 'edit', kanban: kanban });
                 }
             });
         });

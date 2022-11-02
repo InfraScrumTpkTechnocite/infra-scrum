@@ -1,8 +1,25 @@
-<div class="flex w-128 justify-between items-center">
+<div class="flex ml-12 mt-6 xl:ml-0 w-128 justify-between items-center">
     <p
         class="w-80 py-4 border-dotted border-2 border-b-primary border-x-0 border-t-0"
     >
         {{ user.username }}
     </p>
-    <mat-slide-toggle [(ngModel)]="isAssigned" [disabled]="isAdmin" (change)="assignUserToProject()"></mat-slide-toggle>
+
+    <mat-slide-toggle
+        class="p-5"
+        [(ngModel)]="isAssigned"
+        [disabled]="
+            (isAssigned && isAdmin) ||
+            (isAssigned && userProjectList.length <= 1)
+        "
+        (change)="assignUserToProject()"
+        >{{ 'infrascrum.edit-project.assigned' | translate }}</mat-slide-toggle
+    >
+    <mat-slide-toggle
+        class="p-5"
+        [(ngModel)]="isAdmin"
+        [disabled]="!isAssigned"
+        (change)="setUserProjectAdmin()"
+        >{{ 'infrascrum.edit-project.admin' | translate }}</mat-slide-toggle
+    >
 </div>

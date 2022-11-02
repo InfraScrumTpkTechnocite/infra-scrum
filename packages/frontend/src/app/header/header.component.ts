@@ -25,7 +25,8 @@ export class HeaderComponent implements OnInit {
         public authService: AuthService,
         private translate: TranslateService,
         private headerTitleService: HeaderTitleService,
-        private router: Router,private activatedRoute: ActivatedRoute,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
         private userService: UserService,
         private userProjectService: UserprojectService,
     ) {
@@ -136,7 +137,9 @@ export class HeaderComponent implements OnInit {
 
     onChange(event: any) {
         console.log(`header.component - onChange - ${event.target.value}`); //id du projet sélectionné
-        this.router.navigate(['/project'], { queryParams: { projectid: event.target.value } });
+        this.router.navigate(['/project'], {
+            queryParams: { projectid: event.target.value }
+        });
     }
 
     ngOnDestroy() {

@@ -7,7 +7,6 @@ import { Kanbanstatus } from '../models/kanbanstatus.model';
     providedIn: 'root'
 })
 export class KanbanstatusService {
-
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -15,9 +14,7 @@ export class KanbanstatusService {
         })
     };
 
-    constructor(
-        private httpClient: HttpClient
-    ) { }
+    constructor(private httpClient: HttpClient) {}
 
     private handleError(error: Error, errorValue: any) {
         console.error(error);
@@ -28,32 +25,45 @@ export class KanbanstatusService {
         console.table(response);
     }
 
-    
     create(kanbanstatus: Kanbanstatus): Observable<Kanbanstatus> {
-        return this.httpClient.post<any>("/backend/kanbanstatus", JSON.stringify(kanbanstatus), this.httpOptions)
-            .pipe(
-                tap((response) => this.log(response)),
-                catchError((error) => this.handleError(error, null))
-                );
-            }
-            
-    findAllOfProject(projectid: string): Observable<Kanbanstatus[]> {
-        return this.httpClient.get<any>("/backend/kanbanstatus/of/project/" + projectid, this.httpOptions);
+        return this.httpClient.post<any>(
+            '/backend/kanbanstatus',
+            JSON.stringify(kanbanstatus),
+            this.httpOptions
+        );
+        // .pipe(
+        //     tap((response) => this.log(response)),
+        //     catchError((error) => this.handleError(error, null))
+        //     );
     }
-    
+
+    findAllOfProject(projectid: string): Observable<Kanbanstatus[]> {
+        return this.httpClient.get<any>(
+            '/backend/kanbanstatus/of/project/' + projectid,
+            this.httpOptions
+        );
+    }
+
     edit(kanbanstatus: Kanbanstatus): Observable<any> {
-        return this.httpClient.put<any>("/backend/kanbanstatus/"+ kanbanstatus.id, JSON.stringify(kanbanstatus), this.httpOptions)
-            // .pipe(
-            //     tap((response) => this.log(response)),
-            //     catchError((error) => this.handleError(error, null))
-            // );
+        return this.httpClient.put<any>(
+            '/backend/kanbanstatus/' + kanbanstatus.id,
+            JSON.stringify(kanbanstatus),
+            this.httpOptions
+        );
+        // .pipe(
+        //     tap((response) => this.log(response)),
+        //     catchError((error) => this.handleError(error, null))
+        // );
     }
 
     delete(kanbanstatusId: string): Observable<any> {
-        return this.httpClient.delete<any>("/backend/kanbanstatus/"+ kanbanstatusId, this.httpOptions)
-            // .pipe(
-            //     tap((response) => this.log(response)),
-            //     catchError((error) => this.handleError(error, null))
-            // );
+        return this.httpClient.delete<any>(
+            '/backend/kanbanstatus/' + kanbanstatusId,
+            this.httpOptions
+        );
+        // .pipe(
+        //     tap((response) => this.log(response)),
+        //     catchError((error) => this.handleError(error, null))
+        // );
     }
 }

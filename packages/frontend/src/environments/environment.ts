@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+    production: false,
+    SERVER_PORT: '4200',
+    //BACKEND_SERVER_HOST: 'localhost', //set this in configuration file proxy.conf.json
+    BACKEND_URL_PROXY: 'backend'
 };
 
 /*
