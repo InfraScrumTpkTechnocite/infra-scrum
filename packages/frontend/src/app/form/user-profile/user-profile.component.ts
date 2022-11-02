@@ -61,9 +61,9 @@ onSubmit(user: User): void {
     this.userService.editUser(this.user).subscribe(userObserver)
   }
 
-  /*function "ajouter" avatar profile*/
+/*function "ajouter" avatar profile*/
 
-  onSelectFile(event:any) {
+onSelectFile(event:any) {
 
     const userObserver = {
       complete: () => {
@@ -84,9 +84,9 @@ onSubmit(user: User): void {
     this.userService.editUser(this.user).subscribe(userObserver)
   }
 
-  /*function select et update "avatar"*/
+/*function select et update "avatar"*/
 
-  userProfileClicked(event: any) {
+userProfileClicked(event: any) {
     console.log(
         `userprofileinfo.component - userProfileClicked - user-profile clicked - userid = ${this.user.user.id}`
     );
