@@ -11,10 +11,9 @@ import { KanbanstatusService } from '../services/kanbanstatus.service';
     styleUrls: ['./kanban-status.component.css']
 })
 export class KanbanStatusComponent implements OnInit {
+    @Input() kanbanstatus!: Kanbanstatus;
 
-    @Input() kanbanstatus!:Kanbanstatus;
-
-    @Input() subject!:WebSocketSubject<any>;
+    @Input() subject!: WebSocketSubject<any>;
 
     @Output() kanbanDeleted: EventEmitter<any> = new EventEmitter();
 
@@ -36,41 +35,61 @@ export class KanbanStatusComponent implements OnInit {
         this.isEditColumn = !this.isEditColumn;
     }
 
-    validateEditKanbanStatus(){
+    validateEditKanbanStatus() {
         this.kanbanstatus.color = this.newColor;
 
         const kanbanObserver = {
             next: (response: any) => {
                 console.log(`${response}`);
-                this.toastService.success(" Column edited !");
-                this.subject.next({method: "edit", kanban: this.kanbanstatus});
+                this.toastService.success('Column edited !');
+                this.subject.next({
+                    method: 'edit',
+                    kanban: this.kanbanstatus
+                });
             },
-            error : (err: any) => {
-                console.log(`Erreur edition kanbanstatus : ${err.error['driverError'].detail}`);
-                this.toastService.error(`Error during kanban edition<br><br>${err.error.driverError.detail}`);
+            error: (err: any) => {
+                console.log(
+                    `Erreur edition kanbanstatus : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during kanban edition<br><br>${err.error.driverError.detail}`
+                );
             },
-            complete : () => {}
-        }
-        this.kanbanstatusService.edit(this.kanbanstatus).subscribe(kanbanObserver);
+            complete: () => {}
+        };
+        this.kanbanstatusService
+            .edit(this.kanbanstatus)
+            .subscribe(kanbanObserver);
 
         this.editKanbanStatus();
     }
 
-    deleteKanbanStatus(){
+    deleteKanbanStatus() {
         const kanbanObserver = {
             next: (result: any) => {
-                console.log(`${result}`);
-                this.toastService.success(`Column deleted ! ${result}`);
-                this.subject.next({method: "delete", kabanstatus: this.kanbanstatus});
+                //console.log(result);
+                this.toastService.success(
+                    `${result.affected} column(s) deleted !`
+                );
+                this.subject.next({
+                    method: 'delete',
+                    kabanstatus: this.kanbanstatus
+                });
             },
-            error : (err: any) => {
-                console.log(`Erreur suprresion kanbanstatus : ${err.error['driverError'].detail}`);
-                this.toastService.error(`Error during kanban supression<br><br>${err.error.driverError.detail}`);
+            error: (err: any) => {
+                console.log(
+                    `Erreur suprresion kanbanstatus : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during kanban supression<br><br>${err.error.driverError.detail}`
+                );
             },
-            complete : () => {
+            complete: () => {
                 this.kanbanDeleted.emit(this.kanbanstatus);
             }
-        }
-        this.kanbanstatusService.delete(this.kanbanstatus.id!).subscribe(kanbanObserver);
+        };
+        this.kanbanstatusService
+            .delete(this.kanbanstatus.id!)
+            .subscribe(kanbanObserver);
     }
 }

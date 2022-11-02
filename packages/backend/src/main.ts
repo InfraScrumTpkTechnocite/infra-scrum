@@ -51,7 +51,7 @@ async function bootstrap() {
   });
 
   // Creating connection using websocket and loops waiting for client connections...
-  wss.on('connection', (ws, request) => {
+  wss.on('connection', (ws, request, client) => {
     // console.log(
     //   `new client ( origin : ${
     //     request.rawHeaders[request.rawHeaders.indexOf('Origin') + 1]
@@ -59,7 +59,7 @@ async function bootstrap() {
     // );
     //console.log(request.rawHeaders);
     console.log(
-      `ws : ${ws}, Request: ${request}, ClientIP address : ${request.socket.remoteAddress}`,
+      `ws : ${ws}, Request: ${request}, Client IP address : ${request.socket.remoteAddress}`,
     );
     // sending message
     ws.on('message', (data: any) => {
@@ -70,7 +70,7 @@ async function bootstrap() {
       wss.clients.forEach(function each(client: any) {
         // console.log('client : ' + client + ' - ws : ' + ws);
         if (client !== ws) {
-          console.log(`WebSocket server - sending message : ${data}`);
+          // console.log(`WebSocket server - sending message : ${data}`);
           client.send(data.toString());
         }
       });

@@ -1,7 +1,7 @@
 {
     "infrascrum": {
         "global": {
-            "btn-register": "Register",
+            "btn-register": "Save",
             "btn-cancel": "Cancel",
             "btn-delete": "Delete",
             "btn-login": "LOG IN"
