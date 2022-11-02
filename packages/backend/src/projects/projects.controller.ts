@@ -108,9 +108,14 @@ export class ProjectsController {
     return await this.projectsService.findOneByName(name);
   }
 
-  @Get('/:id/sprints/')
-  async findSprints(@Param('id') id: string): Promise<Project[]> {
-    return this.projectsService.findSprints(id);
+  @Get('/:id/sprintsonly/')
+  async findSprintsOnly(@Param('id') id: string): Promise<Project[]> {
+    return this.projectsService.findSprintsOnly(id);
+  }
+
+  @Get('/projects/only/')
+  async findProjectsOnly(): Promise<Project[]> {
+    return this.projectsService.findProjectsOnly();
   }
 
   @Post('image-upload/:projectid')

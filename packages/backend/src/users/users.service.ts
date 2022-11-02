@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Equal, Repository, UpdateResult } from 'typeorm';
 import { User } from './user.entity';
 import { hash } from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
+import { IsolationLevel } from 'typeorm/driver/types/IsolationLevel';
 //import { MailService } from '../mail/mail.service';
 
 @Injectable()
@@ -10,6 +12,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>, //private mailService: MailService
+    private configService: ConfigService,
   ) {}
 
   async create(user: User): Promise<User> {
@@ -23,7 +26,9 @@ export class UsersService {
         JSON.stringify(user),
     );
     return await this.usersRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<User> => {
         return await transactionnalEntityManager.save(User, user);
       },
@@ -34,7 +39,9 @@ export class UsersService {
     if (user.password) user.password = await hash(user.password, 10);
     //return await this.usersRepository.update(id, user);
     return await this.usersRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<UpdateResult> => {
         console.log(`users.services - update - user = ${JSON.stringify(user)}`);
         return await transactionnalEntityManager.update(
@@ -57,7 +64,9 @@ export class UsersService {
   async delete(id: string): Promise<DeleteResult> {
     //return await this.usersRepository.delete(id);
     return await this.usersRepository.manager.transaction(
-      'SERIALIZABLE',
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
       async (transactionnalEntityManager): Promise<DeleteResult> => {
         return await transactionnalEntityManager.delete(User, id);
       },
@@ -72,24 +81,58 @@ export class UsersService {
     //   console.log(`users.controller - findAll - user = ${user.role.id}`);
     // });
     // return users;
-    return await this.usersRepository.find({ relations: ['role'] });
+    return await this.usersRepository.manager.transaction(
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
+      async (transactionnalEntityManager): Promise<User[]> => {
+        return await transactionnalEntityManager.find(User, {
+          relations: ['role'],
+        });
+      },
+    );
   }
 
   async findOne(id: string): Promise<User> {
-    return await this.usersRepository.findOne({
-      where: {
-        id: id,
+    return await this.usersRepository.manager.transaction(
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
+      async (transactionnalEntityManager): Promise<User> => {
+        return await transactionnalEntityManager.findOne(User, {
+          where: {
+            id: id,
+          },
+          relations: {
+            role: true,
+          },
+        });
       },
-      relations: {
-        role: true,
-      },
-    });
+    );
   }
 
   async findOneByUsername(username: string): Promise<User> {
-    return await this.usersRepository.findOne({
-      relations: { role: true },
-      where: { username },
-    });
+    return await this.usersRepository.manager.transaction(
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
+      async (transactionnalEntityManager): Promise<User> => {
+        return await transactionnalEntityManager.findOne(User, {
+          relations: { role: true },
+          where: { username },
+        });
+      },
+    );
+  }
+
+  async select(select: any): Promise<any> {
+    return await this.usersRepository.manager.transaction(
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
+      async (transactionnalEntityManager): Promise<User[]> => {
+        return await transactionnalEntityManager.query(select.select);
+      },
+    );
   }
 }

@@ -27,16 +27,29 @@ export class UserprojectService {
     }
 
     create(userproject: UserProject): Observable<UserProject> {
-        return this.httpClient
-            .post<any>(
-                '/backend/usersprojects',
-                JSON.stringify(userproject),
-                this.httpOptions
-            )
-            .pipe(
-                tap((response) => this.log(response)),
-                catchError((error) => this.handleError(error, null))
-            );
+        return this.httpClient.post<any>(
+            '/backend/usersprojects',
+            JSON.stringify(userproject),
+            this.httpOptions
+        );
+        // .pipe(
+        //     tap((response) => this.log(response)),
+        //     catchError((error) => this.handleError(error, null))
+        // );
+    }
+
+    findAll(): Observable<UserProject[]> {
+        return this.httpClient.get<any>(
+            `/backend/usersprojects/`,
+            this.httpOptions
+        );
+    }
+
+    findAllAssignedAtLeastOnce(): Observable<UserProject[]> {
+        return this.httpClient.get<any>(
+            `/backend/usersprojects/findallassignedatleastonce`,
+            this.httpOptions
+        );
     }
 
     findCurrentUserProjects(userid: string): Observable<any> {

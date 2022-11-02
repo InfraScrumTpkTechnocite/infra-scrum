@@ -208,7 +208,7 @@ export class ProjectComponent implements OnInit {
                         //     `project.component - ngOnInit - parentProject = ${this.parentProject}`
                         // );
                         this.projectService
-                            .findSprints(
+                            .findSprintsOnly(
                                 <string>localStorage.getItem('projectid')
                             )
                             .subscribe(sprintObserver);

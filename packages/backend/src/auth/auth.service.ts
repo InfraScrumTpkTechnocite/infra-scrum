@@ -12,9 +12,9 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByUsername(username);
-    console.log(
-      `auth.service - validateUser username=${username}, pass=${pass}, user.password=${user.password}`,
-    );
+    // console.log(
+    //   `auth.service - validateUser username=${username}, pass=${pass}, user.password=${user.password}`,
+    // );
     console.log(`comparaison passwords=${await compare(pass, user.password)}`);
     //console.log(`User ${user.username} active : ${user.active}`);
     if (user && (await compare(pass, user.password)) /*&& user.active*/) {
