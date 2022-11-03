@@ -3,7 +3,8 @@
       "global": {
         "btn-register": "Register",
         "btn-cancel": "Cancel",
-        "btn-delete": "Delete"
+        "btn-delete": "Delete",
+        "btn-login": "LOG IN"
       },
       "admin": {
         "title": "Super admin"
@@ -15,7 +16,13 @@
         "password": "Password",
         "verif-password": "Confirm Password",
         "sub-title": "Already have an account ?",
-        "login": "Log in"
+        "login": "Log in",
+        "msg-username-invalid": "Username invalid",
+        "msg-username-required": "Username required",
+        "msg-email-invalid":"Email invalid",
+        "msg-email-required": "Email required",
+        "msg-password-matching": "Passwords doesn't match",
+        "msg-password-required": "Password required"
       },
       "edit-new-task": {
         "title": "Edit task",
@@ -48,11 +55,62 @@
         "description": "Description",
         "file": "Choose an file/capture"
       },
-      "edit-projet":  {
-        "title": "Edit projet",
-        "btn-edit-projet": "Edit projet",
+      "edit-project":  {
+        "title": "Edit project",
+        "btn-edit-project": "Edit project",
         "btn-user": "Users",
-        "btn-inter-date": "Intermediate date"
+        "btn-inter-date": "Intermediate date",
+        "inter-date": "Intermediate date",
+        "inter-date-description": "Description",
+        "edit-projectinfo-name": "Name",
+        "edit-projectinfo-file": "Choose an file/capture",
+        "edit-project-delivery": "Delivery date"
+      },
+      "login": {
+        "title": "Log In",
+        "username": "Username or Email",
+        "password": "Password",
+        "msg-error": "Username or password invalid.",
+        "no-account": "No account?",
+        "create-account": "Create One"
+      },
+      "header": {
+        "option-project": "My project",
+        "login": "Login",
+        "search": "Search",
+        "sub-menu-projects": "My projects",
+        "sub-menu-profil": "My profile",
+        "sub-menu-users": "Edit users",
+        "sub-menu-logout": "Logout",
+        "sub-menu-language": "French"
+      },
+      "index": {
+        "title": "INFRASCRUM",
+        "sub-title": ""
+      },
+      "kanban-status": {
+        "color": "Color:"
+      },
+      "page-not-found": {
+        "title": "You seem to be lost!",
+        "sub-title-one":"The page you're looking for isn't available.",
+        "sub-title-two":"Try searching again or use the Go Back button below.",
+        "btn-goback": "Go back"
+      },
+      "project": {
+        "btn-global": "Global View",
+        "btn-add": "Add sprint",
+        "btn-new-task": "New task",
+        "btn-new-column": "New Column",
+        "btn-add-column": "Add column"
+      },
+      "project-info": {
+        "start-date": "Start date",
+        "picture": "Add a picture:"
+      },
+      "task": {
+        "start-date": "Start date",
+        "estimate-time": "Estimate time"
       }
-    }
   }
+}

@@ -44,7 +44,7 @@
             *ngIf="user.role.name === 'superadmin'"
             class="text-sm sm:text-base md:text-lg lg:text-xl text-secondary"
         >
-            Super Admin
+            {{ "infrascrum.admin.title" | translate}}
         </p>
         <select
             *ngIf="user.role.name !== 'superadmin'"

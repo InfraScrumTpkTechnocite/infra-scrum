@@ -17,8 +17,8 @@ export class EditProjectInfoComponent implements OnInit {
 
     constructor(
         private projectService: ProjectService,
-        private toast: HotToastService,
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        private toastService: HotToastService
     ) {}
 
     ngOnInit(): void {}
@@ -26,13 +26,13 @@ export class EditProjectInfoComponent implements OnInit {
     onSubmit() {
         const projectObserver = {
             next: (project: Project) => {
-                this.toast.success('Project edited !');
+                this.toastService.success('Project edited !');
             },
             error: (err: any) => {
                 console.log(
                     `Erreur édition projet : ${err.error['driverError'].detail}`
                 );
-                this.toast.error(
+                this.toastService.error(
                     `Error during project edition<br><br>${err.error.driverError.detail}`
                 );
             },
@@ -41,6 +41,7 @@ export class EditProjectInfoComponent implements OnInit {
             }
         };
 
+        delete this.project.picture; //no need to update (if any new picture, it's already been posted by upload)
         this.projectService.update(this.project).subscribe(projectObserver);
     }
 
@@ -56,19 +57,23 @@ export class EditProjectInfoComponent implements OnInit {
 
         formData.append('file', file, this.project.id);
 
-        console.table(event.target.files[0]);
+        //console.table(event.target.files[0]);
 
         this.httpClient
             .post<any>(
-                'http://localhost:4200/backend/image-upload/' + this.project.id,
+                'http://localhost:4200/backend/projects/image-upload/' +
+                    this.project.id,
                 formData,
                 httpOptions
             )
             .subscribe({
                 next: (response) => {
-                    console.log(response);
+                    this.toastService.success('Project picture updated !');
+                    //console.log(response);
                 },
-                error: (err: any) => {},
+                error: (err: any) => {
+                    this.toastService.error(err.error.message);
+                },
                 complete: () => {}
             });
     }

@@ -20,7 +20,7 @@
                 class="w-36 h-6 md:w-40 md:h-8 lg:w-48 lg:h-10 text-secondary text-xs md:text-sm lg:text-lg bg-tpkwhite p-1 font-semibold rounded-md focus:ring-2 focus:ring-secondary"
                 (change)="onChange($event)"
             >
-                <option selected disabled hidden>My projects:</option>
+                <option selected disabled hidden>{{"infrascrum.header.option-project" | translate}}</option>
                 <option
                     *ngFor="
                         let userProject of userProjects;
@@ -66,7 +66,7 @@
                 class="btn-hover tpkBlueBtn rounded-2xl px-3 py-2 md:px-4 md:py-3"
                 (click)="onLoginClick()"
             >
-                Login
+                {{"infrascrum.header.login" | translate}}
             </button>
         </div>
         <!-- input search -->
@@ -76,7 +76,7 @@
         >
             <input
                 type="text"
-                placeholder="Search"
+                [placeholder]="'infrascrum.header.search' | translate"
                 class="w-36 h-6 md:w-40 md:h-8 lg:w-48 lg:h-10 text-secondary text-xs md:text-sm lg:text-lg bg-tpkwhite p-2 font-semibold rounded-md placeholder-primary focus-visible:outline-none focus-visible:ring-secondary focus-visible:ring-2"
                 list="userprojects"
             />
@@ -166,7 +166,7 @@
                             />
                         </svg>
 
-                        <p class="w-full">My projects</p>
+                        <p class="w-full">{{"infrascrum.header.sub-menu-projects" | translate}}</p>
                         <span>></span>
                     </a>
 
@@ -189,7 +189,7 @@
                                 d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                             />
                         </svg>
-                        <p class="w-full">My profile</p>
+                        <p class="w-full">{{"infrascrum.header.sub-menu-profil" | translate}}</p>
                         <span>></span>
                     </a>
 
@@ -214,7 +214,30 @@
                             />
                         </svg>
 
-                        <p class="w-full">Edit users</p>
+                        <p class="w-full">{{"infrascrum.header.sub-menu-users" | translate}}</p>
+                        <span>></span>
+                    </a>
+                    <a
+                        class="sub-menu-link flex text-white my-2 p-2 items-center hover:bg-primary hover:text-white rounded-md"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke-width="1.5" 
+                            stroke="currentColor" 
+                            class="w-8 h-8 mr-2"
+                        >
+                        
+                            <path 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round" 
+                                d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802" 
+                            />
+                        </svg>
+
+
+                        <p class="w-full"><button translate (click)="changeLanguage()"> {{"infrascrum.header.sub-menu-language" | translate}}</button></p>
                         <span>></span>
                     </a>
                     <!-- Lien déconnexion -->
@@ -238,7 +261,7 @@
                             />
                         </svg>
 
-                        <p class="w-full">Logout</p>
+                        <p class="w-full">{{"infrascrum.header.sub-menu-logout" |translate}}</p>
                         <span><</span>
                     </a>
                 </div>

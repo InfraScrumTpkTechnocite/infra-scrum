@@ -7,7 +7,6 @@ import { Project } from '../models/project.model';
     providedIn: 'root'
 })
 export class ProjectService {
-
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -40,24 +39,35 @@ export class ProjectService {
     }
 
     update(project: Project): Observable<Project> {
-        return this.httpClient
-            .put<Project>(
-                '/backend/projects/' + project.id,
-                JSON.stringify(project),
-                this.httpOptions
-            )
-            // .pipe(
-            //     tap((response) => this.log(response)),
-            //     catchError((error) => this.handleError(error, null))
-            // );
+        return this.httpClient.put<Project>(
+            '/backend/projects/' + project.id,
+            JSON.stringify(project),
+            this.httpOptions
+        );
+        // .pipe(
+        //     tap((response) => this.log(response)),
+        //     catchError((error) => this.handleError(error, null))
+        // );
     }
 
     findOne(id: string): Observable<Project> {
-        return this.httpClient.get<any>("/backend/projects/" + id, this.httpOptions);
+        return this.httpClient.get<any>(
+            '/backend/projects/' + id,
+            this.httpOptions
+        );
     }
-    
-    findSprints(id: string): Observable<Project[]>{
-        return this.httpClient.get<any>(`/backend/projects/${id}/sprints`, this.httpOptions);
+
+    findSprintsOnly(id: string): Observable<Project[]> {
+        return this.httpClient.get<any>(
+            `/backend/projects/${id}/sprintsonly`,
+            this.httpOptions
+        );
+    }
+
+    findProjectsOnly(): Observable<Project[]> {
+        return this.httpClient.get<any>(
+            `/backend/projects/projects/only`,
+            this.httpOptions
+        );
     }
 }
-

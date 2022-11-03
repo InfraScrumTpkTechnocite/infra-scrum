@@ -47,6 +47,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         port: parseInt(config.get('DATABASE_PORT')),
         autoLoadEntities: config.get<boolean>('TYPEORM_AUTOLOADENTITIES'),
         synchronize: config.get<boolean>('TYPEORM_SYNCHRONIZE'),
+        logging: config.get('TYPEORM_LOGGING'),
+        maxQueryExecutionTime: config.get<number>(
+          'TYPEORM_MAXQUERTEXECUTIONTIME',
+        ),
       }),
       inject: [ConfigService],
     }),

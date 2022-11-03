@@ -1,6 +1,8 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { environment } from 'src/environments/environment';
 import { Project } from '../models/project.model';
 import { User } from '../models/user.model';
 import { UserProject } from '../models/userproject.model';
@@ -16,18 +18,19 @@ export class ProjectinfoComponent {
     @Input() user: User = new User();
 
     isEditNewProject: boolean = false;
-    // selectedPictureFile?: File;
     showErrorMessage: boolean = false;
     errorMessage: string = '';
     userProjects: any;
+    project: any;
 
     constructor(
         private projectService: ProjectService,
         private toastService: HotToastService,
-        private router: Router
+        private router: Router,
+        private httpClient: HttpClient
     ) {}
 
-    ngOnInit(): void { 
+    ngOnInit(): void {
         let user: any = localStorage.getItem('user');
         this.user = JSON.parse(user);
     }
@@ -37,16 +40,22 @@ export class ProjectinfoComponent {
     }
 
     updateProjectModel(projectForm: any) {
-        console.log(`projectinfo.component - updateProjectModel - form = ${JSON.stringify(projectForm.value)}`);
+        // console.log(
+        //     `projectinfo.component - updateProjectModel - form = ${JSON.stringify(
+        //         projectForm.value
+        //     )}`
+        // );
 
-        console.log(
-            `project name = ${this.userProject.project.name}, projet id = ${this.userProject.project.id}`
-        );
+        // console.log(
+        //     `project name = ${this.userProject.project.name}, projet id = ${this.userProject.project.id}`
+        // );
 
-       const projectObserver = {
+        const projectObserver = {
             next: (updateresponse: any) => {
-                console.log(`projectinfo.component - updateProjectModel - update row affected = ${updateresponse.affected}`);
-                this.router.navigate([this.router.url]);//reload header component !
+                // console.log(
+                //     `projectinfo.component - updateProjectModel - update row affected = ${updateresponse.affected}`
+                // );
+                this.router.navigate([this.router.url]); //reload header component !
             },
             error: (err: any) => {
                 this.showErrorMessage = true;
@@ -65,6 +74,7 @@ export class ProjectinfoComponent {
         };
         // console.warn(this.userProject);
 
+        delete this.userProject.project.picture; //no need to update (if any new picture, it's already been posted by upload)
         this.projectService
             .update(this.userProject.project)
             .subscribe(projectObserver);
@@ -73,14 +83,55 @@ export class ProjectinfoComponent {
     }
 
     userProjectClicked(event: any) {
-        console.log(`projectinfo.component - userProjectClicked - user project clicked - projectid = ${this.userProject.project.id}`);
-        this.router.navigate(['/project'], { queryParams: { projectid:  this.userProject.project.id } });
+        this.router.navigate(['/project'], {
+            queryParams: { projectid: this.userProject.project.id }
+        });
     }
 
-    // onFileSelected(event: any) {
-    //     this.selectedPictureFile = event.target.files[0];
-    //     console.log(
-    //         `Selected picture file : ${this.selectedPictureFile?.name}`
-    //     );
-    // }
+    onFileSelected(event: any) {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + localStorage.getItem('jwt-token')
+            })
+        };
+
+        const file: File = event.target.files[0];
+        const formData = new FormData();
+
+        formData.append('file', file, this.userProject.project.id);
+
+        //console.table(event.target.files[0]);
+
+        this.httpClient
+            .post<any>(
+                'http://localhost:' +
+                    environment.SERVER_PORT +
+                    '/' +
+                    environment.BACKEND_URL_PROXY +
+                    '/projects/image-upload/' +
+                    this.userProject.project.id,
+                formData,
+                httpOptions
+            )
+            .subscribe({
+                next: (response) => {
+                    //console.log(response);
+                    this.projectService
+                        .findOne(<string>this.userProject.project.id)
+                        .subscribe({
+                            next: (project: Project) => {
+                                this.userProject.project = project;
+                            },
+                            error: (err: any) => {},
+                            complete: () => {}
+                        });
+                    this.toastService.success('Project picture updated !');
+                },
+                error: (err: any) => {
+                    //console.log(err.error.message);
+                    this.toastService.error(err.error.message);
+                },
+                complete: () => {}
+            });
+    }
 }

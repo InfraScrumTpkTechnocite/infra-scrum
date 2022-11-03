@@ -5,6 +5,7 @@ import {
   Entity,
   Index,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -34,4 +35,7 @@ export class UserProject {
   })
   @Column({ nullable: false, default: false })
   isprojectadmin: boolean;
+
+  // @OneToMany(() => UserProject, (userproject) => userproject.user)
+  // userproject: UserProject[];
 }

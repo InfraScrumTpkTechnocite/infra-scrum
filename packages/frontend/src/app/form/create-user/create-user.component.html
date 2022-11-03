@@ -34,14 +34,14 @@
                     *ngIf="!username.errors?.['required'] && username.invalid && username.dirty"
                     class="text-tpkerror text-sm italic"
                 >
-                    Username invalid
+                {{"infrascrum.create-user.msg-username-invalid" | translate}}
                 </p>
 
                 <p
                     *ngIf="username.errors?.['required'] && username.dirty"
                     class="text-tpkerror text-sm italic"
                 >
-                    Username required
+                {{"infrascrum.create-user.msg-username-required" | translate}}
                 </p>
 
                 <div
@@ -63,14 +63,14 @@
                     *ngIf="!email.errors?.['required'] && email.invalid && email.dirty"
                     class="text-tpkerror text-sm italic"
                 >
-                    Email invalid
+                    {{"infrascrum.create-user.msg-email-invalid" | translate}}
                 </p>
 
                 <p
                     *ngIf="email.errors?.['required'] && email.dirty"
                     class="text-tpkerror text-sm italic"
                 >
-                    Email required
+                    {{"infrascrum.create-user.msg-email-required" | translate}}
                 </p>
 
                 <div
@@ -107,14 +107,14 @@
                     *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
                     class="text-tpkerror text-sm italic"
                 >
-                    Passwords doesn't match
+                {{"infrascrum.create-user.msg-password-matching" | translate}}
                 </p>
 
                 <p
                     *ngIf="password.errors?.['required'] && password.dirty"
                     class="text-tpkerror text-sm italic"
                 >
-                    Password required
+                {{"infrascrum.create-user.msg-password-required" | translate}}
                 </p>
 
                 <div *ngIf="showErrorMessage">

@@ -1,14 +1,49 @@
+<form (ngSubmit)="onSubmit()">
+    <div
+        class="w-128 xl:w-0 ml-10 xl:ml-0 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+    >
+        <select
+            name="Intermediate"
+            id="intermediate"
+            class="w-full xl:w-160 mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+        >
+            <option value="#">
+                {{ 'infrascrum.edit-project.inter-date' | translate }}
+            </option>
+            <option value="date">Date 1</option>
+            <option value="date">Date 2</option>
+            <option value="date">Date 3</option>
+            <option value="date">Date 4</option>
+            <option value="date">Date 5</option>
+        </select>
+    </div>
+    <div class="ml-10 xl:ml-0 w-128 xl:w-160 border-2 border-b-primary mt-48"></div>
+    <div class="ml-10 xl:ml-0 w-128 xl:w-0 mt-4 pb-12">
+        <p class="mt-2 text-lg font-semibold">
+            {{ 'infrascrum.edit-project.inter-date-description' | translate }}
+        </p>
+        <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident
+            repellendus illum aperiam sit nobis dolor atque quae rerum minima a quos
+            eligendi, soluta quibusdam ipsum sequi, dolorum quaerat cum nesciunt
+            repellat laudantium unde?
+    
+        </p>
+    </div>
 
-                  <div class="ml-10 xl:ml-0  transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
-                    <select name="Intermediate" id="intermediate" class="w-128 xl:w-160 mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none">
-                        <option value="#">Intermediate date</option>
-                        <option value="date">Date 1</option>
-                        <option value="date">Date 2</option>
-                        <option value="date">Date 3</option>
-                        <option value="date">Date 4</option>
-                        <option value="date">Date 5</option>
-                    </select>
-                </div>
-                <div class="w-160 border-2 border-b-primary mt-48 overflow-x-hidden"></div>
-                <p class="mt-2 text-lg font-semibold">Description</p>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident repellendus illum aperiam sit nobis dolor atque quae rerum minima a quos eligendi, soluta quibusdam ipsum sequi, dolorum quaerat cum nesciunt repellat laudantium unde? Assumenda fugiat commodi sapiente molestiae doloribus sequi officia cum veniam praesentium culpa sed repudiandae ipsam quibusdam enim aut libero fuga cumque, ullam voluptatem accusantium consequatur optio! Quasi alias, ducimus saepe sit magnam unde nostrum dolorum expedita ut dignissimos, velit ipsam odit totam incidunt acc</p>
+    <div class="xl:ml-12 mx-auto flex justify-center w-full">
+        <button
+            [routerLink]="['/project']"
+            [queryParams]="{ projectid: project.id }"
+            class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-12 w-24 mb-8"
+        >
+            {{ 'infrascrum.global.btn-cancel' | translate }}
+        </button>
+        <button
+            type="submit"
+            class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8 disabled:bg-grey2"
+        >
+            {{ 'infrascrum.global.btn-register' | translate }}
+        </button>
+    </div>
+</form>

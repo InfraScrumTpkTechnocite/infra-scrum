@@ -39,6 +39,9 @@ export class EditProjectComponent implements OnInit {
             .subscribe((userList: User[]) => (this.userList = userList));
         this.userProjectService
             .findCurrentProjectUsers(this.projectid)
-            .subscribe((userProjectList: UserProject[]) => (this.userProjectList = userProjectList));
+            .subscribe(
+                (userProjectList: UserProject[]) =>
+                    (this.userProjectList = userProjectList)
+            );
     }
 }
