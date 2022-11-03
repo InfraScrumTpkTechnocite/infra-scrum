@@ -13,10 +13,11 @@ export class AppComponent {
     // usernameLabel!: string;
     // passwordLabel!: string;
     
-    constructor() {
+    constructor() {}
         
 
-    ngOnInit() {
+    ngOnInit()
+     {
         // hardcoded example
         // this.user = { firstName: 'Sammy', lastName: 'Shark' };
         // synchronous. Also interpolate the 'firstName' parameter with a value.
@@ -28,4 +29,5 @@ export class AppComponent {
         //     this.passwordLabel = translations['login.password'];
         //   });
     }
+    
 }
