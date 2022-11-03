@@ -55,16 +55,16 @@
         "description": "Description",
         "file": "Choisir un fichier/image"
       },
-      "edit-projet":  {
+      "edit-project":  {
         "title": "Editer projet",
-        "btn-edit-projet": "Editer projet",
+        "btn-edit-project": "Editer projet",
         "btn-user": "Utilisateur",
         "btn-inter-date": "Date intermédiaire",
         "inter-date": "Date intermédiaire",
         "inter-date-description": "Description",
-        "edit-projetinfo-name": "Nom",
-        "edit-projetinfo-file": "Choisir un fichier/image",
-        "edit-projet-delivery": "Date de livraison"
+        "edit-projectinfo-name": "Nom",
+        "edit-projectinfo-file": "Choisir un fichier/image",
+        "edit-project-delivery": "Date de livraison"
       },
       "login": {
         "title": "Connectez-vous",
@@ -75,7 +75,7 @@
         "create-account": "Créer un compte"
       },
       "header": {
-        "option-project": "Mes projet",
+        "option-project": "Mes projets",
         "login": "Connectez-vous",
         "search": "Recherche",
         "sub-menu-projects": "Mes projets",
