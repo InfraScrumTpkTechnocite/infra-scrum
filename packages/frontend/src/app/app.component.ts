@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-root',
@@ -13,12 +12,9 @@ export class AppComponent {
     // welcome!: string;
     // usernameLabel!: string;
     // passwordLabel!: string;
-
-    constructor(private translate: TranslateService) {
-        translate.addLangs(['fr', 'en']);
-        //translate.setDefaultLang(navigator.language.split('-')[0]);
-        translate.use(navigator.language.split('-')[0]);
-    }
+    
+    constructor() {
+        
 
     ngOnInit() {
         // hardcoded example
