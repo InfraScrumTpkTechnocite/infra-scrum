@@ -83,6 +83,22 @@ export class UserService {
             );
     }
 
+    /*image "user.picture*/
+    
+    getBase64(event: Blob): Observable<string> {
+        return new Observable<string>(sub => {
+          const reader = new FileReader();
+          reader.readAsDataURL(event);
+          reader.onload = () => {
+            sub.next(reader.toString());
+            sub.complete();
+          };
+          reader.onerror = error => {
+            sub.error(error);
+          };
+        })
+      }
+
     editUser(user: User): Observable<User> {
         return this.httpClient
             .put<User>(
