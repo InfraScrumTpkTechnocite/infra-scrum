@@ -4,16 +4,27 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Kanbanstatus } from '../models/kanbanstatus.model';
 import { KanbanstatusService } from '../services/kanbanstatus.service';
+import { TaskType } from '../models/tasktype.model';
+import { Project } from '../models/project.model';
+import { Task } from '../models/task.model';
 
+interface KanbanList {
+    kanban: Kanbanstatus;
+    tasks: Task[];
+}
 @Component({
     selector: 'app-kanban-status',
     templateUrl: './kanban-status.component.html',
     styleUrls: ['./kanban-status.component.css']
 })
 export class KanbanStatusComponent implements OnInit {
-    @Input() kanbanstatus!: Kanbanstatus;
+    @Input() kanbanList!: any;
 
     @Input() subject!: WebSocketSubject<any>;
+
+    @Input() taskTypeList!: TaskType[];
+
+    @Input() sprintList!: Project[];
 
     @Output() kanbanDeleted: EventEmitter<any> = new EventEmitter();
 
@@ -21,6 +32,7 @@ export class KanbanStatusComponent implements OnInit {
     isEditColumn: boolean = false;
 
     newColor!: string;
+    kanbanstatus!: KanbanList;
 
     constructor(
         private kanbanstatusService: KanbanstatusService,
@@ -28,7 +40,8 @@ export class KanbanStatusComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.newColor = this.kanbanstatus.color;
+        this.kanbanstatus = this.kanbanList as KanbanList;
+        this.newColor = this.kanbanstatus.kanban.color;
     }
 
     editKanbanStatus() {
@@ -36,7 +49,7 @@ export class KanbanStatusComponent implements OnInit {
     }
 
     validateEditKanbanStatus() {
-        this.kanbanstatus.color = this.newColor;
+        this.kanbanstatus.kanban.color = this.newColor;
 
         const kanbanObserver = {
             next: (response: any) => {
@@ -58,7 +71,7 @@ export class KanbanStatusComponent implements OnInit {
             complete: () => {}
         };
         this.kanbanstatusService
-            .edit(this.kanbanstatus)
+            .edit(this.kanbanstatus.kanban)
             .subscribe(kanbanObserver);
 
         this.editKanbanStatus();
@@ -89,7 +102,7 @@ export class KanbanStatusComponent implements OnInit {
             }
         };
         this.kanbanstatusService
-            .delete(this.kanbanstatus.id!)
+            .delete(this.kanbanstatus.kanban.id!)
             .subscribe(kanbanObserver);
     }
 }
