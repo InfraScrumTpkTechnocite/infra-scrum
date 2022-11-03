@@ -22,7 +22,7 @@ import { UsersprojectsService } from './usersprojects.service';
 @ApiTags('users-projects')
 @Controller('usersprojects')
 export class UsersprojectsController {
-  constructor(private usersProjectsService: UsersprojectsService) { }
+  constructor(private usersProjectsService: UsersprojectsService) {}
 
   @Post()
   async create(@Body() userproject: UserProject): Promise<UserProject> {
@@ -45,6 +45,11 @@ export class UsersprojectsController {
   @Get()
   async findAll(): Promise<UserProject[]> {
     return await this.usersProjectsService.findAll();
+  }
+
+  @Get('/findallassignedatleastonce')
+  async findAllAssignedAtLeastOnce(): Promise<UserProject[]> {
+    return await this.usersProjectsService.findAllAssignedAtLeastOnce();
   }
 
   @Get(':id')

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { HeaderTitleService } from '../services/header-title.service';
@@ -12,19 +13,27 @@ import { UserprojectService } from '../services/userproject.service';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
     title: string = '';
     isMenuOpen: boolean = false;
     user: User = new User();
     userProjects = [];
     mySubscription: any;
+    language ='en'
 
     constructor(
         public authService: AuthService,
+        private translate: TranslateService,
         private headerTitleService: HeaderTitleService,
-        private router: Router,private activatedRoute: ActivatedRoute,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
         private userService: UserService,
-        private userProjectService: UserprojectService
+        private userProjectService: UserprojectService,
     ) {
+        // translate.addLangs(['en', 'fr']);
+        console.log(translate.getLangs());
+        translate.setDefaultLang(this.language);
+
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.mySubscription = this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
@@ -33,8 +42,17 @@ export class HeaderComponent implements OnInit {
             }
         });
     }
+    changeLanguage(): void {
+        if(this.language === 'en') {
+            this.language = 'fr'
+        } else {
+            this.language = 'en'
+        }
+        this.translate.use(this.language);
+    }
 
     ngOnInit(): void {
+
         this.headerTitleService.title.subscribe((updatedTitle) => {
             this.title = updatedTitle;
         });
@@ -89,6 +107,11 @@ export class HeaderComponent implements OnInit {
             this.userService
                 .findUserByUsername(username)
                 .subscribe(userObserver);
+
+
+    }
+    getLangs(){
+
     }
 
     loggedIn() {
@@ -114,7 +137,9 @@ export class HeaderComponent implements OnInit {
 
     onChange(event: any) {
         console.log(`header.component - onChange - ${event.target.value}`); //id du projet sélectionné
-        this.router.navigate(['/project'], { queryParams: { projectid: event.target.value } });
+        this.router.navigate(['/project'], {
+            queryParams: { projectid: event.target.value }
+        });
     }
 
     ngOnDestroy() {

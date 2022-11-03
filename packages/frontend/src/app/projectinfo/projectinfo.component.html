@@ -14,7 +14,8 @@
             <button
                 [disabled]="
                     !userProject.isprojectadmin &&
-                    user.role.name != 'superadmin'
+                    user.role.name != 'superadmin' &&
+                    user.role.name != 'admin'
                 "
                 (click)="openEditionProject()"
                 class="pr-2 pt-2 mr-2 md:mr-1 text-grey4 hover:text-white"
@@ -22,6 +23,7 @@
                 <div
                     *ngIf="
                         userProject.isprojectadmin ||
+                            user.role.name == 'admin' ||
                             user.role.name == 'superadmin';
                         then mayedit;
                         else maynotedit
@@ -95,7 +97,7 @@
                     class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 flex flex-col text-secondary items-center justify-center"
                 >
                     <h3 class="font-semibold text-xl lg:text-2xl">
-                       {{"infrascrum.project-info.start-date" | translate}}
+                        {{ 'infrascrum.project-info.start-date' | translate }}
                     </h3>
                     <p class="text-xl">
                         {{
@@ -164,7 +166,9 @@
                     <label
                         for="#ProjectPicture"
                         class="text-secondary text-md font-bold"
-                        >{{"infrascrum.project-info.picture" | translate}}</label
+                        >{{
+                            'infrascrum.project-info.picture' | translate
+                        }}</label
                     >
                     <img
                         (click)="PictureUploader.click()"
@@ -192,7 +196,9 @@
                 <div
                     class="rounded-sm w-3/5 h-5/6 bg-tpkwhite p-2 flex flex-col text-secondary items-center justify-center"
                 >
-                    <h3 class="text-md font-bold">{{"infrascrum.project-info.start-date" | translate}}</h3>
+                    <h3 class="text-md font-bold">
+                        {{ 'infrascrum.project-info.start-date' | translate }}
+                    </h3>
                     <input
                         [(ngModel)]="userProject.project.startdate"
                         name="startdate"

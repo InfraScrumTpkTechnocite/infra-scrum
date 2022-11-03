@@ -32,7 +32,7 @@ export class User {
 
   @ApiProperty({ example: 'aze@rty.com', description: 'User email (unique)' })
   @Column()
-  @ValidateIf(value => value === "")
+  @ValidateIf((value) => value === '')
   @IsEmail()
   email: string;
 
@@ -49,7 +49,7 @@ export class User {
   @ApiProperty({ example: 'gilles', description: 'Hashed password' })
   //  @Column({select: false})
   @Column()
-  @ValidateIf(value => value === "")
+  @ValidateIf((value) => value === '')
   @IsNotEmpty()
   password: string;
 

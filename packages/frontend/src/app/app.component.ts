@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-root',
@@ -9,18 +8,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
     title = 'frontend';
 
-
     //   user!: { firstName: string; lastName: string; };
     // welcome!: string;
     // usernameLabel!: string;
     // passwordLabel!: string;
-
-    constructor(private translate: TranslateService) {
-        translate.addLangs(['en', 'klingon']);
-        translate.setDefaultLang('en');
-        translate.use('en');
-
-    }
+    
+    constructor() {
+        
 
     ngOnInit() {
         // hardcoded example

@@ -22,7 +22,7 @@ import { RolesService } from './roles.service';
 @ApiTags('roles')
 @Controller('roles')
 export class RolesController {
-  constructor(private roleService: RolesService) { }
+  constructor(private roleService: RolesService) {}
 
   @Post()
   async create(@Body() role: Role): Promise<Role> {
@@ -30,7 +30,7 @@ export class RolesController {
   }
 
   @Put(':id')
-  async updateUser(
+  async update(
     @Param('id') id: string,
     @Body() role: Role,
   ): Promise<UpdateResult> {

@@ -2,22 +2,29 @@ import {
   Body,
   Controller,
   Delete,
+  FileTypeValidator,
   Get,
+  MaxFileSizeValidator,
   Param,
+  ParseFilePipe,
   Post,
   Put,
+  UploadedFile,
   UseFilters,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { Project } from './project.entity';
 import { ProjectsService } from './projects.service';
 import { QueryFailedExceptionFilter } from '../query-failed-exceptions.filter';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { KanbanstatusService } from '../kanbanstatus/kanbanstatus.service';
-//import { defaultKanbanstatus } from '../kanbanstatus/default-kanbanstatus';
-import { KanbanStatus } from 'src/kanbanstatus/kanbanstatus.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { readFile, unlink } from 'fs';
+import { Observable } from 'rxjs';
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
@@ -26,7 +33,7 @@ import { KanbanStatus } from 'src/kanbanstatus/kanbanstatus.entity';
 @Controller('projects')
 export class ProjectsController {
   constructor(
-    private projectService: ProjectsService,
+    private projectsService: ProjectsService,
     private kanbanStatusService: KanbanstatusService,
   ) {}
 
@@ -58,10 +65,10 @@ export class ProjectsController {
         order: 4,
       },
     ];
-    const new_project: Project = await this.projectService.create(project);
+    const new_project: Project = await this.projectsService.create(project);
 
     //if not a sprint, create 4 default kanbans (Backlog, In progress, Urgent and Done)
-    if(!project.project) {
+    if (!project.project) {
       defaultKanbanstatus.forEach((kanbanstatus) => {
         kanbanstatus.project = new_project.id;
         this.kanbanStatusService.create(kanbanstatus);
@@ -78,31 +85,101 @@ export class ProjectsController {
     @Param('id') id: string,
     @Body() project: Project,
   ): Promise<UpdateResult> {
-    return await this.projectService.update(id, project);
+    return await this.projectsService.update(id, project);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<DeleteResult> {
-    return await this.projectService.delete(id);
+    return await this.projectsService.delete(id);
   }
 
   @Get()
   async findAll(): Promise<Project[]> {
-    return await this.projectService.findAll();
+    return await this.projectsService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Project> {
-    return await this.projectService.findOne(id);
+    return await this.projectsService.findOne(id);
   }
 
   @Get('/name/:name')
   async findOneByName(@Param('name') name: string): Promise<Project> {
-    return await this.projectService.findOneByName(name);
+    return await this.projectsService.findOneByName(name);
   }
 
-  @Get('/:id/sprints/')
-  async findSprints(@Param('id') id: string): Promise<Project[]> {
-    return this.projectService.findSprints(id);
+  @Get('/:id/sprintsonly/')
+  async findSprintsOnly(@Param('id') id: string): Promise<Project[]> {
+    return this.projectsService.findSprintsOnly(id);
+  }
+
+  @Get('/projects/only/')
+  async findProjectsOnly(): Promise<Project[]> {
+    return this.projectsService.findProjectsOnly();
+  }
+
+  @Post('image-upload/:projectid')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './images',
+      }),
+    }),
+  )
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          // 👈 this property
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  async uploadFile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 100000 }),
+          new FileTypeValidator({
+            fileType: new RegExp('(.jpeg|.JPEG|.gif|.GIF|.png|.PNG)$'),
+          }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+    @Param('projectid') projectid: string,
+  ) {
+    // console.log(file);
+    // console.log(`project id : ${projectid}`);
+
+    let project: Project = new Project();
+
+    this.projectsService.findOne(projectid).then((result) => {
+      project = result;
+    });
+
+    readFile(file.path, (err, data) => {
+      if (err) throw err;
+
+      //console.log(data.toString('base64'));
+
+      project.picture = data.toString('base64');
+      this.projectsService.update(projectid, project);
+
+      unlink(file.path, (error) => {
+        console.log(error);
+      });
+    });
+
+    return new Observable((subscriber) => {
+      subscriber.next(file);
+      subscriber.complete();
+    });
   }
 }
