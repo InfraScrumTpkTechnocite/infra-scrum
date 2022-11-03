@@ -16,7 +16,7 @@ export class AppComponent {
     constructor() {
         
 
-    ngOnInit() {
+    ngOnInit() 
         // hardcoded example
         // this.user = { firstName: 'Sammy', lastName: 'Shark' };
         // synchronous. Also interpolate the 'firstName' parameter with a value.
@@ -29,3 +29,9 @@ export class AppComponent {
         //   });
     }
 }
+
+
+function ngOnInit() {
+    throw new Error('Function not implemented.');
+}
+
