@@ -50,7 +50,7 @@ async function bootstrap() {
         ws.on("message", (data: any) => {
             console.log(`Client with projectid ${ws} has sent us: ${data}`);
             wss.clients.forEach(function each(client) {
-                if (client.params !== ws) {
+                if (client !== ws) {
                   client.send(data.toString());
                 }
             });

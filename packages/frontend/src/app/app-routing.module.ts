@@ -45,15 +45,6 @@ const routes: Routes = [
             role: ['superadmin', 'admin', 'employee', 'intern']
         }
     },
-
-    {
-        path: 'edit-new-tasks',
-        component: EditNewTasksComponent,
-        canActivate: [AuthGuardService],
-        data: {
-            role: ['superadmin', 'admin', 'employee', 'intern']
-        }
-    },
     {
         path: 'project/edit-project',
         component: EditProjectComponent,
