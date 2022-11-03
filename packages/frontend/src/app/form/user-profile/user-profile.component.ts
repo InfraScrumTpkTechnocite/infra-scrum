@@ -1,14 +1,13 @@
 import { Component, Injectable, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { RoleService } from 'src/app/services/role.service';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
 import { User } from 'src/app/models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Role } from 'c:/Users/szmul/Desktop/Infrascrum/infra-scrum/packages/frontend/src/app/models/role.model';
 import { HotToastService } from '@ngneat/hot-toast';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-profile',
@@ -29,6 +28,8 @@ export class UserProfileComponent{
   connect: any;
   userProject: any;
   projectService: any;
+  language ='en'
+  mySubscription: any;
 
   constructor(
     private userService: UserService,
@@ -36,9 +37,32 @@ export class UserProfileComponent{
     private router: Router,
     private headerTitleService: HeaderTitleService,
     private toastService: HotToastService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private translate: TranslateService,
 ) {
     this.verifPassword = '';
+
+
+// translate.addLangs(['en', 'fr']);
+
+console.log(translate.getLangs());
+translate.setDefaultLang(this.language);
+
+this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+this.mySubscription = this.router.events.subscribe((event) => {
+    if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+    }
+});
+}
+changeLanguage(): void {
+if(this.language === 'en') {
+    this.language = 'fr'
+} else {
+    this.language = 'en'
+}
+this.translate.use(this.language);
 }
 
 /*function update profile*/
