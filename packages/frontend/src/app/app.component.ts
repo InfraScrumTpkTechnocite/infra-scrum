@@ -12,9 +12,8 @@ export class AppComponent {
     // welcome!: string;
     // usernameLabel!: string;
     // passwordLabel!: string;
-    
-    constructor() {
-        
+
+    constructor() {}
 
     ngOnInit() {
         // hardcoded example
