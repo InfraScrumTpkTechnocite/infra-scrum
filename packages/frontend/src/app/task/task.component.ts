@@ -24,6 +24,10 @@ export class TaskComponent implements OnInit {
     @Input() sprintList!: Project[];
     taskassignmentList!: TaskAssignment[];
 
+    showTask: boolean = true;
+    @Input() projectid!: string | undefined | null;
+    @Input() project!: Project;
+
     constructor(
         private taskassignmentService: TaskassignmentService,
         public dialog: MatDialog
@@ -36,6 +40,20 @@ export class TaskComponent implements OnInit {
                 (taskassignmentList: TaskAssignment[]) =>
                     (this.taskassignmentList = taskassignmentList)
             );
+
+        if (this.task.sprint?.id)
+            this.showTask =
+                this.task.sprint.id == this.projectid ||
+                this.projectid == this.project.id;
+        // console.log(
+        //     `showTask : ${this.showTask} - projectid : ${
+        //         this.projectid
+        //     } - task sprint id : ${
+        //         this.task.sprint?.id
+        //     } - sprint : ${JSON.stringify(
+        //         this.task.sprint
+        //     )} - project.id ${JSON.stringify(this.project)}`
+        // );
     }
 
     toggleTaskOverview() {
