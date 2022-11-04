@@ -94,6 +94,7 @@ export class TasksService {
           select: ['kanbanstatus'],
           relations: { kanbanstatus: true, tasktype: true, sprint: true },
           where: { kanbanstatus: Equal(kanbanstatusid) },
+          order: { startdate: 'ASC' },
         });
       },
     );
