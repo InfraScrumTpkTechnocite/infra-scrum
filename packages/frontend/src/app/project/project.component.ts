@@ -30,17 +30,15 @@ import { TaskType } from '../models/tasktype.model';
 import { MatDialog } from '@angular/material/dialog';
 import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.component';
 
-
 interface KanbanList {
-    kanban:Kanbanstatus;
-    tasks:Task[];
+    kanban: Kanbanstatus;
+    tasks: Task[];
 }
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',
     styleUrls: ['./project.component.css']
 })
-
 export class ProjectComponent implements OnInit {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
@@ -128,7 +126,6 @@ export class ProjectComponent implements OnInit {
                 //...and subscription (if user is on project page)
                 //this.subject.subscribe(subjectObserver);
 
-               
                 const userProjectsObserver = {
                     next: (userProjects: UserProject[]) => {
                         this.userProjects = userProjects;
@@ -162,17 +159,22 @@ export class ProjectComponent implements OnInit {
                             localStorage.getItem('projectid')
                         );
                         kanban.map((kanbanstatus) => {
-                            this.kanbanList.push({kanban: kanbanstatus} as KanbanList);
+                            this.kanbanList.push({
+                                kanban: kanbanstatus
+                            } as KanbanList);
                             this.taskService
                                 .findAllOfKanbanstatus(kanbanstatus.id!)
                                 .subscribe((taskList: Task[]) => {
-                                    this.kanbanList.find((kanbanlist) => kanbanlist.kanban.id == kanbanstatus.id)!.tasks = taskList;
-                                },);
+                                    this.kanbanList.find(
+                                        (kanbanlist) =>
+                                            kanbanlist.kanban.id ==
+                                            kanbanstatus.id
+                                    )!.tasks = taskList;
+                                });
                         });
                         this.userProjectService
                             .findCurrentProjectUsers(projectid)
                             .subscribe(userProjectsObserver);
-                        
                     },
                     error: () => {},
                     complete: () => {}
@@ -220,7 +222,12 @@ export class ProjectComponent implements OnInit {
                             .subscribe(sprintObserver);
                     },
                     error: () => {},
-                    complete: () => {}
+                    complete: () => {
+                        delete this.project.picture;
+                        // console.log(
+                        //     `projectObserver : ${JSON.stringify(this.project)}`
+                        // );
+                    }
                 };
 
                 this.projectService
@@ -229,11 +236,15 @@ export class ProjectComponent implements OnInit {
             }
         });
 
-        this.taskTypeService.getAll().subscribe((taskTypeList: TaskType[]) => this.taskTypeList = taskTypeList);
+        this.taskTypeService
+            .getAll()
+            .subscribe(
+                (taskTypeList: TaskType[]) => (this.taskTypeList = taskTypeList)
+            );
     }
 
     //Boutons modales
-    addTask(){
+    addTask() {
         this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: new Task(),
@@ -260,7 +271,7 @@ export class ProjectComponent implements OnInit {
         });
     }
 
-    //Afficher Sprint en fonction de celui sélectionner
+    //Afficher Sprint en fonction de celui sélectionné
     changeSprintDisplay(id?: string) {
         //console.log(`project.component - changeSprintDisplay - id = ${id}`);
         const sprint: Project =
@@ -316,7 +327,7 @@ export class ProjectComponent implements OnInit {
 
         const kanbanObserver = {
             next: (kanban: Kanbanstatus) => {
-                this.kanbanList.push({kanban: kanban} as KanbanList);
+                this.kanbanList.push({ kanban: kanban } as KanbanList);
 
                 // 'next' will send a message to the server once a connection is made
                 // and all subscribed client will receive message right away
