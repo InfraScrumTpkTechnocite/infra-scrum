@@ -55,7 +55,9 @@
         <form action="">
             <div class="w-full h-10 rounded-t-lg p-3 flex justify-center">
                 <div class="flex justify-center w-2/3">
-                    <label for="" class="mr-2 text-sm text-grey3">{{"infrascrum.kanban-status.color" | translate}}</label>
+                    <label for="" class="mr-2 text-sm text-grey3">{{
+                        'infrascrum.kanban-status.color' | translate
+                    }}</label>
                     <input
                         [(ngModel)]="newColor"
                         name="color"
@@ -153,6 +155,8 @@
             [subject]="subject"
             [taskTypeList]="taskTypeList"
             [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
         ></app-task>
     </div>
 </div>
