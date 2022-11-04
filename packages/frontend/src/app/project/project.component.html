@@ -202,9 +202,13 @@
                         <app-kanban-status
                             [subject]="subject"
                             [kanbanList]="kanbanstatus"
-                            (kanbanDeleted)="onKanbanDeleted(kanbanstatus.kanban)"                            
+                            (kanbanDeleted)="
+                                onKanbanDeleted(kanbanstatus.kanban)
+                            "
                             [taskTypeList]="taskTypeList"
                             [sprintList]="sprintList"
+                            [projectid]="projectid"
+                            [project]="project"
                         ></app-kanban-status>
                     </div>
                 </div>
