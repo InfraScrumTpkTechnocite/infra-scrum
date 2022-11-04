@@ -1,12 +1,12 @@
 <div class="kanbanStatusTitle flex flex-col w-64 mx-4 mt-6">
     <div *ngIf="!isEditColumn" class="bg-grey1 rounded-t-lg">
-        <div 
+        <div
             class="w-full h-6 rounded-t-lg"
-            [style.background]="kanbanstatus.color"
+            [style.background]="kanbanstatus.kanban.color"
         ></div>
         <div class="flex justify-between h-12 items-center">
             <h3 class="text-center text-lg font-bold w-2/3 flex justify-center">
-                {{ kanbanstatus.name }}
+                {{ kanbanstatus.kanban.name }}
             </h3>
             <div class="w-1/3 flex items-end justify-end mr-4">
                 <button class="addTask mr-2" title="Add a task here">
@@ -56,10 +56,16 @@
             <div class="w-full h-10 rounded-t-lg p-3 flex justify-center">
                 <div class="flex justify-center w-2/3">
                     <label for="" class="mr-2 text-sm text-grey3">{{"infrascrum.kanban-status.color" | translate}}</label>
-                    <input [(ngModel)]="newColor" name="color" [value]="kanbanstatus.color" type="color" class="w-8" />
+                    <input
+                        [(ngModel)]="newColor"
+                        name="color"
+                        [value]="kanbanstatus.kanban.color"
+                        type="color"
+                        class="w-8"
+                    />
                 </div>
                 <div class="w-1/3 flex justify-end mr-1">
-                    <button 
+                    <button
                         title="Delete column"
                         (click)="deleteKanbanStatus()"
                     >
@@ -82,7 +88,13 @@
             </div>
             <div class="flex justify-around h-12 items-center">
                 <div class="ml-4 mr-8 w-1/2">
-                    <input type="text" [(ngModel)]="kanbanstatus.name" name="name" [value]="kanbanstatus.name" class="w-full" />
+                    <input
+                        type="text"
+                        [(ngModel)]="kanbanstatus.kanban.name"
+                        name="name"
+                        [value]="kanbanstatus.kanban.name"
+                        class="w-full"
+                    />
                 </div>
 
                 <div class="w-1/3">
@@ -131,5 +143,16 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+<!-- tâches du kanbanstatus  -->
+<div class="tasksContainer w-64 mx-4 mt-2 flex flex-col">
+    <div *ngFor="let task of kanbanstatus.tasks">
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [sprintList]="sprintList"
+        ></app-task>
     </div>
 </div>

@@ -105,6 +105,7 @@
                     </svg>
                 </button>
                 <button
+                    (click)="addTask()"
                     class="bg-primary hover:bg-secondary text-white p-2 rounded-xl h-8 text-xs mr-6"
                     title="Add a new task"
                 >
@@ -200,28 +201,11 @@
                     >
                         <app-kanban-status
                             [subject]="subject"
-                            [kanbanstatus]="kanbanstatus"
-                            (kanbanDeleted)="onKanbanDeleted(kanbanstatus)"
+                            [kanbanList]="kanbanstatus"
+                            (kanbanDeleted)="onKanbanDeleted(kanbanstatus.kanban)"                            
+                            [taskTypeList]="taskTypeList"
+                            [sprintList]="sprintList"
                         ></app-kanban-status>
-                        <!-- tâches du kanbanstatus  -->
-                        <div
-                            class="tasksContainer w-64 mx-4 mt-2 flex flex-col"
-                        >
-                            <div *ngFor="let task of taskList">
-                                <app-task
-                                    [task]="task"
-                                    *ngIf="
-                                        (kanbanstatus.id ==
-                                            task.kanbanstatus.id &&
-                                            projectid == project.id) ||
-                                        (kanbanstatus.id ==
-                                            task.kanbanstatus.id &&
-                                            task.sprint &&
-                                            task.sprint.id == projectid)
-                                    "
-                                ></app-task>
-                            </div>
-                        </div>
                     </div>
                 </div>
 

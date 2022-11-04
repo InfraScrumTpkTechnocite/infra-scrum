@@ -14,7 +14,7 @@ export class Task {
   done: boolean;
   tasktype: TaskType;
   color: string;
-  sprint: Project;
+  sprint?: Project | null;
 
   constructor() {
     this.name = '';
@@ -26,6 +26,5 @@ export class Task {
     this.done = false;
     this.tasktype = new TaskType();
     this.color = '#1F71A5';
-    this.sprint = new Project();
   }
 }

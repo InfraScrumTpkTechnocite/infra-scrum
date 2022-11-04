@@ -14,10 +14,9 @@ export class AppComponent {
     // usernameLabel!: string;
     // passwordLabel!: string;
 
-    constructor(private translate: TranslateService) {
-        translate.addLangs(['fr', 'en']);
-        //translate.setDefaultLang(navigator.language.split('-')[0]);
-        translate.use(navigator.language.split('-')[0]);
+    constructor(private translateService: TranslateService) {
+        this.translateService.addLangs(['fr', 'en']);
+        this.translateService.use(navigator.language.split('-')[0]);
     }
 
     ngOnInit() {

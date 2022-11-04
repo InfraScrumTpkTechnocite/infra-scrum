@@ -34,6 +34,9 @@ import { EditProjectuserComponent } from './form/edit-project/components/edit-pr
 import { EditDeliverydateComponent } from './form/edit-project/components/edit-deliverydate/edit-deliverydate.component';
 import { EditProjectInfoComponent } from './form/edit-project/components/edit-project-info/edit-project-info.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -77,9 +80,12 @@ export function HttpLoaderFactory(http: HttpClient) {
                 useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
             },
-            defaultLanguage: 'en',
+            defaultLanguage: navigator.language.split('-')[0],
             useDefaultLang: false
-        })
+        }),
+        MatDialogModule,
+        MatFormFieldModule,
+        BrowserAnimationsModule
     ],
     exports: [TranslateModule],
     providers: [

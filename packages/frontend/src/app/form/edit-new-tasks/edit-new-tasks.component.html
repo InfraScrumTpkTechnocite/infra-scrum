@@ -1,207 +1,235 @@
-<div class="w-screen h-screen mt-60">
-    <form #formEditTask="ngForm" (ngSubmit)="onSubmit()"
-        class="bg-tpkwhite text-secondary mt-20 m-auto max-w-xl max-h-max md:max-w-2xl xl:max-h-max xl:max-w-screen-md rounded-md shadow-lg shadow-primary" 
+<div
+    class="bg-tpkwhite text-secondary mt-20 m-auto max-w-xl max-h-max md:max-w-2xl xl:max-h-max xl:max-w-screen-md rounded-md shadow-lg shadow-primary"
+>
+    <h1
+        mat-dialog-title
+        class="text-xl md:text-2xl xl:text-3xl text-secondary font-bold underline underline-offset-8 text-center pt-4"
     >
-        <h1
-            class="text-xl md:text-2xl xl:text-3xl text-secondary font-bold underline underline-offset-8 text-center pt-4"
-        >
-            {{ "infrascrum.edit-new-task.title" | translate }}
-        </h1>
-        <div class="mt-10">
-            <div class="flex xl:mt-6 flex-col xl:flex-row items-center">
-                <div
-                    class="xl:w-184 h-128 mt-4 xl:mt-6 xl:ml-4 overflow-x-hidden">
-                    <div class="flex flex-row xl:m-3">
-                        <div class="flex flex-col mr-10 mx-12">
-                            <h3>{{"infrascrum.edit-new-task.title-user" | translate }}</h3>
-                            <div class="flex flex-row">
-                                <div class="flex mt-1">
+        {{ 'infrascrum.edit-new-task.title' | translate }}
+    </h1>
+    <div mat-dialog-content>
+        <div class="flex xl:mt-6 flex-col xl:flex-row items-center">
+            <div class="xl:w-184 h-128 mt-4 xl:mt-6 xl:ml-4">
+                <div class="flex flex-row xl:m-3">
+                    <div class="flex flex-col mr-10 mx-12">
+                        <h3>
+                            {{
+                                'infrascrum.edit-new-task.title-user'
+                                    | translate
+                            }}
+                        </h3>
+                        <div class="flex flex-row">
+                            <div class="flex mt-1">
+                                <div
+                                    *ngFor="
+                                        let taskassignment of newTaskassignmentList
+                                    "
+                                >
                                     <div
+                                        *ngIf="
+                                            !taskassignment.userproject
+                                                .isprojectadmin
+                                        "
                                         class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
                                     >
-                                        O
-                                    </div>
-                                    <div
-                                        class="w-8 h-8 bg-grey1 rounded-2xl text-grey4 flex justify-center items-center"
-                                    >
-                                        +
+                                        {{
+                                            taskassignment.userproject.user
+                                                .username | initialsName
+                                        }}
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <h3>{{"infrascrum.edit-new-task.title-etiquette" | translate }}</h3>
-                            <div class="flex flex-row w-10 h-10">
-                                <div class="flex">
-                                    <input
-                                        name="color"
-                                        #color="ngModel"
-                                        [(ngModel)]="task.color"
-                                        type="color"
-                                        class="h-10 w-10 mr-2"
-                                        required
-                                    />
-                                    
+                                <div
+                                    class="w-8 h-8 bg-grey1 rounded-2xl text-grey4 flex justify-center items-center"
+                                >
+                                    +
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex">
-                        <div
-                        class="xl:w-50 mt-12 mx-8 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                        >
-                            <select
-                                name="type"
-                                #type="ngModel"
-                                [(ngModel)]="selectedType"
-                                id="type"
-                                required
-                                class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
-                            >
-                                <option selected disabled value="">{{"infrascrum.edit-new-task.option-type-title" | translate}}</option>
-                                <option value="front">{{"infrascrum.edit-new-task.option-front" | translate}}</option>
-                                <option value="improv">{{"infrascrum.edit-new-task.option-improvement" | translate}}</option>
-                                <option value="correct">{{"infrascrum.edit-new-task.option-correction" | translate}}</option>
-                                <option value="bug">{{"infrascrum.edit-new-task.option-bug" | translate}}</option>
-                                <option value="analyse">{{"infrascrum.edit-new-task.option-analyse" | translate}}</option>
-                                <option value="back">{{"infrascrum.edit-new-task.option-back" | translate}}</option>
-                                <option value="intdesign">{{"infrascrum.edit-new-task.option-integration" | translate}}</option>
-                                <option value="liaisonFB">{{"infrascrum.edit-new-task.option-liaison-bf" | translate}}</option>
-                                <option value="desig">{{"infrascrum.edit-new-task.option-design" | translate}}</option>
-                                <option value="ux">{{"infrascrum.edit-new-task.option-ux" | translate}}</option>
-                                <option value="full">{{"infrascrum.edit-new-task.option-full" | translate}}</option>
-                            </select>
+                    <div class="flex flex-col">
+                        <h3>
+                            {{
+                                'infrascrum.edit-new-task.title-etiquette'
+                                    | translate
+                            }}
+                        </h3>
+                        <div class="flex flex-row w-10 h-10">
+                            <div class="flex">
+                                <input
+                                    type="color"
+                                    class="h-10 w-10 mr-2"
+                                    required
+                                    [(ngModel)]="newTask.color"
+                                />
+                            </div>
                         </div>
-                        <div
-                        class="w-50 mt-12 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                        >
-                            <select
-                                name="sprints"
-                                #sprints="ngModel"
-                                [(ngModel)]="selectedSprint"
-                                id="sprints"
-                                required
-                                class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
-                            >
-                                <option selected disabled value="">{{"infrascrum.edit-new-task.option-sprint-title" | translate}}</option>
-                                <option value="one">{{"infrascrum.edit-new-task.option-one" | translate}}</option>
-                                <option value="two">{{"infrascrum.edit-new-task.option-two" | translate}}</option>
-                                <option value="three">{{"infrascrum.edit-new-task.option-three" | translate}}</option>
-                                <option value="four">{{"infrascrum.edit-new-task.option-four" | translate}}</option>
-                                <option value="five">{{"infrascrum.edit-new-task.option-five" | translate}}</option>
-                            </select>
-                        </div>
-                        <div
-                            class="w-48 xl:w-50 mt-12 mx-6 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary">
-                            <label class="font-bold"
-                            >{{ "infrascrum.edit-new-task.estimate-time" | translate }}</label>
-                                <div class="flex">
-                                    <div class="flex flex-col w-12 mr-3">
-                                        <h3>{{ "infrascrum.edit-new-task.estimate-day" | translate }}</h3>
-                                        <select name="day" id="day">
-                                            <option value="#">0</option>
-                                            <option value="day1">1</option>
-                                            <option value="day2">2</option>
-                                        </select>
-                                    </div>
-                                    <div class="flex flex-col w-12">
-                                        <h3>{{ "infrascrum.edit-new-task.estimate-hours" | translate }}</h3>
-                                        <select name="hours" id="hours">
-                                            <option value="#">0</option>
-                                            <option value="h1">1</option>
-                                            <option value="h2">2</option>
-                                            <option value="h3">3</option>
-                                            <option value="h4">4</option>
-                                            <option value="#">5</option>
-                                            <option value="#">6</option>
-                                            <option value="#">7</option>
-                                            <option value="#">8</option>
-                                            <option value="#">9</option>
-                                            <option value="#">10</option>
-                                        </select>
-                                    </div>
-                                    <div class="flex flex-col w-12 mx-3">
-                                        <h3>{{ "infrascrum.edit-new-task.estimate-minute" | translate }}</h3>
-                                        <select name="minute" id="minute">
-                                            <option value="#">0</option>
-                                            <option value="#">15</option>
-                                            <option value="#">30</option>
-                                            <option value="#">45</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            
-                        </div>
-                    </div>
-                    
-                    <div class="flex">
-                        <div
-                            class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                        >
-                            <label class="font-bold">{{ "infrascrum.edit-new-task.name" | translate }}</label>
-                            <input
-                                type="text"
-                                name="name"
-                                #name="ngModel"
-                                [(ngModel)]="task.name"
-                                required
-                                class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                            />
-                        </div>
-                        <div
-                            class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                        >
-                            <label class="font-bold">{{ "infrascrum.edit-new-task.start-date" | translate }}</label>
-                            <p class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none">
-                                {{ dateToday | date }}
-                            </p>
-                        </div>
-                    </div>
-                    <div
-                        class="w-50 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                    >
-                        <label class="font-bold">{{ "infrascrum.edit-new-task.description" | translate }}</label>
-                        <textarea
-                            name="description"
-                            id="description"
-                            #description="ngModel"
-                            [(ngModel)]="task.description"
-                            required
-                            cols="30"
-                            rows="2"
-                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                        ></textarea>
-                    </div>
-                    <div
-                        class="w-50 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                    >
-                        <label class="font-bold">{{ "infrascrum.edit-new-task.file" | translate }}</label>
-                        <input
-                            type="file"
-                            name="file"
-                            #file="ngModel"
-                            [(ngModel)]="task.file"
-                            required
-                            class="w-full mt-6 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                        />
                     </div>
                 </div>
-            </div>
+                <div class="flex">
+                    <div
+                        class="xl:w-50 mt-12 mx-8 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <select
+                            id="type"
+                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+                            [ngModel]="newTask.tasktype"
+                            [compareWith]="compareTaskType"
+                        >
+                            <option
+                                *ngFor="let taskType of taskTypeList"
+                                [value]="taskType"
+                            >
+                                {{ taskType.label }}
+                            </option>
+                        </select>
+                    </div>
+                    <div
+                        class="w-50 mt-12 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <select
+                            id="sprints"
+                            [(ngModel)]="newTask.sprint"
+                            [compareWith]="compareSprint"
+                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+                        >
+                            <option [ngValue]="noSprint">
+                                <!-- Change translation to "No Sprints" -->
+                                {{
+                                    'infrascrum.edit-new-task.option-sprint-title'
+                                        | translate
+                                }}
+                            </option>
+                            <option
+                                *ngFor="let sprint of sprintList"
+                                [ngValue]="sprint"
+                            >
+                                {{ sprint.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div
+                        class="w-48 xl:w-50 mt-12 mx-6 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold">
+                            {{
+                                'infrascrum.edit-new-task.estimate-time'
+                                    | translate
+                            }}
+                        </label>
+                        <div class="flex">
+                            <div class="flex flex-col w-12 mr-3">
+                                <h3>
+                                    {{
+                                        'infrascrum.edit-new-task.estimate-day'
+                                            | translate
+                                    }}
+                                </h3>
+                                <input type="number" name="day" id="day" />
+                            </div>
+                            <div class="flex flex-col">
+                                <h3>
+                                    {{
+                                        'infrascrum.edit-new-task.estimate-hours'
+                                            | translate
+                                    }}
+                                </h3>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max="8"
+                                    name="hour"
+                                    id="hour"
+                                />
+                            </div>
+                            <div class="flex flex-col w-12 mx-3">
+                                <h3>
+                                    {{
+                                        'infrascrum.edit-new-task.estimate-minute'
+                                            | translate
+                                    }}
+                                </h3>
+                                <input
+                                    type="number"
+                                    step="15"
+                                    min="0"
+                                    max="45"
+                                    name="minute"
+                                    id="minute"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="mt-10 flex justify-center w-full">
-                <button
-                    class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-4 w-24 mb-8"
+                <div class="flex">
+                    <div
+                        class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold">{{
+                            'infrascrum.edit-new-task.name' | translate
+                        }}</label>
+                        <input
+                            type="text"
+                            [(ngModel)]="newTask.name"
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        />
+                    </div>
+                    <div
+                        class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold">{{
+                            'infrascrum.edit-new-task.start-date' | translate
+                        }}</label>
+                        <p
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        >
+                            <input
+                                type="date"
+                                [ngModel]="newDate | date: 'yyyy-MM-dd'"
+                            />
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="w-50 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                 >
-                    {{ "infrascrum.global.btn-cancel" | translate }}
-                </button>
-                <button type="submit"
-                [disabled]="formEditTask.valid"
-                    class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8"
+                    <label class="font-bold">{{
+                        'infrascrum.edit-new-task.description' | translate
+                    }}</label>
+                    <textarea
+                        id="description"
+                        cols="30"
+                        rows="2"
+                        class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        [(ngModel)]="newTask.description"
+                    ></textarea>
+                </div>
+                <div
+                    class="w-50 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                 >
-                {{ "infrascrum.global.btn-register" | translate }}
-
-                </button>
+                    <label class="font-bold">{{
+                        'infrascrum.edit-new-task.file' | translate
+                    }}</label>
+                    <input
+                        type="file"
+                        class="w-full mt-6 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                    />
+                </div>
+                <div class="mt-10 flex justify-center w-full">
+                    <button
+                        class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-4 w-24 mb-8"
+                        (click)="onNoClick()"
+                    >
+                        {{ 'infrascrum.global.btn-cancel' | translate }}
+                    </button>
+                    <button
+                        class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8"
+                        (click)="(data.edition && editTask()) || addTask()"
+                    >
+                        {{ 'infrascrum.global.btn-register' | translate }}
+                    </button>
+                </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>

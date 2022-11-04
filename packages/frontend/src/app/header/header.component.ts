@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         public authService: AuthService,
+        private translate: TranslateService,
         private headerTitleService: HeaderTitleService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -34,6 +35,12 @@ export class HeaderComponent implements OnInit {
                 this.router.navigated = false;
             }
         });
+    }
+
+    changeLanguage(): void {
+        this.translate.currentLang == 'en'
+            ? this.translate.use('fr')
+            : this.translate.use('en');
     }
 
     ngOnInit(): void {
@@ -92,6 +99,7 @@ export class HeaderComponent implements OnInit {
                 .findUserByUsername(username)
                 .subscribe(userObserver);
     }
+    getLangs() {}
 
     loggedIn() {
         return this.authService.isAuthenticated();
