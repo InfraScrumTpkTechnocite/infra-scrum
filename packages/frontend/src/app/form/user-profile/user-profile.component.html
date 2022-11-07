@@ -1,93 +1,272 @@
 <!--espacement "margin"-->
-<br><br><br><br><br><br><br><br><br><br>
-<form #userForm="ngForm" (ngSubmit)="onSubmit" [appMatchPassword]="['password', 'confirmPassword']">
-
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<form
+    #userForm="ngForm"
+    (ngSubmit)="(onSubmit)"
+    [appMatchPassword]="['password', 'confirmPassword']"
+>
     <!--div header-->
-    <div class="bg-tpkwhite text-secondary mt-15 m-auto w-1/2 h-18/9 rounded-md shadow-lg shadow-primary"><br>
+    <div
+        class="bg-tpkwhite text-secondary mt-15 m-auto w-1/2 h-18/9 rounded-md shadow-lg shadow-primary"
+    >
+        <br />
 
-<!--Zone avatar-->
-<section>
-    <div class="flex mx-12">
-        <div class="avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2 border-tpkvalidate">
-        <!--button ("+")-->
-        <!--<input style="border:1px solid #7697a8;" class="button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" alt="profile picture" id="loadFileXml" placeholder="" value="+" #picture="ngModel" [(ngModel)]="user.picture"/>-->
-        <!--<img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"class="avatar">--> 
-        <!--<img src="{{user.picture}}" class="avatar" alt="image"/>-->
-        <img *ngIf="user.picture" class="img-avatar" src="{{ user.picture }}" alt="profile picture"/>
-        <span *ngIf="!user.picture" class="text-2xl uppercase font-bold">{{ user.username | initialsName }}</span>
-        <!--<input type='file' (change)="onSelectFile($event)" class="select-profile-picture" alt="profile picture" value="{{user.picture}}" #user.picture="ngModel" [(ngModel)]="user.picture">-->
-            <!--""message "add" avatar-->
-            <!--<span class="message">add your avatar</span>-->
-    </div>
+        <!--Zone avatar-->
+        <section>
+            <div class="flex mx-12">
+                <div
+                    class="avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2 border-tpkvalidate"
+                >
+                    <!--button ("+")-->
+                    <!--<input style="border:1px solid #7697a8;" class="button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" alt="profile picture" id="loadFileXml" placeholder="" value="+" #picture="ngModel" [(ngModel)]="user.picture"/>-->
+                    <!--<img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"class="avatar">-->
+                    <!--<img src="{{user.picture}}" class="avatar" alt="image"/>-->
+                    <img
+                        *ngIf="user.picture"
+                        class="img-avatar"
+                        src="{{ user.picture }}"
+                        alt="profile picture"
+                    />
+                    <span
+                        *ngIf="!user.picture"
+                        class="text-2xl uppercase font-bold"
+                        >{{ user.username | initialsName }}</span
+                    >
+                    <!--<input type='file' (change)="onSelectFile($event)" class="select-profile-picture" alt="profile picture" value="{{user.picture}}" #user.picture="ngModel" [(ngModel)]="user.picture">-->
+                    <!--""message "add" avatar-->
+                    <!--<span class="message">add your avatar</span>-->
+                </div>
 
-    <!--titre ("My Profil")-->
-    <div>
-        <h1 class=" h1 text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-center pt-4">My Profile</h1><br><br><br>
-           
-        <!--zone formulaire Username-->
-        <label for="username"></label><input style="text-align:left" type="text" placeholder="username" value="{{user.username}}" required class="input-username form-control bg-transparent placeholder:normal" id="username"
-            name="username" size="30" #username="ngModel" [(ngModel)]="user.username" required="required" pattern="^[a-zA-Z0-9àéèç]{1,25}$" /><br>
+                <!--titre ("My Profil")-->
+                <div>
+                    <h1
+                        class="h1 text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-center pt-4"
+                    >
+                        My Profile
+                    </h1>
+                    <br /><br /><br />
 
-        <!--"message erreur Username"-->
-        <p *ngIf="username.errors?.['required'] && username.dirty" style="text-align:start" class="alert username-message-erreur text-sm normal">username required</p><br>
+                    <!--zone formulaire Username-->
+                    <label for="username"></label
+                    ><input
+                        style="text-align: left"
+                        type="text"
+                        placeholder="username"
+                        value="{{ user.username }}"
+                        required
+                        class="input-username form-control bg-transparent placeholder:normal"
+                        id="username"
+                        name="username"
+                        size="30"
+                        #username="ngModel"
+                        [(ngModel)]="user.username"
+                        required="required"
+                        pattern="^[a-zA-Z0-9àéèç]{1,25}$"
+                    /><br />
 
-        <!--input Email-->
-        <label for="email"></label><input style="text-align:left" type="email" placeholder="email" value="{{user.email }}"  name="email" size="30" #email="ngModel" [(ngModel)]="user.email" required class="input-email form-control bg-transparent placeholder:normal" id="email"
-            required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+                    <!--"message erreur Username"-->
+                    <p
+                        *ngIf="username.errors?.['required'] && username.dirty"
+                        style="text-align: start"
+                        class="alert username-message-erreur text-sm normal"
+                    >
+                        username required
+                    </p>
+                    <br />
 
-        <!--"message erreur Email"-->
-        <p *ngIf="!email.errors?.['required'] && email.invalid && password.dirty" style="text-align:center" class="alert email-message-erreur text-sm normal">email invalid</p>
-        <p *ngIf="email.errors?.['required'] && email.dirty" style="text-align:center" class="alert email-message-erreur text-sm normal">email required</p>
-    </div>
-</div>
-</section>
+                    <!--input Email-->
+                    <label for="email"></label
+                    ><input
+                        style="text-align: left"
+                        type="email"
+                        placeholder="email"
+                        value="{{ user.email }}"
+                        name="email"
+                        size="30"
+                        #email="ngModel"
+                        [(ngModel)]="user.email"
+                        required
+                        class="input-email form-control bg-transparent placeholder:normal"
+                        id="email"
+                        required="required"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    />
 
-    <!--input Role-->
-    <div class="flex w-full justify-start">
-        <label for="role"></label><input id="role" type="text" name="role" style="text-align:center" required class="input-role form-control bg-transparent placeholder:normal" placeholder="role" value="{{user.role.name}}" size="10" #role="ngModel"
-            [(ngModel)]="user.role.name" required="required">
-    </div>
+                    <!--"message erreur Email"-->
+                    <p
+                        *ngIf="!email.errors?.['required'] && email.invalid && password.dirty"
+                        style="text-align: center"
+                        class="alert email-message-erreur text-sm normal"
+                    >
+                        email invalid
+                    </p>
+                    <p
+                        *ngIf="email.errors?.['required'] && email.dirty"
+                        style="text-align: center"
+                        class="alert email-message-erreur text-sm normal"
+                    >
+                        email required
+                    </p>
+                </div>
+            </div>
+        </section>
 
-    <!--"message erreur Role"-->
-    <p *ngIf="role.errors?.['required'] && role.dirty" style="text-align:start" class="alert role-message-erreur normal">role required</p><br><br>
-      
-    <!--zone formulaire Firstname/Lastname-->
-    <div class="flex w-full justify-center">
-        <label for="firstname"></label><input style="text-align:start" type="text" placeholder="firstname" value="{{user.firstname}}"  required class="input-firstname form-control bg-transparent placeholder:normal"
-            id="firstname" size="30" name="firstname" minlength="8" #firstname="ngModel" [(ngModel)]="user.firstname" required="required">
-        <label for="lastname"></label><input style="text-align:start" type="text" placeholder="lastname" value="{{user.lastname}}" required class="input-lastname form-control bg-transparent placeholder:normal" id="lastname"
-            size="30" name="lastname" minlength="8" #lastname="ngModel" [(ngModel)]="user.lastname" required="required">
-    </div>
+        <!--input Role-->
+        <div class="flex w-full justify-start">
+            <label for="role"></label
+            ><input
+                id="role"
+                type="text"
+                name="role"
+                style="text-align: center"
+                required
+                class="input-role form-control bg-transparent placeholder:normal"
+                placeholder="role"
+                value="{{ user.role.name }}"
+                size="10"
+                #role="ngModel"
+                [(ngModel)]="user.role.name"
+                required="required"
+            />
+        </div>
 
-    <!--"message erreur Firstname"-->
-    <p *ngIf="firstname.errors?.['required'] && firstname.dirty" style="text-align:start" class="alert firstname-message-erreur text-sm normal">firstname required</p><br>
+        <!--"message erreur Role"-->
+        <p
+            *ngIf="role.errors?.['required'] && role.dirty"
+            style="text-align: start"
+            class="alert role-message-erreur normal"
+        >
+            role required
+        </p>
+        <br /><br />
 
-    <!--zone formulaire Password-->
-    <div class="flex w-full justify-center">
-        <label for="password"></label><input style="text-align:start" type="password" placeholder="Password" required class="input-password  form-control bg-transparent placeholder:normal "
-            id="password" size="30" #password="ngModel" [(ngModel)]="user.password" name="Password" minlength="8" required="required">
-        <label for="ConfirPassword"></label><input style="text-align:start" type="password" placeholder="Confirm-Password" required class="input-confirm-password form-control bg-transparent placeholder:normal"
-            id="confirmPassword" size="30" #confirmPassword="ngModel" [(ngModel)]="verifPassword" name="ConfirPassword" minlength="8" required="required"><p>
-    </div>
+        <!--zone formulaire Firstname/Lastname-->
+        <div class="flex w-full justify-center">
+            <label for="firstname"></label
+            ><input
+                style="text-align: start"
+                type="text"
+                placeholder="firstname"
+                value="{{ user.firstname }}"
+                required
+                class="input-firstname form-control bg-transparent placeholder:normal"
+                id="firstname"
+                size="30"
+                name="firstname"
+                minlength="8"
+                #firstname="ngModel"
+                [(ngModel)]="user.firstname"
+                required="required"
+            />
+            <label for="lastname"></label
+            ><input
+                style="text-align: start"
+                type="text"
+                placeholder="lastname"
+                value="{{ user.lastname }}"
+                required
+                class="input-lastname form-control bg-transparent placeholder:normal"
+                id="lastname"
+                size="30"
+                name="lastname"
+                minlength="8"
+                #lastname="ngModel"
+                [(ngModel)]="user.lastname"
+                required="required"
+            />
+        </div>
 
-    <!--"message erreur Password/Confirm-Password"-->
-    <div>
-        <p *ngIf="password.errors?.['required'] && password.dirty" style="text-align:start" class="alert password-message-erreur text-sm normal">password required&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;confir-password required</p>
-        <p *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']" class="alert password-message-erreur">{{"infrascrum.create-user.msg-password-matching" | translate}}</p>
-        <div *ngIf="showErrorMessage">
-            <h1 class="alert password-message-erreur">{{errorMessage}}</h1>
-        </div><br><br>
-        
-    <!--button Update/Delete-->
-    <div class="flex w-full justify-center">
-        <button class="update" type="submit" (click)="onSubmit(user)">Update</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="clear" type="reset" (click)="onDeleteSubmit(user)">Clear</button>
-    </div><br>
-    <button class="cancel" type="submit" onclick= "window.location.href = 'http://localhost:4200/projects';">Cancel</button>&nbsp;&nbsp;&nbsp; 
-    <br><br>
-    </div>
+        <!--"message erreur Firstname"-->
+        <p
+            *ngIf="firstname.errors?.['required'] && firstname.dirty"
+            style="text-align: start"
+            class="alert firstname-message-erreur text-sm normal"
+        >
+            firstname required
+        </p>
+        <br />
+
+        <!--zone formulaire Password-->
+        <div class="flex w-full justify-center">
+            <label for="password"></label
+            ><input
+                style="text-align: start"
+                type="password"
+                placeholder="Password"
+                required
+                class="input-password form-control bg-transparent placeholder:normal"
+                id="password"
+                size="30"
+                #password="ngModel"
+                [(ngModel)]="user.password"
+                name="Password"
+                minlength="8"
+                required="required"
+            />
+            <label for="ConfirPassword"></label
+            ><input
+                style="text-align: start"
+                type="password"
+                placeholder="Confirm-Password"
+                required
+                class="input-confirm-password form-control bg-transparent placeholder:normal"
+                id="confirmPassword"
+                size="30"
+                #confirmPassword="ngModel"
+                [(ngModel)]="verifPassword"
+                name="ConfirPassword"
+                minlength="8"
+                required="required"
+            />
+            <p></p>
+        </div>
+
+        <!--"message erreur Password/Confirm-Password"-->
+        <div>
+            <p
+                *ngIf="password.errors?.['required'] && password.dirty"
+                style="text-align: start"
+                class="alert password-message-erreur text-sm normal"
+            >
+                password
+                required&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;confir-password
+                required
+            </p>
+            <p
+                *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
+                class="alert password-message-erreur"
+            >
+                {{ 'infrascrum.create-user.msg-password-matching' | translate }}
+            </p>
+            <div *ngIf="showErrorMessage">
+                <h1 class="alert password-message-erreur">
+                    {{ errorMessage }}
+                </h1>
+            </div>
+            <br /><br />
+
+            <!--button Update/Delete-->
+            <div class="flex w-full justify-center">
+                <button class="update" type="submit" (click)="onSubmit(user)">
+                    Update
+                </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button
+                    class="clear"
+                    type="reset"
+                    (click)="onDeleteSubmit(user)"
+                >
+                    Clear
+                </button>
+            </div>
+            <br />
+            <button
+                class="cancel"
+                type="submit"
+                onclick="window.location.href = 'http://localhost:4200/projects';"
+            >
+                Cancel</button
+            >&nbsp;&nbsp;&nbsp; <br /><br />
+        </div>
     </div>
 </form>
-
-
-
