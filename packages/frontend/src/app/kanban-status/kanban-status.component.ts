@@ -12,6 +12,7 @@ interface KanbanList {
     kanban: Kanbanstatus;
     tasks: Task[];
 }
+
 @Component({
     selector: 'app-kanban-status',
     templateUrl: './kanban-status.component.html',
@@ -34,6 +35,9 @@ export class KanbanStatusComponent implements OnInit {
     newColor!: string;
     kanbanstatus!: KanbanList;
 
+    @Input() projectid!: string | undefined | null;
+    @Input() project!: Project;
+
     constructor(
         private kanbanstatusService: KanbanstatusService,
         private toastService: HotToastService
@@ -42,6 +46,7 @@ export class KanbanStatusComponent implements OnInit {
     ngOnInit(): void {
         this.kanbanstatus = this.kanbanList as KanbanList;
         this.newColor = this.kanbanstatus.kanban.color;
+        //console.log(`ngOnInit - this.project ${JSON.stringify(this.project)}`);
     }
 
     editKanbanStatus() {
