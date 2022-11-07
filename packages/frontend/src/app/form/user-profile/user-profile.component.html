@@ -73,7 +73,10 @@
     <!--"message erreur Password/Confirm-Password"-->
     <div>
         <p *ngIf="password.errors?.['required'] && password.dirty" style="text-align:start" class="alert password-message-erreur text-sm normal">password required&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;confir-password required</p>
-    </div><br><br>
+        <p *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']" class="alert password-message-erreur">{{"infrascrum.create-user.msg-password-matching" | translate}}</p>
+        <div *ngIf="showErrorMessage">
+            <h1 class="alert password-message-erreur">{{errorMessage}}</h1>
+        </div><br><br>
         
     <!--button Update/Delete-->
     <div class="flex w-full justify-center">
@@ -82,6 +85,7 @@
     </div><br>
     <button class="cancel" type="submit" onclick= "window.location.href = 'http://localhost:4200/projects';">Cancel</button>&nbsp;&nbsp;&nbsp; 
     <br><br>
+    </div>
     </div>
 </form>
 

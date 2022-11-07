@@ -30,6 +30,7 @@ export class UserProfileComponent{
   projectService: any;
   language ='en'
   mySubscription: any;
+  errorMessage: any;
 
   constructor(
     private userService: UserService,
@@ -71,10 +72,10 @@ onSubmit(user: User): void {
 
     const userObserver = {
       error: (err: any) => {
-        console.log(`Erreur édition profile : ${err.error['driverError'].detail}`);
-        this.toastService.error(`Error during profile creation<br><br>${err.error.driverError.detail}`);
-  
-        this.toast.success('Update user-profile!');
+        this.showErrorMessage = true;
+        this.errorMessage = err.error.driverError.detail;
+        console.log(`Erreur edit profile : ${err.error['driverError'].detail}`);
+        this.toast.error(`Error during profile edit<br><br>${err.error.driverError.detail}`);
       },
       complete: () => {
         this.toastService.success(`User-profile edited !`);
