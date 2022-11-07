@@ -1,47 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Inject} from '@angular/core';
 import { UserProject } from '../../models/userproject.model';
-import { UserprojectService } from '../../services/userproject.service';
 import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
 import { Project } from '../../models/project.model';
-import { ProjectService } from '../../services/project.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ProjectService } from 'src/app/services/project.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
     selector: 'app-edit-project',
     templateUrl: './edit-project.component.html',
     styleUrls: ['./edit-project.component.css']
 })
-export class EditProjectComponent implements OnInit {
+export class EditProjectComponent{
     projectid!: string;
-    project: Project = new Project();
-    userList!: User[];
-    userProjectList!: UserProject[];
+    project: Project = this.data.project;
+    userList: User[] = this.data.userList;
+    userProjectList: UserProject[] = this.data.userProjectList;
     switch: string = 'default';
 
     constructor(
-        private route: ActivatedRoute,
         private projectService: ProjectService,
-        private userService: UserService,
-        private userProjectService: UserprojectService
+        private dialogRef: MatDialogRef<EditProjectComponent>,
+        private toastService: HotToastService,
+        @Inject(MAT_DIALOG_DATA)
+        private data: {
+            project: Project,
+            userProjectList: UserProject[],
+            userList: User[]
+        }
     ) {}
 
-    ngOnInit(): void {
-        this.route.queryParamMap.subscribe((params) => {
-            let paramsObject: any = { ...params.keys, ...params };
-            this.projectid = paramsObject.params.projectid;
-        });
-        this.projectService
-            .findOne(this.projectid)
-            .subscribe((project: Project) => (this.project = project));
-        this.userService
-            .getAllUsers()
-            .subscribe((userList: User[]) => (this.userList = userList));
-        this.userProjectService
-            .findCurrentProjectUsers(this.projectid)
-            .subscribe(
-                (userProjectList: UserProject[]) =>
-                    (this.userProjectList = userProjectList)
-            );
+    editProject() {
+        const observer = {
+            error: (err: any) => {
+                console.log(
+                    `Erreur edition project : ${err.error['driverError'].detail}`
+                );
+                this.toastService.error(
+                    `Error during project edition<br><br>${err.error.driverError.detail}`
+                );
+            },
+            complete: () => {
+                this.toastService.success('Project Edited !');
+                this.dialogRef.close({
+                    project: this.project
+                });
+            }
+        };
+        delete this.project.picture; //no need to update (if any new picture, it's already been posted by upload)
+        this.projectService.update(this.project).subscribe(observer);
+    }
+
+    closeWindow(){
+        this.dialogRef.close();
     }
 }

@@ -1,4 +1,3 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
 import { User } from '../../../../models/user.model';

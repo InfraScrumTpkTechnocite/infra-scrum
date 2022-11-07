@@ -29,6 +29,8 @@ import { TasktypeService } from '../services/tasktype.service';
 import { TaskType } from '../models/tasktype.model';
 import { MatDialog } from '@angular/material/dialog';
 import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.component';
+import { EditProjectComponent } from '../form/edit-project/edit-project.component';
+import { UserService } from '../services/user.service';
 
 interface KanbanList {
     kanban: Kanbanstatus;
@@ -55,6 +57,7 @@ export class ProjectComponent implements OnInit {
     userProjects!: UserProject[];
     user!: User;
     isUserProjectadmin: boolean = false;
+    userList!: User[];
 
     dateToday: string = '';
 
@@ -72,6 +75,7 @@ export class ProjectComponent implements OnInit {
         private headerTitleService: HeaderTitleService,
         private taskService: TaskService,
         private taskTypeService: TasktypeService,
+        private userService: UserService,
         private router: Router,
         private dialog: MatDialog
     ) {}
@@ -241,9 +245,21 @@ export class ProjectComponent implements OnInit {
             .subscribe(
                 (taskTypeList: TaskType[]) => (this.taskTypeList = taskTypeList)
             );
+
+        this.userService.getAllUsers().subscribe((userList:User[]) => this.userList = userList);
     }
 
     //Boutons modales
+    editProject(){
+        this.dialog.open(EditProjectComponent, {
+            data:{
+                project: this.project,
+                userProjectList: this.userProjects,
+                userList: this.userList
+            }
+        })
+    }
+
     addTask() {
         this.dialog.open(EditNewTasksComponent, {
             data: {
