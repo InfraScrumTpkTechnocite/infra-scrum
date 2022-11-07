@@ -45,7 +45,7 @@
     <!--input Role-->
     <div class="flex w-full justify-start">
         <label for="role"></label><input id="role" type="text" name="role" style="text-align:center" required class="input-role form-control bg-transparent placeholder:normal" placeholder="role" value="{{user.role.name}}" size="10" #role="ngModel"
-            [(ngModel)]="user.username" required="required">
+            [(ngModel)]="user.role.name" required="required">
     </div>
 
     <!--"message erreur Role"-->
