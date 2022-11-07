@@ -33,11 +33,11 @@
 
         <!--input Email-->
         <label for="email"></label><input style="text-align:left" type="email" placeholder="email" value="{{user.email }}"  name="email" size="30" #email="ngModel" [(ngModel)]="user.email" required class="input-email form-control bg-transparent placeholder:normal" id="email"
-            required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" /><br>
+            required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
 
         <!--"message erreur Email"-->
         <p *ngIf="!email.errors?.['required'] && email.invalid && password.dirty" style="text-align:center" class="alert email-message-erreur text-sm normal">email invalid</p>
-        <p *ngIf="email.errors?.['required'] && email.dirty" style="text-align:center" class="alert email-message-erreur text-sm normal">email required</p><br>
+        <p *ngIf="email.errors?.['required'] && email.dirty" style="text-align:center" class="alert email-message-erreur text-sm normal">email required</p>
     </div>
 </div>
 </section>
