@@ -85,8 +85,7 @@
                             user.role.name == 'superadmin' ||
                             isUserProjectadmin)
                     "
-                    routerLink="edit-project"
-                    [queryParams]="{ projectid: project.id }"
+                    (click)="editProject()"
                     title="Edit project"
                 >
                     <svg

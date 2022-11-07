@@ -47,14 +47,6 @@ const routes: Routes = [
         }
     },
     {
-        path: 'project/edit-project',
-        component: EditProjectComponent,
-        canActivate: [AuthGuardService],
-        data: {
-            role: ['superadmin', 'admin', 'employee']
-        }
-    },
-    {
         path: 'create-user',
         component: CreateUserComponent,
         canActivate: [AuthGuardService],
