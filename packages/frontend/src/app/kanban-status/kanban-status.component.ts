@@ -21,7 +21,7 @@ export class KanbanStatusComponent implements OnInit {
     @Input() kanbanList!: any;
 
     @Input() subject!: WebSocketSubject<any>;
-    
+
     @Input() taskTypeList!: TaskType[];
 
     @Input() sprintList!: Project[];
