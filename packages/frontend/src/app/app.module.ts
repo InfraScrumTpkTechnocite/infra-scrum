@@ -38,6 +38,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NumberToIntegerPipe } from './pipes/number-to-integer.pipe';
+import { MatMenuModule } from '@angular/material/menu'
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -63,7 +66,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         EditProjectuserComponent,
         EditDeliverydateComponent,
         EditProjectInfoComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        NumberToIntegerPipe
     ],
     imports: [
         BrowserModule,
@@ -85,7 +89,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         }),
         MatDialogModule,
         MatFormFieldModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatMenuModule
     ],
     exports: [TranslateModule],
     providers: [
