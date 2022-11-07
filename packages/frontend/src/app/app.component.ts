@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-root',
@@ -12,12 +13,13 @@ export class AppComponent {
     // welcome!: string;
     // usernameLabel!: string;
     // passwordLabel!: string;
-    
-    constructor() {}
-        
 
-    ngOnInit()
-     {
+    constructor(private translateService: TranslateService) {
+        this.translateService.addLangs(['fr', 'en']);
+        this.translateService.use(navigator.language.split('-')[0]);
+    }
+
+    ngOnInit() {
         // hardcoded example
         // this.user = { firstName: 'Sammy', lastName: 'Shark' };
         // synchronous. Also interpolate the 'firstName' parameter with a value.
@@ -29,5 +31,4 @@ export class AppComponent {
         //     this.passwordLabel = translations['login.password'];
         //   });
     }
-    
 }

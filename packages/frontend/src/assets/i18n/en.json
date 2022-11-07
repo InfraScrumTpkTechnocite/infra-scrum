@@ -48,8 +48,8 @@
         "option-five": "Sprint 5",
         "estimate-time": "Estimate Time",
         "estimate-day": "Day",
-        "estimate-hours": "Hours",
-        "estimate-minute": "Minute",
+        "estimate-hours": "h",
+        "estimate-minute": "min",
         "name": "Name",
         "start-date": "Start date",
         "description": "Description",
@@ -114,3 +114,4 @@
       }
   }
 }
+

@@ -13,13 +13,11 @@ import { UserprojectService } from '../services/userproject.service';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
     title: string = '';
     isMenuOpen: boolean = false;
     user: User = new User();
     userProjects = [];
     mySubscription: any;
-    language ='en'
 
     constructor(
         public authService: AuthService,
@@ -28,12 +26,8 @@ export class HeaderComponent implements OnInit {
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
-        private userProjectService: UserprojectService,
+        private userProjectService: UserprojectService
     ) {
-        // translate.addLangs(['en', 'fr']);
-        console.log(translate.getLangs());
-        translate.setDefaultLang(this.language);
-
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.mySubscription = this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
@@ -42,17 +36,14 @@ export class HeaderComponent implements OnInit {
             }
         });
     }
+
     changeLanguage(): void {
-        if(this.language === 'en') {
-            this.language = 'fr'
-        } else {
-            this.language = 'en'
-        }
-        this.translate.use(this.language);
+        this.translate.currentLang == 'en'
+            ? this.translate.use('fr')
+            : this.translate.use('en');
     }
 
     ngOnInit(): void {
-
         this.headerTitleService.title.subscribe((updatedTitle) => {
             this.title = updatedTitle;
         });
@@ -107,12 +98,8 @@ export class HeaderComponent implements OnInit {
             this.userService
                 .findUserByUsername(username)
                 .subscribe(userObserver);
-
-
     }
-    getLangs(){
-
-    }
+    getLangs() {}
 
     loggedIn() {
         return this.authService.isAuthenticated();

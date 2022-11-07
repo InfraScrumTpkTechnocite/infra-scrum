@@ -1,17 +1,17 @@
 <div
-    class="bg-tpkwhite text-secondary mt-20 m-auto max-w-xl max-h-max md:max-w-2xl xl:max-h-max xl:max-w-screen-md rounded-md shadow-lg shadow-primary"
+    class="bg-tpkwhite text-secondary pt-6 p-auto max-w-xl max-h-max md:max-w-2xl xl:max-h-max xl:max-w-screen-md"
 >
     <h1
         mat-dialog-title
-        class="text-xl md:text-2xl xl:text-3xl text-secondary font-bold underline underline-offset-8 text-center pt-4"
+        class="text-xl xl:text-2xl font-bold underline underline-offset-8 text-center pt-4"
     >
         {{ 'infrascrum.edit-new-task.title' | translate }}
     </h1>
     <div mat-dialog-content>
-        <div class="flex xl:mt-6 flex-col xl:flex-row items-center">
-            <div class="xl:w-184 h-128 mt-4 xl:mt-6 xl:ml-4">
+        <div class="flex xl:mt-2 flex-col xl:flex-row items-center">
+            <div class="w-128 xl:w-160 h-128 mt-4 xl:mt-2 xl:ml-4">
                 <div class="flex flex-row xl:m-3">
-                    <div class="flex flex-col mr-10 mx-12">
+                    <div class="flex flex-col mr-10 mx-12 justify-center items-center">
                         <h3>
                             {{
                                 'infrascrum.edit-new-task.title-user'
@@ -77,9 +77,11 @@
                                     </mat-menu>
                                 </button>
                             </div>
+                                    </mat-menu>
+                                </button>
                         </div>
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col mr-5 xl:mr-10 justify-center items-center">
                         <h3>
                             {{
                                 'infrascrum.edit-new-task.title-etiquette'
@@ -97,10 +99,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex">
                     <div
-                        class="xl:w-50 mt-12 mx-8 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-40 xl:w-52 ml-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <select
                             id="type"
@@ -116,8 +116,10 @@
                             </option>
                         </select>
                     </div>
+                </div>
+                <div class="flex">
                     <div
-                        class="w-50 mt-12 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-40 xl:w-52 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <select
                             id="sprints"
@@ -140,7 +142,7 @@
                         </select>
                     </div>
                     <div
-                        class="w-48 xl:w-50 mt-12 mx-6 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-40 xl:w-52 xl:w-50 mt-12 mx-12 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <label class="font-bold">
                             {{
@@ -149,7 +151,7 @@
                             }}
                         </label>
                         <div class="flex">
-                            <div class="flex flex-col w-12 mr-3">
+                            <div class="flex flex-col w-12 mr-3 justify-center items-center">
                                 <h3>
                                     {{
                                         'infrascrum.edit-new-task.estimate-day'
@@ -165,7 +167,7 @@
                                     [(ngModel)]="days"
                                 />
                             </div>
-                            <div class="flex flex-col">
+                            <div class="flex flex-col w-12 justify-center items-center">
                                 <h3>
                                     {{
                                         'infrascrum.edit-new-task.estimate-hours'
@@ -180,9 +182,10 @@
                                     name="hour"
                                     id="hour"
                                     [(ngModel)]="hours"
+                                    class="w-12 xl:w-0"
                                 />
                             </div>
-                            <div class="flex flex-col w-12 mx-3">
+                            <div class="flex flex-col w-12 mx-3 justify-center items-center">
                                 <h3>
                                     {{
                                         'infrascrum.edit-new-task.estimate-minute'
@@ -197,6 +200,7 @@
                                     name="minute"
                                     id="minute"
                                     [(ngModel)]="minutes"
+                                    class="w-12 xl:w-0"
                                 />
                             </div>
                         </div>
@@ -205,7 +209,7 @@
 
                 <div class="flex">
                     <div
-                        class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-40 xl:w-52 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <label class="font-bold">{{
                             'infrascrum.edit-new-task.name' | translate
@@ -217,7 +221,7 @@
                         />
                     </div>
                     <div
-                        class="w-50 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-40 xl:w-52 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <label class="font-bold">{{
                             'infrascrum.edit-new-task.start-date' | translate

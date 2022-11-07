@@ -93,11 +93,12 @@ export class ProjectsService {
         'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
       ),
       async (transactionnalEntityManager): Promise<Project[]> => {
-        return await transactionnalEntityManager
-          .createQueryBuilder(Project, 'project')
-          .where('project.project = :projectid', { projectid })
-          .orderBy('project.startdate', 'ASC')
-          .getMany();
+        return await transactionnalEntityManager.find(Project, {
+          select: ['project'],
+          relations: { project: true },
+          where: { project: Equal(projectid) },
+          order: { startdate: 'ASC' },
+        });
       },
     );
   }

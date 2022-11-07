@@ -37,6 +37,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NumberToIntegerPipe } from './pipes/number-to-integer.pipe';
 import { MatMenuModule } from '@angular/material/menu'
 
@@ -83,7 +84,7 @@ export function HttpLoaderFactory(http: HttpClient) {
                 useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
             },
-            defaultLanguage: 'en',
+            defaultLanguage: navigator.language.split('-')[0],
             useDefaultLang: false
         }),
         MatDialogModule,
