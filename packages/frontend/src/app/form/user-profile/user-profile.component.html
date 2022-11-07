@@ -64,9 +64,9 @@
 
     <!--zone formulaire Password-->
     <div class="flex w-full justify-center">
-        <label for="password"></label><input style="text-align:start" type="password" placeholder="Password" value="{{user.password}}" required class="input-password  form-control bg-transparent placeholder:normal "
+        <label for="password"></label><input style="text-align:start" type="password" placeholder="Password" required class="input-password  form-control bg-transparent placeholder:normal "
             id="password" size="30" #password="ngModel" [(ngModel)]="user.password" name="Password" minlength="8" required="required" pattern="">
-        <label for="ConfirPassword"></label><input style="text-align:start" type="password" placeholder="Confirm-Password" value="{{user.password}}" required class="input-confirm-password form-control bg-transparent placeholder:normal"
+        <label for="ConfirPassword"></label><input style="text-align:start" type="password" placeholder="Confirm-Password" required class="input-confirm-password form-control bg-transparent placeholder:normal"
             id="confirmPassword" size="30" #confirmPassword="ngModel" [(ngModel)]="verifPassword" name="ConfirPassword" minlength="8" required="required"><p>
     </div>
 
