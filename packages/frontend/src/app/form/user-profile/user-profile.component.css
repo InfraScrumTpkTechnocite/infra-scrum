@@ -6,7 +6,17 @@
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    border: 2px solid #464747;
+    border: 1px solid #12c471;
+    color: white;
+    font-size: 70px;
+}
+
+.img-avatar{
+    margin:15px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 1px solid  #12c471 ;
 }
 
 
@@ -63,7 +73,7 @@ p {
 /*css input role message erreur*/
 
 .role-message-erreur {
-    margin-left: 105px;
+    margin-left: 100px;
     font-style: normal;
     font-size: 14pt;
     color: red;
@@ -87,7 +97,7 @@ p {
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: 190px;
+    margin-left: 75px;
     font-style: normal;
     font-size: 14pt;
     color: red;
