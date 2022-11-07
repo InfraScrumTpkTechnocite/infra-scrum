@@ -22,7 +22,7 @@
             <button
                 *ngIf="!parentProject"
                 (click)="addSprint()"
-                class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-8 text-xs"
+                class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-12 text-xs"
                 title="Add a sprint"
             >
                 {{ 'infrascrum.project.btn-add' | translate }}
@@ -135,11 +135,27 @@
                         <span
                             *ngIf="!userProject.user.picture"
                             class="text-2xl uppercase font-bold"
+                            title="{{ userProject.user.username }}"
                         >
                             {{ userProject.user.username | initialsName }}
                         </span>
                     </div>
                 </div>
+            </div>
+            <!-- Dates intermédiaires à ajouter ?? -->
+            <!--  -->
+            <!-- Delivery date -->
+            <div
+                class="flex justify-end items-center text-primary mr-52 xl:mr-40 ml-4"
+            >
+                <h4 class="pr-2">Delivery date :</h4>
+                <p>
+                    {{
+                        project.enddate
+                            ? (project.enddate | date: 'dd-MMM-yyyy')
+                            : '/'
+                    }}
+                </p>
             </div>
 
             <!-- PLUS BESOIN, affichage global est passé dans navbar latérale, avec l'affichage des sprints -->
