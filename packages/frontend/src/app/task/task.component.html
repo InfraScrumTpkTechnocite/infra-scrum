@@ -97,7 +97,7 @@
                     </div>
                     <div class="flex flex-col items-center">
                         <p class="text-xs">{{"infrascrum.task.estimate-time" | translate}}</p>
-                        <p class="text-sm">{{ task.estimatedtime }}</p>
+                        <p class="text-sm">{{ task.estimatedtime /480 | numberToInteger }} d, {{task.estimatedtime /60 %8 | numberToInteger }}:{{task.estimatedtime %60}}</p>
                     </div>
                 </div>
             </div>

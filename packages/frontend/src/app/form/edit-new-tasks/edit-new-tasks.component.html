@@ -22,7 +22,7 @@
                             <div class="flex mt-1">
                                 <div
                                     *ngFor="
-                                        let taskassignment of newTaskassignmentList
+                                        let taskassignment of taskassignmentList
                                     "
                                 >
                                     <div
@@ -38,11 +38,44 @@
                                         }}
                                     </div>
                                 </div>
-                                <div
-                                    class="w-8 h-8 bg-grey1 rounded-2xl text-grey4 flex justify-center items-center"
-                                >
-                                    +
-                                </div>
+                                <button mat-button [matMenuTriggerFor]="menu">
+                                    <div
+                                        class="w-8 h-8 bg-grey1 rounded-2xl text-grey4 flex justify-center items-center"
+                                    >
+                                        +
+                                    </div>
+                                    <mat-menu #menu="matMenu">
+                                        <div
+                                            *ngFor="
+                                                let userProject of userProjectList
+                                            "
+                                        >
+                                            <button
+                                                mat-menu-item
+                                                *ngIf="
+                                                    !isUserAssigned(userProject)
+                                                "
+                                                (click)="addUser(userProject)"
+                                            >
+                                                <div>
+                                                    <div
+                                                        class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
+                                                    >
+                                                        {{
+                                                            userProject.user
+                                                                .username
+                                                                | initialsName
+                                                        }}
+                                                    </div>
+                                                    {{
+                                                        userProject.user
+                                                            .username
+                                                    }}
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </mat-menu>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -93,7 +126,6 @@
                             class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
                         >
                             <option [ngValue]="noSprint">
-                                <!-- Change translation to "No Sprints" -->
                                 {{
                                     'infrascrum.edit-new-task.option-sprint-title'
                                         | translate
@@ -124,7 +156,14 @@
                                             | translate
                                     }}
                                 </h3>
-                                <input type="number" name="day" id="day" />
+                                <input
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    name="day"
+                                    id="day"
+                                    [(ngModel)]="days"
+                                />
                             </div>
                             <div class="flex flex-col">
                                 <h3>
@@ -137,8 +176,10 @@
                                     type="number"
                                     min="0"
                                     max="8"
+                                    step="1"
                                     name="hour"
                                     id="hour"
+                                    [(ngModel)]="hours"
                                 />
                             </div>
                             <div class="flex flex-col w-12 mx-3">
@@ -155,6 +196,7 @@
                                     max="45"
                                     name="minute"
                                     id="minute"
+                                    [(ngModel)]="minutes"
                                 />
                             </div>
                         </div>
@@ -186,6 +228,7 @@
                             <input
                                 type="date"
                                 [ngModel]="newDate | date: 'yyyy-MM-dd'"
+                                (ngModelChange)="newDate = $event"
                             />
                         </p>
                     </div>
@@ -224,7 +267,7 @@
                     </button>
                     <button
                         class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8"
-                        (click)="(data.edition && editTask()) || addTask()"
+                        (click)="addOrEditTask(true)"
                     >
                         {{ 'infrascrum.global.btn-register' | translate }}
                     </button>

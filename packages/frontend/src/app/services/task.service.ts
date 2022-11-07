@@ -41,9 +41,9 @@ export class TaskService {
         );
     }
 
-    edit(task: Task): Observable<Task> {
+    edit(taskId:string ,task: Task): Observable<Task> {
         return this.httpClient.put<any>(
-            '/backend/tasks/' + task.id,
+            '/backend/tasks/' + taskId,
             JSON.stringify(task),
             this.httpOptions
         );

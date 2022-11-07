@@ -7,6 +7,7 @@ import { KanbanstatusService } from '../services/kanbanstatus.service';
 import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
 import { Task } from '../models/task.model';
+import { UserProject } from '../models/userproject.model';
 
 interface KanbanList {
     kanban: Kanbanstatus;
@@ -23,6 +24,8 @@ export class KanbanStatusComponent implements OnInit {
     @Input() subject!: WebSocketSubject<any>;
     
     @Input() taskTypeList!: TaskType[];
+
+    @Input() userProjectList!: UserProject[];
 
     @Input() sprintList!: Project[];
 
