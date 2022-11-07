@@ -36,7 +36,7 @@
             required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" /><br>
 
         <!--"message erreur Email"-->
-        <p *ngIf="!email.errors?.['required'] && email.invalid && password.dirty" class="alert email-message-erreur text-sm normal">email invalid</p>
+        <p *ngIf="!email.errors?.['required'] && email.invalid && password.dirty" style="text-align:center" class="alert email-message-erreur text-sm normal">email invalid</p>
         <p *ngIf="email.errors?.['required'] && email.dirty" style="text-align:center" class="alert email-message-erreur text-sm normal">email required</p><br>
     </div>
 </div>

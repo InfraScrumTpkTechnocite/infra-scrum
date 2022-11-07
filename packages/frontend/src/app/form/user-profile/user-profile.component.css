@@ -6,7 +6,7 @@
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    border: 1px solid #12c471;
+    border: 1.5px solid #9eecc8;
     color: white;
     font-size: 70px;
 }
@@ -16,7 +16,7 @@
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    border: 1px solid #12c471 ;
+    border: 1.5px solid  #9eecc8;
 }
 
 
@@ -87,7 +87,7 @@ p {
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 260px;
+    margin-left: 285px;
     font-style: normal;
     font-size: 14pt;
     color: red;
@@ -97,7 +97,7 @@ p {
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: 75px;
+    margin-left: 100px;
     font-style: normal;
     font-size: 14pt;
     color: red;
@@ -146,7 +146,7 @@ p {
 /*css username*/
 
 .input-username {
-    margin-left: 260px;
+    margin-left: 285px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -155,7 +155,7 @@ p {
 /*css email*/
 
 .input-email {
-    margin-left: 260px;
+    margin-left: 285px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
