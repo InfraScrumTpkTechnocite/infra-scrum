@@ -1,7 +1,7 @@
 {
     "infrascrum": {
       "global": {
-        "btn-register": "Enregister",
+        "btn-register": "Enregistrer",
         "btn-cancel": "Annuler",
         "btn-delete": "Supprimer",
         "btn-login": "CONNECTEZ-VOUS"
@@ -46,7 +46,7 @@
         "option-three": "Sprint 3",
         "option-four": "Sprint 4",
         "option-five": "Sprint 5",
-        "estimate-time": "Temps estimer",
+        "estimate-time": "Temps estimé",
         "estimate-day": "jr",
         "estimate-hours": "h",
         "estimate-minute": "min",
@@ -80,7 +80,7 @@
         "search": "Recherche",
         "sub-menu-projects": "Mes projets",
         "sub-menu-profil": "Mon profil",
-        "sub-menu-users": "Editer les utilisateur",
+        "sub-menu-users": "Editer les utilisateurs",
         "sub-menu-logout": "Déconnecté",
         "sub-menu-language": "English"
       },
@@ -110,7 +110,7 @@
       },
       "task": {
         "start-date": "Date de début",
-        "estimate-time": "Temps estimer"
+        "estimate-time": "Temps estimé"
       }
     }
 }

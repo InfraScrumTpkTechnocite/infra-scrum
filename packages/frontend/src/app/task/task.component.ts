@@ -44,9 +44,15 @@ export class TaskComponent implements OnInit {
             );
 
         if (this.task.sprint?.id)
+            //sprint de la tâche existe => vue globale ou sprint
             this.showTask =
-                this.task.sprint.id == this.projectid ||
-                this.projectid == this.project.id;
+                this.projectid == this.project.id ||
+                this.task.sprint.id == this.projectid;
+        else {
+            //sinon vue globale seulement
+            this.showTask = this.projectid == this.project.id;
+        }
+
         // console.log(
         //     `showTask : ${this.showTask} - projectid : ${
         //         this.projectid

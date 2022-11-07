@@ -21,7 +21,7 @@
         "msg-username-required": "Username required",
         "msg-email-invalid":"Email invalid",
         "msg-email-required": "Email required",
-        "msg-password-matching": "Passwords doesn't match",
+        "msg-password-matching": "Passwords don't match",
         "msg-password-required": "Password required"
       },
       "edit-new-task": {
@@ -35,25 +35,25 @@
         "option-full": "Fullstack",
         "option-design": "Designer",
         "option-improvement": "Improvement",
-        "option-liaison-bf": "Liaison Back-Front",
+        "option-liaison-bf": "Back-Front link",
         "option-ux": "UX",
         "option-correction": "Correction",
         "option-analyse": "Analyse",
-        "option-integration": "Intégration design",
+        "option-integration": "Design integration",
         "option-sprint-title": "No Sprint",
         "option-one": "Sprint 1",
         "option-two": "Sprint 2",
         "option-three": "Sprint 3",
         "option-four": "Sprint 4",
         "option-five": "Sprint 5",
-        "estimate-time": "Estimate Time",
+        "estimate-time": "Estimated Time",
         "estimate-day": "Day",
         "estimate-hours": "h",
         "estimate-minute": "min",
         "name": "Name",
         "start-date": "Start date",
         "description": "Description",
-        "file": "Choose an file/capture"
+        "file": "Choose an file/image"
       },
       "edit-project":  {
         "title": "Edit project",
@@ -63,7 +63,7 @@
         "inter-date": "Intermediate date",
         "inter-date-description": "Description",
         "edit-projectinfo-name": "Name",
-        "edit-projectinfo-file": "Choose an file/capture",
+        "edit-projectinfo-file": "Choose an file/image",
         "edit-project-delivery": "Delivery date"
       },
       "login": {
@@ -75,7 +75,7 @@
         "create-account": "Create One"
       },
       "header": {
-        "option-project": "My project",
+        "option-project": "My projects",
         "login": "Login",
         "search": "Search",
         "sub-menu-projects": "My projects",
@@ -110,7 +110,7 @@
       },
       "task": {
         "start-date": "Start date",
-        "estimate-time": "Estimate time"
+        "estimate-time": "Estimated time"
       }
   }
 }
