@@ -37,7 +37,7 @@ import { Subscription } from 'rxjs';
 
 interface KanbanList {
     kanban: Kanbanstatus;
-    tasks?: Task[];
+    tasks: Task[];
 }
 @Component({
     selector: 'app-project',
@@ -134,7 +134,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     case 'add':
                         if (message.kanban) {
                             const kanbanList: KanbanList = {
-                                kanban: message.kanban
+                                kanban: message.kanban,
+                                tasks: []
                             };
                             this.kanbanList.push(kanbanList);
                         }
@@ -514,7 +515,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     console.log(err);
                 },
                 complete: () => {
-                    this.subject.next({ method: 'edit', kanban: kanban });
+                    this.subject.next({ method: 'edit', kanban: kanban.kanban });
                 }
             });
         });
@@ -541,7 +542,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 kanban.tasks.forEach((task) => {
                     //console.log(`Task: ${task.name}`);
                     task.kanbanstatus = kanban.kanban;
-                    this.taskService.edit(task).subscribe({
+                    this.taskService.edit(task.id!,task).subscribe({
                         next: () => {},
                         error: () => {},
                         complete: () => {}
