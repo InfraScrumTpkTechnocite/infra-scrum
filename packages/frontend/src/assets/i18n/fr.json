@@ -60,7 +60,7 @@
         "title": "Editer projet",
         "btn-edit-project": "Editer projet",
         "btn-user": "Utilisateur",
-        "btn-inter-date": "Date intermédiaire",
+        "btn-edit-sprint": "Editer sprint",
         "inter-date": "Date intermédiaire",
         "inter-date-description": "Description",
         "edit-projectinfo-name": "Nom",
