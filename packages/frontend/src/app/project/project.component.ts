@@ -110,11 +110,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             console.log('in if');
                             this.kanbanList.find((kanbans) => {
                                 console.log(
-                                //kanbans.tasks![
+                                    //kanbans.tasks![
                                     kanbans.tasks!.findIndex(
                                         (tasks) => tasks.id == message.task.id
                                     )
-                                /*]*/); //= message.task;
+                                    /*]*/
+                                ); //= message.task;
                             });
                         }
                         break;
@@ -289,7 +290,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             .subscribe((userList: User[]) => (this.userList = userList));
     }
 
-    ngOnDestroy():void {
+    ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
 
@@ -515,7 +516,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     console.log(err);
                 },
                 complete: () => {
-                    this.subject.next({ method: 'edit', kanban: kanban.kanban });
+                    this.subject.next({
+                        method: 'edit',
+                        kanban: kanban.kanban
+                    });
                 }
             });
         });
@@ -530,19 +534,33 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 event.currentIndex
             );
         } else {
+            console.log(`Changement colonne`);
+            console.log(`current index: ${event.currentIndex}`);
             transferArrayItem(
                 event.previousContainer.data,
                 event.container.data,
                 event.previousIndex,
                 event.currentIndex
             );
-
+            console.log(event.container.data[event.currentIndex]);
+            // if (event.container.data[event.currentIndex].id) {
+            //     this.taskService
+            //         .edit(
+            //             <string>event.container.data[event.currentIndex].id,
+            //             event.container.data[event.currentIndex]
+            //         )
+            //         .subscribe({
+            //             next: () => {},
+            //             error: () => {},
+            //             complete: () => {}
+            //         });
+            // }
             this.kanbanList.forEach((kanban) => {
                 //console.log(`Kanban: ${kanban.kanban.name}`);
                 kanban.tasks.forEach((task) => {
                     //console.log(`Task: ${task.name}`);
                     task.kanbanstatus = kanban.kanban;
-                    this.taskService.edit(task.id!,task).subscribe({
+                    this.taskService.edit(task.id!, task).subscribe({
                         next: () => {},
                         error: () => {},
                         complete: () => {}
