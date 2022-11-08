@@ -15,7 +15,7 @@ export class AppComponent {
     // passwordLabel!: string;
 
     constructor(private translateService: TranslateService) {
-        this.translateService.addLangs(['fr', 'en']);
+        this.translateService.addLangs(['en', 'fr']);
         this.translateService.use(navigator.language.split('-')[0]);
     }
 

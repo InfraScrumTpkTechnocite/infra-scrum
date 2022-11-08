@@ -5,11 +5,11 @@
         class="hover:cursor-zoom-out"
     >
         <div
-            class="border-2 rounded-md bg-grey1 mt-2 flex h-auto"
+            class="taskcontainer border-2 rounded-md mt-2 flex h-auto"
             [style.border-color]="task.color"
         >
             <div class="w-1/12" [style.background]="task.color"></div>
-            <div class="w-11/12 bg-grey1 flex flex-col p-2">
+            <div class="taskcontainer w-11/12 flex flex-col p-2">
                 <!-- task title + edit -->
                 <div
                     class="flex justify-between border-b-2 border-grey2 p-2 ml-2"
@@ -105,7 +105,12 @@
                         <p class="text-xs">
                             {{ 'infrascrum.task.estimate-time' | translate }}
                         </p>
-                        <p class="text-sm">{{ task.estimatedtime /480 | numberToInteger }} d, {{task.estimatedtime /60 %8 | numberToInteger }}:{{task.estimatedtime %60}}</p>
+                        <p class="text-sm">
+                            {{ task.estimatedtime / 480 | numberToInteger }} d,
+                            {{
+                                (task.estimatedtime / 60) % 8 | numberToInteger
+                            }}:{{ task.estimatedtime % 60 }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -117,11 +122,11 @@
         class="hover:cursor-zoom-in"
     >
         <div
-            class="border-2 rounded-sm bg-grey1 mt-2 flex h-auto"
+            class="border-2 rounded-sm taskcontainer mt-2 flex h-auto"
             [style.border-color]="task.color"
         >
             <div class="w-1/12" [style.background]="task.color"></div>
-            <div class="w-11/12 bg-grey1 flex flex-col px-2 py-1">
+            <div class="w-11/12 taskcontainer flex flex-col px-2 py-1">
                 <!-- titre tâche -->
                 <div
                     class="flex justify-center items-center border-b-2 border-grey2 p-1"

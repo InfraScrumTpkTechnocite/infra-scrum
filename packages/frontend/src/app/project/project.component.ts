@@ -1,11 +1,5 @@
-import {
-    Component,
-    ElementRef,
-    Input,
-    OnInit,
-    SimpleChanges,
-    ViewChild
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
 import {
     CdkDragDrop,
     CdkDragEnter,
@@ -31,6 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.component';
 import { EditProjectComponent } from '../form/edit-project/edit-project.component';
 import { UserService } from '../services/user.service';
+import { debounceTime, fromEvent, map, tap } from 'rxjs';
 
 interface KanbanList {
     kanban: Kanbanstatus;
@@ -44,6 +39,8 @@ interface KanbanList {
 export class ProjectComponent implements OnInit {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
+
+    isBottom: boolean = false;
 
     projectid: string = '';
     parentProject: any;
@@ -77,6 +74,7 @@ export class ProjectComponent implements OnInit {
         private taskTypeService: TasktypeService,
         private userService: UserService,
         private router: Router,
+        private scroller: ViewportScroller,
         private dialog: MatDialog
     ) {}
 
@@ -246,18 +244,20 @@ export class ProjectComponent implements OnInit {
                 (taskTypeList: TaskType[]) => (this.taskTypeList = taskTypeList)
             );
 
-        this.userService.getAllUsers().subscribe((userList:User[]) => this.userList = userList);
+        this.userService
+            .getAllUsers()
+            .subscribe((userList: User[]) => (this.userList = userList));
     }
 
     //Boutons modales
-    editProject(){
+    editProject() {
         this.dialog.open(EditProjectComponent, {
-            data:{
+            data: {
                 project: this.project,
                 userProjectList: this.userProjects,
                 userList: this.userList
             }
-        })
+        });
     }
 
     addTask() {
@@ -451,5 +451,20 @@ export class ProjectComponent implements OnInit {
         this.dropListReceiverElement.style.removeProperty('display');
         this.dropListReceiverElement = undefined;
         this.dragDropInfo = undefined;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                              SCROLL TOP BUTTON                             */
+    /* -------------------------------------------------------------------------- */
+
+    onScroll(event: any) {
+        event.target.offsetHeight + event.target.scrollTop >=
+        event.target.scrollHeight - 1
+            ? (this.isBottom = true)
+            : (this.isBottom = false);
+    }
+
+    scrollTop() {
+        document.getElementById('kanbanDashboard')!.scrollTop = 0;
     }
 }

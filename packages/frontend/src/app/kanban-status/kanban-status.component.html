@@ -1,10 +1,10 @@
-<div class="kanbanStatusTitle flex flex-col w-64 mx-4 mt-6">
-    <div *ngIf="!isEditColumn" class="bg-grey1 rounded-t-lg">
+<div class="kanbanStatusTitle flex flex-col w-56 mx-2 mt-4 hover:cursor-move">
+    <div *ngIf="!isEditColumn" class="kanbanstatusBG rounded-t-lg">
         <div
-            class="w-full h-6 rounded-t-lg"
+            class="w-full h-3 rounded-t-lg"
             [style.background]="kanbanstatus.kanban.color"
         ></div>
-        <div class="flex justify-between h-12 items-center">
+        <div class="flex justify-between h-10 items-center">
             <h3 class="text-center text-lg font-bold w-2/3 flex justify-center">
                 {{ kanbanstatus.kanban.name }}
             </h3>
@@ -50,7 +50,8 @@
     </div>
     <div
         *ngIf="isEditColumn"
-        class="bg-grey1 rounded-t-lg border-2 border-secondary"
+        class="kanbanstatusBG rounded-t-lg border-2"
+        [style.border-color]="kanbanstatus.kanban.color"
     >
         <form action="">
             <div class="w-full h-10 rounded-t-lg p-3 flex justify-start">
@@ -169,8 +170,98 @@
     </div>
 </div>
 <!-- tâches du kanbanstatus  -->
-<div class="tasksContainer w-64 mx-4 mt-2 flex flex-col">
+<div class="tasksContainer w-56 mx-4 mt-2 flex flex-col">
     <div *ngFor="let task of kanbanstatus.tasks">
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
+        <app-task
+            [task]="task"
+            [subject]="subject"
+            [taskTypeList]="taskTypeList"
+            [userProjectList]="userProjectList"
+            [sprintList]="sprintList"
+            [projectid]="projectid"
+            [project]="project"
+        ></app-task>
         <app-task
             [task]="task"
             [subject]="subject"

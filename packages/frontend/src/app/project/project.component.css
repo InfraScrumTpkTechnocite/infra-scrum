@@ -3,3 +3,19 @@
 .cdk-drag-placeholder {
   opacity: 0.3;
 }
+
+#scrollTopBtn{
+  animation: color-change 1.5s infinite;
+}
+@keyframes color-change {
+  0% { color: #1f71a5; border-color: #1f71a5}
+  50% { color: #275e9d;border-color: #275e9d}
+  100% { color: #1f71a5; border-color: #1f71a5}
+}
+
+#sprintsCol{
+  background-color: rgba(225,225,224,0.5);
+}
+#kanbanHeader{
+  background-color: rgba(225,225,224,0.5);
+}
