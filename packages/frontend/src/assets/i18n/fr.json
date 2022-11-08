@@ -65,7 +65,9 @@
         "inter-date-description": "Description",
         "edit-projectinfo-name": "Nom",
         "edit-projectinfo-file": "Choisir un fichier/image",
-        "edit-project-delivery": "Date de livraison"
+        "edit-project-delivery": "Date de livraison",
+        "assigned": "Assigned",
+        "admin": "Admin"
       },
       "login": {
         "title": "Connectez-vous",
@@ -114,4 +116,5 @@
         "estimate-time": "Temps estimé"
       }
     }
-}
+  }
+
