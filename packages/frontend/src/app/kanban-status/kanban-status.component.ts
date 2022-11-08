@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
 import { WebSocketSubject } from 'rxjs/webSocket';
@@ -62,10 +61,10 @@ export class KanbanStatusComponent implements OnInit {
         const kanbanObserver = {
             next: (response: any) => {
                 console.log(`${response}`);
-                this.toastService.success(' Column edited !');
+                this.toastService.success('Column edited !');
                 this.subject.next({
                     method: 'edit',
-                    kanban: this.kanbanstatus
+                    kanban: this.kanbanstatus.kanban
                 });
             },
             error: (err: any) => {
@@ -90,7 +89,7 @@ export class KanbanStatusComponent implements OnInit {
             next: (result: any) => {
                 console.log(`${result}`);
                 this.toastService.success(`Column deleted ! ${result}`);
-                //this.subject.next({method: "delete", kabanstatus: this.kanbanstatus});
+                this.subject.next({method: "delete", kaban: this.kanbanstatus.kanban});
             },
             error: (err: any) => {
                 console.log(
