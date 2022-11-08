@@ -1,5 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild
+} from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Kanbanstatus } from '../models/kanbanstatus.model';

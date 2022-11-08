@@ -183,9 +183,9 @@
 
         <!-- Kanban columns  -->
 
-        <div id="kanban" class="flex px-12 pb-12 pt-16">
-            <!-- boucler sur les kanbanstatus du projet  -->
-            <div cdkDropListGroup class="flex">
+        <!-- <div cdkDropListGroup id="kanban" class="flex px-12 pb-12 pt-16"> -->
+        <!-- boucler sur les kanbanstatus du projet  -->
+        <!--     <div class="flex">
                 <div
                     *ngFor="let kanbanstatus of kanbanList; let i = index"
                     cdkDropList
@@ -211,10 +211,87 @@
                             [project]="project"
                         ></app-kanban-status>
                     </div>
+                </div> -->
+
+        <!-- BOUTON NEW COLUMN  -->
+
+        <!-- <div class="w-36 mx-4 mt-6">
+                    <button
+                        (click)="addnewKanbanStatus()"
+                        class="bg-grey1 rounded-md hover:shadow-sm hover:shadow-secondary"
+                    >
+                        <div
+                            class="w-full bg-primary text-white h-6 rounded-t-lg p-2 flex items-center justify-center"
+                        >
+                            <h3 class="text-center font-bold text-xs">
+                                {{
+                                    'infrascrum.project.btn-add-column'
+                                        | translate
+                                }}
+                            </h3>
+                        </div>
+                        <div class="h-12 items-center flex justify-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5 font-extrabold"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 4.5v15m7.5-7.5h-15"
+                                />
+                            </svg>
+                        </div>
+                    </button>
                 </div>
+            </div>
+        </div> -->
+        <!-- fin kanban columns-->
 
-                <!-- BOUTON NEW COLUMN  -->
+        <!-- début test -->
+        <div
+            cdkDropList
+            cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="dropColumns($event)"
+        >
+            <div cdkDropListGroup class="flex px-12 pb-12 pt-16">
+                <div
+                    class="example-container"
+                    *ngFor="let kanban of kanbanList; let i = index"
+                    cdkDrag
+                >
+                    <app-kanban-status
+                        [subject]="subject"
+                        [kanbanList]="kanban"
+                        (kanbanDeleted)="onKanbanDeleted(kanban.kanban)"
+                        [taskTypeList]="taskTypeList"
+                        [sprintList]="sprintList"
+                        [projectid]="projectid"
+                        [project]="project"
+                    ></app-kanban-status>
 
+                    <div
+                        cdkDropList
+                        [cdkDropListData]="kanban.tasks"
+                        class="example-list kanbanStatusTitle flex flex-col w-64 mx-4 mt-6"
+                        (cdkDropListDropped)="drop($event)"
+                    >
+                        <div *ngFor="let task of kanban.tasks" cdkDrag>
+                            <app-task
+                                [task]="task"
+                                [subject]="subject"
+                                [taskTypeList]="taskTypeList"
+                                [sprintList]="sprintList"
+                                [projectid]="projectid"
+                                [project]="project"
+                            ></app-task>
+                        </div>
+                    </div>
+                </div>
                 <div class="w-36 mx-4 mt-6">
                     <button
                         (click)="addnewKanbanStatus()"
@@ -250,5 +327,7 @@
                 </div>
             </div>
         </div>
+        <!-- fin test -->
     </div>
+    <!-- fin kanban dashboard -->
 </div>
