@@ -8,6 +8,7 @@ import { Project } from 'src/app/models/project.model';
 import { HotToastService } from '@ngneat/hot-toast';
 import { UserProject } from 'src/app/models/userproject.model';
 import { TaskassignmentService } from 'src/app/services/taskassignment.service';
+import { WebSocketSubject } from 'rxjs/webSocket';
 
 @Component({
     selector: 'app-edit-new-tasks',
@@ -45,7 +46,8 @@ export class EditNewTasksComponent implements OnInit {
             userProjectList: UserProject[];
             taskTypeList: TaskType[];
             sprintList: Project[];
-            edition: boolean;
+            edition: boolean,
+            subject: WebSocketSubject<unknown>;
         }
     ) {
         this.minutes = this.newTask.estimatedtime % 60;
@@ -122,6 +124,7 @@ export class EditNewTasksComponent implements OnInit {
                 },
                 complete: () => {
                     this.toastService.success('Task Edited !');
+                    this.data.subject.next({ method: 'edit', task: this.newTask });
                     this.dialogRef.close({
                         task: this.newTask,
                         taskid: this.data.task.id
@@ -131,7 +134,7 @@ export class EditNewTasksComponent implements OnInit {
             if (!this.newTask.sprint?.id) {
                 this.newTask.sprint = null;
             }
-            console.log(this.newTask);
+            console.log(this.data.subject);
             this.taskService
                 .edit(this.data.task.id!, this.newTask)
                 .subscribe(observer);
@@ -147,6 +150,8 @@ export class EditNewTasksComponent implements OnInit {
                 },
                 complete: () => {
                     this.toastService.success('Task created !');
+                    console.log(this.data.subject);
+                    this.data.subject.next({ method: 'add', task: this.newTask });
                     this.dialogRef.close({
                         task: this.newTask,
                         taskid: this.data.task.id

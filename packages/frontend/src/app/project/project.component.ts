@@ -2,6 +2,7 @@ import {
     Component,
     ElementRef,
     Input,
+    OnDestroy,
     OnInit,
     SimpleChanges,
     ViewChild
@@ -31,17 +32,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.component';
 import { EditProjectComponent } from '../form/edit-project/edit-project.component';
 import { UserService } from '../services/user.service';
+import { Subscription } from 'rxjs';
 
 interface KanbanList {
     kanban: Kanbanstatus;
-    tasks: Task[];
+    tasks?: Task[];
 }
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',
     styleUrls: ['./project.component.css']
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
 
@@ -66,6 +68,8 @@ export class ProjectComponent implements OnInit {
     //https://rxjs.dev/api/webSocket/webSocket
     subject = webSocket('');
 
+    subscription!: Subscription;
+
     constructor(
         private route: ActivatedRoute,
         private projectService: ProjectService,
@@ -89,26 +93,58 @@ export class ProjectComponent implements OnInit {
         // );
 
         //messages received from webSocket server are processed here
-        /*const subjectObserver = {
+        const subjectObserver = {
             next: (message: any) => {
                 const method = message.method;
-                var kanban: Kanbanstatus = new Kanbanstatus();
-                var task: Task = new Task();
-                if (message.kanban) kanban = message.kanban as Kanbanstatus;
-                if (message.task) task = message.task as Task;
-                //console.log(message);
+                console.log(message);
                 switch (method) {
                     case 'edit':
-                        this.kanbanList.splice(kanban.order - 1, 1, kanban);
+                        console.log('edit', message.task);
+                        if (message.kanban)
+                            this.kanbanList.find(
+                                (kanbans) =>
+                                    kanbans.kanban.order == message.kanban.order
+                            )!.kanban = message.kanban;
+                        if (message.task) {
+                            console.log('in if');
+                            this.kanbanList.find((kanbans) => {
+                                console.log(
+                                //kanbans.tasks![
+                                    kanbans.tasks!.findIndex(
+                                        (tasks) => tasks.id == message.task.id
+                                    )
+                                /*]*/); //= message.task;
+                            });
+                        }
                         break;
                     case 'delete':
-                        this.kanbanList.splice(kanban.order - 1, 1);
+                        if (message.kanban)
+                            this.kanbanList.splice(message.kanban.order - 1, 1);
+                        if (message.task)
+                            this.kanbanList.find((kanbans) => {
+                                kanbans.tasks?.splice(
+                                    kanbans.tasks?.findIndex(
+                                        (tasks) => tasks.id == message.task.id
+                                    ),
+                                    1
+                                );
+                            });
                         break;
                     case 'add':
-                        this.kanbanList.push(kanban);
+                        if (message.kanban) {
+                            const kanbanList: KanbanList = {
+                                kanban: message.kanban
+                            };
+                            this.kanbanList.push(kanbanList);
+                        }
+                        if (message.task) {
+                            this.kanbanList.find((kanbans) => {
+                                kanbans.tasks?.push(message.task);
+                            });
+                        }
                 }
             }
-        };*/
+        };
 
         this.dateToday = new Date(
             new Date().setUTCHours(0, 0, 0, 0)
@@ -128,7 +164,7 @@ export class ProjectComponent implements OnInit {
                     `ws://localhost:8080?projectid=${this.projectid}`
                 );
                 //...and subscription (if user is on project page)
-                //this.subject.subscribe(subjectObserver);
+                this.subscription = this.subject.subscribe(subjectObserver);
 
                 const userProjectsObserver = {
                     next: (userProjects: UserProject[]) => {
@@ -246,18 +282,24 @@ export class ProjectComponent implements OnInit {
                 (taskTypeList: TaskType[]) => (this.taskTypeList = taskTypeList)
             );
 
-        this.userService.getAllUsers().subscribe((userList:User[]) => this.userList = userList);
+        this.userService
+            .getAllUsers()
+            .subscribe((userList: User[]) => (this.userList = userList));
+    }
+
+    ngOnDestroy():void {
+        this.subscription.unsubscribe();
     }
 
     //Boutons modales
-    editProject(){
+    editProject() {
         this.dialog.open(EditProjectComponent, {
-            data:{
+            data: {
                 project: this.project,
                 userProjectList: this.userProjects,
                 userList: this.userList
             }
-        })
+        });
     }
 
     addTask() {
@@ -348,7 +390,7 @@ export class ProjectComponent implements OnInit {
                 // 'next' will send a message to the server once a connection is made
                 // and all subscribed client will receive message right away
                 //Remember value is serialized with JSON.stringify by default!
-                //this.subject.next({ method: 'add', kanban: kanban });
+                this.subject.next({ method: 'add', kanban: kanban });
             },
             error: (err: any) => {
                 console.log(

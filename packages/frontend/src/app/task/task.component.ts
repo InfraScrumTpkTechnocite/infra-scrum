@@ -77,7 +77,8 @@ export class TaskComponent implements OnInit {
                 userProjectList: this.userProjectList,
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
-                edition: true
+                edition: true,
+                subject: this.subject
             }
         });
         dialogRef.afterClosed().subscribe((data: any) => {
