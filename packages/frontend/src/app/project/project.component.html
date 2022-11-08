@@ -149,11 +149,11 @@
                 class="flex justify-end items-center text-primary mr-52 xl:mr-40 ml-4"
             >
                 <h4 class="pr-2">Delivery date :</h4>
-                <p>
+                <p *ngIf="project">
                     {{
                         project.enddate
                             ? (project.enddate | date: 'dd-MMM-yyyy')
-                            : '/'
+                            : 'n/a'
                     }}
                 </p>
             </div>
