@@ -5,7 +5,6 @@ import { RoleService } from 'src/app/services/role.service';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
 import { User } from 'src/app/models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Role } from 'c:/Users/szmul/Desktop/Infrascrum/infra-scrum/packages/frontend/src/app/models/role.model';
 import { HotToastService } from '@ngneat/hot-toast';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -55,7 +54,7 @@ this.mySubscription = this.router.events.subscribe((event) => {
         // Trick the Router into believing it's last link wasn't previously loaded
         this.router.navigated = false;
     }
-});
+  });
 }
 changeLanguage(): void {
 if(this.language === 'en') {
