@@ -21,9 +21,11 @@ export class EditNewTasksComponent implements OnInit {
     userProjectList: UserProject[] = this.data.userProjectList;
 
     taskTypeList: TaskType[] = this.data.taskTypeList;
+    noType: TaskType = new TaskType();
 
     sprintList: Project[] = this.data.sprintList;
     noSprint: Project = new Project();
+
 
     newDate: Date = new Date();
 
