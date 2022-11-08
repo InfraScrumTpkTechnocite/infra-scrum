@@ -1,13 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewChild
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Kanbanstatus } from '../models/kanbanstatus.model';
@@ -15,6 +6,7 @@ import { KanbanstatusService } from '../services/kanbanstatus.service';
 import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
 import { Task } from '../models/task.model';
+import { UserProject } from '../models/userproject.model';
 
 interface KanbanList {
     kanban: Kanbanstatus;
@@ -32,6 +24,8 @@ export class KanbanStatusComponent implements OnInit {
     @Input() subject!: WebSocketSubject<any>;
 
     @Input() taskTypeList!: TaskType[];
+
+    @Input() userProjectList!: UserProject[];
 
     @Input() sprintList!: Project[];
 
@@ -70,7 +64,7 @@ export class KanbanStatusComponent implements OnInit {
                 this.toastService.success('Column edited !');
                 this.subject.next({
                     method: 'edit',
-                    kanban: this.kanbanstatus
+                    kanban: this.kanbanstatus.kanban
                 });
             },
             error: (err: any) => {
@@ -93,14 +87,9 @@ export class KanbanStatusComponent implements OnInit {
     deleteKanbanStatus() {
         const kanbanObserver = {
             next: (result: any) => {
-                //console.log(result);
-                this.toastService.success(
-                    `${result.affected} column(s) deleted !`
-                );
-                this.subject.next({
-                    method: 'delete',
-                    kabanstatus: this.kanbanstatus
-                });
+                console.log(`${result}`);
+                this.toastService.success(`Column deleted ! ${result}`);
+                this.subject.next({method: "delete", kaban: this.kanbanstatus.kanban});
             },
             error: (err: any) => {
                 console.log(

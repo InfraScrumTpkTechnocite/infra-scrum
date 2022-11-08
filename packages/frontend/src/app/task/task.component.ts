@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.component';
 import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
+import { UserProject } from '../models/userproject.model';
 
 @Component({
     selector: 'app-task',
@@ -22,6 +23,7 @@ export class TaskComponent implements OnInit {
     @Input() task!: Task;
     @Input() taskTypeList!: TaskType[];
     @Input() sprintList!: Project[];
+    @Input() userProjectList!: UserProject[];
     taskassignmentList!: TaskAssignment[];
 
     showTask: boolean = true;
@@ -68,13 +70,21 @@ export class TaskComponent implements OnInit {
 
     editTask() {
         const task = this.task;
-        this.dialog.open(EditNewTasksComponent, {
+        const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: task,
                 taskassignmentList: this.taskassignmentList,
+                userProjectList: this.userProjectList,
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
-                edition: true
+                edition: true,
+                subject: this.subject
+            }
+        });
+        dialogRef.afterClosed().subscribe((data: any) => {
+            if (data) {
+                this.task = data.task as Task;
+                this.task.id = data.taskid;
             }
         });
     }

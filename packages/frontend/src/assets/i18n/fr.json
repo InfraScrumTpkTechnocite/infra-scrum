@@ -1,7 +1,7 @@
 {
     "infrascrum": {
       "global": {
-        "btn-register": "Enregister",
+        "btn-register": "Enregistrer",
         "btn-cancel": "Annuler",
         "btn-delete": "Supprimer",
         "btn-login": "CONNECTEZ-VOUS"
@@ -28,7 +28,7 @@
         "title": "Editer tâche",
         "title-user": "Utilisateur",
         "title-etiquette": "Couleur",
-        "option-type-title": "Type",
+        "option-type-title": "Pas de type",
         "option-front": "Font-end",
         "option-back": "Back-end",
         "option-bug": "Bug",
@@ -40,13 +40,14 @@
         "option-correction": "Correction",
         "option-analyse": "Analyser",
         "option-integration": "Intégration design",
-        "option-sprint-title": "Sprint",
+        "option-sprint-title": "Pas de Sprint",
         "option-one": "Sprint 1",
         "option-two": "Sprint 2",
         "option-three": "Sprint 3",
         "option-four": "Sprint 4",
         "option-five": "Sprint 5",
-        "estimate-time": "Temps estimer",
+        "option-kanban-title": "Pas de kanban",
+        "estimate-time": "Temps estimé",
         "estimate-day": "jr",
         "estimate-hours": "h",
         "estimate-minute": "min",
@@ -80,7 +81,7 @@
         "search": "Recherche",
         "sub-menu-projects": "Mes projets",
         "sub-menu-profil": "Mon profil",
-        "sub-menu-users": "Editer les utilisateur",
+        "sub-menu-users": "Editer les utilisateurs",
         "sub-menu-logout": "Déconnecté",
         "sub-menu-language": "English"
       },
@@ -110,7 +111,7 @@
       },
       "task": {
         "start-date": "Date de début",
-        "estimate-time": "Temps estimer"
+        "estimate-time": "Temps estimé"
       }
     }
 }

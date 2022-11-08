@@ -16,15 +16,16 @@ export class Task {
   color: string;
   sprint?: Project | null;
 
-  constructor() {
-    this.name = '';
-    this.kanbanstatus = new Kanbanstatus();
-    this.description = '';
-    this.startdate = '';
-    this.estimatedtime = 0;
-    this.file = '';
-    this.done = false;
-    this.tasktype = new TaskType();
-    this.color = '#1F71A5';
+  constructor( task?: Task ) {
+    this.name = task?.name ?? '';
+    this.kanbanstatus = task?.kanbanstatus ?? new Kanbanstatus();
+    this.description = task?.description ??'';
+    this.startdate = task?.startdate ?? '';
+    this.estimatedtime = task?.estimatedtime ?? 0;
+    this.file = task?.file ?? '';
+    this.done = task?.done ??false;
+    this.tasktype = task?.tasktype ?? new TaskType();
+    this.color = task?.color ?? '#1F71A5';
+    this.sprint = task?.sprint ?? new Project();
   }
 }

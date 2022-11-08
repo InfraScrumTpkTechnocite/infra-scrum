@@ -22,7 +22,7 @@
                             <div class="flex mt-1">
                                 <div
                                     *ngFor="
-                                        let taskassignment of newTaskassignmentList
+                                        let taskassignment of taskassignmentList
                                     "
                                 >
                                     <div
@@ -38,11 +38,44 @@
                                         }}
                                     </div>
                                 </div>
-                                <div
-                                    class="w-8 h-8 bg-grey1 rounded-2xl text-grey4 flex justify-center items-center"
-                                >
-                                    +
-                                </div>
+                                <button mat-button [matMenuTriggerFor]="menu">
+                                    <div
+                                        class="w-8 h-8 bg-grey1 rounded-2xl text-grey4 flex justify-center items-center"
+                                    >
+                                        +
+                                    </div>
+                                    <mat-menu #menu="matMenu">
+                                        <div
+                                            *ngFor="
+                                                let userProject of userProjectList
+                                            "
+                                        >
+                                            <button
+                                                mat-menu-item
+                                                *ngIf="
+                                                    !isUserAssigned(userProject)
+                                                "
+                                                (click)="addUser(userProject)"
+                                            >
+                                                <div>
+                                                    <div
+                                                        class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
+                                                    >
+                                                        {{
+                                                            userProject.user
+                                                                .username
+                                                                | initialsName
+                                                        }}
+                                                    </div>
+                                                    {{
+                                                        userProject.user
+                                                            .username
+                                                    }}
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </mat-menu>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -65,50 +98,7 @@
                         </div>
                     </div>
                     <div
-                        class="w-40 xl:w-52 ml-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                    >
-                        <select
-                            id="type"
-                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
-                            [ngModel]="newTask.tasktype"
-                            [compareWith]="compareTaskType"
-                        >
-                            <option
-                                *ngFor="let taskType of taskTypeList"
-                                [value]="taskType"
-                            >
-                                {{ taskType.label }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="flex">
-                    <div
-                        class="w-40 xl:w-52 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                    >
-                        <select
-                            id="sprints"
-                            [(ngModel)]="newTask.sprint"
-                            [compareWith]="compareSprint"
-                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
-                        >
-                            <option [ngValue]="noSprint">
-                                <!-- Change translation to "No Sprints" -->
-                                {{
-                                    'infrascrum.edit-new-task.option-sprint-title'
-                                        | translate
-                                }}
-                            </option>
-                            <option
-                                *ngFor="let sprint of sprintList"
-                                [ngValue]="sprint"
-                            >
-                                {{ sprint.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div
-                        class="w-40 xl:w-52 xl:w-50 mt-12 mx-12 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-40 xl:w-52 xl:w-50 mx-8 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <label class="font-bold">
                             {{
@@ -124,7 +114,15 @@
                                             | translate
                                     }}
                                 </h3>
-                                <input type="number" name="day" id="day" class="w-12 xl:w-0" />
+                                <input
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    name="day"
+                                    id="day"
+                                    [(ngModel)]="days"
+                                    class="w-12"
+                                />
                             </div>
                             <div class="flex flex-col w-12 justify-center items-center">
                                 <h3>
@@ -137,9 +135,11 @@
                                     type="number"
                                     min="0"
                                     max="8"
+                                    step="1"
                                     name="hour"
                                     id="hour"
-                                    class="w-12 xl:w-0"
+                                    [(ngModel)]="hours"
+                                    class="w-12"
                                 />
                             </div>
                             <div class="flex flex-col w-12 mx-3 justify-center items-center">
@@ -156,16 +156,78 @@
                                     max="45"
                                     name="minute"
                                     id="minute"
-                                    class="w-12 xl:w-0"
+                                    [(ngModel)]="minutes"
+                                    class="w-12"
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="flex ml-8">
+                    <div
+                        class="w-40 xl:w-44 mt-12 mr-4 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <select
+                            id="sprints"
+                            [(ngModel)]="newTask.sprint"
+                            [compareWith]="compareSprint"
+                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+                        >
+                            <option [ngValue]="noSprint">
+                                {{
+                                    'infrascrum.edit-new-task.option-sprint-title'
+                                        | translate
+                                }}
+                            </option>
+                            <option
+                                *ngFor="let sprint of sprintList"
+                                [ngValue]="sprint"
+                            >
+                                {{ sprint.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div
+                        class="w-40 xl:w-48 mt-12 mr-4 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <select
+                            id="kanban"
+                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+                        >
+                            <option value="kanban">
+                                {{
+                                    'infrascrum.edit-new-task.option-kanban-title'
+                                        | translate
+                                }}
+                            </option>
+                        </select>
+                    </div>
+                    <div
+                        class="w-40 xl:w-44 mt-12 mx-2 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <select
+                            id="type"
+                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+                            [ngModel]="newTask.tasktype"
+                            [compareWith]="compareTaskType"
+                        >
+                        <option [ngValue]="noType">
+                            {{ "infrascrum.edit-new-task.option-type-title" | translate }}
+                        </option>
+                            <option
+                                *ngFor="let taskType of taskTypeList"
+                                [value]="taskType"
+                            >
+                                {{ taskType.label }}
+                            </option>
+                        </select>
+                    </div>
+                    
+                </div>
 
                 <div class="flex">
                     <div
-                        class="w-40 xl:w-52 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <label class="font-bold">{{
                             'infrascrum.edit-new-task.name' | translate
@@ -188,12 +250,13 @@
                             <input
                                 type="date"
                                 [ngModel]="newDate | date: 'yyyy-MM-dd'"
+                                (ngModelChange)="newDate = $event"
                             />
                         </p>
                     </div>
                 </div>
                 <div
-                    class="w-50 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    class="w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                 >
                     <label class="font-bold">{{
                         'infrascrum.edit-new-task.description' | translate
@@ -207,7 +270,7 @@
                     ></textarea>
                 </div>
                 <div
-                    class="w-50 mt-12 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    class="w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                 >
                     <label class="font-bold">{{
                         'infrascrum.edit-new-task.file' | translate
@@ -226,7 +289,7 @@
                     </button>
                     <button
                         class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8"
-                        (click)="(data.edition && editTask()) || addTask()"
+                        (click)="addOrEditTask(true)"
                     >
                         {{ 'infrascrum.global.btn-register' | translate }}
                     </button>

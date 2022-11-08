@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { ProjectService } from '../../../../services/project.service';
 import { Project } from '../../../../models/project.model';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     templateUrl: './edit-project-info.component.html',
     styleUrls: ['./edit-project-info.component.css']
 })
-export class EditProjectInfoComponent implements OnInit {
+export class EditProjectInfoComponent {
     @Input() projectid!: string;
     @Input() project!: Project;
     enddate!: Date;
@@ -20,31 +20,6 @@ export class EditProjectInfoComponent implements OnInit {
         private httpClient: HttpClient,
         private toastService: HotToastService
     ) {}
-
-    ngOnInit(): void {}
-
-    onSubmit() {
-        const projectObserver = {
-            next: (project: Project) => {
-                this.toastService.success('Project edited !');
-            },
-            error: (err: any) => {
-                console.log(
-                    `Erreur édition projet : ${err.error['driverError'].detail}`
-                );
-                this.toastService.error(
-                    `Error during project edition<br><br>${err.error.driverError.detail}`
-                );
-            },
-            complete: () => {
-                console.log(`edit-project - onSubmit - update terminé.`);
-            }
-        };
-
-        delete this.project.picture; //no need to update (if any new picture, it's already been posted by upload)
-        this.projectService.update(this.project).subscribe(projectObserver);
-    }
-
     onFileSelected(event: any) {
         const httpOptions = {
             headers: new HttpHeaders({

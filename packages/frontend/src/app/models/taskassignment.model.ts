@@ -7,9 +7,9 @@ export class TaskAssignment {
   task: Task;
   isTaskCreator: boolean;
 
-  constructor() {
-    this.userproject = new UserProject();
-    this.task = new Task();
-    this.isTaskCreator = true;
+  constructor(userProject: UserProject, task:Task) {
+    this.userproject = userProject ?? new UserProject();
+    this.task = task ?? new Task();
+    this.isTaskCreator = false;
   }
 }
