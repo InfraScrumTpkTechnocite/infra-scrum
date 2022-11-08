@@ -61,7 +61,7 @@ export class KanbanStatusComponent implements OnInit {
         const kanbanObserver = {
             next: (response: any) => {
                 console.log(`${response}`);
-                this.toastService.success(' Column edited !');
+                this.toastService.success('Column edited !');
                 this.subject.next({
                     method: 'edit',
                     kanban: this.kanbanstatus.kanban

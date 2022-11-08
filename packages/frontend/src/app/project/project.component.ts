@@ -11,7 +11,8 @@ import {
     CdkDragDrop,
     CdkDragEnter,
     CdkDragMove,
-    moveItemInArray
+    moveItemInArray,
+    transferArrayItem
 } from '@angular/cdk/drag-drop';
 import { Kanbanstatus } from '../models/kanbanstatus.model';
 import { KanbanstatusService } from '../services/kanbanstatus.service';
@@ -472,7 +473,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     // Méthode invoquée quand l'utilisateur lache l'item dans un element cdkDropList
     dragDropped(event: CdkDragDrop<number>) {
         this.kanbanList.forEach((kanban, index) => {
-            kanban.kanban.order = index + 1;
+            kanban.kanban.order = index;
             this.kanbanstatusService.edit(kanban.kanban).subscribe({
                 next: (kanban) => {
                     //console.log(kanban);
@@ -493,5 +494,60 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.dropListReceiverElement.style.removeProperty('display');
         this.dropListReceiverElement = undefined;
         this.dragDropInfo = undefined;
+    }
+
+    dropColumns(event: CdkDragDrop<Kanbanstatus>) {
+        console.log(event.previousIndex, event.currentIndex);
+        moveItemInArray(
+            this.kanbanList,
+            event.previousIndex,
+            event.currentIndex
+        );
+
+        this.kanbanList.forEach((kanban, index) => {
+            kanban.kanban.order = index;
+            this.kanbanstatusService.edit(kanban.kanban).subscribe({
+                next: (kanban) => {
+                    //console.log(kanban);
+                },
+                error: (err) => {
+                    console.log(err);
+                },
+                complete: () => {
+                    this.subject.next({ method: 'edit', kanban: kanban });
+                }
+            });
+        });
+    }
+
+    drop(event: CdkDragDrop<Task[]>) {
+        if (event.previousContainer === event.container) {
+            console.log(`Même colonne`);
+            moveItemInArray(
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex
+            );
+        } else {
+            transferArrayItem(
+                event.previousContainer.data,
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex
+            );
+
+            this.kanbanList.forEach((kanban) => {
+                //console.log(`Kanban: ${kanban.kanban.name}`);
+                kanban.tasks.forEach((task) => {
+                    //console.log(`Task: ${task.name}`);
+                    task.kanbanstatus = kanban.kanban;
+                    this.taskService.edit(task).subscribe({
+                        next: () => {},
+                        error: () => {},
+                        complete: () => {}
+                    });
+                });
+            });
+        }
     }
 }

@@ -52,7 +52,7 @@ async function bootstrap() {
 
   var webSockets = []; 
   // Creating connection using websocket and loops waiting for client connections...
-  wss.on('connection', (ws, request) => {
+  wss.on('connection', (ws, request, client) => {
     // console.log(
     //   `new client ( origin : ${
     //     request.rawHeaders[request.rawHeaders.indexOf('Origin') + 1]
@@ -60,7 +60,7 @@ async function bootstrap() {
     // );
     //console.log(request.rawHeaders);
     console.log(
-      `ws : ${ws}, Request: ${request}, ClientIP address : ${request.socket.remoteAddress}`,
+      `ws : ${ws}, Request: ${request}, Client IP address : ${request.socket.remoteAddress}`,
     );
     webSockets.push({url : request.url, ws : ws});
     // sending message

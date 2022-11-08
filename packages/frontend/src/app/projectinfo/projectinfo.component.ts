@@ -115,7 +115,9 @@ export class ProjectinfoComponent {
             )
             .subscribe({
                 next: (response) => {
-                    //console.log(response);
+                    //console.log(response);//should be : null...
+                    //...anyway, we only have to know that POST was successful...
+                    // ...and go and get the new version of the user project which contains the new picture !
                     this.projectService
                         .findOne(<string>this.userProject.project.id)
                         .subscribe({
