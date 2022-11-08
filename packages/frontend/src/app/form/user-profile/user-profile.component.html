@@ -53,7 +53,6 @@
                         type="text"
                         placeholder="username"
                         value="{{ user.username }}"
-                        required
                         class="input-username form-control bg-transparent placeholder:normal"
                         id="username"
                         name="username"
@@ -198,6 +197,7 @@
                 id="password"
                 size="30"
                 #password="ngModel"
+                minlength="8"
                 [(ngModel)]="user.password"
                 name="Password"
                 required="required"
