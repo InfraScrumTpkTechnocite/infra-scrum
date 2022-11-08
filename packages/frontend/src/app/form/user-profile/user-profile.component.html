@@ -188,62 +188,58 @@
         <!--zone formulaire Password-->
         <div class="flex w-full justify-center">
             <label for="password"></label
-            ><input
-                style="text-align: start"
+            >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input
                 type="password"
-                placeholder="Password"
-                required
-                class="input-password form-control bg-transparent placeholder:normal"
-                id="password"
                 size="30"
-                #password="ngModel"
-                minlength="8"
+                [placeholder]="'password' | translate"
+                class="input-password form-control bg-transparent placeholder:normal focus:outline-none"
+                id="password"
                 [(ngModel)]="user.password"
-                name="Password"
+                name="password"
+                #password="ngModel"
+                required
             />
+
             <label for="ConfirPassword"></label
             ><input
-                style="text-align: start"
                 type="password"
-                placeholder="Confirm-Password"
-                required
-                class="input-confirm-password form-control bg-transparent placeholder:normal"
-                id="confirmPassword"
                 size="30"
-                #confirmPassword="ngModel"
+                [placeholder]="'verif-password' | translate"
+                class="input-password form-control bg-transparent placeholder:normal focus:outline-none"
                 [(ngModel)]="verifPassword"
-                name="ConfirPassword"
+                #confirmPassword="ngModel"
+                id="confirmPassword"
+                name="confirmPassword"
+                required
             />
             <p></p>
         </div>
-
-        <!--"message erreur Password/Confirm-Password"-->
         <div>
+            <!--"message erreur Password/Confirm-Password"-->
             <p
                 *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
-                class="alert password-message-erreur text-sm normal"
+                class="password-message-erreur normal"
             >
-                incorect password!
+                {{ 'Invalid password!' | translate }}
             </p>
 
             <p
                 *ngIf="password.errors?.['required'] && password.dirty"
-                style="text-align: start"
-                class="alert password-message-erreur text-sm normal"
+                class="password-message-erreur normal"
             >
-                password
-                required&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;confir-password
-                required
+                {{ 'password required' | translate }}
             </p>
 
             <div *ngIf="showErrorMessage">
-                <h1 class="alert password-message-erreur">
+                <h1 class="text-tpkerror text-sm text-center">
                     {{ errorMessage }}
                 </h1>
             </div>
             <br /><br />
 
             <!--button Update/Delete-->
+
             <div class="flex w-full justify-center">
                 <button
                     class="update"
@@ -251,7 +247,7 @@
                     [disabled]=""
                     (click)="onSubmit(user)"
                 >
-                    Update
+                    {{ 'update' | translate }}
                 </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button

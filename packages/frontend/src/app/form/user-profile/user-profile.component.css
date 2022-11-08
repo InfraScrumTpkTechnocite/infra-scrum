@@ -182,7 +182,7 @@ p {
 /*css input password*/
 
 .input-password {
-    margin-left: 230px;
+    margin-left: 0px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -191,7 +191,7 @@ p {
 /*css input password*/
 
 .input-confirm-password {
-    margin-right: 120px;
+    margin-left: 50px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
