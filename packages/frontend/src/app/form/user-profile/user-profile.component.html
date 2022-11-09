@@ -53,6 +53,9 @@
                         type="text"
                         placeholder="username"
                         value="{{ user.username }}"
+                        value=""
+                        required
+                        aria-required="true"
                         class="input-username form-control bg-transparent placeholder:normal"
                         id="username"
                         name="username"
@@ -80,6 +83,9 @@
                         type="email"
                         placeholder="email"
                         value="{{ user.email }}"
+                        value=""
+                        required
+                        aria-required="true"
                         name="email"
                         size="30"
                         #email="ngModel"
@@ -148,6 +154,9 @@
                 type="text"
                 placeholder="firstname"
                 value="{{ user.firstname }}"
+                value=""
+                required
+                aria-required="true"
                 required
                 class="input-firstname form-control bg-transparent placeholder:normal"
                 id="firstname"
@@ -164,6 +173,9 @@
                 type="text"
                 placeholder="lastname"
                 value="{{ user.lastname }}"
+                value=""
+                required
+                aria-required="true"
                 required
                 class="input-lastname form-control bg-transparent placeholder:normal"
                 id="lastname"
@@ -200,6 +212,9 @@
                 name="password"
                 #password="ngModel"
                 required
+                value=""
+                required
+                aria-required="true"
             />
 
             <label for="ConfirPassword"></label
@@ -213,60 +228,58 @@
                 id="confirmPassword"
                 name="confirmPassword"
                 required
+                value=""
+                required
+                aria-required="true"
             />
             <p></p>
         </div>
-        <div>
-            <!--"message erreur Password/Confirm-Password"-->
-            <p
-                *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
-                class="password-message-erreur normal"
-            >
-                {{ 'Invalid password!' | translate }}
-            </p>
 
-            <p
-                *ngIf="password.errors?.['required'] && password.dirty"
-                class="password-message-erreur normal"
-            >
-                {{ 'password required' | translate }}
-            </p>
+        <!--"message erreur Password/Confirm-Password"-->
+        <p
+            *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
+            class="password-message-erreur normal"
+        >
+            {{ 'Invalid password!' | translate }}
+        </p>
 
-            <div *ngIf="showErrorMessage">
-                <h1 class="text-tpkerror text-sm text-center">
-                    {{ errorMessage }}
-                </h1>
-            </div>
-            <br /><br />
+        <p
+            *ngIf="password.errors?.['required'] && password.dirty"
+            class="password-message-erreur normal"
+        >
+            {{ 'password required' | translate }}
+        </p>
 
-            <!--button Update/Delete-->
-
-            <div class="flex w-full justify-center">
-                <button
-                    class="update"
-                    type="submit"
-                    [disabled]=""
-                    (click)="onSubmit(user)"
-                >
-                    {{ 'Update' | translate }}
-                </button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button
-                    class="clear"
-                    type="reset"
-                    (click)="onDeleteSubmit(user)"
-                >
-                    Clear
-                </button>
-            </div>
-            <br />
-            <button
-                class="cancel"
-                type="submit"
-                onclick="window.location.href = 'http://localhost:4200/projects';"
-            >
-                Cancel</button
-            >&nbsp;&nbsp;&nbsp; <br /><br />
+        <div *ngIf="showErrorMessage">
+            <h1 class="text-tpkerror text-sm text-center">
+                {{ errorMessage }}
+            </h1>
         </div>
+        <br /><br />
+
+        <!--button Update/Delete-->
+
+        <div class="flex w-full justify-center">
+            <button
+                class="update"
+                type="submit"
+                [disabled]=""
+                (click)="onSubmit(user)"
+            >
+                {{ 'Update' | translate }}
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="clear" type="reset" (click)="onDeleteSubmit(user)">
+                Clear
+            </button>
+        </div>
+        <br />
+        <button
+            class="cancel"
+            type="submit"
+            onclick="window.location.href = 'http://localhost:4200/projects';"
+        >
+            Cancel</button
+        >&nbsp;&nbsp;&nbsp; <br /><br />
     </div>
 </form>

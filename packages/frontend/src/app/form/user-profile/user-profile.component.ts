@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HotToastService } from '@ngneat/hot-toast';
 import { TranslateService } from '@ngx-translate/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,6 +15,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent{
+
+  registerForm!: FormGroup;
+  submitted = false;
 
   /*méthode localstorage de récuperation objet formulaire*/
   user: User = JSON.parse(localStorage.getItem('user') || "{}");
@@ -39,6 +43,7 @@ export class UserProfileComponent{
     private toastService: HotToastService,
     private httpClient: HttpClient,
     private translate: TranslateService,
+    private formBuilder: FormBuilder,
 ) {
     this.verifPassword = '';
 
@@ -82,8 +87,12 @@ onSubmit(user: User): void {
       },
     };
 
+    this.submitted = true;
     this.userService.editUser(this.user).subscribe(userObserver)
   }
+
+
+
 
 /*function "ajouter" avatar profile*/
 
@@ -134,6 +143,6 @@ ngOnInit(): void {
     this.headerTitleService.setTitle('InfraScrum');
     console.log(this.user.role.name)}
 }
-
-
+    
+    
 
