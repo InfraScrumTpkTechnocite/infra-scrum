@@ -114,6 +114,7 @@
         <div class="flex w-full justify-start">
             <label for="role"></label
             ><input
+                disabled="disabled"
                 id="role"
                 type="text"
                 name="role"
@@ -247,7 +248,7 @@
                     [disabled]=""
                     (click)="onSubmit(user)"
                 >
-                    {{ 'update' | translate }}
+                    {{ 'Update' | translate }}
                 </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button
