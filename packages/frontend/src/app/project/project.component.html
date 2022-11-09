@@ -181,7 +181,7 @@
                     {{
                         project.enddate
                             ? (project.enddate | date: 'dd-MMM-yyyy')
-                            : 'n/a'
+                            : 'none'
                     }}
                 </p>
             </div>
@@ -319,6 +319,7 @@
                     ></app-kanban-status>
 
                     <div
+                        id="{{ i }}"
                         cdkDropList
                         [cdkDropListData]="kanban.tasks"
                         class="example-list kanbanStatusTitle flex flex-col w-64 mx-4 mt-6"
