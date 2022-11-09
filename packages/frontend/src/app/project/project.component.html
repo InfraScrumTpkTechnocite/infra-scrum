@@ -35,7 +35,7 @@
                 class="bg-tpkwhite text-primary p-3 rounded-lg text-xs font font-semibold m-2 justify-center"
             >
                 <option
-                    value=""
+                    value="{{ sprint.id }}"
                     (click)="changeSprintDisplay(sprint.id)"
                     [ngClass]="{
                         'bg-primary text-white': sprint.id == projectid,
@@ -43,6 +43,7 @@
                     }"
                     *ngFor="let sprint of sprintList"
                     [disabled]="sprint.id == projectid"
+                    [selected]="sprint.id == projectid"
                 >
                     {{ sprint.name }}
                 </option>
@@ -88,10 +89,10 @@
         <div class="mt-[22rem]">
             <!-- BTN DIAGRAMME DE GRANT -->
             <button
-            class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-12 text-xs"
-        >
-            Diagramme de Gantt
-        </button>
+                class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-12 text-xs"
+            >
+                Diagramme de Gantt
+            </button>
         </div>
     </div>
 
