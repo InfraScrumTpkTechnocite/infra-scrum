@@ -7,6 +7,7 @@ import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
 import { Task } from '../models/task.model';
 import { UserProject } from '../models/userproject.model';
+import { User } from '../models/user.model';
 
 interface KanbanList {
     kanban: Kanbanstatus;
@@ -40,12 +41,17 @@ export class KanbanStatusComponent implements OnInit {
     @Input() projectid!: string | undefined | null;
     @Input() project!: Project;
 
+    @Input() user!: User;
+    @Input() isUserProjectadmin!: boolean;
+
     constructor(
         private kanbanstatusService: KanbanstatusService,
         private toastService: HotToastService
     ) {}
 
     ngOnInit(): void {
+        //console.log(this.user);
+        //console.log(this.isUserProjectadmin);
         this.kanbanstatus = this.kanbanList as KanbanList;
         this.newColor = this.kanbanstatus.kanban.color;
         //console.log(`ngOnInit - this.project ${JSON.stringify(this.project)}`);
