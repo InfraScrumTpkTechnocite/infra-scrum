@@ -164,7 +164,7 @@ p {
 /*css input firstname*/
 
 .input-firstname {
-    margin-left: 210px;
+    margin-left: 50px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -173,7 +173,7 @@ p {
 /*css input lastname*/
 
 .input-lastname {
-    margin-right: 100px;
+    margin-left: 50px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -182,7 +182,7 @@ p {
 /*css input password*/
 
 .input-password {
-    margin-left: 0px;
+    margin-left: 50px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -191,7 +191,7 @@ p {
 /*css input password*/
 
 .input-confirm-password {
-    margin-left: 50px;
+    margin:auto;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
