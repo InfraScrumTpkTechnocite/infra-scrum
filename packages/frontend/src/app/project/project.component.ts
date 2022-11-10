@@ -105,11 +105,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         if (message.projectid == this.project.id) {
                             if (message.kanban) {
                                 //console.log(message.kanban.id);
-                                this.kanbanList.find(
+                                let kanban = this.kanbanList.find(
                                     (kanbans) =>
                                         kanbans.kanban.order ==
                                         message.kanban.order
-                                )!.kanban = message.kanban;
+                                );
+
+                                kanban!.kanban = message.kanban;
+                                kanban!.tasks = message.tasks;
                             }
                             if (message.task) {
                                 console.log('in if');
@@ -123,13 +126,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                         /*]*/
                                     ); //= message.task;
                                 });
-
-                                transferArrayItem(
-                                    message.previousContainer.data,
-                                    message.container.data,
-                                    message.previousIndex,
-                                    message.currentIndex
-                                );
                             }
                         }
                         break;
@@ -534,7 +530,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     this.subject.next({
                         method: 'edit',
                         kanban: kanban.kanban,
-                        projectid: this.project.id
+                        projectid: this.project.id,
+                        tasks: kanban.tasks
                     });
                 }
             });
