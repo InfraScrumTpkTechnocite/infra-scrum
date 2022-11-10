@@ -1,10 +1,10 @@
-<div class="pt-60 w-full bg-grey1">
+<div class="mt-10 px-20 w-full">
     <div class="flex">
-        <div class="w-1/5">Activities</div>
+        <div class="w-1/6"></div>
 
         <div class="flex w-4/5">
             <div
-                class="text-center border-l-2 border-black"
+                class="bg-gray-800 text-white text-center"
                 *ngFor="let month of monthAxis"
                 [style.width]="month.monthDurationPercentage + '%'"
             >
@@ -12,23 +12,26 @@
             </div>
         </div>
     </div>
-    <div class="">
+    <div>
         <div class="w-full flex" *ngFor="let row of rows; let i = index">
-            <div class="w-1/5">
+            <div [style.height.px]="10"></div>
+            <div class="w-1/6 text-end pr-10">
                 {{ row.name }}
             </div>
             <div
-                [style.height.px]="getEventNumberOfOverlapInRow(row) * 25"
-                class="relative items-start w-4/5"
+            [style.height.px]="getEventNumberOfOverlapInRow(row) * 25"
+            class="relative items-start w-4/5"
             >
+            <!-- gantt chart grid lines-->
             <div class="absolute top-0 w-full h-full flex">
                 <span
-                    class="border-l-2 border-black"
+                    class="border-l-2 border-gray-200"
                     *ngFor="let month of monthAxis"
                     [style.width]="month.monthDurationPercentage + '%'"
                 ></span>
             </div>
                 <!-- period blocks-->
+                <div [style.height.px]="10"></div>
                 <div
                     *ngFor="let event of row.events, let j = index"
                     [style.margin-left]="
@@ -45,7 +48,6 @@
                 <div *ngIf="!isHidden[i][j]"><div>{{event.name}}</div>
                 <div>{{event.startDate | date:"d-MM-yyyy" }} -> {{event.endDate | date:"d-MM-yyyy"}}</div> </div>
             </div>
-                <!-- gantt chart grid lines-->
             </div>
         </div>
     </div>
