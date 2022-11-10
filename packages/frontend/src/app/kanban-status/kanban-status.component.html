@@ -26,6 +26,11 @@
                     </svg>
                 </button>
                 <button
+                    *ngIf="
+                        user.role.name == 'admin' ||
+                        user.role.name == 'superadmin' ||
+                        isUserProjectadmin
+                    "
                     class="editKanbanStatus"
                     title="Edit column"
                     (click)="editKanbanStatus()"

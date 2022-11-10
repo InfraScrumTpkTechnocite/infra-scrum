@@ -315,6 +315,11 @@
                     class="example-container"
                     *ngFor="let kanban of kanbanList; let i = index"
                     cdkDrag
+                    [cdkDragDisabled]="
+                        user.role.name != 'admin' &&
+                        user.role.name != 'superadmin' &&
+                        !isUserProjectadmin
+                    "
                 >
                     <app-kanban-status
                         [subject]="subject"
@@ -324,6 +329,8 @@
                         [sprintList]="sprintList"
                         [projectid]="projectid"
                         [project]="project"
+                        [user]="user"
+                        [isUserProjectadmin]="isUserProjectadmin"
                     ></app-kanban-status>
 
                     <div
@@ -333,7 +340,15 @@
                         class="example-list kanbanStatusTitle flex flex-col w-56 mx-2 mt-2"
                         (cdkDropListDropped)="drop($event)"
                     >
-                        <div *ngFor="let task of kanban.tasks" cdkDrag>
+                        <div
+                            *ngFor="let task of kanban.tasks"
+                            cdkDrag
+                            [cdkDragDisabled]="
+                                user.role.name != 'admin' &&
+                                user.role.name != 'superadmin' &&
+                                !isUserProjectadmin
+                            "
+                        >
                             <app-task
                                 [task]="task"
                                 [subject]="subject"
