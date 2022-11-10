@@ -116,16 +116,22 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             }
                             if (message.task) {
                                 console.log('in if');
-                                this.kanbanList.find((kanbans) => {
-                                    console.log(
-                                        //kanbans.tasks![
-                                        kanbans.tasks!.findIndex(
-                                            (tasks) =>
-                                                tasks.id == message.task.id
-                                        )
-                                        /*]*/
-                                    ); //= message.task;
-                                });
+                                // this.kanbanList.find((kanbans) => {
+                                //     console.log(
+                                //         //kanbans.tasks![
+                                //         kanbans.tasks!.findIndex(
+                                //             (tasks) =>
+                                //                 tasks.id == message.task.id
+                                //         )
+                                //         /*]*/
+                                //     ); //= message.task;
+                                // });
+                                this.kanbanList[
+                                    message.sourceKanbanOrder
+                                ].tasks.splice(message.sourceIndex, 1);
+                                this.kanbanList[
+                                    message.targetKanbanOrder
+                                ].tasks.push(message.task);
                             }
                         }
                         break;
@@ -548,7 +554,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
             );
         } else {
             console.log(`Changement colonne`);
-            console.log(`current index: ${event.currentIndex}`);
+            console.log(
+                `previous kanban: ${event.previousContainer.id}, current kanban: ${event.container.id}`
+            );
             transferArrayItem(
                 event.previousContainer.data,
                 event.container.data,
@@ -569,13 +577,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     complete: () => {
                         this.subject.next({
                             method: 'edit',
-                            //kanban: kanban.kanban,
-                            task: task
-                            //previousContainer: event.previousContainer
-                            // container: event.container,
-                            // previousIndex: event.previousIndex,
-                            // currentIndex: event.currentIndex,
-                            // projectid: this.project.id
+                            task: task,
+                            projectid: this.project.id,
+                            sourceKanbanOrder: event.previousContainer.id,
+                            targetKanbanOrder: event.container.id,
+                            sourceIndex: event.previousIndex
                         });
                     }
                 });
