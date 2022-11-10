@@ -1,11 +1,11 @@
 <div
-    class="fixed top-0 bg-primary flex justify-between h-20 md:h-32 w-screen z-50"
+    class="fixed top-0 bg-primary flex justify-between h-16 md:h-24 w-screen z-50"
 >
     <div class="w-1/3 flex justify-left ml-6 md:ml-8">
         <!-- logo triptyk -->
         <img
             routerLink=""
-            class="w-16 h-24 md:w-24 md:h-36 mr-6 flex pb-3 hover:cursor-pointer"
+            class="w-10 h-16 mt-2 md:mt-0 md:w-20 md:h-28 mr-6 flex pb-2 hover:cursor-pointer"
             src="./../../assets/img/logos/tpk-logo-white.png"
             alt=""
         />
@@ -17,7 +17,7 @@
             <select
                 name="projects"
                 id="selectMyProjects"
-                class="w-36 h-6 md:w-40 md:h-8 lg:w-48 lg:h-10 text-secondary text-xs md:text-sm lg:text-lg bg-tpkwhite p-1 font-semibold rounded-md focus:ring-2 focus:ring-secondary"
+                class="w-30 h-6 md:w-36 md:h-8 lg:w-40 lg:h-8 text-secondary text-xs md:text-sm lg:text-lg bg-tpkwhite p-1 font-semibold rounded-md focus:ring-2 focus:ring-secondary"
                 (change)="onChange($event)"
             >
                 <option selected disabled hidden>
@@ -39,7 +39,7 @@
 
     <!-- titre page actuelle -->
     <div class="hidden md:flex items-center w-1/3 justify-center">
-        <h1 class="text-white text-xl sm:text-2xl md:text-5xl font-bold">
+        <h1 class="text-white sm:text-3xl lg:text-4xl xl:text-5xl font-bold">
             {{ title }}
         </h1>
     </div>
@@ -65,7 +65,7 @@
             <button
                 type="button"
                 routerLink="login"
-                class="btn-hover tpkBlueBtn rounded-2xl px-3 py-2 md:px-4 md:py-3"
+                class="btn-hover tpkBlueBtn rounded-xl sm:rounded-2xl p-2 md:px-3 md:py-2"
                 (click)="onLoginClick()"
             >
                 {{ 'infrascrum.header.login' | translate }}
@@ -74,12 +74,12 @@
         <!-- input search -->
         <div
             *ngIf="loggedIn()"
-            class="hidden sm:flex items-center justify-start mr-6 sm:mr-28"
+            class="hidden sm:flex items-center justify-start mr-6 sm:mr-24"
         >
             <input
                 type="text"
                 [placeholder]="'infrascrum.header.search' | translate"
-                class="w-36 h-6 md:w-40 md:h-8 lg:w-48 lg:h-10 text-secondary text-xs md:text-sm lg:text-lg bg-tpkwhite p-2 font-semibold rounded-md placeholder-primary focus-visible:outline-none focus-visible:ring-secondary focus-visible:ring-2"
+                class="w-32 h-6 md:w-36 md:h-7 lg:w-40 lg:h-8 text-secondary text-xs md:text-sm lg:text-lg bg-tpkwhite p-2 font-semibold rounded-md placeholder-primary focus-visible:outline-none focus-visible:ring-secondary focus-visible:ring-2"
                 list="userprojects"
                 (input)="onChange($event)"
             />
@@ -103,7 +103,8 @@
             class="rounded-full hover:cursor-pointer"
         >
             <div
-                class="userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2 border-tpkvalidate"
+                class="userChip relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-secondary flex items-center justify-center border-2 hover:border-tpkvalidate"
+                [ngClass]="isMenuOpen ? 'border-tpkvalidate' : ''"
             >
                 <!-- condition si photo, sinon span avec premiere lettre username -->
                 <img
@@ -114,7 +115,7 @@
                 />
                 <span
                     *ngIf="!user.picture"
-                    class="text-2xl uppercase font-bold"
+                    class="text-sm sm:text-xl md:text-2xl uppercase font-bold"
                     >{{ user.username | initialsName }}</span
                 >
             </div>
@@ -122,7 +123,7 @@
             <div
                 *ngIf="isMenuOpen"
                 (outsideClick)="isMenuOpen = false"
-                class="sub-menu-wrapper absolute top-auto right-6 w-64 max-h-0 drop-shadow-lg z-50"
+                class="sub-menu-wrapper absolute top-auto right-3 md:right-6 w-64 max-h-0 drop-shadow-lg z-50"
             >
                 <div
                     class="sub-menu bg-secondary rounded-b-lg rounded-tl-lg p-5 m-3"
@@ -152,7 +153,7 @@
                     <!-- Lien vers projets de l'utilisateur  -->
                     <a
                         routerLink="/projects"
-                        class="sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="sub-menu-link flex items-center justify-between text-white mt-4 mb-2 p-2 hover:bg-primary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -232,33 +233,39 @@
                         <span>></span>
                     </a>
                     <a
+                        (click)="changeLanguage()"
                         class="sub-menu-link flex text-white my-2 p-2 items-center hover:bg-primary hover:text-white rounded-md"
                     >
                         <svg
-                            xmlns="http://www.w3.org/2000/svg" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
-                            stroke-width="1.5" 
-                            stroke="currentColor" 
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
                             class="w-8 h-8 mr-2"
                         >
-                        
-                            <path 
-                                stroke-linecap="round" 
-                                stroke-linejoin="round" 
-                                d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802" 
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802"
                             />
                         </svg>
 
-
-                        <p class="w-full"><button translate (click)="changeLanguage()"> {{"infrascrum.header.sub-menu-language" | translate}}</button></p>
+                        <p class="w-full">
+                            <button translate>
+                                {{
+                                    'infrascrum.header.sub-menu-language'
+                                        | translate
+                                }}
+                            </button>
+                        </p>
                         <span>></span>
                     </a>
                     <!-- Lien déconnexion -->
                     <a
                         routerLink="/index"
                         (click)="logOut()"
-                        class="sub-menu-link flex text-white my-2 p-2 items-center hover:bg-tpkerror hover:text-white rounded-md"
+                        class="sub-menu-link flex text-white mt-2 p-2 items-center hover:bg-tpkerror hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

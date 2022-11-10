@@ -47,6 +47,7 @@ interface KanbanList {
 export class ProjectComponent implements OnInit, OnDestroy {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
+    isBottom: boolean = false;
 
     projectid: string = '';
     parentProject: any;
@@ -432,7 +433,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     /* -------------------------------------------------------------------------- */
-    /*    DRAG AND DROP KANBANSTATUS   */
+    /*                                DRAG AND DROP                               */
     /* -------------------------------------------------------------------------- */
 
     @ViewChild('dropListContainer') dropListContainer?: ElementRef;
@@ -581,5 +582,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 });
             }
         }
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                              Scroll top button                             */
+    /* -------------------------------------------------------------------------- */
+
+    onScroll(event: any) {
+        event.target.offsetHeight + event.target.scrollTop >=
+        event.target.scrollHeight - 1
+            ? (this.isBottom = true)
+            : (this.isBottom = false);
+    }
+
+    scrollTop() {
+        document.getElementById('kanbanDashboard')!.scrollTop = 0;
     }
 }

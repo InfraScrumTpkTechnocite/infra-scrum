@@ -1,119 +1,118 @@
 {
     "infrascrum": {
-        "global": {
-            "btn-register": "Enregistrer",
-            "btn-cancel": "Annuler",
-            "btn-delete": "Supprimer",
-            "btn-login": "CONNECTEZ-VOUS"
-        },
-        "admin": {
-            "title": "Super admin"
-        },
-        "create-user": {
-            "title": "Créer un compte",
-            "username": "Nom d'utilisateur",
-            "email": "Email",
-            "password": "Mot de passe",
-            "verif-password": "Confirmer mot de passe",
-            "sub-title": "Vous avez déjà un compte ?",
-            "login": "Connectez-vous",
-            "msg-username-invalid": "Nom d'utilisateur non valide",
-            "msg-username-required": "Nom d'utilisateur requis",
-            "msg-email-invalid": "Email non valide",
-            "msg-email-required": "Email requis",
-            "msg-password-matching": "Mot de passe ne correspond pas",
-            "msg-password-required": "Mot de passe requis"
-        },
-        "edit-new-task": {
-            "title": "Editer tâche",
-            "title-user": "Utilisateur",
-            "title-etiquette": "Couleur",
-            "option-type-title": "Pas de type",
-            "option-front": "Font-end",
-            "option-back": "Back-end",
-            "option-bug": "Bug",
-            "option-full": "Fullstack",
-            "option-design": "Designer",
-            "option-improvement": "Amélioration",
-            "option-liaison-bf": "Liaison Back-Front",
-            "option-ux": "UX",
-            "option-correction": "Correction",
-            "option-analyse": "Analyser",
-            "option-integration": "Intégration design",
-            "option-sprint-title": "Pas de Sprint",
-            "option-one": "Sprint 1",
-            "option-two": "Sprint 2",
-            "option-three": "Sprint 3",
-            "option-four": "Sprint 4",
-            "option-five": "Sprint 5",
-            "option-kanban-title": "Pas de kanban",
-            "estimate-time": "Temps estimé",
-            "estimate-day": "jr",
-            "estimate-hours": "h",
-            "estimate-minute": "min",
-            "name": "Nom",
-            "start-date": "Date de début",
-            "description": "Description",
-            "file": "Choisir un fichier/image"
-        },
-        "edit-project": {
-            "title": "Editer projet",
-            "btn-edit-project": "Editer projet",
-            "btn-user": "Utilisateur",
-            "btn-inter-date": "Date intermédiaire",
-            "inter-date": "Date intermédiaire",
-            "inter-date-description": "Description",
-            "edit-projectinfo-name": "Nom",
-            "edit-projectinfo-file": "Choisir un fichier/image",
-            "edit-project-delivery": "Date de livraison",
-            "assigned": "assigné",
-            "admin": "admin"
-        },
-        "login": {
-            "title": "Connectez-vous",
-            "username": "Nom d'utilisateur ou Email",
-            "password": "Mot de passe",
-            "msg-error": "Nom d'utilisateur ou Email non valide.",
-            "no-account": "Pas de compte ?",
-            "create-account": "Créer un compte"
-        },
-        "header": {
-            "option-project": "Mes projets",
-            "login": "Connectez-vous",
-            "search": "Recherche",
-            "sub-menu-projects": "Mes projets",
-            "sub-menu-profil": "Mon profil",
-            "sub-menu-users": "Editer les utilisateurs",
-            "sub-menu-logout": "Déconnecté",
-            "sub-menu-language": "English"
-        },
-        "index": {
-            "title": "INFRASCRUM",
-            "sub-title": ""
-        },
-        "kanban-status": {
-            "color": "Couleur:"
-        },
-        "page-not-found": {
-            "title": "Vous semblez perdu !",
-            "sub-title-one": "La page que vous recherchez n'est pas disponible.",
-            "sub-title-two": "Essayez à nouveau de rechercher ou utilisez le bouton Retour ci-dessous.",
-            "btn-goback": "Retour"
-        },
-        "project": {
-            "btn-global": "Vue globale",
-            "btn-add": "Ajouter un sprint",
-            "btn-new-task": "Nouvelle tâche",
-            "btn-new-column": "Nouvelle colonne",
-            "btn-add-column": "Ajouter une colonne"
-        },
-        "project-info": {
-            "start-date": "Date de début",
-            "picture": "Ajouter une photo:"
-        },
-        "task": {
-            "start-date": "Date de début",
-            "estimate-time": "Temps estimé"
-        }
+
+      "global": {
+        "btn-register": "Enregistrer",
+        "btn-cancel": "Annuler",
+        "btn-delete": "Supprimer",
+        "btn-login": "CONNECTEZ-VOUS"
+      },
+      "admin": {
+        "title": "Super admin"
+      },
+      "create-user": {
+        "title": "Créer un compte",
+        "username": "Nom d'utilisateur",
+        "email": "Email",
+        "password": "Mot de passe",
+        "verif-password": "Confirmer mot de passe",
+        "sub-title": "Vous avez déjà un compte ?",
+        "login": "Connectez-vous",
+        "msg-username-invalid": "Nom d'utilisateur non valide",
+        "msg-username-required": "Nom d'utilisateur requis",
+        "msg-email-invalid":"Email non valide",
+        "msg-email-required": "Email requis",
+        "msg-password-matching": "Mot de passe ne correspond pas",
+        "msg-password-required": "Mot de passe requis"
+      },
+      "edit-new-task": {
+        "title": "Editer tâche",
+        "title-user": "Utilisateur",
+        "title-etiquette": "Couleur",
+        "option-type-title": "Pas de type",
+        "option-front": "Font-end",
+        "option-back": "Back-end",
+        "option-bug": "Bug",
+        "option-full": "Fullstack",
+        "option-design": "Designer",
+        "option-improvement": "Amélioration",
+        "option-liaison-bf": "Liaison Back-Front",
+        "option-ux": "UX",
+        "option-correction": "Correction",
+        "option-analyse": "Analyser",
+        "option-integration": "Intégration design",
+        "option-sprint-title": "Pas de Sprint",
+        "option-one": "Sprint 1",
+        "option-two": "Sprint 2",
+        "option-three": "Sprint 3",
+        "option-four": "Sprint 4",
+        "option-five": "Sprint 5",
+        "option-kanban-title": "Pas de kanban",
+        "estimate-time": "Temps estimé",
+        "estimate-day": "jr",
+        "estimate-hours": "h",
+        "estimate-minute": "min",
+        "name": "Nom",
+        "start-date": "Date de début",
+        "description": "Description",
+        "file": "Choisir un fichier/image"
+      },
+      "edit-project":  {
+        "title": "Editer projet",
+        "btn-edit-project": "Editer projet",
+        "btn-user": "Utilisateur",
+        "btn-inter-date": "Date intermédiaire",
+        "inter-date": "Date intermédiaire",
+        "inter-date-description": "Description",
+        "edit-projectinfo-name": "Nom",
+        "edit-projectinfo-file": "Choisir un fichier/image",
+        "edit-project-delivery": "Date de livraison"
+      },
+      "login": {
+        "title": "Connectez-vous",
+        "username": "Nom d'utilisateur ou Email",
+        "password": "Mot de passe",
+        "msg-error": "Nom d'utilisateur ou Email non valide.",
+        "no-account": "Pas de compte ?",
+        "create-account": "Créer un compte"
+      },
+      "header": {
+        "option-project": "Mes projets",
+        "login": "Connectez-vous",
+        "search": "Recherche",
+        "sub-menu-projects": "Mes projets",
+        "sub-menu-profil": "Mon profil",
+        "sub-menu-users": "Editer les utilisateurs",
+        "sub-menu-logout": "Déconnexion",
+        "sub-menu-language": "English"
+      },
+      "index": {
+        "title": "INFRASCRUM",
+        "sub-title": ""
+      },
+      "kanban-status": {
+        "color": "Couleur:"
+      },
+      "page-not-found": {
+        "title": "Vous semblez perdu !",
+        "sub-title-one":"La page que vous recherchez n'est pas disponible.",
+        "sub-title-two":"Essayez à nouveau de rechercher ou utilisez le bouton Retour ci-dessous.",
+        "btn-goback": "Retour"
+      },
+      "project": {
+        "btn-global": "Vue globale",
+        "btn-add": "Ajouter un sprint",
+        "btn-new-task": "Nouvelle tâche",
+        "btn-new-column": "Nouvelle colonne",
+        "btn-add-column": "Ajouter une colonne"
+      },
+      "project-info": {
+        "start-date": "Date de début",
+        "picture": "Ajouter une photo:"
+      },
+      "task": {
+        "start-date": "Date de début",
+        "estimate-time": "Temps estimé"
+      }
     }
 }
