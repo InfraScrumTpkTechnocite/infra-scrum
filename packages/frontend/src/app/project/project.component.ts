@@ -67,6 +67,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     taskTypeList: TaskType[] = [];
 
+    hideChart: boolean = true;
+
     //https://rxjs.dev/api/webSocket/webSocket
     subject = webSocket('');
 

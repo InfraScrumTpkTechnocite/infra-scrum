@@ -30,6 +30,7 @@
             <!-- Boucler sur le nombre de sprints  -->
 
             <select
+                *ngIf="sprintList.length"
                 name="sprint"
                 id="sprint"
                 class="bg-tpkwhite text-primary p-3 rounded-lg text-xs font font-semibold m-2 justify-center"
@@ -90,6 +91,7 @@
             <!-- BTN DIAGRAMME DE GRANT -->
             <button
                 class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-12 text-xs"
+                (click)="hideChart = !hideChart"
             >
                 Diagramme de Gantt
             </button>
@@ -99,6 +101,7 @@
     <!-- KANBAN DASHBOARD -->
 
     <div
+        *ngIf="hideChart"
         (scroll)="onScroll($event)"
         id="kanbanDashboard"
         class="w-11/12 overflow-y-scroll scroll-smooth"
@@ -408,4 +411,5 @@
         </div>
     </div>
     <!-- fin kanban dashboard -->
+    <app-chart-gantt *ngIf="!hideChart" class="w-full"></app-chart-gantt>
 </div>
