@@ -1,16 +1,17 @@
+
 /* DRAG AND DROP KANBANSTATUS */
 
 .cdk-drag-placeholder {
     opacity: 0.3;
 }
 
-.example-container {
-    /* width: 400px; */
-    /* max-width: 100%; */
-    /* margin: 0 25px 25px 0; */
-    /* display: inline-block; */
-    /* vertical-align: top; */
-}
+/* .example-container {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 25px 25px 0;
+    display: inline-block;
+    vertical-align: top;
+} */
 
 .example-list {
     /* border: solid 1px #ccc; */
@@ -22,7 +23,7 @@
 }
 
 .example-box {
-    padding: 20px 10px;
+    /* padding: 20px 10px; */
     border-bottom: solid 1px #ccc;
     color: rgba(0, 0, 0, 0.87);
     display: flex;
@@ -69,3 +70,14 @@
 .cdk-drop-list {
     opacity: 1;
 }
+
+/* Scroll top button */
+
+#scrollTopBtn{
+    animation: color-change 1.5s infinite;
+  }
+  @keyframes color-change {
+    0% { color: #1f71a5; border-color: #1f71a5}
+    50% { color: #275e9d;border-color: #275e9d}
+    100% { color: #1f71a5; border-color: #1f71a5}
+  }

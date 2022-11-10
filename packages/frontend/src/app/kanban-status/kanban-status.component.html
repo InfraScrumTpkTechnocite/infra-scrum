@@ -1,10 +1,10 @@
-<div class="kanbanStatusTitle flex flex-col w-64 mx-4 mt-6">
-    <div *ngIf="!isEditColumn" class="bg-grey1 rounded-t-lg">
+<div class="kanbanStatusTitle flex flex-col w-56 mx-2 mt-4 hover:cursor-move">
+    <div *ngIf="!isEditColumn" class="kanbanstatusBG rounded-t-lg">
         <div
-            class="w-full h-6 rounded-t-lg"
+            class="w-full h-3 rounded-t-lg"
             [style.background]="kanbanstatus.kanban.color"
         ></div>
-        <div class="flex justify-between h-12 items-center">
+        <div class="flex justify-between h-10 items-center">
             <h3 class="text-center text-lg font-bold w-2/3 flex justify-center">
                 {{ kanbanstatus.kanban.name }}
             </h3>
@@ -50,10 +50,11 @@
     </div>
     <div
         *ngIf="isEditColumn"
-        class="bg-grey1 rounded-t-lg border-2 border-secondary"
+        class="kanbanstatusBG rounded-t-lg border-2"
+        [style.border-color]="kanbanstatus.kanban.color"
     >
         <form action="">
-            <div class="w-full h-10 rounded-t-lg p-3 flex justify-start">
+            <div class="w-full h-8 rounded-t-lg py-3 flex justify-start">
                 <div class="flex justify-center w-2/3">
                     <label for="" class="mr-2 text-sm text-grey3">{{
                         'infrascrum.kanban-status.color' | translate
@@ -142,27 +143,6 @@
                             />
                         </svg>
                     </button>
-                    <!-- <button
-                        (click)="validateEditKanbanStatus()"
-                        class="validateColumnEdition"
-                        title="Edit column"
-                        type="submit"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5 text-tpkvalidate"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                            />
-                        </svg>
-                    </button> -->
                 </div>
             </div>
         </form>
