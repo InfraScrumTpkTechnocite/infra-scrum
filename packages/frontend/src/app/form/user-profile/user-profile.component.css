@@ -1,12 +1,12 @@
 /*css avatar*/
 
 .avatar {
-    vertical-align: middle;
+    /*vertical-align: middle;*/
     margin: 25px;
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 130px;
     border-radius: 50%;
-    border: 1.5px solid #9eecc8;
+    border: 1.5px #9eecc8;
     color: white;
     font-size: 70px;
 }
@@ -16,6 +16,7 @@
     width: 140px;
     height: 140px;
     border-radius: 50%;
+    color: white;
     border: 1.5px solid  #9eecc8;
 }
 
@@ -137,7 +138,7 @@ p {
 /*css role*/
 
 .input-role {
-    margin-left: 85px;
+    margin-left: 105px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }

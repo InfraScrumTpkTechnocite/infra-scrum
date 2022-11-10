@@ -15,26 +15,25 @@
         <section>
             <div class="flex mx-12">
                 <div
-                    class="avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2 border-tpkvalidate"
+                    class="avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2"
                 >
-                    <!--button ("+")-->
-                    <!--<input style="border:1px solid #7697a8;" class="button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey2 mr-2 mt-3" type="button" alt="profile picture" id="loadFileXml" placeholder="" value="+" #picture="ngModel" [(ngModel)]="user.picture"/>-->
-                    <!--<img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"class="avatar">-->
-                    <!--<img src="{{user.picture}}" class="avatar" alt="image"/>-->
+                    <!-- image -->
+                    <label for="#UserPicture" class="avatar">{{
+                        '' | translate
+                    }}</label>
                     <img
+                        (click)="PictureUploader.click()"
                         *ngIf="user.picture"
-                        class="img-avatar"
-                        src="{{ user.picture }}"
-                        alt="profile picture"
+                        src="data:image/*;base64, {{ user.picture }}"
+                        alt="{{ user.picture }}"
                     />
-                    <span
-                        *ngIf="!user.picture"
-                        class="text-2xl uppercase font-bold"
-                        >{{ user.username | initialsName }}</span
-                    >
-                    <!--<input type='file' (change)="onSelectFile($event)" class="select-profile-picture" alt="profile picture" value="{{user.picture}}" #user.picture="ngModel" [(ngModel)]="user.picture">-->
-                    <!--""message "add" avatar-->
-                    <!--<span class="message">add your avatar</span>-->
+
+                    <input
+                        #PictureUploader
+                        type="file"
+                        class="avatar"
+                        (change)="onFileSelected($event)"
+                    />
                 </div>
 
                 <!--titre ("My Profil")-->

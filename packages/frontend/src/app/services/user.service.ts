@@ -9,6 +9,9 @@ import { response } from 'express';
     providedIn: 'root'
 })
 export class UserService {
+    findOne(arg0: string) {
+      throw new Error('Method not implemented.');
+    }
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',

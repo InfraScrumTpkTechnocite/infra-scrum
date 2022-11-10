@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HotToastService } from '@ngneat/hot-toast';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -116,6 +117,63 @@ onSelectFile(event:any) {
     }
     this.userService.editUser(this.user).subscribe(userObserver)
   }
+  
+/*function "click"*/
+
+  userProjectClicked(event: any) {
+    this.router.navigate(['/user'], {
+        queryParams: { userid: this.user.id }
+    });
+}
+
+  /*function selectFile*/
+
+  onFileSelected(event: any) {
+    const httpOptions = {
+        headers: new HttpHeaders({
+            Authorization: 'Bearer ' + localStorage.getItem('jwt-token')
+        })
+    };
+
+    const file: File = event.target.files[0];
+    const formData = new FormData();
+
+    formData.append('file', file, this.user.id);
+
+    //console.table(event.target.files[0]);
+
+    this.httpClient
+        .post<any>(
+            'http://localhost:' +
+                environment.SERVER_PORT +
+                '/' +
+                environment.BACKEND_URL_PROXY +
+                '/users/image-upload/' +
+                this.user.id,
+            formData,
+            httpOptions
+        )
+        .subscribe({
+            next: (response) => {
+                //console.log(response);
+                this.userService
+                    .getUserbyId(<string>this.user.id)
+                    .subscribe({
+                        next: (user: User) => {
+                            this.user = user;
+                        },
+                        error: (err: any) => {},
+                        complete: () => {}
+                    });
+                this.toastService.success('User picture updated !');
+            },
+            error: (err: any) => {
+                //console.log(err.error.message);
+                this.toastService.error(err.error.message);
+            },
+            complete: () => {}
+        });
+}
     
 /*function delete profile*/
 

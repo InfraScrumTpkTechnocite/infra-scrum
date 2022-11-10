@@ -12,16 +12,18 @@ import {
   UploadedFile,
   UseFilters,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 import { QueryFailedExceptionFilter } from '../query-failed-exceptions.filter';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Project } from 'src/projects/project.entity';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { readFile, unlink } from 'fs';
 import { Observable } from 'rxjs';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @UseFilters(new QueryFailedExceptionFilter())
 @ApiBearerAuth()
@@ -68,5 +70,71 @@ export class UsersController {
   async select(@Body() select: any) {
     return await this.userService.select(select);
   }
+
+  @Post('image-upload/:userid')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './images',
+      }),
+    }),
+  )
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          // 👈 this property
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  async uploadFile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 100000 }),
+          new FileTypeValidator({
+            fileType: new RegExp('(.jpeg|.JPEG|.gif|.GIF|.png|.PNG)$'),
+          }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+    @Param('userid') userid: string,
+  ) {
+    // console.log(file);
+    // console.log(`user id : ${userid}`);
+
+    let user: User = new User();
+
+    this.userService.findOne(userid).then((result) => {
+      user = result;
+    });
+
+    readFile(file.path, (err, data) => {
+      if (err) throw err;
+
+      //console.log(data.toString('base64'));
+
+      user.picture = data.toString('base64');
+      this.userService.update(userid, user);
+
+      unlink(file.path, (error) => {
+        console.log(error);
+      });
+    });
+
+    return new Observable((subscriber) => {
+      subscriber.next(file);
+      subscriber.complete();
+    });
+  }
 }
+
 
