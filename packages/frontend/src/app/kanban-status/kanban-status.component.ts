@@ -61,7 +61,7 @@ export class KanbanStatusComponent implements OnInit {
         const kanbanObserver = {
             next: (response: any) => {
                 console.log(`${response}`);
-                this.toastService.success(' Column edited !');
+                this.toastService.success('Column edited !');
                 this.subject.next({
                     method: 'edit',
                     kanban: this.kanbanstatus.kanban
@@ -89,7 +89,10 @@ export class KanbanStatusComponent implements OnInit {
             next: (result: any) => {
                 console.log(`${result}`);
                 this.toastService.success(`Column deleted ! ${result}`);
-                this.subject.next({method: "delete", kaban: this.kanbanstatus.kanban});
+                this.subject.next({
+                    method: 'delete',
+                    kaban: this.kanbanstatus.kanban
+                });
             },
             error: (err: any) => {
                 console.log(

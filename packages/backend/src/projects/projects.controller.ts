@@ -44,25 +44,25 @@ export class ProjectsController {
         name: 'Backlog',
         kanbancolor: '#1F71A5',
         project: '',
-        order: 1,
+        order: 0,
       },
       {
         name: 'In progress',
         kanbancolor: '#1F71A5',
         project: '',
-        order: 2,
+        order: 1,
       },
       {
         name: 'Urgent',
         kanbancolor: '#1F71A5',
         project: '',
-        order: 3,
+        order: 2,
       },
       {
         name: 'Done',
         kanbancolor: '#1F71A5',
         project: '',
-        order: 4,
+        order: 3,
       },
     ];
     const new_project: Project = await this.projectsService.create(project);

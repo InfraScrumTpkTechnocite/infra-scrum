@@ -1,9 +1,9 @@
-<div class="pt-10 sm:pt-32 flex h-screen overflow-x-scroll">
+<div class="pt-16 md:pt-24 flex h-screen overflow-x-scroll">
     <!-- COLONNE SPRINTS -->
 
     <div
         id="sprintsCol"
-        class="bg-grey1 text-white h-full w-1/6 xl:w-1/12 px-5 py-3 overflow-x-hidden"
+        class="bg-[rgba(225,225,224,0.5)] text-white h-full w-1/6 xl:w-1/12 px-2 py-1 overflow-x-hidden"
     >
         <div class="flex flex-col justify-start items-center text-center">
             <button
@@ -18,7 +18,6 @@
             >
                 {{ 'infrascrum.project.btn-global' | translate }}
             </button>
-
             <button
                 *ngIf="!parentProject"
                 (click)="addSprint()"
@@ -27,8 +26,31 @@
             >
                 {{ 'infrascrum.project.btn-add' | translate }}
             </button>
+
             <!-- Boucler sur le nombre de sprints  -->
-            <div
+
+            <select
+                *ngIf="sprintList.length"
+                name="sprint"
+                id="sprint"
+                class="bg-tpkwhite text-primary p-3 rounded-lg text-xs font font-semibold m-2 justify-center"
+            >
+                <option
+                    value="{{ sprint.id }}"
+                    (click)="changeSprintDisplay(sprint.id)"
+                    [ngClass]="{
+                        'bg-primary text-white': sprint.id == projectid,
+                        'text-primary': sprint.id != projectid
+                    }"
+                    *ngFor="let sprint of sprintList"
+                    [disabled]="sprint.id == projectid"
+                    [selected]="sprint.id == projectid"
+                >
+                    {{ sprint.name }}
+                </option>
+            </select>
+
+            <!-- <div
                 class="flex justify-center items-center mt-8"
                 *ngFor="let sprint of sprintList"
             >
@@ -42,9 +64,9 @@
                     [disabled]="sprint.id == projectid"
                 >
                     {{ sprint.name }}
-                </button>
-                <!-- Si sprint terminé, icône V coché  -->
-                <div
+                </button> -->
+            <!-- Si sprint terminé, icône V coché  -->
+            <!-- <div
                     *ngIf="sprint.enddate && sprint.enddate < dateToday"
                     class=""
                 >
@@ -63,17 +85,29 @@
                         />
                     </svg>
                 </div>
-            </div>
+            </div> -->
+        </div>
+        <div class="mt-[22rem]">
+            <!-- BTN DIAGRAMME DE GRANT -->
+            <button
+                class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-12 text-xs"
+            >
+                Diagramme de Gantt
+            </button>
         </div>
     </div>
 
     <!-- KANBAN DASHBOARD -->
 
-    <div id="kanbanDashboard" class="w-11/12 overflow-y-scroll">
+    <div
+        (scroll)="onScroll($event)"
+        id="kanbanDashboard"
+        class="w-11/12 overflow-y-scroll scroll-smooth"
+    >
         <!-- Header  -->
         <div
             id="kanbanHeader"
-            class="flex justify-between h-1/12 py-2 bg-grey1 w-full fixed z-0"
+            class="flex justify-between h-1/12 py-2 bg-[rgba(225,225,224,0.5)] w-full fixed z-0"
         >
             <!-- boutons edit project, add task et add column -->
 
@@ -113,7 +147,7 @@
                 <button
                     (click)="addnewKanbanStatus()"
                     class="bg-primary hover:bg-secondary text-white p-2 rounded-xl h-8 text-xs mr-8"
-                    title="Add a new task"
+                    title="Add a new column"
                 >
                     {{ 'infrascrum.project.btn-new-column' | translate }}
                 </button>
@@ -149,11 +183,11 @@
                 class="flex justify-end items-center text-primary mr-52 xl:mr-40 ml-4"
             >
                 <h4 class="pr-2">Delivery date :</h4>
-                <p>
+                <p *ngIf="project">
                     {{
                         project.enddate
                             ? (project.enddate | date: 'dd-MMM-yyyy')
-                            : '/'
+                            : 'none'
                     }}
                 </p>
             </div>
@@ -198,9 +232,9 @@
 
         <!-- Kanban columns  -->
 
-        <div id="kanban" class="flex px-12 pb-12 pt-16">
-            <!-- boucler sur les kanbanstatus du projet  -->
-            <div cdkDropListGroup class="flex">
+        <!-- <div cdkDropListGroup id="kanban" class="flex px-12 pb-12 pt-16"> -->
+        <!-- boucler sur les kanbanstatus du projet  -->
+        <!--     <div class="flex">
                 <div
                     *ngFor="let kanbanstatus of kanbanList; let i = index"
                     cdkDropList
@@ -227,11 +261,11 @@
                             [project]="project"
                         ></app-kanban-status>
                     </div>
-                </div>
+                </div> -->
 
-                <!-- BOUTON NEW COLUMN  -->
+        <!-- BOUTON NEW COLUMN  -->
 
-                <div class="w-36 mx-4 mt-6">
+        <!-- <div class="w-36 mx-4 mt-6">
                     <button
                         (click)="addnewKanbanStatus()"
                         class="bg-grey1 rounded-md hover:shadow-sm hover:shadow-secondary"
@@ -265,7 +299,115 @@
                     </button>
                 </div>
             </div>
+        </div> -->
+        <!-- fin kanban columns-->
+
+        <!-- début test -->
+        <div
+            cdkDropList
+            cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="dropColumns($event)"
+        >
+            <div cdkDropListGroup class="flex px-12 pb-12 pt-16">
+                <div
+                    class="example-container"
+                    *ngFor="let kanban of kanbanList; let i = index"
+                    cdkDrag
+                >
+                    <app-kanban-status
+                        [subject]="subject"
+                        [kanbanList]="kanban"
+                        (kanbanDeleted)="onKanbanDeleted(kanban.kanban)"
+                        [taskTypeList]="taskTypeList"
+                        [sprintList]="sprintList"
+                        [projectid]="projectid"
+                        [project]="project"
+                    ></app-kanban-status>
+
+                    <div
+                        id="{{ i }}"
+                        cdkDropList
+                        [cdkDropListData]="kanban.tasks"
+                        class="example-list kanbanStatusTitle flex flex-col w-56 mx-2 mt-2"
+                        (cdkDropListDropped)="drop($event)"
+                    >
+                        <div *ngFor="let task of kanban.tasks" cdkDrag>
+                            <app-task
+                                [task]="task"
+                                [subject]="subject"
+                                [taskTypeList]="taskTypeList"
+                                [sprintList]="sprintList"
+                                [projectid]="projectid"
+                                [project]="project"
+                            ></app-task>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-28 mx-2 mt-4">
+                    <button
+                        (click)="addnewKanbanStatus()"
+                        class="bg-[rgba(225,225,224,0.5)] rounded-md hover:shadow-sm hover:shadow-secondary hover:text-secondary"
+                        title="Add a column"
+                    >
+                        <div
+                            class="w-16 bg-primary text-white h-3 rounded-t-lg flex items-center justify-center"
+                        >
+                            <!-- <h3 class="text-center font-bold text-xs">
+                                {{
+                                    'infrascrum.project.btn-add-column'
+                                        | translate
+                                }}
+                            </h3> -->
+                        </div>
+                        <div class="h-10 items-center flex justify-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5 font-extrabold"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 4.5v15m7.5-7.5h-15"
+                                />
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- fin test -->
+
+        <!-- Bouton scroll to the top -->
+        <div
+            *ngIf="isBottom"
+            class="flex justify-end fixed bottom-5 right-5 animate-bounce"
+        >
+            <button
+                id="scrollTopBtn"
+                (click)="scrollTop()"
+                class="rounded-full border-2 border-primary font-bold p-1"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"
+                    />
+                </svg>
+            </button>
         </div>
     </div>
+    <!-- fin kanban dashboard -->
 </div>
 <app-chart-gantt></app-chart-gantt>

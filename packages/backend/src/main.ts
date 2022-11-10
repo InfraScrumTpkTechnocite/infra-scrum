@@ -50,9 +50,9 @@ async function bootstrap() {
     port: configEnv.get<number>('WEBSOCKET_SERVER_PORT'),
   });
 
-  var webSockets = []; 
+  var webSockets = [];
   // Creating connection using websocket and loops waiting for client connections...
-  wss.on('connection', (ws, request) => {
+  wss.on('connection', (ws, request, client) => {
     // console.log(
     //   `new client ( origin : ${
     //     request.rawHeaders[request.rawHeaders.indexOf('Origin') + 1]
@@ -60,19 +60,23 @@ async function bootstrap() {
     // );
     //console.log(request.rawHeaders);
     console.log(
-      `ws : ${ws}, Request: ${request}, ClientIP address : ${request.socket.remoteAddress}`,
+      `ws : ${ws}, Request: ${request}, Client IP address : ${request.socket.remoteAddress}`,
     );
-    webSockets.push({url : request.url, ws : ws});
+    webSockets.push({ url: request.url, ws: ws });
     // sending message
     ws.on('message', (data: any) => {
       // console.log(
       //   `Client with projectid ${JSON.stringify(ws)} has sent us: ${data}`,
       // );
       // console.table(wss.clients);
-      //console.log('received from ' + webSockets + ': ' + data)
+      console.log('received from ' + webSockets + ': ' + data);
       wss.clients.forEach(function each(client: any) {
         // console.log('client : ' + client + ' - ws : ' + ws);
-        if (client !== ws && webSockets.find(websocket => websocket.ws == client).url == webSockets.find(websocket => websocket.ws == ws).url) {
+        if (
+          client !== ws /* &&
+          webSockets.find((websocket) => websocket.ws == client).url ==
+            webSockets.find((websocket) => websocket.ws == ws).url */
+        ) {
           console.log(`WebSocket server - sending message : ${data}`);
           client.send(data.toString());
         }
@@ -81,7 +85,10 @@ async function bootstrap() {
     // handling what to do when clients disconnects from server
     ws.on('close', () => {
       console.log('the client has disconnected');
-      webSockets.splice(webSockets.findIndex(websocket => websocket.ws == ws),1);
+      webSockets.splice(
+        webSockets.findIndex((websocket) => websocket.ws == ws),
+        1,
+      );
     });
     // handling client connection error
     ws.onerror = function () {
