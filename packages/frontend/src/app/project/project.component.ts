@@ -105,11 +105,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         if (message.projectid == this.project.id) {
                             if (message.kanban) {
                                 //console.log(message.kanban.id);
-                                this.kanbanList.find(
+                                let kanban = this.kanbanList.find(
                                     (kanbans) =>
                                         kanbans.kanban.order ==
                                         message.kanban.order
-                                )!.kanban = message.kanban;
+                                );
+
+                                kanban!.kanban = message.kanban;
+                                kanban!.tasks = message.tasks;
                             }
                             if (message.task) {
                                 console.log('in if');
@@ -527,7 +530,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     this.subject.next({
                         method: 'edit',
                         kanban: kanban.kanban,
-                        projectid: this.project.id
+                        projectid: this.project.id,
+                        tasks: kanban.tasks
                     });
                 }
             });
@@ -552,7 +556,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 event.currentIndex
             );
 
-            let kanbanIndex: number = parseInt(event.container.id); //id de la div contenant la liste des tâches (=index du ngFor)
+            let kanbanIndex: number = parseInt(event.container.id); //kanban = event.container = div contenant la liste des tâches
             //console.log(this.kanbanList[kanbanIndex]);
             let kanbanTarget: Kanbanstatus =
                 this.kanbanList[kanbanIndex].kanban;
@@ -562,7 +566,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.taskService.edit(task.id, task).subscribe({
                     next: () => {},
                     error: () => {},
-                    complete: () => {}
+                    complete: () => {
+                        this.subject.next({
+                            method: 'edit',
+                            //kanban: kanban.kanban,
+                            task: task
+                            //previousContainer: event.previousContainer
+                            // container: event.container,
+                            // previousIndex: event.previousIndex,
+                            // currentIndex: event.currentIndex,
+                            // projectid: this.project.id
+                        });
+                    }
                 });
             }
         }
