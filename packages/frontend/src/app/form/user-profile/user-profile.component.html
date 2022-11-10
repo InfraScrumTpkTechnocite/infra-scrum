@@ -262,7 +262,7 @@
             <button
                 class="update"
                 type="submit"
-                [disabled]=""
+                [disabled]="!user.password || !user.username || !verifPassword"
                 (click)="onSubmit(user)"
             >
                 {{ 'Update' | translate }}
