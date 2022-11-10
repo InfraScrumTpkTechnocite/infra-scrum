@@ -116,19 +116,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             }
                             if (message.task) {
                                 console.log('in if');
-                                // this.kanbanList.find((kanbans) => {
-                                //     console.log(
-                                //         //kanbans.tasks![
-                                //         kanbans.tasks!.findIndex(
-                                //             (tasks) =>
-                                //                 tasks.id == message.task.id
-                                //         )
-                                //         /*]*/
-                                //     ); //= message.task;
-                                // });
+                                let sourceIndex: number = this.kanbanList[
+                                    message.sourceKanbanOrder
+                                ].tasks.findIndex(
+                                    (task) => task.id == message.task.id
+                                );
                                 this.kanbanList[
                                     message.sourceKanbanOrder
-                                ].tasks.splice(message.sourceIndex, 1);
+                                ].tasks.splice(sourceIndex, 1);
                                 this.kanbanList[
                                     message.targetKanbanOrder
                                 ].tasks.push(message.task);
@@ -580,8 +575,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             task: task,
                             projectid: this.project.id,
                             sourceKanbanOrder: event.previousContainer.id,
-                            targetKanbanOrder: event.container.id,
-                            sourceIndex: event.previousIndex
+                            targetKanbanOrder: event.container.id
                         });
                     }
                 });
