@@ -12,10 +12,16 @@ import { HotToastService } from '@ngneat/hot-toast';
 export class EditDeliverydateComponent {
   @Input() projectid!: string;
   @Input() project!: Project;
+
+  isEditSprint: boolean = false;
+
   constructor(
   ) { }
 
   ngOnInit(): void {
   }
 
+  editSprint() {
+    this.isEditSprint = !this.isEditSprint;
+}
 }

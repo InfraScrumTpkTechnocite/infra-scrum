@@ -14,6 +14,6 @@ export const seederUser: any = {
   firstname: 'Gilles',
   lastname: '',
   password: 'gilles',
-  picture: 'zrzerzer',
+  picture: '',
   role: 'acf42287-aaaa-48b5-ae6e-ebc75e2a275f',
 };

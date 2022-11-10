@@ -18,7 +18,6 @@
             >
                 {{ 'infrascrum.project.btn-global' | translate }}
             </button>
-
             <button
                 *ngIf="!parentProject"
                 (click)="addSprint()"
@@ -27,8 +26,30 @@
             >
                 {{ 'infrascrum.project.btn-add' | translate }}
             </button>
+
             <!-- Boucler sur le nombre de sprints  -->
-            <div
+
+            <select
+                name="sprint"
+                id="sprint"
+                class="bg-tpkwhite text-primary p-3 rounded-lg text-xs font font-semibold m-2 justify-center"
+            >
+                <option
+                    value="{{ sprint.id }}"
+                    (click)="changeSprintDisplay(sprint.id)"
+                    [ngClass]="{
+                        'bg-primary text-white': sprint.id == projectid,
+                        'text-primary': sprint.id != projectid
+                    }"
+                    *ngFor="let sprint of sprintList"
+                    [disabled]="sprint.id == projectid"
+                    [selected]="sprint.id == projectid"
+                >
+                    {{ sprint.name }}
+                </option>
+            </select>
+
+            <!-- <div
                 class="flex justify-center items-center mt-8"
                 *ngFor="let sprint of sprintList"
             >
@@ -42,9 +63,9 @@
                     [disabled]="sprint.id == projectid"
                 >
                     {{ sprint.name }}
-                </button>
-                <!-- Si sprint terminé, icône V coché  -->
-                <div
+                </button> -->
+            <!-- Si sprint terminé, icône V coché  -->
+            <!-- <div
                     *ngIf="sprint.enddate && sprint.enddate < dateToday"
                     class=""
                 >
@@ -63,7 +84,15 @@
                         />
                     </svg>
                 </div>
-            </div>
+            </div> -->
+        </div>
+        <div class="mt-[22rem]">
+            <!-- BTN DIAGRAMME DE GRANT -->
+            <button
+                class="bg-primary hover:bg-secondary border-2 text-white text-center p-2 rounded-xl h-12 text-xs"
+            >
+                Diagramme de Gantt
+            </button>
         </div>
     </div>
 
@@ -157,7 +186,7 @@
                     {{
                         project.enddate
                             ? (project.enddate | date: 'dd-MMM-yyyy')
-                            : 'n/a'
+                            : 'none'
                     }}
                 </p>
             </div>
@@ -295,6 +324,7 @@
                     ></app-kanban-status>
 
                     <div
+                        id="{{ i }}"
                         cdkDropList
                         [cdkDropListData]="kanban.tasks"
                         class="example-list kanbanStatusTitle flex flex-col w-56 mx-2 mt-2"
