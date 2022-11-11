@@ -18,12 +18,11 @@
                     class="avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2"
                 >
                     <!-- image -->
-                    <label for="#UserPicture" class="avatar">{{
-                        '' | translate
-                    }}</label>
+                    <label for="#UserPicture">{{ '' | translate }}</label>
                     <img
                         (click)="PictureUploader.click()"
                         *ngIf="user.picture"
+                        class="img border-tpkvalidate"
                         src="data:image/*;base64, {{ user.picture }}"
                         alt="{{ user.picture }}"
                     />
@@ -31,7 +30,8 @@
                     <input
                         #PictureUploader
                         type="file"
-                        class="avatar"
+                        value="+"
+                        class="select-profile-picture"
                         (change)="onFileSelected($event)"
                     />
                 </div>
