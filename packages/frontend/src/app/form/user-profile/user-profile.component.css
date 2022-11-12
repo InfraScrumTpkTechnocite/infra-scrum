@@ -70,7 +70,10 @@ p {
 
   /*css button"ajouter" avatar*/
   .button-ajouter-avatar{
-    margin-left: 225px;
+    border-radius: 50%;
+    color:white;
+    font-size: 70px;
+
   }
 
 /*css input role message erreur*/
@@ -83,14 +86,14 @@ p {
 }
 
 .h1{
-    margin-left: -80px;
+    margin-left: 100px;
 }
 
 
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 310px;
+    margin-left: 240px;
     font-style: normal;
     font-size: 14pt;
     color: red;
@@ -100,7 +103,7 @@ p {
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: 125px;
+    margin-left: 55px;
     font-style: normal;
     font-size: 14pt;
     color: red;
@@ -149,7 +152,7 @@ p {
 /*css username*/
 
 .input-username {
-    margin-left: 310px;
+    margin-left: 240px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }
@@ -158,7 +161,7 @@ p {
 /*css email*/
 
 .input-email {
-    margin-left: 310px;
+    margin-left: 240px;
     font-size: 18px;
     text-decoration: underline rgb(130, 161, 224);
 }

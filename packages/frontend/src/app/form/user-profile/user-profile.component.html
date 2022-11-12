@@ -9,7 +9,7 @@
     <div
         class="bg-tpkwhite text-secondary mt-15 m-auto w-1/2 h-18/9 rounded-md shadow-lg shadow-primary"
     >
-        <br />
+        <br /><br />
 
         <!--Zone avatar-->
         <section>
@@ -36,10 +36,27 @@
                     />
                 </div>
 
+                <div
+                    class="button-ajouter-avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2 border-tpkvalidate"
+                >
+                    <!-- condition si photo, sinon span avec premiere lettre username -->
+                    <img
+                        *ngIf="user.name"
+                        class="rounded-full"
+                        src="{{ user.name }}"
+                        alt="profile name"
+                    />
+                    <span
+                        *ngIf="!user.name"
+                        class="text-2xl uppercase font-bold"
+                        >{{ user.username | initialsName }}</span
+                    >
+                </div>
+
                 <!--titre ("My Profil")-->
                 <div>
                     <h1
-                        class="h1 text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-center pt-4"
+                        class="h1 text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-align pt-4"
                     >
                         My Profile
                     </h1>
