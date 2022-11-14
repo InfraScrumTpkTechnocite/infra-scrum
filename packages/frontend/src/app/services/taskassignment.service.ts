@@ -29,7 +29,7 @@ export class TaskassignmentService {
   }
 
   create(taskassignment: TaskAssignment): Observable<TaskAssignment> {
-
+    console.log(taskassignment);
     return this.httpClient.post<any>("/backend/tasksassignments", JSON.stringify(taskassignment), this.httpOptions)
     .pipe(
       tap((response) => this.log(response)),

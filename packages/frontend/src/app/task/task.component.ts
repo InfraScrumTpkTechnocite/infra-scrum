@@ -8,6 +8,12 @@ import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.com
 import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
 import { UserProject } from '../models/userproject.model';
+import { Kanbanstatus } from '../models/kanbanstatus.model';
+
+interface KanbanList {
+    kanban: Kanbanstatus;
+    tasks: Task[];
+}
 
 @Component({
     selector: 'app-task',
@@ -24,6 +30,7 @@ export class TaskComponent implements OnInit {
     @Input() taskTypeList!: TaskType[];
     @Input() sprintList!: Project[];
     @Input() userProjectList!: UserProject[];
+    @Input() kanbanList!: KanbanList[];
     taskassignmentList!: TaskAssignment[];
 
     showTask: boolean = true;
@@ -70,6 +77,7 @@ export class TaskComponent implements OnInit {
 
     editTask() {
         const task = this.task;
+        console.log(this.userProjectList)
         const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: task,
@@ -78,6 +86,7 @@ export class TaskComponent implements OnInit {
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
                 edition: true,
+                kanbanList: this.kanbanList,
                 subject: this.subject
             }
         });
