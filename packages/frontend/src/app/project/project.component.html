@@ -64,7 +64,12 @@
                 </button>
                 <!-- BTN ADD A SPRINT -->
                 <button
-                    *ngIf="!parentProject"
+                    *ngIf="
+                        !parentProject &&
+                        (user.role.name == 'admin' ||
+                            user.role.name == 'superadmin' ||
+                            isUserProjectadmin)
+                    "
                     (click)="addSprint()"
                     class="w-28 h-10 hover:text-white hover:bg-secondary text-primary text-center mt-2 p-2 rounded-lg text-xs hoverSmooth"
                     title="Add a sprint"
