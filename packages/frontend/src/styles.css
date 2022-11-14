@@ -114,3 +114,17 @@
     background: #82979F;
   }
 
+  td, th {
+    border: 1px solid #a1a1a0;
+    text-align: left;
+    padding: 8px;
+  }
+
+  th {
+    color: #1F71A5;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #a1a1a0;
+  }
+
