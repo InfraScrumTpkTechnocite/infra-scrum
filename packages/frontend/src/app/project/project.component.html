@@ -49,10 +49,10 @@
                     class="w-28 h-10 hover:bg-secondary hover:text-white hoverSmooth p-2 rounded-lg m-2 text-xs font-semibold justify-center hover:cursor-pointer"
                     [ngClass]="{
                         'bg-secondary text-white focus:border-2 focus:border-tpkvalidate ':
-                            !parentProject,
-                        'text-primary': parentProject
+                            !parentProject && switch == 'default',
+                        'text-primary': parentProject || switch != 'default'
                     }"
-                    [disabled]="!parentProject"
+                    [disabled]="!parentProject && switch == 'default'"
                 >
                     {{ 'infrascrum.project.btn-global' | translate }}
                 </button>
@@ -128,8 +128,8 @@
             </div>
             <div class="flex flex-col">
                 <!-- BTN DIAGRAMME DE GANTT -->
-                <button 
-                (click)="hideChart = !hideChart"
+                <button
+                    (click)="switch = 'gantt'"
                     title="Gantt diagram"
                     class="flex items-center justify-center w-28 h-10 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg text-xs p-1"
                 >
@@ -151,6 +151,7 @@
                 </button>
                 <!-- BTN HISTORIQUE TACHES COMMENCEES-->
                 <button
+                    (click)="switch = 'history'"
                     title="Tasks history"
                     class="flex items-center justify-center w-28 h-10 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg text-xs p-1"
                 >
@@ -169,147 +170,148 @@
                             d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75"
                         />
                     </svg>
-
                 </button>
             </div>
-
         </div>
     </div>
 
     <!-- KANBAN DASHBOARD -->
 
     <div
-        *ngIf="hideChart"
+        [ngSwitch]="switch"
         (scroll)="onScroll($event)"
         id="kanbanDashboard"
         class="w-11/12 overflow-y-scroll scroll-smooth"
     >
-        <!-- Header  -->
-        <div
-            id="kanbanHeader"
-            class="flex justify-between h-16 py-2 bg-[rgba(225,225,224,0.5)] w-screen fixed z-0"
-        >
-            <!-- boutons edit project, add task et add column -->
+        <div *ngSwitchDefault>
+            <!-- Header  -->
+            <div
+                id="kanbanHeader"
+                class="flex justify-between h-16 py-2 bg-[rgba(225,225,224,0.5)] w-screen fixed z-0"
+            >
+                <!-- boutons edit project, add task et add column -->
 
-            <div class="flex items-center justify-start pl-6">
-                <button
-                    *ngIf="
-                        project &&
-                        (user.role.name == 'admin' ||
-                            user.role.name == 'superadmin' ||
-                            isUserProjectadmin)
-                    "
-                    (click)="editProject()"
-                    title="Edit project"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-8 h-8 text-white bg-primary border-2 border-primary hover:border-secondary hover:text-white hover:bg-secondary hoverSmooth font-bold mr-8 rounded"
+                <div class="flex items-center justify-start pl-6">
+                    <button
+                        *ngIf="
+                            project &&
+                            (user.role.name == 'admin' ||
+                                user.role.name == 'superadmin' ||
+                                isUserProjectadmin)
+                        "
+                        (click)="editProject()"
+                        title="Edit project"
                     >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
-                        />
-                    </svg>
-                </button>
-                <button
-                    (click)="addTask()"
-                    class="flex items-center justify-center bg-primary hover:bg-secondary text-white hoverSmooth p-2 rounded-lg h-8 text-xs mr-6"
-                    title="Add a new task"
-                >
-                    <span>
-                        {{ 'infrascrum.project.btn-new-task' | translate }}
-                    </span>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-5 h-5 ml-2"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
-                        />
-                    </svg>
-                </button>
-                <button
-                    (click)="addnewKanbanStatus()"
-                    class="flex items-center justify-center bg-primary hover:bg-secondary text-white hoverSmooth p-2 rounded-lg h-8 text-xs mr-8"
-                    title="Add a new column"
-                >
-                    <span>
-                        {{ 'infrascrum.project.btn-new-column' | translate }}
-                    </span>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-5 h-5 ml-2"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z"
-                        />
-                    </svg>
-                </button>
-                <div
-                    class="flex items-center"
-                    *ngFor="let userProject of userProjects"
-                >
-                    <div
-                        class="userChipSmall w-7 h-7 md:w-8 md:h-8 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
-                    >
-                        <!-- condition si photo, sinon span avec premiere lettre username -->
-                        <img
-                            *ngIf="userProject.user.picture"
-                            class="rounded-full hover:cursor-default"
-                            [src]="userProject.user.picture"
-                            alt="profile picture"
-                            title="{{ userProject.user.username }}"
-                        />
-                        <span
-                            *ngIf="!userProject.user.picture"
-                            class="text-2xl uppercase font-bold"
-                            title="{{ userProject.user.username }}"
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-8 h-8 text-white bg-primary border-2 border-primary hover:border-secondary hover:text-white hover:bg-secondary hoverSmooth font-bold mr-8 rounded"
                         >
-                            {{ userProject.user.username | initialsName }}
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
+                            />
+                        </svg>
+                    </button>
+                    <button
+                        (click)="addTask()"
+                        class="flex items-center justify-center bg-primary hover:bg-secondary text-white hoverSmooth p-2 rounded-lg h-8 text-xs mr-6"
+                        title="Add a new task"
+                    >
+                        <span>
+                            {{ 'infrascrum.project.btn-new-task' | translate }}
                         </span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5 ml-2"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
+                            />
+                        </svg>
+                    </button>
+                    <button
+                        (click)="addnewKanbanStatus()"
+                        class="flex items-center justify-center bg-primary hover:bg-secondary text-white hoverSmooth p-2 rounded-lg h-8 text-xs mr-8"
+                        title="Add a new column"
+                    >
+                        <span>
+                            {{
+                                'infrascrum.project.btn-new-column' | translate
+                            }}
+                        </span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5 ml-2"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z"
+                            />
+                        </svg>
+                    </button>
+                    <div
+                        class="flex items-center"
+                        *ngFor="let userProject of userProjects"
+                    >
+                        <div
+                            class="userChipSmall w-7 h-7 md:w-8 md:h-8 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                        >
+                            <!-- condition si photo, sinon span avec premiere lettre username -->
+                            <img
+                                *ngIf="userProject.user.picture"
+                                class="rounded-full hover:cursor-default"
+                                [src]="userProject.user.picture"
+                                alt="profile picture"
+                                title="{{ userProject.user.username }}"
+                            />
+                            <span
+                                *ngIf="!userProject.user.picture"
+                                class="text-2xl uppercase font-bold"
+                                title="{{ userProject.user.username }}"
+                            >
+                                {{ userProject.user.username | initialsName }}
+                            </span>
+                        </div>
                     </div>
                 </div>
+                <!-- Dates intermédiaires à ajouter ?? -->
+                <!--  -->
+                <!-- Delivery date -->
+                <div
+                    class="flex justify-end items-center text-primary mr-52 sm:mr-36 lg:mr-40 ml-4"
+                >
+                    <h4 class="pr-2">Delivery date :</h4>
+                    <p *ngIf="project">
+                        {{
+                            project.enddate
+                                ? (project.enddate | date: 'dd-MMM-yyyy')
+                                : 'none yet'
+                        }}
+                    </p>
+                </div>
             </div>
-            <!-- Dates intermédiaires à ajouter ?? -->
-            <!--  -->
-            <!-- Delivery date -->
-            <div
-                class="flex justify-end items-center text-primary mr-52 sm:mr-36 lg:mr-40 ml-4"
-            >
-                <h4 class="pr-2">Delivery date :</h4>
-                <p *ngIf="project">
-                    {{
-                        project.enddate
-                            ? (project.enddate | date: 'dd-MMM-yyyy')
-                            : 'none yet'
-                    }}
-                </p>
-            </div>
-        </div>
 
-        <!-- Kanban columns  -->
+            <!-- Kanban columns  -->
 
-        <!-- <div cdkDropListGroup id="kanban" class="flex px-12 pb-12 pt-16"> -->
-        <!-- boucler sur les kanbanstatus du projet  -->
-        <!--     <div class="flex">
+            <!-- <div cdkDropListGroup id="kanban" class="flex px-12 pb-12 pt-16"> -->
+            <!-- boucler sur les kanbanstatus du projet  -->
+            <!--     <div class="flex">
                 <div
                     *ngFor="let kanbanstatus of kanbanList; let i = index"
                     cdkDropList
@@ -338,9 +340,9 @@
                     </div>
                 </div> -->
 
-        <!-- BOUTON NEW COLUMN  -->
+            <!-- BOUTON NEW COLUMN  -->
 
-        <!-- <div class="w-36 mx-4 mt-6">
+            <!-- <div class="w-36 mx-4 mt-6">
                     <button
                         (click)="addnewKanbanStatus()"
                         class="bg-grey1 rounded-md hover:shadow-sm hover:shadow-secondary"
@@ -375,93 +377,106 @@
                 </div>
             </div>
         </div> -->
-        <!-- fin kanban columns-->
+            <!-- fin kanban columns-->
 
-        <!-- début test -->
-        <div
-            cdkDropList
-            cdkDropListOrientation="horizontal"
-            (cdkDropListDropped)="dropColumns($event)"
-        >
-            <div cdkDropListGroup class="flex px-12 pb-12 pt-16">
-                <div
-                    class="example-container"
-                    *ngFor="let kanban of kanbanList; let i = index"
-                    cdkDrag
-                    [cdkDragDisabled]="
-                        user.role.name != 'admin' &&
-                        user.role.name != 'superadmin' &&
-                        !isUserProjectadmin
-                    "
-                >
-                    <app-kanban-status
-                        [subject]="subject"
-                        [kanbanList]="kanban"
-                        (kanbanDeleted)="onKanbanDeleted(kanban.kanban)"
-                        [taskTypeList]="taskTypeList"
-                        [sprintList]="sprintList"
-                        [projectid]="projectid"
-                        [project]="project"
-                        [user]="user"
-                        [isUserProjectadmin]="isUserProjectadmin"
-                    ></app-kanban-status>
-
+            <!-- début test -->
+            <div
+                cdkDropList
+                cdkDropListOrientation="horizontal"
+                (cdkDropListDropped)="dropColumns($event)"
+            >
+                <div cdkDropListGroup class="flex px-12 pb-12 pt-16">
                     <div
-                        id="{{ i }}"
-                        cdkDropList
-                        [cdkDropListData]="kanban.tasks"
-                        class="example-list kanbanStatusTitle flex flex-col w-56 mx-2 mt-2"
-                        (cdkDropListDropped)="drop($event)"
+                        class="example-container"
+                        *ngFor="let kanban of kanbanList; let i = index"
+                        cdkDrag
+                        [cdkDragDisabled]="
+                            user.role.name != 'admin' &&
+                            user.role.name != 'superadmin' &&
+                            !isUserProjectadmin
+                        "
                     >
-                        <div *ngFor="let task of kanban.tasks" cdkDrag>
-                            <app-task
-                                [task]="task"
-                                [subject]="subject"
-                                [taskTypeList]="taskTypeList"
-                                [sprintList]="sprintList"
-                                [projectid]="projectid"
-                                [project]="project"
-                            ></app-task>
+
+                        <app-kanban-status
+                            [subject]="subject"
+                            [kanbanList]="kanban"
+                            (kanbanDeleted)="onKanbanDeleted(kanban.kanban)"
+                            [taskTypeList]="taskTypeList"
+                            [sprintList]="sprintList"
+                            [projectid]="projectid"
+                            [project]="project"
+                            [user]="user"
+                            [isUserProjectadmin]="isUserProjectadmin"
+                        ></app-kanban-status>
+
+                        <div
+                            id="{{ i }}"
+                            cdkDropList
+                            [cdkDropListData]="kanban.tasks"
+                            class="example-list kanbanStatusTitle flex flex-col w-56 mx-2 mt-2"
+                            (cdkDropListDropped)="drop($event)"
+                        >
+                            <div
+                                *ngFor="let task of kanban.tasks"
+                                cdkDrag
+                                [cdkDragDisabled]="
+                                    user.role.name != 'admin' &&
+                                    user.role.name != 'superadmin' &&
+                                    !isUserProjectadmin
+                                "
+                            >
+                                <app-task
+                                    [task]="task"
+                                    [subject]="subject"
+                                    [taskTypeList]="taskTypeList"
+                                    [sprintList]="sprintList"
+                                    [projectid]="projectid"
+                                    [project]="project"
+                                ></app-task>
+                            </div>
+
                         </div>
                     </div>
-                </div>
-                <div class="w-28 mx-2 mt-4">
-                    <button
-                        (click)="addnewKanbanStatus()"
-                        class="bg-[rgba(225,225,224,0.5)] rounded-md hover:shadow-sm hover:shadow-secondary hover:text-secondary"
-                        title="Add a column"
-                    >
-                        <div
-                            class="w-16 bg-primary text-white h-3 rounded-t-lg flex items-center justify-center"
+                    <div class="w-28 mx-2 mt-4">
+                        <button
+                            (click)="addnewKanbanStatus()"
+                            class="bg-[rgba(225,225,224,0.5)] rounded-md hover:shadow-sm hover:shadow-secondary hover:text-secondary"
+                            title="Add a column"
                         >
-                            <!-- <h3 class="text-center font-bold text-xs">
+                            <div
+                                class="w-16 bg-primary text-white h-3 rounded-t-lg flex items-center justify-center"
+                            >
+                                <!-- <h3 class="text-center font-bold text-xs">
                                 {{
                                     'infrascrum.project.btn-add-column'
                                         | translate
                                 }}
                             </h3> -->
-                        </div>
-                        <div class="h-10 items-center flex justify-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5 font-extrabold"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M12 4.5v15m7.5-7.5h-15"
-                                />
-                            </svg>
-                        </div>
-                    </button>
+                            </div>
+                            <div class="h-10 items-center flex justify-center">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-5 h-5 font-extrabold"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M12 4.5v15m7.5-7.5h-15"
+                                    />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
+            <!-- fin test -->
         </div>
-        <!-- fin test -->
+        <app-chart-gantt *ngSwitchCase="'gantt'"></app-chart-gantt>
+        <app-tasks-history *ngSwitchCase="'history'"></app-tasks-history>
 
         <!-- Bouton scroll to the top -->
         <div
