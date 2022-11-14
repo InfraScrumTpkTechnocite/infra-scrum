@@ -99,7 +99,9 @@
                         <p class="text-xs">
                             {{ 'infrascrum.task.start-date' | translate }}
                         </p>
-                        <p class="text-sm">{{ task.startdate | date }}</p>
+                        <p class="text-sm">
+                            {{ task.startdate | date: 'dd-MMM-yyyy' }}
+                        </p>
                     </div>
                     <div class="flex flex-col items-center">
                         <p class="text-xs">

@@ -413,15 +413,7 @@
                         class="example-list kanbanStatusTitle flex flex-col w-56 mx-2 mt-2"
                         (cdkDropListDropped)="drop($event)"
                     >
-                        <div
-                            *ngFor="let task of kanban.tasks"
-                            cdkDrag
-                            [cdkDragDisabled]="
-                                user.role.name != 'admin' &&
-                                user.role.name != 'superadmin' &&
-                                !isUserProjectadmin
-                            "
-                        >
+                        <div *ngFor="let task of kanban.tasks" cdkDrag>
                             <app-task
                                 [task]="task"
                                 [subject]="subject"
