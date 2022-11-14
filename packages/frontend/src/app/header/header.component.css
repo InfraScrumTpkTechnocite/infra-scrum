@@ -1,0 +1,70 @@
+/* Login button animations */
+
+.btn-hover {
+    cursor: pointer;
+    background-size: 300% 100%;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+
+.btn-hover.tpkBlueBtn {
+    background-image: linear-gradient(to right, #25aae1, #1F71A5, #0faee4, #275E9d);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+.btn-hover.tpkErrorBtn {
+    background-image: linear-gradient(to right, #e44e4d, #e12525, #e40f0f, #9d2727);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+
+
+/* Dropdown-menu triangle */
+
+.sub-menu:after{
+    content:''; 
+    position: absolute; 
+    top: 0;
+    right: 8%;
+    /* margin-left: 0px; */
+	margin-top:4px; 
+    width: 0;
+    z-index:1;
+    height: 0;
+    border-bottom: solid 8px #275e9d; 
+    border-left: solid 8px transparent; 
+    border-right: solid 8px transparent; 
+}
+
+
+/* ANIMATION DROPDOWN USER-MENU */
+
+.dropdownAnim{
+    animation: growDown 300ms ease-in-out forwards;
+    transform-origin: top center
+}
+@keyframes growDown {
+    0% {
+        transform: scaleY(0);
+    }
+    80% {
+        transform: scaleY(1.1);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+

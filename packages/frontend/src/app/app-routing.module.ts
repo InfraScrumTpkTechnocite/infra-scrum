@@ -14,6 +14,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { EditProjectComponent } from './form/edit-project/edit-project.component';
 import { EditNewTasksComponent } from './form/edit-new-tasks/edit-new-tasks.component';
 import { UserProfileComponent } from './form/user-profile/user-profile.component';
+import { TableUsersComponent } from './table-users/table-users.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -48,22 +49,9 @@ const routes: Routes = [
             role: ['superadmin', 'admin', 'employee', 'intern']
         }
     },
-
     {
-        path: 'edit-new-tasks',
-        component: EditNewTasksComponent,
-        canActivate: [AuthGuardService],
-        data: {
-            role: ['superadmin', 'admin', 'employee', 'intern']
-        }
-    },
-    {
-        path: 'project/edit-project',
-        component: EditProjectComponent,
-        canActivate: [AuthGuardService],
-        data: {
-            role: ['superadmin', 'admin', 'employee']
-        }
+        path: 'table-users',
+        component: TableUsersComponent,
     },
     {
         path: 'create-user',
