@@ -106,14 +106,16 @@
             >
                 <!-- condition si photo, sinon span avec premiere lettre username -->
                 <img
-                    *ngIf="user.name"
-                    class="rounded-full"
-                    src="{{ user.name }}"
-                    alt="profile name"
+                    *ngIf="user.picture"
+                    class="img rounded-full"
+                    src="data:image/*;base64, {{ user.picture }}"
+                    alt="{{ user.picture }}"
                 />
-                <span *ngIf="!user.name" class="text-2xl uppercase font-bold">{{
-                    user.username | initialsName
-                }}</span>
+                <span
+                    *ngIf="!user.picture"
+                    class="text-2xl uppercase font-bold"
+                    >{{ user.username | initialsName }}</span
+                >
             </div>
             <!-- Sous-menu user -->
             <div

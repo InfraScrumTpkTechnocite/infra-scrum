@@ -9,7 +9,7 @@
     border: 1.5px #9eecc8;
     color: rgb(255, 255, 255);
     font-size: 70px;
-}*/
+}
 
 .img-avatar{
     margin-right:25px ;
@@ -35,11 +35,19 @@ p {
   img {
     height: 160px;
     width: 160px;
-    border: 3px solid #57bebe;
+    border: 3px solid #16e7dd;
     border-radius: 50%;
     color: rgb(255, 255, 255);
     font-size: 70px;
   }
+
+  .img-button-ajouter-avatar {
+    border: 3px solid #0b86c4;
+    border-radius: 50%;
+    color: rgb(16, 99, 177);
+    font-size: 150%;
+  }
+  
   
   .select-profile-picture {
     position: absolute;
@@ -49,6 +57,8 @@ p {
     opacity: 0;
     width: 100%;
     height: 100%;
+    font-size: 120px;
+    color: white;
     cursor: pointer;
   }
   
@@ -68,14 +78,6 @@ p {
     opacity: 1;
   }
 
-  /*css button"ajouter" avatar*/
-  .button-ajouter-avatar{
-    border-radius: 50%;
-    color:white;
-    font-size: 70px;
-
-  }
-
 /*css input role message erreur*/
 
 .role-message-erreur {
@@ -93,8 +95,8 @@ p {
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 240px;
-    font-style: normal;
+    margin-left: 300px;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
@@ -103,8 +105,8 @@ p {
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: 55px;
-    font-style: normal;
+    margin-left: 110px;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
@@ -113,8 +115,8 @@ p {
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
-    margin-left: 175px;
-    font-style: normal;
+    margin-left: 185px;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
@@ -124,7 +126,7 @@ p {
 
 .lastname-message-erreur {
     margin-left: 100px;
-    font-style: normal;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
@@ -133,8 +135,8 @@ p {
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 175px;
-    font-style: normal;
+    margin-left: 185px;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
@@ -143,63 +145,71 @@ p {
 /*css role*/
 
 .input-role {
-    margin-left: 80px;
+    margin-left: 75px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
+    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 
 /*css username*/
 
 .input-username {
-    margin-left: 240px;
+    margin-left: 290px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
+    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 
 /*css email*/
 
 .input-email {
-    margin-left: 240px;
+    margin-left: 290px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
+    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 
 /*css input firstname*/
 
 .input-firstname {
-    margin-left: 50px;
+    margin-left: 180px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
+    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 
 /*css input lastname*/
 
 .input-lastname {
-    margin-left: 50px;
+    margin-left: 0px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
+    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 
 /*css input password*/
 
 .input-password {
-    margin-left: 50px;
+    margin-left:180px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
+
+    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 
 /*css input password*/
 
 .input-confirm-password {
-    margin:auto;
+    margin-left: 0px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
+    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 
@@ -214,7 +224,7 @@ p {
     border-radius: 6px;
     border: 2px solid #ffffff;
     font-size: 20px;
-    font-style: normal;
+    font-style: italic;
 }
 
 
@@ -230,7 +240,7 @@ p {
     border-radius: 6px;
     border: 2px solid #ffffff;
     font-size: 20px;
-    font-style: normal;
+    font-style: italic;
 }
 
 /*css button Cancel*/
@@ -246,7 +256,7 @@ p {
     border-radius: 6px;
     border: 2px solid #ffffff;
     font-size: 20px;
-    font-style: normal; 
+    font-style: italic; 
 
 }
 

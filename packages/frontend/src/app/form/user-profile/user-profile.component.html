@@ -36,22 +36,15 @@
                     />
                 </div>
 
-                <div
-                    class="button-ajouter-avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2 border-tpkvalidate"
-                >
-                    <!-- condition si photo, sinon span avec premiere lettre username -->
-                    <img
-                        *ngIf="user.name"
-                        class="rounded-full"
-                        src="{{ user.name }}"
-                        alt="profile name"
-                    />
-                    <span
-                        *ngIf="!user.name"
-                        class="text-2xl uppercase font-bold"
-                        >{{ user.username | initialsName }}</span
-                    >
-                </div>
+                <!--button ("+")-->
+                <input
+                    style="border: 2.5px solid #0b86c4"
+                    class="img-button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey4 large mr-2 mt-3"
+                    type="button"
+                    placeholder="+"
+                    value="+"
+                    (click)="PictureUploader.click()"
+                />
 
                 <!--titre ("My Profil")-->
                 <div>
@@ -72,7 +65,7 @@
                         value=""
                         required
                         aria-required="true"
-                        class="input-username form-control bg-transparent placeholder:normal"
+                        class="input-username form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
                         id="username"
                         name="username"
                         size="30"
@@ -107,7 +100,7 @@
                         #email="ngModel"
                         [(ngModel)]="user.email"
                         required
-                        class="input-email form-control bg-transparent placeholder:normal"
+                        class="input-email form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
                         id="email"
                         required="required"
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
@@ -117,14 +110,14 @@
                     <p
                         *ngIf="!email.errors?.['required'] && email.invalid && password.dirty"
                         style="text-align: center"
-                        class="alert email-message-erreur text-sm normal"
+                        class="alert email-message-erreur text-sm placeholder:italic"
                     >
                         email invalid
                     </p>
                     <p
                         *ngIf="email.errors?.['required'] && email.dirty"
                         style="text-align: center"
-                        class="alert email-message-erreur text-sm normal"
+                        class="alert email-message-erreur text-sm placeholder:italic"
                     >
                         email required
                     </p>
@@ -142,7 +135,7 @@
                 name="role"
                 style="text-align: center"
                 required
-                class="input-role form-control bg-transparent placeholder:normal"
+                class="input-role form-control bg-transparent placeholder:italic"
                 placeholder="role"
                 value="{{ user.role.name }}"
                 size="10"
@@ -156,7 +149,7 @@
         <p
             *ngIf="role.errors?.['required'] && role.dirty"
             style="text-align: start"
-            class="alert role-message-erreur normal"
+            class="alert role-message-erreur placeholder:italic"
         >
             role required
         </p>
@@ -174,7 +167,7 @@
                 required
                 aria-required="true"
                 required
-                class="input-firstname form-control bg-transparent placeholder:normal"
+                class="input-firstname form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
                 id="firstname"
                 size="30"
                 name="firstname"
@@ -193,7 +186,7 @@
                 required
                 aria-required="true"
                 required
-                class="input-lastname form-control bg-transparent placeholder:normal"
+                class="input-lastname form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
                 id="lastname"
                 size="30"
                 name="lastname"
@@ -208,7 +201,7 @@
         <p
             *ngIf="firstname.errors?.['required'] && firstname.dirty"
             style="text-align: start"
-            class="alert firstname-message-erreur text-sm normal"
+            class="alert firstname-message-erreur text-sm placeholder:italic"
         >
             firstname required
         </p>
@@ -221,7 +214,7 @@
                 type="password"
                 size="30"
                 [placeholder]="'password' | translate"
-                class="input-password form-control bg-transparent placeholder:normal"
+                class="input-password form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
                 id="password"
                 [(ngModel)]="user.password"
                 name="password"
@@ -237,7 +230,7 @@
                 type="password"
                 size="30"
                 [placeholder]="'verif-password' | translate"
-                class="input-password form-control bg-transparent placeholder:normal"
+                class="input-confirm-password form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
                 [(ngModel)]="verifPassword"
                 #confirmPassword="ngModel"
                 id="confirmPassword"
@@ -253,20 +246,20 @@
         <!--"message erreur Password/Confirm-Password"-->
         <p
             *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
-            class="password-message-erreur normal"
+            class="password-message-erreur placeholder:italic"
         >
             {{ 'Invalid password!' | translate }}
         </p>
 
         <p
             *ngIf="password.errors?.['required'] && password.dirty"
-            class="password-message-erreur normal"
+            class="password-message-erreur placeholder:italic"
         >
             {{ 'password required' | translate }}
         </p>
 
         <div *ngIf="showErrorMessage">
-            <h1 class="text-tpkerror text-sm text-center">
+            <h1 class="text-tpkerror text-sm text-center placeholder:italic">
                 {{ errorMessage }}
             </h1>
         </div>
