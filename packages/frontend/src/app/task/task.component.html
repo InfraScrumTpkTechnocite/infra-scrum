@@ -5,16 +5,16 @@
         class="hover:cursor-zoom-out"
     >
         <div
-            class="border-2 rounded-md bg-grey1 mt-2 flex h-auto"
+            class="taskcontainer border-2 rounded-md mt-2 flex h-auto"
             [style.border-color]="task.color"
         >
-            <div class="w-1/12" [style.background]="task.color"></div>
-            <div class="w-11/12 bg-grey1 flex flex-col p-2">
+            <div class="w-2" [style.background]="task.color"></div>
+            <div class="taskcontainer w-11/12 flex flex-col p-2">
                 <!-- task title + edit -->
                 <div
                     class="flex justify-between border-b-2 border-grey2 p-2 ml-2"
                 >
-                    <h4 class="text-center font-semibold pr-1">
+                    <h4 class="text-center text-lg font-semibold pr-1">
                         {{ task.name }}
                     </h4>
                     <button
@@ -40,7 +40,7 @@
                 </div>
                 <!-- task type + users -->
                 <div class="flex justify-between mt-2 mr-1 p-2 items-center">
-                    <h5 class="text-sm md:text-base items-start">
+                    <h5 class="text-sm items-start">
                         {{ task.tasktype.label }}
                     </h5>
                     <span>|</span>
@@ -74,7 +74,7 @@
                 </div>
                 <!-- task description -->
                 <div
-                    class="h-32 overflow-y-scroll mt-1 p-2 border-2 border-grey2 border-opacity-50"
+                    class="h-32 overflow-y-scroll ml-2 mt-1 p-2 border-2 border-grey2 border-opacity-50"
                 >
                     <p class="overflow-y-scroll text-sm">
                         {{ task.description }}
@@ -94,18 +94,25 @@
 
                 <!-- date début et temps estimé -->
 
-                <div class="flex justify-between mt-3 p-1">
+                <div class="flex justify-between ml-2 mt-3 p-1">
                     <div class="flex flex-col items-center">
                         <p class="text-xs">
                             {{ 'infrascrum.task.start-date' | translate }}
                         </p>
-                        <p class="text-sm">{{ task.startdate | date }}</p>
+                        <p class="text-sm">
+                            {{ task.startdate | date: 'dd-MMM-yyyy' }}
+                        </p>
                     </div>
                     <div class="flex flex-col items-center">
                         <p class="text-xs">
                             {{ 'infrascrum.task.estimate-time' | translate }}
                         </p>
-                        <p class="text-sm">{{ task.estimatedtime /480 | numberToInteger }} d, {{task.estimatedtime /60 %8 | numberToInteger }}:{{task.estimatedtime %60}}</p>
+                        <p class="text-sm">
+                            {{ task.estimatedtime / 480 | numberToInteger }} d,
+                            {{
+                                (task.estimatedtime / 60) % 8 | numberToInteger
+                            }}:{{ task.estimatedtime % 60 }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -117,22 +124,22 @@
         class="hover:cursor-zoom-in"
     >
         <div
-            class="border-2 rounded-sm bg-grey1 mt-2 flex h-auto"
+            class="border-2 rounded-sm taskcontainer mt-2 flex h-auto"
             [style.border-color]="task.color"
         >
-            <div class="w-1/12" [style.background]="task.color"></div>
-            <div class="w-11/12 bg-grey1 flex flex-col px-2 py-1">
+            <div class="w-2" [style.background]="task.color"></div>
+            <div class="w-11/12 taskcontainer flex flex-col">
                 <!-- titre tâche -->
                 <div
                     class="flex justify-center items-center border-b-2 border-grey2 p-1"
                 >
-                    <h4 class="text-center font-semibold">
+                    <h4 class="text-center text-sm font-semibold">
                         {{ task.name }}
                     </h4>
                 </div>
                 <!-- users  -->
-                <div>
-                    <div class="flex justify-between items-center p-1">
+                <div class="p-1">
+                    <div class="flex justify-between items-center">
                         <!-- créateur tâche -->
                         <div *ngFor="let taskassignment of taskassignmentList">
                             <div

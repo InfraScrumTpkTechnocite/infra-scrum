@@ -1,0 +1,54 @@
+<div class="mt-10 px-20 w-full">
+    <div class="flex">
+        <div class="w-1/6"></div>
+
+        <div class="flex w-4/5">
+            <div
+                class="bg-gray-800 text-white text-center"
+                *ngFor="let month of monthAxis"
+                [style.width]="month.monthDurationPercentage + '%'"
+            >
+                {{ month.monthName }}
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="w-full flex" *ngFor="let row of rows; let i = index">
+            <div [style.height.px]="10"></div>
+            <div class="w-1/6 text-end pr-10">
+                {{ row.name }}
+            </div>
+            <div
+            [style.height.px]="getEventNumberOfOverlapInRow(row) * 25"
+            class="relative items-start w-4/5"
+            >
+            <!-- gantt chart grid lines-->
+            <div class="absolute top-0 w-full h-full flex">
+                <span
+                    class="border-l-2 border-gray-200"
+                    *ngFor="let month of monthAxis"
+                    [style.width]="month.monthDurationPercentage + '%'"
+                ></span>
+            </div>
+                <!-- period blocks-->
+                <div [style.height.px]="10"></div>
+                <div
+                    *ngFor="let event of row.events, let j = index"
+                    [style.margin-left]="
+                        getEventOffsetPercentage(event.startDate) + '%'
+                    "
+                    [style.margin-top.px]="getEventNumberOfOverlap(event) * 25"
+                    [style.width]="getEventDurationPercentage(event) + '%'"
+                    [style.height.px]="20"
+                    class="bg-primary absolute rounded-full"
+                    (mouseenter)="isHidden[i][j] = false" (mouseleave)="isHidden[i][j] = true"
+                >
+            </div>
+            <div *ngFor="let event of row.events, let j = index"  class="absolute w-48 mt-10 bg-white z-10"> 
+                <div *ngIf="!isHidden[i][j]"><div>{{event.name}}</div>
+                <div>{{event.startDate | date:"d-MM-yyyy" }} -> {{event.endDate | date:"d-MM-yyyy"}}</div> </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

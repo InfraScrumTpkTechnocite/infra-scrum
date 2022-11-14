@@ -47,6 +47,7 @@ interface KanbanList {
 export class ProjectComponent implements OnInit, OnDestroy {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
+    isBottom: boolean = false;
 
     projectid: string = '';
     parentProject: any;
@@ -65,6 +66,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
     dateToday: string = '';
 
     taskTypeList: TaskType[] = [];
+
+    hideChart: boolean = true;
+    hideHistory: boolean = true;
+    switch: string = 'default';
 
     //https://rxjs.dev/api/webSocket/webSocket
     subject = webSocket('');
@@ -100,27 +105,39 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 console.log(message);
                 switch (method) {
                     case 'edit':
-                        console.log('edit', message.task);
-                        if (message.kanban)
-                            this.kanbanList.find(
-                                (kanbans) =>
-                                    kanbans.kanban.order == message.kanban.order
-                            )!.kanban = message.kanban;
-                        if (message.task) {
-                            console.log('in if');
-                            this.kanbanList.find((kanbans) => {
-                                console.log(
-                                //kanbans.tasks![
-                                    kanbans.tasks!.findIndex(
-                                        (tasks) => tasks.id == message.task.id
-                                    )
-                                /*]*/); //= message.task;
-                            });
+                        //console.log('edit', message.task);
+                        //console.log(message.projectid);
+                        if (message.projectid == this.project.id) {
+                            if (message.kanban) {
+                                //console.log(message.kanban.id);
+                                let kanban = this.kanbanList.find(
+                                    (kanbans) =>
+                                        kanbans.kanban.order ==
+                                        message.kanban.order
+                                );
+
+                                kanban!.kanban = message.kanban;
+                                kanban!.tasks = message.tasks;
+                            }
+                            if (message.task) {
+                                console.log('in if');
+                                let sourceIndex: number = this.kanbanList[
+                                    message.sourceKanbanOrder
+                                ].tasks.findIndex(
+                                    (task) => task.id == message.task.id
+                                );
+                                this.kanbanList[
+                                    message.sourceKanbanOrder
+                                ].tasks.splice(sourceIndex, 1);
+                                this.kanbanList[
+                                    message.targetKanbanOrder
+                                ].tasks.push(message.task);
+                            }
                         }
                         break;
                     case 'delete':
                         if (message.kanban)
-                            this.kanbanList.splice(message.kanban.order - 1, 1);
+                            this.kanbanList.splice(message.kanban.order, 1);
                         if (message.task)
                             this.kanbanList.find((kanbans) => {
                                 kanbans.tasks?.splice(
@@ -202,7 +219,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         );
                         kanban.map((kanbanstatus) => {
                             this.kanbanList.push({
-                                kanban: kanbanstatus
+                                kanban: kanbanstatus,
+                                tasks: []
                             } as KanbanList);
                             this.taskService
                                 .findAllOfKanbanstatus(kanbanstatus.id!)
@@ -289,7 +307,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             .subscribe((userList: User[]) => (this.userList = userList));
     }
 
-    ngOnDestroy():void {
+    ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
 
@@ -324,10 +342,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     closeSprintBar() {
         this.isSprintsOpen = false;
+        this.hideChart = true;
+        this.hideHistory = true;
+        console.log('close sprint bar');
+
+        const url = this.parentProject ? this.parentProject.id : this.projectid;
+
         this.router.navigate([], {
             skipLocationChange: true,
             queryParamsHandling: 'merge', //== if you need to keep queryParams
-            queryParams: { projectid: this.parentProject.id }
+            queryParams: { projectid: url }
         });
     }
 
@@ -419,7 +443,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     /* -------------------------------------------------------------------------- */
-    /*    DRAG AND DROP KANBANSTATUS   */
+    /*                                DRAG AND DROP                               */
     /* -------------------------------------------------------------------------- */
 
     @ViewChild('dropListContainer') dropListContainer?: ElementRef;
@@ -515,7 +539,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     console.log(err);
                 },
                 complete: () => {
-                    this.subject.next({ method: 'edit', kanban: kanban.kanban });
+                    this.subject.next({
+                        method: 'edit',
+                        kanban: kanban.kanban,
+                        projectid: this.project.id,
+                        tasks: kanban.tasks
+                    });
                 }
             });
         });
@@ -530,6 +559,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 event.currentIndex
             );
         } else {
+            console.log(`Changement colonne`);
+            console.log(
+                `previous kanban: ${event.previousContainer.id}, current kanban: ${event.container.id}`
+            );
             transferArrayItem(
                 event.previousContainer.data,
                 event.container.data,
@@ -537,18 +570,42 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 event.currentIndex
             );
 
-            this.kanbanList.forEach((kanban) => {
-                //console.log(`Kanban: ${kanban.kanban.name}`);
-                kanban.tasks.forEach((task) => {
-                    //console.log(`Task: ${task.name}`);
-                    task.kanbanstatus = kanban.kanban;
-                    this.taskService.edit(task.id!,task).subscribe({
-                        next: () => {},
-                        error: () => {},
-                        complete: () => {}
-                    });
+            let kanbanIndex: number = parseInt(event.container.id); //kanban = event.container = div contenant la liste des tâches
+            //console.log(this.kanbanList[kanbanIndex]);
+            let kanbanTarget: Kanbanstatus =
+                this.kanbanList[kanbanIndex].kanban;
+            let task: Task = event.container.data[event.currentIndex];
+            if (task.id) {
+                task.kanbanstatus = kanbanTarget;
+                this.taskService.edit(task.id, task).subscribe({
+                    next: () => {},
+                    error: () => {},
+                    complete: () => {
+                        this.subject.next({
+                            method: 'edit',
+                            task: task,
+                            projectid: this.project.id,
+                            sourceKanbanOrder: event.previousContainer.id,
+                            targetKanbanOrder: event.container.id
+                        });
+                    }
                 });
-            });
+            }
         }
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                              Scroll top button                             */
+    /* -------------------------------------------------------------------------- */
+
+    onScroll(event: any) {
+        event.target.offsetHeight + event.target.scrollTop >=
+        event.target.scrollHeight - 1
+            ? (this.isBottom = true)
+            : (this.isBottom = false);
+    }
+
+    scrollTop() {
+        document.getElementById('kanbanDashboard')!.scrollTop = 0;
     }
 }
