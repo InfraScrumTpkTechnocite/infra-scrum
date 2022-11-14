@@ -40,7 +40,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NumberToIntegerPipe } from './pipes/number-to-integer.pipe';
 import { MatMenuModule } from '@angular/material/menu';
-import { ChartGanttComponent } from './project/components/chart-gantt/chart-gantt.component'
+import { ChartGanttComponent } from './project/components/chart-gantt/chart-gantt.component';
+import { TasksHistoryComponent } from './project/components/tasks-history/tasks-history.component'
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -69,7 +70,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         EditProjectInfoComponent,
         PageNotFoundComponent,
         NumberToIntegerPipe,
-        ChartGanttComponent
+        ChartGanttComponent,
+        TasksHistoryComponent
     ],
     imports: [
         BrowserModule,

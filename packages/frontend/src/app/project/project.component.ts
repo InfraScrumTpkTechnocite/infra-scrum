@@ -68,6 +68,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     taskTypeList: TaskType[] = [];
 
     hideChart: boolean = true;
+    hideHistory: boolean = true;
+    switch: string = 'default';
 
     //https://rxjs.dev/api/webSocket/webSocket
     subject = webSocket('');
@@ -340,10 +342,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     closeSprintBar() {
         this.isSprintsOpen = false;
+        this.hideChart = true;
+        this.hideHistory = true;
+        console.log('close sprint bar');
+
+        const url = this.parentProject ? this.parentProject.id : this.projectid;
+
         this.router.navigate([], {
             skipLocationChange: true,
             queryParamsHandling: 'merge', //== if you need to keep queryParams
-            queryParams: { projectid: this.parentProject.id }
+            queryParams: { projectid: url }
         });
     }
 
