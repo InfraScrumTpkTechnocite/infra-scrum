@@ -100,9 +100,10 @@ export class TasksAssignmentsService {
       ),
       async (transactionnalEntityManager): Promise<TaskAssignment[]> => {
         return await transactionnalEntityManager.find(TaskAssignment, {
-          select: ['userproject'],
+          select: ['userproject', 'task'],
           relations: {
             userproject: { user: { role: true } },
+            task: true,
           },
           where: { task: { id: Equal(taskid) } },
         });
