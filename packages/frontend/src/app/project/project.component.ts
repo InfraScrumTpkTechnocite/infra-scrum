@@ -76,6 +76,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
+    showCurrentUserTasks: boolean = false;
+
     constructor(
         private route: ActivatedRoute,
         private projectService: ProjectService,
@@ -618,5 +620,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     scrollTop() {
         document.getElementById('kanbanDashboard')!.scrollTop = 0;
+    }
+
+    toggleCurrentUserTasks() {
+        this.showCurrentUserTasks = !this.showCurrentUserTasks;
     }
 }
