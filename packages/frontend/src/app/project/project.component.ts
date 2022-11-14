@@ -323,13 +323,24 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     addTask() {
-        this.dialog.open(EditNewTasksComponent, {
+        const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: new Task(),
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
-                edition: false
+                edition: false,
+                kanbanList: this.kanbanList,
+                userProjectList: this.userProjects,
+                user: this.user,
+                subject: this.subject
             }
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result)
+                this.kanbanList.find((kanbanAndTasks) => {
+                    if (kanbanAndTasks.kanban.id == result.task.kanbanstatus.id)
+                        kanbanAndTasks.tasks.push(result.task);
+                });
         });
     }
 

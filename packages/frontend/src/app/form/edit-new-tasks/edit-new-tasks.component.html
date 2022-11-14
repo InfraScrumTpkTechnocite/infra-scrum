@@ -5,13 +5,19 @@
         mat-dialog-title
         class="text-xl xl:text-2xl font-bold underline underline-offset-8 text-center pt-4"
     >
-        {{ 'infrascrum.edit-new-task.title' | translate }}
+        {{
+            data.edition
+                ? ('infrascrum.edit-new-task.title' | translate)
+                : 'Add'
+        }}
     </h1>
     <div mat-dialog-content>
         <div class="flex xl:mt-2 flex-col xl:flex-row items-center">
             <div class="w-128 xl:w-160 h-128 mt-4 xl:mt-2 xl:ml-4">
                 <div class="flex flex-row xl:m-3">
-                    <div class="flex flex-col mr-10 mx-12 justify-center items-center">
+                    <div
+                        class="flex flex-col mr-10 mx-12 justify-center items-center"
+                    >
                         <h3>
                             {{
                                 'infrascrum.edit-new-task.title-user'
@@ -79,7 +85,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col mr-5 xl:mr-10 justify-center items-center">
+                    <div
+                        class="flex flex-col mr-5 xl:mr-10 justify-center items-center"
+                    >
                         <h3>
                             {{
                                 'infrascrum.edit-new-task.title-etiquette'
@@ -107,7 +115,9 @@
                             }}
                         </label>
                         <div class="flex">
-                            <div class="flex flex-col w-12 mr-3 justify-center items-center">
+                            <div
+                                class="flex flex-col w-12 mr-3 justify-center items-center"
+                            >
                                 <h3>
                                     {{
                                         'infrascrum.edit-new-task.estimate-day'
@@ -124,7 +134,9 @@
                                     class="w-12"
                                 />
                             </div>
-                            <div class="flex flex-col w-12 justify-center items-center">
+                            <div
+                                class="flex flex-col w-12 justify-center items-center"
+                            >
                                 <h3>
                                     {{
                                         'infrascrum.edit-new-task.estimate-hours'
@@ -142,7 +154,9 @@
                                     class="w-12"
                                 />
                             </div>
-                            <div class="flex flex-col w-12 mx-3 justify-center items-center">
+                            <div
+                                class="flex flex-col w-12 mx-3 justify-center items-center"
+                            >
                                 <h3>
                                     {{
                                         'infrascrum.edit-new-task.estimate-minute'
@@ -180,7 +194,7 @@
                                 }}
                             </option>
                             <option
-                                *ngFor="let sprint of sprintList"
+                                *ngFor="let sprint of data.sprintList"
                                 [ngValue]="sprint"
                             >
                                 {{ sprint.name }}
@@ -192,13 +206,21 @@
                     >
                         <select
                             id="kanban"
+                            [(ngModel)]="newTask.kanbanstatus"
+                            [compareWith]="compareById"
                             class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
                         >
-                            <option value="kanban">
+                            <option [value]="noKanban" disabled hidden>
                                 {{
                                     'infrascrum.edit-new-task.option-kanban-title'
                                         | translate
                                 }}
+                            </option>
+                            <option
+                                *ngFor="let kanban of data.kanbanList"
+                                [ngValue]="kanban.kanban"
+                            >
+                                {{ kanban.kanban.name }}
                             </option>
                         </select>
                     </div>
@@ -208,21 +230,23 @@
                         <select
                             id="type"
                             class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
-                            [ngModel]="newTask.tasktype"
-                            [compareWith]="compareTaskType"
+                            [(ngModel)]="newTask.tasktype"
+                            [compareWith]="compareById"
                         >
-                        <option [ngValue]="noType">
-                            {{ "infrascrum.edit-new-task.option-type-title" | translate }}
-                        </option>
+                            <option [ngValue]="noType" disabled hidden>
+                                {{
+                                    'infrascrum.edit-new-task.option-type-title'
+                                        | translate
+                                }}
+                            </option>
                             <option
-                                *ngFor="let taskType of taskTypeList"
-                                [value]="taskType"
+                                *ngFor="let taskType of data.taskTypeList"
+                                [ngValue]="taskType"
                             >
                                 {{ taskType.label }}
                             </option>
                         </select>
                     </div>
-                    
                 </div>
 
                 <div class="flex">
@@ -250,7 +274,7 @@
                             <input
                                 type="date"
                                 [ngModel]="newDate | date: 'yyyy-MM-dd'"
-                                (ngModelChange)="newDate = $event"
+                                (ngModelChange)="updateDate($event)"
                             />
                         </p>
                     </div>
@@ -289,7 +313,7 @@
                     </button>
                     <button
                         class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8"
-                        (click)="addOrEditTask(true)"
+                        (click)="addOrEditTask()"
                     >
                         {{ 'infrascrum.global.btn-register' | translate }}
                     </button>
