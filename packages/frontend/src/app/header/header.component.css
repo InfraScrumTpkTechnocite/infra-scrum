@@ -51,7 +51,7 @@
 
 /* ANIMATION DROPDOWN USER-MENU */
 
-.sub-menu-wrapper{
+.dropdownAnim{
     animation: growDown 300ms ease-in-out forwards;
     transform-origin: top center
 }

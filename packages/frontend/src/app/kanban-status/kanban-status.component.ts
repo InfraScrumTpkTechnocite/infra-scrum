@@ -35,6 +35,7 @@ export class KanbanStatusComponent implements OnInit {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
 
+    newName!: string;
     newColor!: string;
     kanbanstatus!: KanbanList;
 
@@ -53,6 +54,7 @@ export class KanbanStatusComponent implements OnInit {
         //console.log(this.user);
         //console.log(this.isUserProjectadmin);
         this.kanbanstatus = this.kanbanList as KanbanList;
+        this.newName = this.kanbanstatus.kanban.name
         this.newColor = this.kanbanstatus.kanban.color;
         //console.log(`ngOnInit - this.project ${JSON.stringify(this.project)}`);
     }
@@ -62,6 +64,7 @@ export class KanbanStatusComponent implements OnInit {
     }
 
     validateEditKanbanStatus() {
+        this.kanbanstatus.kanban.name = this.newName;
         this.kanbanstatus.kanban.color = this.newColor;
 
         const kanbanObserver = {

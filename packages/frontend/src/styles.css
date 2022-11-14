@@ -13,6 +13,13 @@
     @apply outline-none ring-2 ring-secondary;
 } */
 
+
+/* buttons smooth hover transition */
+
+.hoverSmooth {
+  @apply transition duration-500 ease-in-out
+}
+
 /* Scrollbar */
 
 ::-webkit-scrollbar {
