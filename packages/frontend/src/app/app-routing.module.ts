@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectComponent } from './project/project.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { TableUsersComponent } from './table-users/table-users.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -42,6 +43,10 @@ const routes: Routes = [
         data: {
             role: ['superadmin', 'admin', 'employee', 'intern']
         }
+    },
+    {
+        path: 'table-users',
+        component: TableUsersComponent,
     },
     {
         path: 'create-user',

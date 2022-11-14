@@ -37,11 +37,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
 
 import { NumberToIntegerPipe } from './pipes/number-to-integer.pipe';
 import { MatMenuModule } from '@angular/material/menu';
 import { ChartGanttComponent } from './project/components/chart-gantt/chart-gantt.component';
 import { TasksHistoryComponent } from './project/components/tasks-history/tasks-history.component'
+import { TableUsersComponent } from './table-users/table-users.component'
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -71,7 +73,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         PageNotFoundComponent,
         NumberToIntegerPipe,
         ChartGanttComponent,
-        TasksHistoryComponent
+        TasksHistoryComponent,
+        TableUsersComponent
     ],
     imports: [
         BrowserModule,
@@ -79,6 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         FormsModule,
         HttpClientModule,
         MatSlideToggleModule,
+        MatTableModule,
         ReactiveFormsModule,
         DragDropModule,
         HotToastModule.forRoot(),
