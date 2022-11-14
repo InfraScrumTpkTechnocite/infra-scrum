@@ -67,6 +67,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     taskTypeList: TaskType[] = [];
 
+    hideChart: boolean = true;
+
     //https://rxjs.dev/api/webSocket/webSocket
     subject = webSocket('');
 
@@ -133,7 +135,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         break;
                     case 'delete':
                         if (message.kanban)
-                            this.kanbanList.splice(message.kanban.order - 1, 1);
+                            this.kanbanList.splice(message.kanban.order, 1);
                         if (message.task)
                             this.kanbanList.find((kanbans) => {
                                 kanbans.tasks?.splice(

@@ -127,8 +127,9 @@
                 </div> -->
             </div>
             <div class="flex flex-col">
-                <!-- BTN DIAGRAMME DE GRANT -->
-                <button
+                <!-- BTN DIAGRAMME DE GANTT -->
+                <button 
+                (click)="hideChart = !hideChart"
                     title="Gantt diagram"
                     class="flex items-center justify-center w-28 h-10 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg text-xs p-1"
                 >
@@ -168,14 +169,17 @@
                             d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75"
                         />
                     </svg>
+
                 </button>
             </div>
+
         </div>
     </div>
 
     <!-- KANBAN DASHBOARD -->
 
     <div
+        *ngIf="hideChart"
         (scroll)="onScroll($event)"
         id="kanbanDashboard"
         class="w-11/12 overflow-y-scroll scroll-smooth"
@@ -384,6 +388,11 @@
                     class="example-container"
                     *ngFor="let kanban of kanbanList; let i = index"
                     cdkDrag
+                    [cdkDragDisabled]="
+                        user.role.name != 'admin' &&
+                        user.role.name != 'superadmin' &&
+                        !isUserProjectadmin
+                    "
                 >
                     <app-kanban-status
                         [subject]="subject"
@@ -393,6 +402,8 @@
                         [sprintList]="sprintList"
                         [projectid]="projectid"
                         [project]="project"
+                        [user]="user"
+                        [isUserProjectadmin]="isUserProjectadmin"
                     ></app-kanban-status>
 
                     <div
@@ -402,7 +413,15 @@
                         class="example-list kanbanStatusTitle flex flex-col w-56 mx-2 mt-2"
                         (cdkDropListDropped)="drop($event)"
                     >
-                        <div *ngFor="let task of kanban.tasks" cdkDrag>
+                        <div
+                            *ngFor="let task of kanban.tasks"
+                            cdkDrag
+                            [cdkDragDisabled]="
+                                user.role.name != 'admin' &&
+                                user.role.name != 'superadmin' &&
+                                !isUserProjectadmin
+                            "
+                        >
                             <app-task
                                 [task]="task"
                                 [subject]="subject"
@@ -480,4 +499,5 @@
         </div>
     </div>
     <!-- fin kanban dashboard -->
+    <app-chart-gantt *ngIf="!hideChart" class="w-full"></app-chart-gantt>
 </div>
