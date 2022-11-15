@@ -16,8 +16,12 @@
             >
                 My Profile
             </h1>
-            <br />
-            <button>
+            <!--Refresh-->
+            <button
+                meta
+                http-equiv="refresh"
+                content="http://localhost:4200/user-profile"
+            >
                 <img
                     src="assets/img/logos/REFRESH.png"
                     width="5%"
@@ -73,7 +77,7 @@
                             value=""
                             required
                             aria-required="true"
-                            class="input-username form-control w-full pl-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                            class="input-username form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                             id="username"
                             name="username"
                             size="30"
@@ -108,7 +112,7 @@
                             #email="ngModel"
                             [(ngModel)]="user.email"
                             required
-                            class="input-email form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                            class="input-email form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                             id="email"
                             required="required"
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
@@ -177,7 +181,7 @@
                     required
                     aria-required="true"
                     required
-                    class="input-firstname form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                    class="input-firstname form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                     id="firstname"
                     size="30"
                     name="firstname"
@@ -196,7 +200,7 @@
                     required
                     aria-required="true"
                     required
-                    class="input-lastname form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                    class="input-lastname form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                     id="lastname"
                     size="30"
                     name="lastname"
@@ -224,7 +228,7 @@
                     type="password"
                     size="30"
                     [placeholder]="'password' | translate"
-                    class="input-password form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                    class="input-password form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                     id="password"
                     [(ngModel)]="user.password"
                     name="password"
@@ -240,7 +244,7 @@
                     type="password"
                     size="30"
                     [placeholder]="'verif-password' | translate"
-                    class="input-confirm-password form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                    class="input-confirm-password form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                     [(ngModel)]="verifPassword"
                     #confirmPassword="ngModel"
                     id="confirmPassword"
