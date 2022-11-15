@@ -37,7 +37,6 @@ export class TaskComponent implements OnInit {
     showTask: boolean = true;
     @Input() projectid!: string | undefined | null;
     @Input() project!: Project;
-    @Input() user!: User;
 
     @Input() showCurrentUserTasks!: boolean;
     @Input() user!: User;

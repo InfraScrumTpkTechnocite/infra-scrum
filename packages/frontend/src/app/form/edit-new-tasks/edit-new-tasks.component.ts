@@ -116,9 +116,15 @@ export class EditNewTasksComponent implements OnInit {
     }
 
     addUser(userProject: UserProject): void {
-        const newAssignement = new TaskAssignment(userProject, this.data.task);
+        const newAssignement = new TaskAssignment(userProject, this.data.edition ? this.data.task : this.newTask);
         this.newTaskAssignmentList.push(newAssignement);
-        this.userProjectList.splice(this.userProjectList.findIndex((userProjectFromList) => userProjectFromList.id == userProject.user.id),1)
+        this.userProjectList.splice(
+            this.userProjectList.findIndex(
+                (userProjectFromList) =>
+                    userProjectFromList.id == userProject.user.id
+            ),
+            1
+        );
     }
 
     addOrEditTask(): void {
@@ -129,13 +135,13 @@ export class EditNewTasksComponent implements OnInit {
             //** Task EDITION */
             const observer = {
                 next: () => {
-                    this.newTaskAssignmentList.map((taskAssignment) =>{
+                    this.newTaskAssignmentList.map((taskAssignment) => {
                         this.taskAssignmentService
                             .create(taskAssignment)
                             .subscribe((taskAssignment: TaskAssignment) =>
                                 this.taskassignmentList.push(taskAssignment)
-                            )}
-                    );
+                            );
+                    });
                 },
                 error: (err: any) => {
                     console.log(
@@ -175,13 +181,13 @@ export class EditNewTasksComponent implements OnInit {
                     );
                     taskAdmin.isTaskCreator = true;
                     this.newTaskAssignmentList.push(taskAdmin);
-                    this.newTaskAssignmentList.map((taskAssignment) =>
+                    this.newTaskAssignmentList.map((taskAssignment) => {
                         this.taskAssignmentService
                             .create(taskAssignment)
                             .subscribe((taskAssignment: TaskAssignment) =>
                                 this.taskassignmentList.push(taskAssignment)
-                            )
-                    );
+                            );
+                    });
                 },
                 error: (err: any) => {
                     console.log(
