@@ -20,16 +20,9 @@
     border: 1.5px #9eecc8;
 }
 
-
 /*css avatar button "ajouter" image*/
 p {
     font-family: Lato;
-  }
-  
-  .image-container {
-    position: relative;
-    display: inline-block;
-    text-align: center;
   }
   
   img {
@@ -47,36 +40,6 @@ p {
     color: rgb(16, 99, 177);
     font-size: 150%;
   }
-  
-  
-  .select-profile-picture {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    font-size: 120px;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .message {
-    position: absolute;
-    width: 35%;
-    top: 50%;
-    left: 45%;
-    transform: translate(-50%, 100%);
-    transition: all 1s;
-    opacity: 0;
-    color: rgb(241, 14, 14);
-  }
-  
-  .image-container:hover .message {
-    transform: translate(-50%, -50%);
-    opacity: 1;
-  }
 
 /*css input role message erreur*/
 
@@ -91,7 +54,6 @@ p {
     margin-left:370px;
 }
 
-
 /*css input username message erreur*/
 
 .username-message-erreur {
@@ -100,7 +62,6 @@ p {
     font-size: 14pt;
     color: red;
 }
-
 
 /*css input email message erreur*/
 
@@ -111,7 +72,6 @@ p {
     color: red;
 }
 
-
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
@@ -120,7 +80,6 @@ p {
     font-size: 14pt;
     color: red;
 }
-
 
 /*css input lastname message erreur*/
 
@@ -131,7 +90,6 @@ p {
     color: red;
 }
 
-
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
@@ -140,7 +98,6 @@ p {
     font-size: 14pt;
     color: red;
 }
-
 
 /*css role*/
 
@@ -151,7 +108,6 @@ p {
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
-
 /*css username*/
 
 .input-username {
@@ -160,7 +116,6 @@ p {
     color:rgb(11, 97, 155);
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
-
 
 /*css email*/
 
@@ -171,7 +126,6 @@ p {
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
-
 /*css input firstname*/
 
 .input-firstname {
@@ -181,7 +135,6 @@ p {
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
-
 /*css input lastname*/
 
 .input-lastname {
@@ -190,7 +143,6 @@ p {
     color:rgb(11, 97, 155);
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
-
 
 /*css input password*/
 
@@ -202,7 +154,6 @@ p {
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
-
 /*css input password*/
 
 .input-confirm-password {
@@ -211,7 +162,6 @@ p {
     color:rgb(11, 97, 155);
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
-
 
 /*css buton cancel*/
 
@@ -226,7 +176,6 @@ p {
     font-size: 20px;
     font-style: italic;
 }
-
 
 /*css buton Update*/
 
@@ -258,6 +207,16 @@ p {
     font-size: 20px;
     font-style: italic; 
 
+}
+
+/*css button Reload*/
+
+.reload
+{
+    margin-left: 790px;
+    height: 85px;
+    width: 85px;
+    border-radius: 50%;
 }
 
 

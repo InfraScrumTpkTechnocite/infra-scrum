@@ -1,13 +1,12 @@
-import { Component, Injectable, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-import { RoleService } from 'src/app/services/role.service';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
 import { User } from 'src/app/models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HotToastService } from '@ngneat/hot-toast';
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -89,29 +88,6 @@ onSubmit(user: User): void {
     this.submitted = true;
     this.userService.editUser(this.user).subscribe(userObserver)
   }
-
-/*function "ajouter" avatar profile*/
-
-onSelectFile(event:any) {
-
-    const userObserver = {
-      complete: () => {
-        this.toastService.success(`Avatar added !`);
-        this.defaultUserProfile = this.user;
-      },
-    };
-
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-
-      reader.readAsDataURL(event.target.files[0]); 
-
-      reader.onload = (event) => { 
-        this.url = event.target?.result;
-      }
-    }
-    this.userService.editUser(this.user).subscribe(userObserver)
-  }
   
 /*function "click"*/
 
@@ -169,26 +145,6 @@ onSelectFile(event:any) {
             complete: () => {}
         });
 }
-    
-/*function delete profile*/
-
-onDeleteSubmit(user: User): void {
-
-  const userObserver = {
-    error: (err: any) => {
-      console.log(`Erreur delete profile : ${err.error['driverError'].detail}`);
-      this.toastService.error(`Error during profile delete<br><br>${err.error.driverError.detail}`);
-  
-      this.toast.success('Profile data deleted');
-      },
-      complete: () => {
-        this.toastService.success(`Profile data deleted!`);
-        this.defaultUserProfile = user;
-      },
-    };
-
-    this.userService.editUser(this.user).subscribe(userObserver)
-  }
 
 /*funtion ngOnInit*/
 
