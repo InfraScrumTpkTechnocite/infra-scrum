@@ -26,7 +26,9 @@ export class EditNewTasksComponent implements OnInit {
     newTask: Task = new Task(this.data.task);
 
     taskassignmentList: TaskAssignment[] = this.data.taskassignmentList ?? [];
-    userProjectList: UserProject[] = this.data.userProjectList;
+    newTaskAssignmentList: TaskAssignment[] = [];
+    userProjectList: UserProject[] = [];
+    myUserProject!: UserProject;
 
     noType: TaskType = new TaskType();
 
@@ -39,8 +41,6 @@ export class EditNewTasksComponent implements OnInit {
     days: number;
     hours: number;
     minutes: number;
-
-    edition: boolean = false;
 
     constructor(
         private taskService: TaskService,
@@ -70,7 +70,18 @@ export class EditNewTasksComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.data.userProjectList.map((userProject) =>
+            this.userProjectList.push(userProject)
+        );
         this.newDate = new Date(this.data.task?.startdate);
+        const index = this.userProjectList.findIndex(
+            (userProject) => userProject.user!.id == this.data.user!.id
+        );
+        if (!this.data.edition && index >= 0) {
+            /** Remove yourself from the user you can assign */
+            this.myUserProject = this.userProjectList[index];
+            this.userProjectList.splice(index, 1);
+        }
     }
 
     isUserAssigned(userProject: UserProject): boolean {
@@ -106,7 +117,8 @@ export class EditNewTasksComponent implements OnInit {
 
     addUser(userProject: UserProject): void {
         const newAssignement = new TaskAssignment(userProject, this.data.task);
-        this.taskassignmentList.push(newAssignement);
+        this.newTaskAssignmentList.push(newAssignement);
+        this.userProjectList.splice(this.userProjectList.findIndex((userProjectFromList) => userProjectFromList.id == userProject.user.id),1)
     }
 
     addOrEditTask(): void {
@@ -114,7 +126,17 @@ export class EditNewTasksComponent implements OnInit {
         this.newTask.estimatedtime =
             this.days * 480 + this.hours * 60 + this.minutes;
         if (this.data.edition) {
+            //** Task EDITION */
             const observer = {
+                next: () => {
+                    this.newTaskAssignmentList.map((taskAssignment) =>{
+                        this.taskAssignmentService
+                            .create(taskAssignment)
+                            .subscribe((taskAssignment: TaskAssignment) =>
+                                this.taskassignmentList.push(taskAssignment)
+                            )}
+                    );
+                },
                 error: (err: any) => {
                     console.log(
                         `Erreur edition task : ${err.error['driverError'].detail}`
@@ -138,23 +160,28 @@ export class EditNewTasksComponent implements OnInit {
             if (!this.newTask.sprint?.id) {
                 this.newTask.sprint = null;
             }
-            console.log(this.newTask.startdate);
             this.taskService
                 .edit(this.data.task.id!, this.newTask)
                 .subscribe(observer);
         } else {
+            //** Task CREATION */
             const observer = {
                 next: (task: Task) => {
                     this.newTask.id = task.id;
+                    /** Add you as the creator of the task */
                     const taskAdmin = new TaskAssignment(
-                        this.userProjectList.find(
-                            (userProject) =>
-                                userProject.user.id == this.data.user.id
-                        )!,
+                        this.myUserProject,
                         task
                     );
                     taskAdmin.isTaskCreator = true;
-                    this.taskAssignmentService.create(taskAdmin).subscribe();
+                    this.newTaskAssignmentList.push(taskAdmin);
+                    this.newTaskAssignmentList.map((taskAssignment) =>
+                        this.taskAssignmentService
+                            .create(taskAssignment)
+                            .subscribe((taskAssignment: TaskAssignment) =>
+                                this.taskassignmentList.push(taskAssignment)
+                            )
+                    );
                 },
                 error: (err: any) => {
                     console.log(

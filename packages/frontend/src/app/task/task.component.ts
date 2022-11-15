@@ -9,6 +9,7 @@ import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
 import { UserProject } from '../models/userproject.model';
 import { Kanbanstatus } from '../models/kanbanstatus.model';
+import { User } from '../models/user.model';
 
 interface KanbanList {
     kanban: Kanbanstatus;
@@ -36,6 +37,7 @@ export class TaskComponent implements OnInit {
     showTask: boolean = true;
     @Input() projectid!: string | undefined | null;
     @Input() project!: Project;
+    @Input() user!: User;
 
     constructor(
         private taskassignmentService: TaskassignmentService,
@@ -87,6 +89,7 @@ export class TaskComponent implements OnInit {
                 sprintList: this.sprintList,
                 edition: true,
                 kanbanList: this.kanbanList,
+                user: this.user,
                 subject: this.subject
             }
         });

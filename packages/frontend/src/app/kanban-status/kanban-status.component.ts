@@ -32,6 +32,8 @@ export class KanbanStatusComponent implements OnInit {
 
     @Output() kanbanDeleted: EventEmitter<any> = new EventEmitter();
 
+    @Output() addTaskFromKanban: EventEmitter<any> = new EventEmitter();
+
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
 
@@ -118,5 +120,8 @@ export class KanbanStatusComponent implements OnInit {
         this.kanbanstatusService
             .delete(this.kanbanstatus.kanban.id!)
             .subscribe(kanbanObserver);
+    }
+    addTask(){
+        this.addTaskFromKanban.emit(this.kanbanstatus);
     }
 }
