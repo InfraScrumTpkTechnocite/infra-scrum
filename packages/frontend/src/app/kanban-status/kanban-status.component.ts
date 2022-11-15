@@ -1,18 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
 import { WebSocketSubject } from 'rxjs/webSocket';
-import { Kanbanstatus } from '../models/kanbanstatus.model';
 import { KanbanstatusService } from '../services/kanbanstatus.service';
 import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
-import { Task } from '../models/task.model';
 import { UserProject } from '../models/userproject.model';
 import { User } from '../models/user.model';
-
-interface KanbanList {
-    kanban: Kanbanstatus;
-    tasks: Task[];
-}
+import { KanbanList } from '../models/kanbanlist.model';
 
 @Component({
     selector: 'app-kanban-status',

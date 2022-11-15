@@ -2,20 +2,16 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskAssignment } from '../../models/taskassignment.model';
 import { Task } from '../../models/task.model';
-import { TaskType } from 'src/app/models/tasktype.model';
-import { TaskService } from 'src/app/services/task.service';
-import { Project } from 'src/app/models/project.model';
+import { TaskType } from '../../models/tasktype.model';
+import { TaskService } from '../../services/task.service';
+import { Project } from '../../models/project.model';
 import { HotToastService } from '@ngneat/hot-toast';
-import { UserProject } from 'src/app/models/userproject.model';
-import { TaskassignmentService } from 'src/app/services/taskassignment.service';
+import { UserProject } from '../../models/userproject.model';
+import { TaskassignmentService } from '../../services/taskassignment.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
-import { Kanbanstatus } from 'src/app/models/kanbanstatus.model';
-import { User } from 'src/app/models/user.model';
-
-interface KanbanList {
-    kanban: Kanbanstatus;
-    tasks: Task[];
-}
+import { Kanbanstatus } from '../../models/kanbanstatus.model';
+import { User } from '../../models/user.model';
+import { KanbanList } from '../../models/kanbanlist.model';
 
 @Component({
     selector: 'app-edit-new-tasks',
@@ -28,7 +24,7 @@ export class EditNewTasksComponent implements OnInit {
     taskassignmentList: TaskAssignment[] = this.data.taskassignmentList ?? [];
     newTaskAssignmentList: TaskAssignment[] = [];
     userProjectList: UserProject[] = [];
-    myUserProject!: UserProject;
+    userProjectTaskCreator!: UserProject;
 
     noType: TaskType = new TaskType();
 
@@ -73,13 +69,25 @@ export class EditNewTasksComponent implements OnInit {
         this.data.userProjectList.map((userProject) =>
             this.userProjectList.push(userProject)
         );
+        console.log(this.data);
         this.newDate = new Date(this.data.task?.startdate);
-        const index = this.userProjectList.findIndex(
-            (userProject) => userProject.user!.id == this.data.user!.id
-        );
-        if (!this.data.edition && index >= 0) {
-            /** Remove yourself from the user you can assign */
-            this.myUserProject = this.userProjectList[index];
+        var index = this.data.edition
+            ? /** Find Task Creator through taskAssignmentList */
+              this.userProjectList.findIndex(
+                  (userProject) =>
+                      userProject.user!.id ==
+                      this.taskassignmentList.find(
+                          (taskAssignment) => taskAssignment.isTaskCreator
+                      )?.userproject.user.id
+              )
+            : /** Find Yourself */
+              this.userProjectList.findIndex(
+                  (userProject) => userProject.user!.id == this.data.user!.id
+              );
+        if (index >= 0) {
+            console.log('in if');
+            /** Remove yourself or taskCreator from the user you can assign */
+            this.userProjectTaskCreator = this.userProjectList[index];
             this.userProjectList.splice(index, 1);
         }
     }
@@ -116,7 +124,10 @@ export class EditNewTasksComponent implements OnInit {
     }
 
     addUser(userProject: UserProject): void {
-        const newAssignement = new TaskAssignment(userProject, this.data.edition ? this.data.task : this.newTask);
+        const newAssignement = new TaskAssignment(
+            userProject,
+            this.data.edition ? this.data.task : this.newTask
+        );
         this.newTaskAssignmentList.push(newAssignement);
         this.userProjectList.splice(
             this.userProjectList.findIndex(
@@ -176,7 +187,7 @@ export class EditNewTasksComponent implements OnInit {
                     this.newTask.id = task.id;
                     /** Add you as the creator of the task */
                     const taskAdmin = new TaskAssignment(
-                        this.myUserProject,
+                        this.userProjectTaskCreator,
                         task
                     );
                     taskAdmin.isTaskCreator = true;
