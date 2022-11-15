@@ -141,36 +141,46 @@
                 <div class="p-1">
                     <div class="flex justify-between items-center">
                         <!-- créateur tâche -->
-                        <div *ngFor="let taskassignment of taskassignmentList">
+                        <div class="flex items-start">
                             <div
-                                *ngIf="taskassignment.isTaskCreator"
-                                class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                                *ngFor="
+                                    let taskassignment of taskassignmentList
+                                "
                             >
-                                <!-- condition si photo, sinon span avec premiere lettre username -->
-                                <img
-                                    *ngIf="
-                                        taskassignment.userproject.user.picture
-                                    "
-                                    class="rounded-full hover:cursor-default"
-                                    [src]="
-                                        taskassignment.userproject.user.picture
-                                    "
-                                    alt="profile picture"
-                                    title="{{
-                                        taskassignment.userproject.user.username
-                                    }}"
-                                />
-                                <span
-                                    *ngIf="
-                                        !taskassignment.userproject.user.picture
-                                    "
-                                    class="text-2xl uppercase font-bold"
+                                <div
+                                    *ngIf="taskassignment.isTaskCreator"
+                                    class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
                                 >
-                                    {{
-                                        taskassignment.userproject.user.username
-                                            | initialsName
-                                    }}
-                                </span>
+                                    <!-- condition si photo, sinon span avec premiere lettre username -->
+                                    <img
+                                        *ngIf="
+                                            taskassignment.userproject.user
+                                                .picture
+                                        "
+                                        class="rounded-full hover:cursor-default"
+                                        [src]="
+                                            taskassignment.userproject.user
+                                                .picture
+                                        "
+                                        alt="profile picture"
+                                        title="{{
+                                            taskassignment.userproject.user
+                                                .username
+                                        }}"
+                                    />
+                                    <span
+                                        *ngIf="
+                                            !taskassignment.userproject.user
+                                                .picture
+                                        "
+                                        class="text-2xl uppercase font-bold"
+                                    >
+                                        {{
+                                            taskassignment.userproject.user
+                                                .username | initialsName
+                                        }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <span>|</span>
