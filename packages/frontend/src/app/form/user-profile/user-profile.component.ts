@@ -38,13 +38,11 @@ export class UserProfileComponent{
 
   constructor(
     private userService: UserService,
-    private roleService: RoleService,
     private router: Router,
     private headerTitleService: HeaderTitleService,
     private toastService: HotToastService,
     private httpClient: HttpClient,
     private translate: TranslateService,
-    private formBuilder: FormBuilder,
 ) {
     this.verifPassword = '';
 
@@ -91,9 +89,6 @@ onSubmit(user: User): void {
     this.submitted = true;
     this.userService.editUser(this.user).subscribe(userObserver)
   }
-
-
-
 
 /*function "ajouter" avatar profile*/
 

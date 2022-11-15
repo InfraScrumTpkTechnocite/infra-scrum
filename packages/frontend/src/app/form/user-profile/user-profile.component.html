@@ -1,293 +1,301 @@
 <!--espacement "margin"-->
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-<form
-    #userForm="ngForm"
-    (ngSubmit)="(onSubmit)"
-    [appMatchPassword]="['password', 'confirmPassword']"
->
-    <!--div header-->
-    <div
-        class="bg-tpkwhite text-secondary mt-15 m-auto w-1/2 h-18/9 rounded-md shadow-lg shadow-primary"
+<div class="w-screen h-screen">
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <form
+        #userForm="ngForm"
+        (ngSubmit)="(onSubmit)"
+        [appMatchPassword]="['password', 'confirmPassword']"
     >
-        <br /><br />
+        <!--div header-->
+        <div
+            class="bg-tpkwhite text-secondary mt-15 m-auto w-1/2 h-18/9 rounded-md shadow-lg shadow-primary"
+        >
+            <!--titre ("My Profil")-->
+            <h1
+                class="h1 text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-align pt-4"
+            >
+                My Profile
+            </h1>
 
-        <!--Zone avatar-->
-        <section>
-            <div class="flex mx-12">
-                <div
-                    class="avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2"
-                >
-                    <!-- image -->
-                    <label for="#UserPicture">{{ '' | translate }}</label>
-                    <img
-                        (click)="PictureUploader.click()"
-                        *ngIf="user.picture"
-                        class="img border-tpkvalidate"
-                        src="data:image/*;base64, {{ user.picture }}"
-                        alt="{{ user.picture }}"
-                    />
+            <br /><br />
 
+            <!--Zone avatar-->
+            <section>
+                <div class="flex mx-12">
+                    <div
+                        class="avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2"
+                    >
+                        <!-- image -->
+                        <label for="#UserPicture">{{ '' | translate }}</label>
+                        <img
+                            (click)="PictureUploader.click()"
+                            *ngIf="user.picture"
+                            class="img border-tpkvalidate"
+                            src="data:image/*;base64, {{ user.picture }}"
+                            alt="{{ user.picture }}"
+                        />
+
+                        <input
+                            #PictureUploader
+                            type="file"
+                            value="+"
+                            class="select-profile-picture"
+                            (change)="onFileSelected($event)"
+                        />
+                    </div>
+
+                    <!--button ("+")-->
                     <input
-                        #PictureUploader
-                        type="file"
+                        style="border: 2.5px solid #0b86c4"
+                        class="img-button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey4 large mr-2 mt-3"
+                        type="button"
+                        placeholder="+"
                         value="+"
-                        class="select-profile-picture"
-                        (change)="onFileSelected($event)"
+                        (click)="PictureUploader.click()"
                     />
-                </div>
 
-                <!--button ("+")-->
-                <input
-                    style="border: 2.5px solid #0b86c4"
-                    class="img-button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey4 large mr-2 mt-3"
-                    type="button"
-                    placeholder="+"
-                    value="+"
-                    (click)="PictureUploader.click()"
+                    <div>
+                        <!--zone formulaire Username-->
+                        <label for="username"></label
+                        ><input
+                            style="text-align: left"
+                            type="text"
+                            placeholder="username"
+                            value="{{ user.username }}"
+                            value=""
+                            required
+                            aria-required="true"
+                            class="input-username form-control w-full pl-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                            id="username"
+                            name="username"
+                            size="30"
+                            #username="ngModel"
+                            [(ngModel)]="user.username"
+                            required="required"
+                            pattern="^[a-zA-Z0-9àéèç]{1,25}$"
+                        /><br />
+
+                        <!--"message erreur Username"-->
+                        <p
+                            *ngIf="username.errors?.['required'] && username.dirty"
+                            style="text-align: start"
+                            class="alert username-message-erreur text-sm normal"
+                        >
+                            username required
+                        </p>
+                        <br />
+
+                        <!--input Email-->
+                        <label for="email"></label
+                        ><input
+                            style="text-align: left"
+                            type="email"
+                            placeholder="email"
+                            value="{{ user.email }}"
+                            value=""
+                            required
+                            aria-required="true"
+                            name="email"
+                            size="30"
+                            #email="ngModel"
+                            [(ngModel)]="user.email"
+                            required
+                            class="input-email form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                            id="email"
+                            required="required"
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                        />
+
+                        <!--"message erreur Email"-->
+                        <p
+                            *ngIf="!email.errors?.['required'] && email.invalid && password.dirty"
+                            style="text-align: center"
+                            class="alert email-message-erreur text-sm placeholder:italic"
+                        >
+                            email invalid
+                        </p>
+                        <p
+                            *ngIf="email.errors?.['required'] && email.dirty"
+                            style="text-align: center"
+                            class="alert email-message-erreur text-sm placeholder:italic"
+                        >
+                            email required
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <br />
+
+            <!--input Role-->
+            <div class="flex w-full justify-start">
+                <label for="role"></label
+                ><input
+                    disabled="disabled"
+                    id="role"
+                    type="text"
+                    name="role"
+                    style="text-align: center"
+                    required
+                    class="input-role form-control bg-transparent placeholder:italic"
+                    placeholder="role"
+                    value="{{ user.role.name }}"
+                    size="10"
+                    #role="ngModel"
+                    [(ngModel)]="user.role.name"
+                    required="required"
+                />
+            </div>
+
+            <!--"message erreur Role"-->
+            <p
+                *ngIf="role.errors?.['required'] && role.dirty"
+                style="text-align: start"
+                class="alert role-message-erreur placeholder:italic"
+            >
+                role required
+            </p>
+            <br /><br />
+
+            <!--zone formulaire Firstname/Lastname-->
+            <div class="flex w-full justify-center">
+                <label for="firstname"></label
+                ><input
+                    style="text-align: start"
+                    type="text"
+                    placeholder="firstname"
+                    value="{{ user.firstname }}"
+                    value=""
+                    required
+                    aria-required="true"
+                    required
+                    class="input-firstname form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                    id="firstname"
+                    size="30"
+                    name="firstname"
+                    minlength="8"
+                    #firstname="ngModel"
+                    [(ngModel)]="user.firstname"
+                    required="required"
+                />
+                <label for="lastname"></label
+                ><input
+                    style="text-align: start"
+                    type="text"
+                    placeholder="lastname"
+                    value="{{ user.lastname }}"
+                    value=""
+                    required
+                    aria-required="true"
+                    required
+                    class="input-lastname form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                    id="lastname"
+                    size="30"
+                    name="lastname"
+                    minlength="8"
+                    #lastname="ngModel"
+                    [(ngModel)]="user.lastname"
+                    required="required"
+                />
+            </div>
+
+            <!--"message erreur Firstname"-->
+            <p
+                *ngIf="firstname.errors?.['required'] && firstname.dirty"
+                style="text-align: start"
+                class="alert firstname-message-erreur text-sm placeholder:italic"
+            >
+                firstname required
+            </p>
+            <br />
+
+            <!--zone formulaire Password-->
+            <div class="flex w-full justify-center">
+                <label for="password"></label
+                ><input
+                    type="password"
+                    size="30"
+                    [placeholder]="'password' | translate"
+                    class="input-password form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                    id="password"
+                    [(ngModel)]="user.password"
+                    name="password"
+                    #password="ngModel"
+                    required
+                    value=""
+                    required
+                    aria-required="true"
                 />
 
-                <!--titre ("My Profil")-->
-                <div>
-                    <h1
-                        class="h1 text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-align pt-4"
-                    >
-                        My Profile
-                    </h1>
-                    <br /><br /><br />
-
-                    <!--zone formulaire Username-->
-                    <label for="username"></label
-                    ><input
-                        style="text-align: left"
-                        type="text"
-                        placeholder="username"
-                        value="{{ user.username }}"
-                        value=""
-                        required
-                        aria-required="true"
-                        class="input-username form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                        id="username"
-                        name="username"
-                        size="30"
-                        #username="ngModel"
-                        [(ngModel)]="user.username"
-                        required="required"
-                        pattern="^[a-zA-Z0-9àéèç]{1,25}$"
-                    /><br />
-
-                    <!--"message erreur Username"-->
-                    <p
-                        *ngIf="username.errors?.['required'] && username.dirty"
-                        style="text-align: start"
-                        class="alert username-message-erreur text-sm normal"
-                    >
-                        username required
-                    </p>
-                    <br />
-
-                    <!--input Email-->
-                    <label for="email"></label
-                    ><input
-                        style="text-align: left"
-                        type="email"
-                        placeholder="email"
-                        value="{{ user.email }}"
-                        value=""
-                        required
-                        aria-required="true"
-                        name="email"
-                        size="30"
-                        #email="ngModel"
-                        [(ngModel)]="user.email"
-                        required
-                        class="input-email form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
-                        id="email"
-                        required="required"
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                    />
-
-                    <!--"message erreur Email"-->
-                    <p
-                        *ngIf="!email.errors?.['required'] && email.invalid && password.dirty"
-                        style="text-align: center"
-                        class="alert email-message-erreur text-sm placeholder:italic"
-                    >
-                        email invalid
-                    </p>
-                    <p
-                        *ngIf="email.errors?.['required'] && email.dirty"
-                        style="text-align: center"
-                        class="alert email-message-erreur text-sm placeholder:italic"
-                    >
-                        email required
-                    </p>
-                </div>
+                <label for="ConfirPassword"></label
+                ><input
+                    type="password"
+                    size="30"
+                    [placeholder]="'verif-password' | translate"
+                    class="input-confirm-password form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
+                    [(ngModel)]="verifPassword"
+                    #confirmPassword="ngModel"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    required
+                    value=""
+                    required
+                    aria-required="true"
+                />
+                <p></p>
             </div>
-        </section>
 
-        <!--input Role-->
-        <div class="flex w-full justify-start">
-            <label for="role"></label
-            ><input
-                disabled="disabled"
-                id="role"
-                type="text"
-                name="role"
-                style="text-align: center"
-                required
-                class="input-role form-control bg-transparent placeholder:italic"
-                placeholder="role"
-                value="{{ user.role.name }}"
-                size="10"
-                #role="ngModel"
-                [(ngModel)]="user.role.name"
-                required="required"
-            />
-        </div>
-
-        <!--"message erreur Role"-->
-        <p
-            *ngIf="role.errors?.['required'] && role.dirty"
-            style="text-align: start"
-            class="alert role-message-erreur placeholder:italic"
-        >
-            role required
-        </p>
-        <br /><br />
-
-        <!--zone formulaire Firstname/Lastname-->
-        <div class="flex w-full justify-center">
-            <label for="firstname"></label
-            ><input
-                style="text-align: start"
-                type="text"
-                placeholder="firstname"
-                value="{{ user.firstname }}"
-                value=""
-                required
-                aria-required="true"
-                required
-                class="input-firstname form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
-                id="firstname"
-                size="30"
-                name="firstname"
-                minlength="8"
-                #firstname="ngModel"
-                [(ngModel)]="user.firstname"
-                required="required"
-            />
-            <label for="lastname"></label
-            ><input
-                style="text-align: start"
-                type="text"
-                placeholder="lastname"
-                value="{{ user.lastname }}"
-                value=""
-                required
-                aria-required="true"
-                required
-                class="input-lastname form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
-                id="lastname"
-                size="30"
-                name="lastname"
-                minlength="8"
-                #lastname="ngModel"
-                [(ngModel)]="user.lastname"
-                required="required"
-            />
-        </div>
-
-        <!--"message erreur Firstname"-->
-        <p
-            *ngIf="firstname.errors?.['required'] && firstname.dirty"
-            style="text-align: start"
-            class="alert firstname-message-erreur text-sm placeholder:italic"
-        >
-            firstname required
-        </p>
-        <br />
-
-        <!--zone formulaire Password-->
-        <div class="flex w-full justify-center">
-            <label for="password"></label
-            ><input
-                type="password"
-                size="30"
-                [placeholder]="'password' | translate"
-                class="input-password form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
-                id="password"
-                [(ngModel)]="user.password"
-                name="password"
-                #password="ngModel"
-                required
-                value=""
-                required
-                aria-required="true"
-            />
-
-            <label for="ConfirPassword"></label
-            ><input
-                type="password"
-                size="30"
-                [placeholder]="'verif-password' | translate"
-                class="input-confirm-password form-control w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-non"
-                [(ngModel)]="verifPassword"
-                #confirmPassword="ngModel"
-                id="confirmPassword"
-                name="confirmPassword"
-                required
-                value=""
-                required
-                aria-required="true"
-            />
-            <p></p>
-        </div>
-
-        <!--"message erreur Password/Confirm-Password"-->
-        <p
-            *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
-            class="password-message-erreur placeholder:italic"
-        >
-            {{ 'Invalid password!' | translate }}
-        </p>
-
-        <p
-            *ngIf="password.errors?.['required'] && password.dirty"
-            class="password-message-erreur placeholder:italic"
-        >
-            {{ 'password required' | translate }}
-        </p>
-
-        <div *ngIf="showErrorMessage">
-            <h1 class="text-tpkerror text-sm text-center placeholder:italic">
-                {{ errorMessage }}
-            </h1>
-        </div>
-        <br /><br />
-
-        <!--button Update/Delete-->
-
-        <div class="flex w-full justify-center">
-            <button
-                class="update"
-                type="submit"
-                [disabled]="!user.password || !user.username || !verifPassword"
-                (click)="onSubmit(user)"
+            <!--"message erreur Password/Confirm-Password"-->
+            <p
+                *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
+                class="password-message-erreur placeholder:italic"
             >
-                {{ 'Update' | translate }}
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="clear" type="reset" (click)="onDeleteSubmit(user)">
+                {{ 'Invalid password!' | translate }}
+            </p>
+
+            <p
+                *ngIf="password.errors?.['required'] && password.dirty"
+                class="password-message-erreur placeholder:italic"
+            >
+                {{ 'password required' | translate }}
+            </p>
+
+            <div *ngIf="showErrorMessage">
+                <h1
+                    class="text-tpkerror text-sm text-center placeholder:italic"
+                >
+                    {{ errorMessage }}
+                </h1>
+            </div>
+            <br /><br />
+
+            <!--button Update/Delete-->
+
+            <div class="flex w-full justify-center">
+                <button
+                    class="cancel"
+                    type="submit"
+                    onclick="window.location.href = 'http://localhost:4200/projects';"
+                >
+                    Cancel
+                </button>
+                &nbsp;&nbsp;&nbsp;
+                <button
+                    class="update"
+                    type="submit"
+                    [disabled]="
+                        !user.password || !user.username || !verifPassword
+                    "
+                    (click)="onSubmit(user)"
+                >
+                    {{ 'Update' | translate }}
+                </button>
+
+                <!--<button class="clear" type="reset" (click)="onDeleteSubmit(user)">
                 Clear
-            </button>
+            </button>-->
+            </div>
+            <br /><br />
         </div>
-        <br />
-        <button
-            class="cancel"
-            type="submit"
-            onclick="window.location.href = 'http://localhost:4200/projects';"
-        >
-            Cancel</button
-        >&nbsp;&nbsp;&nbsp; <br /><br />
-    </div>
-</form>
+    </form>
+</div>

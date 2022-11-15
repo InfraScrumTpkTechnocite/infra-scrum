@@ -88,14 +88,14 @@ p {
 }
 
 .h1{
-    margin-left: 100px;
+    margin-left:370px;
 }
 
 
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 300px;
+    margin-left: 295px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -231,7 +231,7 @@ p {
 /*css buton Update*/
 
 .update {
-    margin-left: -25px;
+    margin-left: 0px;
     padding: 6px 15px;
     background: #4e80ca;
     color: #ffffff;
@@ -247,7 +247,7 @@ p {
 
 .cancel
 {
-    margin-left: +420px;
+    margin-left: 0px;
     padding: 6px 15px;
     background: #11df0a;
     color: #ffffff;
