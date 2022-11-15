@@ -159,9 +159,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             this.kanbanList.push(kanbanList);
                         }
                         if (message.task) {
-                            this.kanbanList.find((kanbans) => {
-                                kanbans.tasks?.push(message.task);
-                            });
+                            const kanban = this.kanbanList.find(
+                                (kanban) =>
+                                    kanban.kanban.id ==
+                                    message.task.kanbanstatus.id
+                            );
+                            kanban?.tasks.push(message.task);
                         }
                 }
             }
@@ -324,10 +327,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         });
     }
 
-    addTask() {
+    addTask(kanban?: Kanbanstatus) {
+        const task = new Task();
+        if (kanban) task.kanbanstatus = kanban;
         const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
-                task: new Task(),
+                task: task,
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
                 edition: false,
@@ -454,6 +459,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
         if (index != -1) {
             this.kanbanList.splice(index, 1);
         }
+    }
+
+    addTaskFromKanban(kanban: Kanbanstatus) {
+        this.addTask(kanban);
     }
 
     /* -------------------------------------------------------------------------- */

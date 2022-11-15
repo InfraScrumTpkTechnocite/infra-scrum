@@ -44,6 +44,24 @@
                                         }}
                                     </div>
                                 </div>
+                                <div
+                                    *ngFor="
+                                        let taskassignment of newTaskAssignmentList
+                                    "
+                                >
+                                    <div
+                                        *ngIf="
+                                            !taskassignment.userproject
+                                                .isprojectadmin
+                                        "
+                                        class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
+                                    >
+                                        {{
+                                            taskassignment.userproject.user
+                                                .username | initialsName
+                                        }}
+                                    </div>
+                                </div>
                                 <button mat-button [matMenuTriggerFor]="menu">
                                     <div
                                         class="w-8 h-8 bg-grey1 rounded-2xl text-grey4 flex justify-center items-center"

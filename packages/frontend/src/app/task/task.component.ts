@@ -81,6 +81,7 @@ export class TaskComponent implements OnInit {
                 sprintList: this.sprintList,
                 edition: true,
                 kanbanList: this.kanbanList,
+                user: this.user,
                 subject: this.subject
             }
         });
