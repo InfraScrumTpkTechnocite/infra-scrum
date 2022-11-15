@@ -24,7 +24,7 @@ export class EditNewTasksComponent implements OnInit {
     taskassignmentList: TaskAssignment[] = this.data.taskassignmentList ?? [];
     newTaskAssignmentList: TaskAssignment[] = [];
     userProjectList: UserProject[] = [];
-    myUserProject!: UserProject;
+    userProjectTaskCreator!: UserProject;
 
     noType: TaskType = new TaskType();
 
@@ -69,13 +69,25 @@ export class EditNewTasksComponent implements OnInit {
         this.data.userProjectList.map((userProject) =>
             this.userProjectList.push(userProject)
         );
+        console.log(this.data);
         this.newDate = new Date(this.data.task?.startdate);
-        const index = this.userProjectList.findIndex(
-            (userProject) => userProject.user!.id == this.data.user!.id
-        );
-        if (!this.data.edition && index >= 0) {
-            /** Remove yourself from the user you can assign */
-            this.myUserProject = this.userProjectList[index];
+        var index = this.data.edition
+            ? /** Find Task Creator through taskAssignmentList */
+              this.userProjectList.findIndex(
+                  (userProject) =>
+                      userProject.user!.id ==
+                      this.taskassignmentList.find(
+                          (taskAssignment) => taskAssignment.isTaskCreator
+                      )?.userproject.user.id
+              )
+            : /** Find Yourself */
+              this.userProjectList.findIndex(
+                  (userProject) => userProject.user!.id == this.data.user!.id
+              );
+        if (index >= 0) {
+            console.log('in if');
+            /** Remove yourself or taskCreator from the user you can assign */
+            this.userProjectTaskCreator = this.userProjectList[index];
             this.userProjectList.splice(index, 1);
         }
     }
@@ -112,7 +124,10 @@ export class EditNewTasksComponent implements OnInit {
     }
 
     addUser(userProject: UserProject): void {
-        const newAssignement = new TaskAssignment(userProject, this.data.edition ? this.data.task : this.newTask);
+        const newAssignement = new TaskAssignment(
+            userProject,
+            this.data.edition ? this.data.task : this.newTask
+        );
         this.newTaskAssignmentList.push(newAssignement);
         this.userProjectList.splice(
             this.userProjectList.findIndex(
@@ -172,7 +187,7 @@ export class EditNewTasksComponent implements OnInit {
                     this.newTask.id = task.id;
                     /** Add you as the creator of the task */
                     const taskAdmin = new TaskAssignment(
-                        this.myUserProject,
+                        this.userProjectTaskCreator,
                         task
                     );
                     taskAdmin.isTaskCreator = true;

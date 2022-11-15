@@ -33,8 +33,7 @@
                                 >
                                     <div
                                         *ngIf="
-                                            !taskassignment.userproject
-                                                .isprojectadmin
+                                            !taskassignment.isTaskCreator
                                         "
                                         class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
                                     >
@@ -50,10 +49,6 @@
                                     "
                                 >
                                     <div
-                                        *ngIf="
-                                            !taskassignment.userproject
-                                                .isprojectadmin
-                                        "
                                         class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
                                     >
                                         {{
