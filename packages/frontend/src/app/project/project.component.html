@@ -88,7 +88,6 @@
                     <option selected disabled value="default">Sprints:</option>
                     <option
                         value="{{ sprint.id }}"
-                        (click)="changeSprintDisplay(sprint.id)"
                         [ngClass]="{
                             'bg-primary text-white': sprint.id == projectid,
                             'text-primary': sprint.id != projectid
@@ -256,6 +255,11 @@
                         (click)="addnewKanbanStatus()"
                         class="flex items-center justify-center bg-primary hover:bg-secondary text-white hoverSmooth p-2 rounded-lg h-8 text-xs mr-8"
                         title="Add a new column"
+                        *ngIf="
+                            user.role.name == 'admin' ||
+                            user.role.name == 'superadmin' ||
+                            isUserProjectadmin
+                        "
                     >
                         <span>
                             {{
@@ -430,11 +434,7 @@
                             <div
                                 *ngFor="let task of kanban.tasks"
                                 cdkDrag
-                                [cdkDragDisabled]="
-                                    user.role.name != 'admin' &&
-                                    user.role.name != 'superadmin' &&
-                                    !isUserProjectadmin
-                                "
+                                [cdkDragDisabled]="user.role.name == 'guest'"
                             >
                                 <app-task
                                     [task]="task"
@@ -458,6 +458,11 @@
                             (click)="addnewKanbanStatus()"
                             class="bg-[rgba(225,225,224,0.5)] rounded-md hover:shadow-sm hover:shadow-secondary hover:text-secondary"
                             title="Add a column"
+                            *ngIf="
+                                user.role.name == 'admin' ||
+                                user.role.name == 'superadmin' ||
+                                isUserProjectadmin
+                            "
                         >
                             <div
                                 class="w-16 bg-primary text-white h-3 rounded-t-lg flex items-center justify-center"
