@@ -76,6 +76,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
+    showCurrentUserTasks: boolean = false;
+
     constructor(
         private route: ActivatedRoute,
         private projectService: ProjectService,
@@ -372,10 +374,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     //Afficher Sprint en fonction de celui sélectionné
-    changeSprintDisplay(id?: string) {
+    changeSprintDisplay(event: any /*id?: string*/) {
         //console.log(`project.component - changeSprintDisplay - id = ${id}`);
         const sprint: Project =
-            this.sprintList.find((sprint) => sprint.id == id) || new Project();
+            this.sprintList.find((sprint) => sprint.id == event.target.value) ||
+            new Project();
         // console.log(
         //     `project.component - changeSprintDisplay - ${JSON.stringify(
         //         sprint
@@ -627,5 +630,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     scrollTop() {
         document.getElementById('kanbanDashboard')!.scrollTop = 0;
+    }
+
+    toggleCurrentUserTasks() {
+        this.showCurrentUserTasks = !this.showCurrentUserTasks;
     }
 }
