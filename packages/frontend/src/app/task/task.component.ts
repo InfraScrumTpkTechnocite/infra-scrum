@@ -8,13 +8,9 @@ import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.com
 import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
 import { UserProject } from '../models/userproject.model';
-import { Kanbanstatus } from '../models/kanbanstatus.model';
 import { User } from '../models/user.model';
+import { KanbanList } from '../models/kanbanlist.model';
 
-interface KanbanList {
-    kanban: Kanbanstatus;
-    tasks: Task[];
-}
 
 @Component({
     selector: 'app-task',

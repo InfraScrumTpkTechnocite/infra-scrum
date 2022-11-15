@@ -34,11 +34,8 @@ import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.com
 import { EditProjectComponent } from '../form/edit-project/edit-project.component';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
+import { KanbanList } from '../models/kanbanlist.model';
 
-interface KanbanList {
-    kanban: Kanbanstatus;
-    tasks: Task[];
-}
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',

@@ -2,20 +2,16 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskAssignment } from '../../models/taskassignment.model';
 import { Task } from '../../models/task.model';
-import { TaskType } from 'src/app/models/tasktype.model';
-import { TaskService } from 'src/app/services/task.service';
-import { Project } from 'src/app/models/project.model';
+import { TaskType } from '../../models/tasktype.model';
+import { TaskService } from '../../services/task.service';
+import { Project } from '../../models/project.model';
 import { HotToastService } from '@ngneat/hot-toast';
-import { UserProject } from 'src/app/models/userproject.model';
-import { TaskassignmentService } from 'src/app/services/taskassignment.service';
+import { UserProject } from '../../models/userproject.model';
+import { TaskassignmentService } from '../../services/taskassignment.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
-import { Kanbanstatus } from 'src/app/models/kanbanstatus.model';
-import { User } from 'src/app/models/user.model';
-
-interface KanbanList {
-    kanban: Kanbanstatus;
-    tasks: Task[];
-}
+import { Kanbanstatus } from '../../models/kanbanstatus.model';
+import { User } from '../../models/user.model';
+import { KanbanList } from '../../models/kanbanlist.model';
 
 @Component({
     selector: 'app-edit-new-tasks',
