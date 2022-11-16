@@ -87,6 +87,7 @@ onSubmit(user: User): void {
 
     this.submitted = true;
     this.userService.editUser(this.user).subscribe(userObserver)
+    window.location.reload()
   }
   
 /*function "click"*/
@@ -97,7 +98,7 @@ onSubmit(user: User): void {
     });
 }
 
-  /*function selectFile*/
+/*function selectFile*/
 
   onFileSelected(event: any) {
     const httpOptions = {
