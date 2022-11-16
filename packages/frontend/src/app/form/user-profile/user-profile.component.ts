@@ -92,7 +92,7 @@ onSubmit(user: User): void {
   
 /*function "click"*/
 
-  userProjectClicked(event: any) {
+  Clicked(event: any) {
     this.router.navigate(['/user'], {
         queryParams: { userid: this.user.id }
     });
