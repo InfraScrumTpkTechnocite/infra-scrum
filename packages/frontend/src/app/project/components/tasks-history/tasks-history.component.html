@@ -13,7 +13,8 @@
                     class="w-full border border-gray-200 rounded overflow-hidden shadow-md"
                 >
                     <li
-                        (click)="getTaskOverview()"
+                        *ngFor="let task of tasksLists"
+                        (click)="task.visible = !task.visible"
                         class="group px-4 py-2 bg-white hover:bg-sky-100 hover:text-secondary border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out hover:cursor-pointer w-full flex flex-col"
                     >
                         <!-- DEFAULT PREVIEW -->
@@ -24,12 +25,12 @@
                             >
                                 <div class="flex-1 min-w-0 justify-center">
                                     <p class="text-sm font-medium truncate">
-                                        Créer le component historique des tâches
+                                        {{ task.name }}
                                     </p>
                                     <span
                                         class="text-sm text-gray-500 truncate"
                                     >
-                                        Front-end
+                                        {{ task.tasktype.label }}
                                     </span>
                                 </div>
                             </div>
@@ -54,8 +55,18 @@
                             >
                                 <p>
                                     Estimated time:
-                                    <span class="font-medium"
-                                        >3 jours 7h55</span
+                                    <span class="font-medium">
+                                        {{
+                                            task.estimatedtime / 480
+                                                | numberToInteger
+                                        }}
+                                        d,
+                                        {{
+                                            (task.estimatedtime / 60) % 8
+                                                | numberToInteger
+                                        }}
+                                        hrs
+                                        {{ task.estimatedtime % 60 }} min.</span
                                     >
                                 </p>
                             </div>
@@ -69,7 +80,7 @@
                                         stroke="currentColor"
                                         class="w-6 h-6 relative transition-transform"
                                         [ngClass]="
-                                            isTaskReduced
+                                            !task.visible
                                                 ? 'group-hover:top-1'
                                                 : 'rotate-180 group-hover:bottom-1'
                                         "
@@ -85,18 +96,12 @@
                         </div>
                         <!-- AFFICHAGE OVERVIEW -->
                         <div
-                            *ngIf="!isTaskReduced"
+                            *ngIf="task.visible"
                             class="flex border-t-2 border-grey2 mt-2 justify-start"
                         >
                             <div class="flex w-full text-sm nowrap mt-2">
                                 <p>
-                                    Description de la tâche, Lorem ipsum dolor
-                                    sit amet consectetur adipisicing elit. Optio
-                                    unde provident numquam laboriosam
-                                    blanditiis, itaque deleniti nostrum suscipit
-                                    assumenda! Aperiam provident quod eum
-                                    laudantium facilis, distinctio mollitia
-                                    deserunt.
+                                    {{ task.description }}
                                 </p>
                                 <!-- !! -->
                                 <!-- Si pas de description: -->
@@ -119,7 +124,6 @@
                     class="w-full border border-gray-200 rounded overflow-hidden shadow-md"
                 >
                     <li
-                        (click)="getTaskOverview()"
                         class="group px-4 py-2 bg-white hover:bg-sky-100 hover:text-secondary border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out hover:cursor-pointer w-full flex flex-col"
                     >
                         <!-- DEFAULT PREVIEW -->

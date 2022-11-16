@@ -144,14 +144,14 @@
                     title="Gantt diagram"
                     class="flex items-center justify-center w-28 h-10 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg text-xs p-1"
                 >
-                    <span>Gantt</span>
+                    <span>Gantt </span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-5 h-5 ml-2 mb-2"
+                        class="w-5 h-5 ml-3 mb-2"
                     >
                         <path
                             stroke-linecap="round"
@@ -194,7 +194,7 @@
         id="kanbanDashboard"
         class="w-11/12 overflow-y-scroll scroll-smooth"
     >
-        <div *ngSwitchCase="'history'">
+        <div *ngSwitchDefault>
             <!-- Header  -->
             <div
                 id="kanbanHeader"
@@ -422,7 +422,9 @@
                             [project]="project"
                             [user]="user"
                             [isUserProjectadmin]="isUserProjectadmin"
-                            (addTaskFromKanban)="addTaskFromKanban(kanban.kanban)"
+                            (addTaskFromKanban)="
+                                addTaskFromKanban(kanban.kanban)
+                            "
                         ></app-kanban-status>
 
                         <div
@@ -498,7 +500,10 @@
             <!-- fin test -->
         </div>
         <app-chart-gantt *ngSwitchCase="'gantt'"></app-chart-gantt>
-        <app-tasks-history *ngSwitchDefault></app-tasks-history>
+        <app-tasks-history
+            *ngSwitchCase="'history'"
+            [kanbanList]="kanbanList"
+        ></app-tasks-history>
 
         <!-- Bouton scroll to the top -->
         <div
