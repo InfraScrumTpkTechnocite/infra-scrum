@@ -183,7 +183,7 @@
         id="kanbanDashboard"
         class="w-11/12 overflow-y-scroll scroll-smooth"
     >
-        <div *ngSwitchDefault>
+        <div *ngSwitchCase="'history'">
             <!-- Header  -->
             <div
                 id="kanbanHeader"
@@ -474,7 +474,7 @@
             <!-- fin test -->
         </div>
         <app-chart-gantt *ngSwitchCase="'gantt'"></app-chart-gantt>
-        <app-tasks-history *ngSwitchCase="'history'"></app-tasks-history>
+        <app-tasks-history *ngSwitchDefault></app-tasks-history>
 
         <!-- Bouton scroll to the top -->
         <div

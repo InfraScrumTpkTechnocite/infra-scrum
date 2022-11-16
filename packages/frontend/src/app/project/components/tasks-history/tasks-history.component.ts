@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-tasks-history',
-  templateUrl: './tasks-history.component.html',
-  styleUrls: ['./tasks-history.component.css']
+    selector: 'app-tasks-history',
+    templateUrl: './tasks-history.component.html',
+    styleUrls: ['./tasks-history.component.css']
 })
 export class TasksHistoryComponent implements OnInit {
+    isTaskReduced: boolean = true;
 
-  constructor() { }
+    // @Input() kanbanList: any
 
-  ngOnInit(): void {
-  }
+    constructor() {}
 
+    ngOnInit(): void {}
+
+    getTaskOverview() {
+        this.isTaskReduced = !this.isTaskReduced;
+    }
 }
