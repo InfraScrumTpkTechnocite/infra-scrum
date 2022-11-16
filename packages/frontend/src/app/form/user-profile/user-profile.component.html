@@ -1,9 +1,11 @@
 <!--espacement "margin"-->
 <div class="w-screen h-screen">
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <marquee direction=""
-        >Double-click reload to validate your profile picture</marquee
-    >
+    <p style="color: rgb(240, 12, 12)">
+        <marquee direction="" scrollamount="10"
+            >Double-click reload to validate your profile picture</marquee
+        >
+    </p>
     <form
         #userForm="ngForm"
         (ngSubmit)="(onSubmit)"
