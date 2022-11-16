@@ -16,6 +16,7 @@ export class TasksHistoryComponent implements OnInit {
     constructor() {}
 
     ngOnInit(): void {
+        // affichage des tâches en cours
         this.kanbanList.forEach((knbn) => {
             this.tasksLists = this.tasksLists.concat(knbn.tasks);
         });
