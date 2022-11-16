@@ -69,7 +69,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
     exports: [RouterModule],
     //for providers, see https://stackoverflow.com/questions/49739277/nullinjectorerror-no-provider-for-jwthelperservice
     providers: [

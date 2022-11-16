@@ -297,6 +297,7 @@
                 <button
                     class="update"
                     type="submit"
+                    onClick="history.go(0)"
                     [disabled]="
                         !user.password || !user.username || !verifPassword
                     "
