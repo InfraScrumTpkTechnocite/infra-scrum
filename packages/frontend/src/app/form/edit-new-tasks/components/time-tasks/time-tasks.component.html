@@ -1,0 +1,134 @@
+<div
+    class="flex mt-8 w-96 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+>
+    <label class="font-bold">
+        {{ 'infrascrum.edit-new-task.estimate-time' | translate }}
+    </label>
+    <div class="flex ml-16">
+        <div class="flex flex-col w-24 mr-3 justify-center">
+            <h3>
+                {{ 'infrascrum.edit-new-task.estimate-day' | translate }}
+            </h3>
+            <input
+                type="number"
+                min="0"
+                step="1"
+                name="day"
+                id="day"
+                [(ngModel)]="days"
+                class="w-20 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+            />
+        </div>
+        <div class="flex flex-col w-24 justify-center">
+            <h3>
+                {{ 'infrascrum.edit-new-task.estimate-hours' | translate }}
+            </h3>
+            <input
+                type="number"
+                min="0"
+                max="8"
+                step="1"
+                name="hour"
+                id="hour"
+                [(ngModel)]="hours"
+                class="w-20 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+            />
+        </div>
+        <div class="flex flex-col w-24 ml-3 justify-center">
+            <h3>
+                {{ 'infrascrum.edit-new-task.estimate-minute' | translate }}
+            </h3>
+            <input
+                type="number"
+                step="15"
+                min="0"
+                max="45"
+                name="minute"
+                id="minute"
+                [(ngModel)]="minutes"
+                class="w-20 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+            />
+        </div>
+    </div>
+</div>
+<div
+    class="flex flex-col w-40 xl:w-128 mt-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+>
+    <label class="font-bold">Temps réaliser: </label>
+    <div class="flex ml-24">
+        <input
+            type="date"
+            class="w-40 mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+        />
+        <div class="flex flex-col w-24 justify-center ml-12">
+            <h3>
+                {{ 'infrascrum.edit-new-task.estimate-hours' | translate }}
+            </h3>
+            <input
+                type="number"
+                min="0"
+                max="8"
+                step="1"
+                name="hour"
+                id="hour"
+                [(ngModel)]="hours"
+                class="w-20 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+            />
+        </div>
+        <div class="flex flex-col w-24 mx-3 justify-center">
+            <h3>
+                {{ 'infrascrum.edit-new-task.estimate-minute' | translate }}
+            </h3>
+            <input
+                type="number"
+                step="15"
+                min="0"
+                max="45"
+                name="minute"
+                id="minute"
+                [(ngModel)]="minutes"
+                class="w-20 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+            />
+        </div>
+        <div class="flex justify-end items-center">
+            <button
+                form="ngFormUserProject"
+                class="pr-2 mr-2 md:mr-1 text-grey4 hover:text-white"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4 md:w-6 md:h-6 text-tpkvalidate font-extrabold"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.5 12.75l6 6 9-13.5"
+                    />
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="flex items-center justify-center mb-6 mt-6">
+    <button>
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-8 h-8 text-primary rounded-full hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-md hover:cursor-pointer"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+    </svg>
+    </button>
+</div>
