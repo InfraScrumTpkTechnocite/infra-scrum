@@ -3,8 +3,8 @@
 .avatar {
     vertical-align: middle;
     margin: 0px;
-    width: 160px;
-    height: 160px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     border: 1.5px #9eecc8;
     color: rgb(255, 255, 255);
@@ -13,8 +13,8 @@
 
 .img-avatar{
     margin-right:25px ;
-    width: 160px;
-    height: 160px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     color: rgb(255, 255, 255);
     border: 1.5px #9eecc8;
@@ -23,8 +23,9 @@
 /*css avatar button "ajouter" image*/
 
   img {
-    height: 160px;
-    width: 160px;
+    margin-left:0px;
+    height: 130px;
+    width: 130px;
     border: 4px solid #16e7dd;
     border-radius: 50%;
     color: rgb(255, 255, 255);
@@ -41,13 +42,13 @@
 }
 
 .h1{
-    margin-left:370px;
+    margin-left:240px;
 }
 
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 170px;
+    margin-left: 110px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -56,7 +57,7 @@
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: -10px;
+    margin-left: 25px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -65,7 +66,7 @@
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
-    margin-left: 240px;
+    margin-left: 100px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -83,7 +84,7 @@
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 240px;
+    margin-left: 100px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -92,7 +93,7 @@
 /*css role*/
 
 .input-role {
-    margin-left: 75px;
+    margin-left: 15px;
     font-size: 18px;
     color:rgb(11, 97, 155);
     /*text-decoration: underline rgb(130, 161, 224);*/
@@ -101,25 +102,27 @@
 /*css username*/
 
 .input-username {
-    margin-left: 170px;
+    margin-left: 110px;
     font-size: 18px;
     color:rgb(11, 97, 155);
+    text-align: center;
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 /*css email*/
 
 .input-email {
-    margin-left: 170px;
+    margin-left: 110px;
     font-size: 18px;
     color:rgb(11, 97, 155);
+    text-align: center;
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 /*css input firstname*/
 
 .input-firstname {
-    margin-left: 180px;
+    margin-left: 30px;
     font-size: 18px;
     color:rgb(11, 97, 155);
     /*text-decoration: underline rgb(130, 161, 224);*/
@@ -137,7 +140,7 @@
 /*css input password*/
 
 .input-password {
-    margin-left:180px;
+    margin-left:30px;
     font-size: 18px;
     color:rgb(11, 97, 155);
 
