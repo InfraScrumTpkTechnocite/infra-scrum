@@ -22,46 +22,13 @@
 
 /*css avatar button "ajouter" image*/
 
-p {
-    font-family: Lato;
-  }
-  
-  .image-container {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-  }
-  
-  .select-profile-picture {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-  }
-  
-  .image-container:hover .message {
-    transform: translate(-50%, -50%);
-    opacity: 1;
-  }
-  
   img {
     height: 160px;
     width: 160px;
-    border: 3px solid #16e7dd;
+    border: 4px solid #16e7dd;
     border-radius: 50%;
     color: rgb(255, 255, 255);
     font-size: 70px;
-  }
-
-  .img-button-ajouter-avatar {
-    border: 3px solid #0b86c4;
-    border-radius: 50%;
-    color: rgb(185, 210, 233);
-    font-size: 150%;
   }
 
 /*css input role message erreur*/
@@ -98,7 +65,7 @@ p {
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
-    margin-left: 265px;
+    margin-left: 240px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -116,7 +83,7 @@ p {
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 265px;
+    margin-left: 240px;
     font-style: italic;
     font-size: 14pt;
     color: red;
