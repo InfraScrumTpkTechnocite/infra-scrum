@@ -60,7 +60,7 @@ p {
   .img-button-ajouter-avatar {
     border: 3px solid #0b86c4;
     border-radius: 50%;
-    color: rgb(16, 99, 177);
+    color: rgb(185, 210, 233);
     font-size: 150%;
   }
 
@@ -80,7 +80,7 @@ p {
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 290px;
+    margin-left: 170px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -89,7 +89,7 @@ p {
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: 105px;
+    margin-left: -10px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -134,7 +134,7 @@ p {
 /*css username*/
 
 .input-username {
-    margin-left: 290px;
+    margin-left: 170px;
     font-size: 18px;
     color:rgb(11, 97, 155);
     /*text-decoration: underline rgb(130, 161, 224);*/
@@ -143,7 +143,7 @@ p {
 /*css email*/
 
 .input-email {
-    margin-left: 290px;
+    margin-left: 170px;
     font-size: 18px;
     color:rgb(11, 97, 155);
     /*text-decoration: underline rgb(130, 161, 224);*/
@@ -232,14 +232,5 @@ p {
 
 }
 
-/*css button Reload*/
-
-.reload
-{
-    margin-left: 790px;
-    height: 75px;
-    width: 75px;
-    border-radius: 50%;
-}
 
 
