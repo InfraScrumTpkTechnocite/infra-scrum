@@ -499,7 +499,7 @@
             </div>
             <!-- fin test -->
         </div>
-        <app-chart-gantt *ngSwitchCase="'gantt'"></app-chart-gantt>
+        <app-chart-gantt *ngSwitchCase="'gantt'" [sprints]="sprintList" [kanbanList]="kanbanList"></app-chart-gantt>
 
         <app-tasks-history
             *ngSwitchCase="'history'"
@@ -535,5 +535,4 @@
         </div>
     </div>
     <!-- fin kanban dashboard -->
-    <app-chart-gantt *ngIf="!hideChart" class="w-full"></app-chart-gantt>
 </div>
