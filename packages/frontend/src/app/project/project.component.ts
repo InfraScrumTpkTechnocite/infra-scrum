@@ -423,7 +423,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     addnewKanbanStatus() {
         var newKanbanStatus = new Kanbanstatus();
         newKanbanStatus.project.id = this.project.id;
-        newKanbanStatus.order = this.kanbanList.length + 1;
+        newKanbanStatus.order = this.kanbanList.length;
 
         const kanbanObserver = {
             next: (kanban: Kanbanstatus) => {
@@ -432,7 +432,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 // 'next' will send a message to the server once a connection is made
                 // and all subscribed client will receive message right away
                 //Remember value is serialized with JSON.stringify by default!
-                this.subject.next({ method: 'add', kanban: kanban });
+                this.subject.next({
+                    method: 'add',
+                    kanban: kanban,
+                    projectid: this.projectid
+                });
             },
             error: (err: any) => {
                 console.log(
@@ -452,8 +456,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     onKanbanDeleted(kanban: Kanbanstatus) {
-        var index = this.kanbanList.findIndex((knb) => knb.kanban === kanban);
+        var index = this.kanbanList.findIndex(
+            (knb) => knb.kanban.id === kanban.id
+        );
         if (index != -1) {
+            this.subject.next({
+                method: 'delete',
+                kanban: kanban,
+                projectid: this.projectid
+            });
             this.kanbanList.splice(index, 1);
         }
     }
