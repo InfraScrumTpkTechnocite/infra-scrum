@@ -123,10 +123,13 @@ export class HeaderComponent implements OnInit {
     }
 
     onChange(event: any) {
-        console.log(`header.component - onChange - ${event.target.value}`); //id du projet sélectionné
-        this.router.navigate(['/project'], {
-            queryParams: { projectid: event.target.value }
-        });
+        //console.log(`header.component - onChange - ${event.target.value}`); //id du projet
+        if (event.target.value) {
+            this.router.navigate(['/project'], {
+                queryParams: { projectid: event.target.value }
+            });
+            event.target.value = '';
+        }
     }
 
     ngOnDestroy() {
