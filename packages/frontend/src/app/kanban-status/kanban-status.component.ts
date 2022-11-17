@@ -50,7 +50,7 @@ export class KanbanStatusComponent implements OnInit {
         //console.log(this.user);
         //console.log(this.isUserProjectadmin);
         this.kanbanstatus = this.kanbanList as KanbanList;
-        this.newName = this.kanbanstatus.kanban.name
+        this.newName = this.kanbanstatus.kanban.name;
         this.newColor = this.kanbanstatus.kanban.color;
         //console.log(`ngOnInit - this.project ${JSON.stringify(this.project)}`);
     }
@@ -69,7 +69,9 @@ export class KanbanStatusComponent implements OnInit {
                 this.toastService.success('Column edited !');
                 this.subject.next({
                     method: 'edit',
-                    kanban: this.kanbanstatus.kanban
+                    kanban: this.kanbanstatus.kanban,
+                    tasks: this.kanbanstatus.tasks,
+                    projectid: this.projectid
                 });
             },
             error: (err: any) => {
@@ -93,10 +95,11 @@ export class KanbanStatusComponent implements OnInit {
         const kanbanObserver = {
             next: (result: any) => {
                 console.log(`${result}`);
-                this.toastService.success(`Column deleted ! ${result}`);
+                this.toastService.success(`Column deleted !`);
                 this.subject.next({
                     method: 'delete',
-                    kaban: this.kanbanstatus.kanban
+                    kaban: this.kanbanstatus.kanban,
+                    projectid: this.projectid
                 });
             },
             error: (err: any) => {
@@ -115,7 +118,7 @@ export class KanbanStatusComponent implements OnInit {
             .delete(this.kanbanstatus.kanban.id!)
             .subscribe(kanbanObserver);
     }
-    addTask(){
+    addTask() {
         this.addTaskFromKanban.emit(this.kanbanstatus);
     }
 }
