@@ -94,7 +94,6 @@
     margin-left: 15px;
     font-size: 18px;
     color:rgb(11, 97, 155);
-    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 /*css username*/
@@ -104,7 +103,6 @@
     font-size: 18px;
     color:rgb(11, 97, 155);
     text-align: center;
-    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 /*css email*/
@@ -114,7 +112,6 @@
     font-size: 18px;
     color:rgb(11, 97, 155);
     text-align: center;
-    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 /*css input firstname*/
@@ -123,7 +120,6 @@
     margin-left: 30px;
     font-size: 18px;
     color:rgb(11, 97, 155);
-    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 /*css input lastname*/
@@ -132,7 +128,6 @@
     margin-left: 0px;
     font-size: 18px;
     color:rgb(11, 97, 155);
-    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 /*css input password*/
@@ -141,8 +136,6 @@
     margin-left:30px;
     font-size: 18px;
     color:rgb(11, 97, 155);
-
-    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 /*css input password*/
@@ -151,7 +144,6 @@
     margin-left: 0px;
     font-size: 18px;
     color:rgb(11, 97, 155);
-    /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
 /*css buton Update*/
