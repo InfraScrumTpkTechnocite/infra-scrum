@@ -186,20 +186,6 @@ p {
     /*text-decoration: underline rgb(130, 161, 224);*/
 }
 
-/*css buton cancel*/
-
-.clear {
-    padding: 6px 15px;
-    background: #e66565;
-    color: #ffffff;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    border: 2px solid #ffffff;
-    font-size: 20px;
-    font-style: italic;
-}
-
 /*css buton Update*/
 
 .update {
