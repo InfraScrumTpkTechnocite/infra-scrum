@@ -6,8 +6,7 @@
     width: 130px;
     height: 130px;
     border-radius: 50%;
-    border: 1.5px #9eecc8;
-    color: rgb(255, 255, 255);
+    color: rgb(13, 226, 180);
     font-size: 0px;
 }
 
@@ -16,8 +15,8 @@
     width: 130px;
     height: 130px;
     border-radius: 50%;
-    color: rgb(255, 255, 255);
-    border: 1.5px #9eecc8;
+    color: rgb(13, 226, 180);
+    border: rgb(13, 226, 180);
 }
 
 /*css avatar button "ajouter" image*/
@@ -26,9 +25,8 @@
     margin-left:0px;
     height: 130px;
     width: 130px;
-    border: 4px solid #16e7dd;
+    border: 3px solid #16e7dd;
     border-radius: 50%;
-    color: rgb(255, 255, 255);
     font-size: 70px;
   }
 
