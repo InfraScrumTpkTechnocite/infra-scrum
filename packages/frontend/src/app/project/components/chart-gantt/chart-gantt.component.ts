@@ -1,25 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { KanbanList } from 'src/app/models/kanbanlist.model';
+import { Project } from '../../../models/project.model';
+import { Task } from '../../../models/task.model';
 export interface IGanttChartEvent {
     startDate: Date;
     endDate: Date;
     name: string;
 }
 
-export interface MonthAxis {
-    monthName: string;
-    monthDurationPercentage: number;
-}
-
-export interface IGanttChartMileStone {
+export interface XAxis {
     name: string;
-    date: Date;
+    durationPercentage: number;
 }
 
 // The Gantt chart component will take in a collection of this object model
 export interface IGanttChartRow {
+    id: string;
     name: string;
     events: IGanttChartEvent[];
-    mileStones: IGanttChartMileStone[];
 }
 
 @Component({
@@ -27,107 +25,50 @@ export interface IGanttChartRow {
     templateUrl: './chart-gantt.component.html',
     styleUrls: ['./chart-gantt.component.css']
 })
-export class ChartGanttComponent {
-    isHidden: boolean[][];
-    rows!: IGanttChartRow[];
-    startDate: Date;
-    endDate: Date;
-    chartPeriodDays!: number;
-    monthAxis: MonthAxis[];
+export class ChartGanttComponent implements OnInit {
+    @Input() sprints!: Project[];
 
-    constructor() {
-        this.rows = [
-            {
-                name: 'Sprint 1',
+    @Input() kanbanList!: KanbanList[];
+
+    isHidden!: boolean[][];
+    isProject: boolean = true;
+    rows: IGanttChartRow[] = [];
+    startDate!: Date;
+    endDate!: Date;
+    chartPeriodDays!: number;
+    monthAxis!: XAxis[];
+    weekAxis!: XAxis[];
+    dayAxis!: XAxis[];
+
+    constructor() {}
+
+    ngOnInit(): void {
+        this.sprints.map((sprint) =>
+            this.rows.push({
+                id: sprint.id,
+                name: sprint.name,
                 events: [
                     {
-                        name: 'Task 1',
-                        startDate: new Date('2021-01-01'),
-                        endDate: new Date('2021-01-31')
-                    } as IGanttChartEvent,
-                    // {
-                    //     name: 'Task 1.5',
-                    //     startDate: new Date('2021-01-03'),
-                    //     endDate: new Date('2021-01-10')
-                    // } as IGanttChartEvent,
-                    {
-                        name: 'Task 2',
-                        startDate: new Date('2021-02-03'),
-                        endDate: new Date('2021-02-17')
-                    } as IGanttChartEvent,
-                    {
-                        name: 'Task 3',
-                        startDate: new Date('2021-03-01'),
-                        endDate: new Date('2021-03-31')
-                    } as IGanttChartEvent,
-                    {
-                        name: 'Task 4',
-                        startDate: new Date('2021-04-05'),
-                        endDate: new Date('2021-04-19')
-                    } as IGanttChartEvent
-                ],
-                mileStones: [
-                    {
-                        name: 'Feature complete',
-                        date: new Date('2021-04-15')
-                    } as IGanttChartMileStone
-                ]
-            } as IGanttChartRow,
-            {
-                name: 'Sprint 2',
-                events: [
-                    {
-                        name: 'Market activity',
-                        startDate: new Date('2021-02-15'),
-                        endDate: new Date('2021-02-28')
-                    } as IGanttChartEvent
-                ],
-                mileStones: [
-                    {
-                        name: 'Funding round complete',
-                        date: new Date('2021-01-28')
-                    } as IGanttChartMileStone
-                ]
-            } as IGanttChartRow,
-            {
-                name: 'Sprint 3',
-                events: [
-                    {
-                        name: 'Busy period',
-                        startDate: new Date('2021-03-02'),
-                        endDate: new Date('2021-03-15')
+                        name: sprint.name,
+                        startDate: new Date(sprint.startdate),
+                        endDate: new Date(sprint.enddate!)
                     } as IGanttChartEvent
                 ]
-            } as IGanttChartRow,
-            {
-                name: 'Sprint 4',
-                events: [
-                    {
-                        name: 'Manual collection',
-                        startDate: new Date('2021-03-15'),
-                        endDate: new Date('2021-03-30')
-                    } as IGanttChartEvent
-                ]
-            } as IGanttChartRow,
-            {
-                name: 'Sprint 5',
-                events: [
-                    {
-                        name: 'Busy period',
-                        startDate: new Date('2021-09-15'),
-                        endDate: new Date('2021-09-30')
-                    } as IGanttChartEvent
-                ]
-            } as IGanttChartRow
-        ];
-        this.startDate = new Date(
-            Math.min(
-                ...this.rows.map((row) =>
-                    Math.min(
-                        ...row.events.map((event) => Number(event.startDate))
+            } as IGanttChartRow)
+        );
+        this.startDate = this.addMonths(
+            new Date(
+                Math.min(
+                    ...this.rows.map((row) =>
+                        Math.min(
+                            ...row.events.map((event) =>
+                                Number(event.startDate)
+                            )
+                        )
                     )
                 )
-            )
+            ),
+            0
         );
         this.endDate = new Date(
             Math.max(
@@ -140,18 +81,19 @@ export class ChartGanttComponent {
         );
         this.chartPeriodDays = this.dateDifference(
             this.addEndMonth(this.endDate),
-            this.startDate,
-            true
+            this.startDate
         );
         this.monthAxis = this.getMonths(this.startDate, this.endDate);
+        this.weekAxis = this.getWeeks(this.startDate, this.endDate);
+        this.dayAxis = this.getDays(this.startDate, this.endDate);
         this.isHidden = new Array<Array<boolean>>(this.rows.length);
         this.isHidden.fill([], 0, this.isHidden.length);
         this.isHidden.forEach((numberOfRow, index) => {
             this.isHidden[index] = new Array(this.rows[index].events.length);
             this.isHidden[index].fill(true, 0, this.isHidden.length);
         });
-        
     }
+
     /** Return the difference in months */
     monthDiff(dateFrom: Date, dateTo: Date): number {
         dateFrom = new Date(dateFrom);
@@ -164,11 +106,7 @@ export class ChartGanttComponent {
     }
 
     /** Given a start and end date return the difference in days */
-    dateDifference(
-        endDate: Date,
-        startDate: Date,
-        inlusiveOfEndDate: boolean = false
-    ): number {
+    dateDifference(endDate: Date, startDate: Date): number {
         endDate = new Date(endDate);
         startDate = new Date(startDate);
 
@@ -193,6 +131,24 @@ export class ChartGanttComponent {
     getMonthName(date: Date): string {
         // TODO : change default to current language //
         return date.toLocaleString(['default'], { month: 'long' });
+    }
+
+    /** Week name based on number */
+    getWeekName(date: Date): string {
+        // TODO : change default to current language //
+        return date.toLocaleString(['default'], {
+            day: 'numeric',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    }
+
+    /** Day name based on number */
+    getDayName(date: Date): string {
+        // TODO : change default to current language //
+        return date
+            .toLocaleString(['default'], { weekday: 'long' })
+            .toUpperCase()[0];
     }
 
     /** Return the number of days in the specified month */
@@ -229,28 +185,90 @@ export class ChartGanttComponent {
         );
     }
 
-    getMonths(startDate: Date, endDate: Date): MonthAxis[] {
+    getMonths(startDate: Date, endDate: Date): XAxis[] {
         const startMonth = startDate.getMonth();
         const endMonth = endDate.getMonth();
         const adjustedEndDate = this.addEndMonth(endDate);
         const totalDurationDays = this.dateDifference(
             startDate,
-            adjustedEndDate,
-            true
+            adjustedEndDate
         );
-        let months: MonthAxis[] = new Array();
+        let months: XAxis[] = new Array();
         for (var i = 0; i <= endMonth - startMonth; i++) {
             const adjustedStartDate = this.addMonths(startDate, i);
-            const monthName = this.getMonthName(adjustedStartDate);
             const daysInMonth = this.daysInMonth(adjustedStartDate);
-            const monthDurationPercentage =
-                (daysInMonth / totalDurationDays) * 100;
             months.push({
-                monthName: monthName,
-                monthDurationPercentage: monthDurationPercentage
+                name: this.getMonthName(adjustedStartDate),
+                durationPercentage: (daysInMonth / totalDurationDays) * 100
             });
         }
         return months;
+    }
+
+    getWeeks(startDate: Date, endDate: Date): XAxis[] {
+        let weekAxis: XAxis[] = [];
+        startDate.setDate(1);
+        endDate = this.addEndMonth(endDate);
+        let firstDayOfMonth = startDate.getDay();
+        firstDayOfMonth =
+            firstDayOfMonth == 1 || firstDayOfMonth == 8
+                ? firstDayOfMonth
+                : 8 - firstDayOfMonth;
+        weekAxis.push({
+            name: '',
+            durationPercentage:
+                (1 / this.dateDifference(startDate, endDate)) *
+                100 *
+                firstDayOfMonth
+        });
+        var daysRemaining: number =
+        this.dateDifference(startDate, endDate) - firstDayOfMonth;
+        var tempDate = new Date(startDate);
+        tempDate.setDate(tempDate.getDate() + firstDayOfMonth);
+        for (
+            let i = new Date(tempDate);
+            i <= endDate;
+            i.setDate(i.getDate() + 7)
+        ) {
+            weekAxis.push({
+                name: this.getWeekName(i),
+                durationPercentage:
+                    (1 / this.dateDifference(startDate, endDate)) *
+                    (daysRemaining > 7 ? 7 : daysRemaining) *
+                    100
+            });
+
+            daysRemaining -= 7;
+        }
+        return weekAxis;
+    }
+
+    getDays(startDate: Date, endDate: Date): XAxis[] {
+        let daysAxis: XAxis[] = [];
+        startDate.setDate(1);
+        endDate = this.addEndMonth(endDate);
+        console.log(
+            '1 day:',
+            (1 / this.dateDifference(startDate, endDate)) * 100
+        );
+        for (
+            let i = new Date(startDate);
+            i <= endDate;
+            i.setMonth(i.getMonth() + 1)
+        ) {
+            for (
+                let j = new Date(i);
+                j.getMonth() == i.getMonth();
+                j.setDate(j.getDate() + 1)
+            ) {
+                daysAxis.push({
+                    name: this.getDayName(j),
+                    durationPercentage:
+                        (1 / this.dateDifference(startDate, endDate)) * 100
+                });
+            }
+        }
+        return daysAxis;
     }
 
     /** Return the percentage of days over the total period */
@@ -303,5 +321,144 @@ export class ChartGanttComponent {
             });
         });
         return Math.max(...maxOverlap);
+    }
+
+    /** Set rows to be tasks of sprint */
+    changeSprintDisplay(sprint: IGanttChartRow) {
+        var tasks: Task[] = [];
+        this.kanbanList.map((kanbanAndTasks) => {
+            console.log(kanbanAndTasks);
+            kanbanAndTasks.tasks.map((task) => {
+                console.log(task);
+                task.sprint != null && task.sprint!.id == sprint.id
+                    ? tasks.push(task)
+                    : '';
+            });
+        });
+        console.log(tasks);
+        this.rows = [];
+        tasks.map((task) =>
+            this.rows.push({
+                id: task.id,
+                name: task.name,
+                events: [
+                    {
+                        name: task.name,
+                        startDate: new Date(task.startdate),
+                        endDate: this.estimatedTimeToDate(
+                            task.startdate,
+                            task.estimatedtime
+                        )
+                    } as IGanttChartEvent
+                ]
+            } as IGanttChartRow)
+        );
+        this.addMonths(
+            new Date(
+                Math.min(
+                    ...this.rows.map((row) =>
+                        Math.min(
+                            ...row.events.map((event) =>
+                                Number(event.startDate)
+                            )
+                        )
+                    )
+                )
+            ),
+            0
+        );
+        this.startDate = this.addMonths(
+            new Date(
+                Math.min(
+                    ...this.rows.map((row) =>
+                        Math.min(
+                            ...row.events.map((event) =>
+                                Number(event.startDate)
+                            )
+                        )
+                    )
+                )
+            ),
+            0
+        );
+        this.endDate = new Date(
+            Math.max(
+                ...this.rows.map((row) =>
+                    Math.max(
+                        ...row.events.map((event) => Number(event.endDate))
+                    )
+                )
+            )
+        );
+        this.monthAxis = this.getMonths(this.startDate, this.endDate);
+        this.weekAxis = this.getWeeks(this.startDate, this.endDate);
+        this.dayAxis = this.getDays(this.startDate, this.endDate);
+        this.isProject = false;
+    }
+
+    /** Set rows to be sprints of project */
+    changeProjectDisplay() {
+        this.rows = [];
+        this.sprints.map((sprint) =>
+            this.rows.push({
+                id: sprint.id,
+                name: sprint.name,
+                events: [
+                    {
+                        name: sprint.name,
+                        startDate: new Date(sprint.startdate),
+                        endDate: new Date(sprint.enddate!)
+                    } as IGanttChartEvent
+                ]
+            } as IGanttChartRow)
+        );
+        this.startDate = this.addMonths(
+            new Date(
+                Math.min(
+                    ...this.rows.map((row) =>
+                        Math.min(
+                            ...row.events.map((event) =>
+                                Number(event.startDate)
+                            )
+                        )
+                    )
+                )
+            ),
+            0
+        );
+        this.endDate = new Date(
+            Math.max(
+                ...this.rows.map((row) =>
+                    Math.max(
+                        ...row.events.map((event) => Number(event.endDate))
+                    )
+                )
+            )
+        );
+        this.chartPeriodDays = this.dateDifference(
+            this.addEndMonth(this.endDate),
+            this.startDate
+        );
+        this.monthAxis = this.getMonths(this.startDate, this.endDate);
+        this.weekAxis = this.getWeeks(this.startDate, this.endDate);
+        this.dayAxis = this.getDays(this.startDate, this.endDate);
+        this.isProject = true;
+    }
+
+    estimatedTimeToDate(startdate: string, estimatedtime: number): Date {
+        var StartDate = new Date(startdate);
+        var estimatedDate = new Date(StartDate);
+        estimatedDate.setTime(
+            estimatedDate.getTime() +
+                ((estimatedtime / 60) % 8) * 60 * 60 * 1000
+        ); //** hours */
+        estimatedDate.setTime(
+            estimatedDate.getTime() +
+                (estimatedtime / 480) * 3 * 24 * 60 * 60 * 1000
+        ); //** days */
+        estimatedDate.setTime(
+            estimatedDate.getTime() + (estimatedtime % 60) * 60 * 1000
+        ); //** minutes */
+        return estimatedDate;
     }
 }

@@ -25,6 +25,8 @@ export class EditNewTasksComponent implements OnInit {
     newTaskAssignmentList: TaskAssignment[] = [];
     userProjectList: UserProject[] = [];
     userProjectTaskCreator!: UserProject;
+    switch: string = 'default';
+
 
     noType: TaskType = new TaskType();
 
@@ -124,6 +126,8 @@ export class EditNewTasksComponent implements OnInit {
     onNoClick(): void {
         this.dialogRef.close();
     }
+    
+
 
     addUser(userProject: UserProject): void {
         const newAssignement = new TaskAssignment(
@@ -139,6 +143,7 @@ export class EditNewTasksComponent implements OnInit {
             1
         );
     }
+    
 
     removeUser(taskAssignment: TaskAssignment): void {
         console.log('task assignment:', taskAssignment);
