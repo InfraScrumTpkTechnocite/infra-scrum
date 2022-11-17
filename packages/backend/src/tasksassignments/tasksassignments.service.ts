@@ -82,17 +82,6 @@ export class TasksAssignmentsService {
     );
   }
 
-  async remove(id: string): Promise<DeleteResult> {
-    return await this.tasksAssignmentsRepository.manager.transaction(
-      this.configService.get<IsolationLevel>(
-        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
-      ),
-      async (transactionnalEntityManager): Promise<DeleteResult> => {
-        return await transactionnalEntityManager.delete(TaskAssignment, id);
-      },
-    );
-  }
-
   async findAllUsersOfTask(taskid: string): Promise<TaskAssignment[]> {
     return await this.tasksAssignmentsRepository.manager.transaction(
       this.configService.get<IsolationLevel>(
