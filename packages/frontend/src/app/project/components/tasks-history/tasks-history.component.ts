@@ -1,5 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { KanbanList } from 'src/app/models/kanbanlist.model';
+import { Task } from 'src/app/models/task.model';
+import { TaskAssignment } from 'src/app/models/taskassignment.model';
+import { TaskassignmentService } from 'src/app/services/taskassignment.service';
+
+export interface tacheAssignment {
+    task: Task;
+    taskassignments: TaskAssignment[];
+    visible: boolean;
+}
 
 @Component({
     selector: 'app-tasks-history',
@@ -8,23 +17,46 @@ import { KanbanList } from 'src/app/models/kanbanlist.model';
 })
 export class TasksHistoryComponent implements OnInit {
     isTaskReduced: boolean = true;
-    tasksLists: any = [];
+    tasksLists: tacheAssignment[] = [];
     projectTasks = [];
 
     @Input() kanbanList!: KanbanList[];
 
-    constructor() {}
+    taskassignmentList: TaskAssignment[] = [];
+
+    constructor(private taskassignmentService: TaskassignmentService) {}
 
     ngOnInit(): void {
-        // affichage des tâches en cours
+        // affichage des tâches en cours:
+
         this.kanbanList.forEach((knbn) => {
-            this.tasksLists = this.tasksLists.concat(knbn.tasks);
+            knbn.tasks.map((task) => {
+                this.tasksLists.push({
+                    task: task,
+                    taskassignments: [],
+                    visible: false
+                });
+            });
         });
         this.tasksLists.sort(function (task1: any, task2: any) {
             return (
-                new Date(task2.startdate).getTime() -
-                new Date(task1.startdate).getTime()
+                new Date(task2.task.startdate).getTime() -
+                new Date(task1.task.startdate).getTime()
             );
         });
+
+        // affichage users assignés à la tache:
+
+        this.tasksLists.map((task: tacheAssignment) =>
+            this.taskassignmentService
+                .findAllUsersOfTask(task.task.id!)
+                .subscribe({
+                    next: (taskassignments: TaskAssignment[]) => {
+                        task.taskassignments = taskassignments;
+                    },
+                    error: () => {},
+                    complete: () => {}
+                })
+        );
     }
 }
