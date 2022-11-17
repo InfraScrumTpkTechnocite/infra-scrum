@@ -1,54 +1,111 @@
-<div class="mt-10 px-20 w-full">
-    <div class="flex">
+<div class="mt-10 px-10 w-full">
+    <div class="flex w-full">
         <div class="w-1/6"></div>
+        <div class="w-5/6">
 
-        <div class="flex w-4/5">
-            <div
-                class="bg-gray-800 text-white text-center"
-                *ngFor="let month of monthAxis"
-                [style.width]="month.monthDurationPercentage + '%'"
-            >
-                {{ month.monthName }}
+            <div class="flex">
+                <div
+                    class="bg-gray-800 text-white boredr-white border-r-2 text-center"
+                    *ngFor="let month of monthAxis"
+                    [style.width]="month.durationPercentage + '%'"
+                    [style.height.px]="30"
+                >
+                    {{ month.name }}
+                </div>
+            </div>
+            
+            <div class="flex" *ngIf="monthAxis.length < 3">
+                <div
+                    class="bg-gray-300 border-l-2 border-b-2 border-gray-400 text-black"
+                    *ngFor="let week of weekAxis"
+                    [style.width]="week.durationPercentage + '%'"
+                    [style.height.px]="30"
+                >
+                    {{week.name}}
+                </div>
+            </div>
+
+            <div class="flex" *ngIf="monthAxis.length < 3">
+                <div
+                    class="bg-gray-300 border-l-2 border-gray-400 text-black text-center"
+                    *ngFor="let day of dayAxis"
+                    [style.width]="day.durationPercentage + '%'"
+                    [style.height.px]="30"
+                >
+                    {{day.name}}
+                </div>
             </div>
         </div>
     </div>
     <div>
         <div class="w-full flex" *ngFor="let row of rows; let i = index">
             <div [style.height.px]="10"></div>
-            <div class="w-1/6 text-end pr-10">
-                {{ row.name }}
-            </div>
-            <div
-            [style.height.px]="getEventNumberOfOverlapInRow(row) * 25"
-            class="relative items-start w-4/5"
+            <button
+                (click)="isProject? changeSprintDisplay(row) : ''"
+                class="w-1/6 text-end pr-10"
             >
-            <!-- gantt chart grid lines-->
-            <div class="absolute top-0 w-full h-full flex">
-                <span
-                    class="border-l-2 border-gray-200"
+                {{ row.name }}
+            </button>
+            <div
+                [style.height.px]="getEventNumberOfOverlapInRow(row) * 30"
+                class="relative items-start w-5/6"
+            >
+                <!-- gantt chart grid lines-->
+                <!-- Month -->
+                <div class="absolute top-0 w-full z-30 h-full flex">
+                    <span
+                    class="border-l-2 border-gray-400"
+                    *ngFor="let week of weekAxis"
+                    [style.width]="week.durationPercentage + '%'"
+                    [style.height.px]="30"
+                    ></span>
+                </div>
+                <!-- Week -->
+                <div class="absolute top-0 w-full z-20 h-full flex" *ngIf="monthAxis.length < 3">
+                    <span
+                    class="border-l-2 border-tpkerror"
                     *ngFor="let month of monthAxis"
-                    [style.width]="month.monthDurationPercentage + '%'"
-                ></span>
-            </div>
+                    [style.width]="month.durationPercentage + '%'"
+                    [style.height.px]="30"
+                    ></span>
+                </div>
+                <!-- Day -->
+                <div class="absolute top-0 w-full z-10 h-full flex" *ngIf="monthAxis.length < 3">
+                    <span
+                        class="border-l-2 border-gray-200"
+                        *ngFor="let day of dayAxis"
+                        [style.width]="day.durationPercentage + '%'"
+                        [style.height.px]="30"
+                    ></span>
+                </div>
                 <!-- period blocks-->
                 <div [style.height.px]="10"></div>
                 <div
-                    *ngFor="let event of row.events, let j = index"
+                    *ngFor="let event of row.events; let j = index"
                     [style.margin-left]="
                         getEventOffsetPercentage(event.startDate) + '%'
                     "
                     [style.margin-top.px]="getEventNumberOfOverlap(event) * 25"
                     [style.width]="getEventDurationPercentage(event) + '%'"
-                    [style.height.px]="20"
-                    class="bg-primary absolute rounded-full"
-                    (mouseenter)="isHidden[i][j] = false" (mouseleave)="isHidden[i][j] = true"
+                    [style.height.px]="10"
+                    class="bg-primary absolute rounded-full z-40"
+                    (mouseenter)="isHidden[i][j] = false"
+                    (mouseleave)="isHidden[i][j] = true"
+                ></div>
+                <div
+                    *ngFor="let event of row.events; let j = index"
+                    class="absolute w-48 mt-10 bg-white z-40"
                 >
-            </div>
-            <div *ngFor="let event of row.events, let j = index"  class="absolute w-48 mt-10 bg-white z-10"> 
-                <div *ngIf="!isHidden[i][j]"><div>{{event.name}}</div>
-                <div>{{event.startDate | date:"d-MM-yyyy" }} -> {{event.endDate | date:"d-MM-yyyy"}}</div> </div>
-            </div>
+                    <div *ngIf="!isHidden[i][j]">
+                        <div>{{ event.name }}</div>
+                        <div>
+                            {{ event.startDate | date: 'd-MM-yyyy' }} ->
+                            {{ event.endDate | date: 'd-MM-yyyy' }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <button *ngIf="!isProject" (click)="changeProjectDisplay()">Back</button>
 </div>
