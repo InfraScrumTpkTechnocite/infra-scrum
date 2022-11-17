@@ -30,16 +30,17 @@
                         <img
                             (click)="PictureUploader.click()"
                             *ngIf="user.picture"
-                            class="img border-tpkvalidate"
+                            type="file"
+                            class="avatar"
                             src="data:image/*;base64, {{ user.picture }}"
                             alt="{{ user.picture }}"
                         />
 
                         <input
                             #PictureUploader
-                            type="file"
-                            value="+"
-                            class="select-profile-picture"
+                            type="button"
+                            value="Avatar"
+                            class="avatar"
                             (change)="onFileSelected($event)"
                         />
                     </div>
