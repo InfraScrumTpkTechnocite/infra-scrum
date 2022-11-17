@@ -1,11 +1,6 @@
 <!--espacement "margin"-->
 <div class="w-screen h-screen">
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    <p style="color: rgb(240, 12, 12)">
-        <marquee direction="" scrollamount="10"
-            >Double-click reload to validate your profile picture</marquee
-        >
-    </p>
     <form
         #userForm="ngForm"
         (ngSubmit)="(onSubmit)"
@@ -21,20 +16,7 @@
             >
                 My Profile
             </h1>
-            <!--Refresh-->
-            <button
-                meta
-                http-equiv="refresh"
-                content="http://localhost:4200/user-profile"
-            >
-                <img
-                    src="assets/img/logos/REFRESH.png"
-                    width="5%"
-                    class="reload"
-                    type="submit"
-                    onClick="history.go(0)"
-                />
-            </button>
+            <br /><br />
 
             <!--Zone avatar-->
             <section>
