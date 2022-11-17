@@ -83,7 +83,13 @@ export class TaskComponent implements OnInit {
         dialogRef.afterClosed().subscribe((data: any) => {
             if (data) {
                 this.task = data.task as Task;
-                this.task.id = data.taskid;
+                this.kanbanList[this.task.kanbanstatus.order].tasks[
+                    this.kanbanList[
+                        this.task.kanbanstatus.order
+                    ].tasks.findIndex((task) => task.id == this.task.id)
+                ] = this.task;
+
+                //this.task.id = data.taskid;
             }
         });
     }

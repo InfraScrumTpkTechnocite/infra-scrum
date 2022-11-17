@@ -500,10 +500,12 @@
             <!-- fin test -->
         </div>
         <app-chart-gantt *ngSwitchCase="'gantt'"></app-chart-gantt>
+
         <app-tasks-history
             *ngSwitchCase="'history'"
             [kanbanList]="kanbanList"
         ></app-tasks-history>
+
 
         <!-- Bouton scroll to the top -->
         <div

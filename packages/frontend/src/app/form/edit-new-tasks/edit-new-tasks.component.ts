@@ -38,6 +38,8 @@ export class EditNewTasksComponent implements OnInit {
     hours: number;
     minutes: number;
 
+    projectid: any = localStorage.getItem('projectid');
+
     constructor(
         private taskService: TaskService,
         private taskAssignmentService: TaskassignmentService,
@@ -164,9 +166,13 @@ export class EditNewTasksComponent implements OnInit {
                 },
                 complete: () => {
                     this.toastService.success('Task Edited !');
+                    this.newTask.id = this.data.task.id;
                     this.data.subject.next({
                         method: 'edit',
-                        task: this.newTask
+                        task: this.newTask,
+                        projectid: this.projectid,
+                        sourceKanbanOrder: this.newTask.kanbanstatus.order,
+                        targetKanbanOrder: this.newTask.kanbanstatus.order
                     });
                     this.dialogRef.close({
                         task: this.newTask,
