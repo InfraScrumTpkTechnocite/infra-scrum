@@ -46,7 +46,7 @@
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 110px;
+    margin-left: 60px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -55,7 +55,7 @@
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: 25px;
+    margin-left: -25px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -99,7 +99,7 @@
 /*css username*/
 
 .input-username {
-    margin-left: 110px;
+    margin-left: 60px;
     font-size: 18px;
     color:rgb(11, 97, 155);
     text-align: center;
@@ -108,7 +108,7 @@
 /*css email*/
 
 .input-email {
-    margin-left: 110px;
+    margin-left: 60px;
     font-size: 18px;
     color:rgb(11, 97, 155);
     text-align: center;
