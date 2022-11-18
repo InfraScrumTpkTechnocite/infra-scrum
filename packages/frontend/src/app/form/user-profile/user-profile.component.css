@@ -2,7 +2,7 @@
 
 .avatar {
     vertical-align: middle;
-    margin: 0px;
+    margin-left: 35px;
     width: 130px;
     height: 130px;
     border-radius: 50%;
@@ -91,7 +91,7 @@
 /*css role*/
 
 .input-role {
-    margin-left: 15px;
+    margin-left: 50px;
     font-size: 18px;
     color:rgb(11, 97, 155);
 }
