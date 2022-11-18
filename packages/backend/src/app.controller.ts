@@ -7,21 +7,23 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { User } from './users/user.entity';
 import { UsersService } from './users/users.service';
-import { seederUser, seederRoles } from './seeder/seeder';
+import { seederUser, seederRoles, seederTaskType } from './seeder/seeder';
 import { ProjectsService } from './projects/projects.service';
 import { RolesService } from './roles/roles.service';
 import { ConfigService } from '@nestjs/config';
+import { TasktypesService } from './tasktypes/tasktypes.service';
 
 @ApiTags('app')
 @Controller()
 export class AppController {
+  taskTypes: any;
   constructor(
     private readonly appService: AppService,
     private authService: AuthService,
     private usersService: UsersService,
-    private projectsService: ProjectsService,
     private rolesService: RolesService,
     private configService: ConfigService,
+    private taskTypeService: TasktypesService,
   ) {}
 
   @Get()
@@ -80,6 +82,13 @@ export class AppController {
           }
         })
         .catch((error) => console.log(error.driverError.detail));
+    });
+
+    seederTaskType.forEach((taskType) => {
+      this.taskTypeService
+        .create(taskType)
+        .then((TaskType) => console.log(`New task type: ${taskType}`))
+        .catch((error) => console.log(error));
     });
   }
 }

@@ -15,8 +15,8 @@ export class IndexComponent implements OnInit {
         private headerTitleService: HeaderTitleService,
         private translateService: TranslateService
     ) {
-        translateService.use('en');
-        translateService.use('fr');
+        // translateService.use('en');
+        // translateService.use('fr');
     }
 
     ngOnInit(): void {

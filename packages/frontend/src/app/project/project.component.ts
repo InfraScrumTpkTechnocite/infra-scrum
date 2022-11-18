@@ -2,6 +2,7 @@ import {
     Component,
     ElementRef,
     Input,
+    OnDestroy,
     OnInit,
     SimpleChanges,
     ViewChild
@@ -10,7 +11,8 @@ import {
     CdkDragDrop,
     CdkDragEnter,
     CdkDragMove,
-    moveItemInArray
+    moveItemInArray,
+    transferArrayItem
 } from '@angular/cdk/drag-drop';
 import { Kanbanstatus } from '../models/kanbanstatus.model';
 import { KanbanstatusService } from '../services/kanbanstatus.service';
@@ -25,15 +27,27 @@ import { Task } from '../models/task.model';
 import { TaskService } from '../services/task.service';
 import { webSocket } from 'rxjs/webSocket';
 import { User } from '../models/user.model';
+import { TasktypeService } from '../services/tasktype.service';
+import { TaskType } from '../models/tasktype.model';
+import { MatDialog } from '@angular/material/dialog';
+import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.component';
+import { EditProjectComponent } from '../form/edit-project/edit-project.component';
+import { UserService } from '../services/user.service';
+import { Subscription } from 'rxjs';
 
+interface KanbanList {
+    kanban: Kanbanstatus;
+    tasks: Task[];
+}
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',
     styleUrls: ['./project.component.css']
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
+    isBottom: boolean = false;
 
     projectid: string = '';
     parentProject: any;
@@ -42,18 +56,25 @@ export class ProjectComponent implements OnInit {
     sprintList!: Project[];
 
     kanbanStatus!: Kanbanstatus;
-    kanbanList!: Kanbanstatus[];
+    kanbanList: KanbanList[] = [];
 
     userProjects!: UserProject[];
     user!: User;
     isUserProjectadmin: boolean = false;
+    userList!: User[];
 
     dateToday: string = '';
 
-    taskList: Task[] = [];
+    taskTypeList: TaskType[] = [];
+
+    hideChart: boolean = true;
+    hideHistory: boolean = true;
+    switch: string = 'default';
 
     //https://rxjs.dev/api/webSocket/webSocket
     subject = webSocket('');
+
+    subscription!: Subscription;
 
     constructor(
         private route: ActivatedRoute,
@@ -63,7 +84,10 @@ export class ProjectComponent implements OnInit {
         private userProjectService: UserprojectService,
         private headerTitleService: HeaderTitleService,
         private taskService: TaskService,
-        private router: Router
+        private taskTypeService: TasktypeService,
+        private userService: UserService,
+        private router: Router,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -78,20 +102,65 @@ export class ProjectComponent implements OnInit {
         const subjectObserver = {
             next: (message: any) => {
                 const method = message.method;
-                var kanban: Kanbanstatus = new Kanbanstatus();
-                var task: Task = new Task();
-                if (message.kanban) kanban = message.kanban as Kanbanstatus;
-                if (message.task) task = message.task as Task;
-                //console.log(message);
+                console.log(message);
                 switch (method) {
                     case 'edit':
-                        this.kanbanList.splice(kanban.order - 1, 1, kanban);
+                        //console.log('edit', message.task);
+                        //console.log(message.projectid);
+                        if (message.projectid == this.project.id) {
+                            if (message.kanban) {
+                                //console.log(message.kanban.id);
+                                let kanban = this.kanbanList.find(
+                                    (kanbans) =>
+                                        kanbans.kanban.order ==
+                                        message.kanban.order
+                                );
+
+                                kanban!.kanban = message.kanban;
+                                kanban!.tasks = message.tasks;
+                            }
+                            if (message.task) {
+                                console.log('in if');
+                                let sourceIndex: number = this.kanbanList[
+                                    message.sourceKanbanOrder
+                                ].tasks.findIndex(
+                                    (task) => task.id == message.task.id
+                                );
+                                this.kanbanList[
+                                    message.sourceKanbanOrder
+                                ].tasks.splice(sourceIndex, 1);
+                                this.kanbanList[
+                                    message.targetKanbanOrder
+                                ].tasks.push(message.task);
+                            }
+                        }
                         break;
                     case 'delete':
-                        this.kanbanList.splice(kanban.order - 1, 1);
+                        if (message.kanban)
+                            this.kanbanList.splice(message.kanban.order, 1);
+                        if (message.task)
+                            this.kanbanList.find((kanbans) => {
+                                kanbans.tasks?.splice(
+                                    kanbans.tasks?.findIndex(
+                                        (tasks) => tasks.id == message.task.id
+                                    ),
+                                    1
+                                );
+                            });
                         break;
                     case 'add':
-                        this.kanbanList.push(kanban);
+                        if (message.kanban) {
+                            const kanbanList: KanbanList = {
+                                kanban: message.kanban,
+                                tasks: []
+                            };
+                            this.kanbanList.push(kanbanList);
+                        }
+                        if (message.task) {
+                            this.kanbanList.find((kanbans) => {
+                                kanbans.tasks?.push(message.task);
+                            });
+                        }
                 }
             }
         };
@@ -114,15 +183,7 @@ export class ProjectComponent implements OnInit {
                     `ws://localhost:8080?projectid=${this.projectid}`
                 );
                 //...and subscription (if user is on project page)
-                this.subject.subscribe(subjectObserver);
-
-                const tasksObserver = {
-                    next: (taskList: Task[]) => {
-                        taskList.map((task) => this.taskList.push(task));
-                    },
-                    error: () => {},
-                    complete: () => {}
-                };
+                this.subscription = this.subject.subscribe(subjectObserver);
 
                 const userProjectsObserver = {
                     next: (userProjects: UserProject[]) => {
@@ -152,21 +213,28 @@ export class ProjectComponent implements OnInit {
                 };
 
                 const kanbanstatusObserver = {
-                    next: (kanbanList: Kanbanstatus[]) => {
-                        this.kanbanList = kanbanList;
+                    next: (kanban: Kanbanstatus[]) => {
                         let projectid: string = <string>(
                             localStorage.getItem('projectid')
                         );
-
+                        kanban.map((kanbanstatus) => {
+                            this.kanbanList.push({
+                                kanban: kanbanstatus,
+                                tasks: []
+                            } as KanbanList);
+                            this.taskService
+                                .findAllOfKanbanstatus(kanbanstatus.id!)
+                                .subscribe((taskList: Task[]) => {
+                                    this.kanbanList.find(
+                                        (kanbanlist) =>
+                                            kanbanlist.kanban.id ==
+                                            kanbanstatus.id
+                                    )!.tasks = taskList;
+                                });
+                        });
                         this.userProjectService
                             .findCurrentProjectUsers(projectid)
                             .subscribe(userProjectsObserver);
-
-                        kanbanList.map((kanbanstatus) => {
-                            this.taskService
-                                .findAllOfKanbanstatus(kanbanstatus.id!)
-                                .subscribe(tasksObserver);
-                        });
                     },
                     error: () => {},
                     complete: () => {}
@@ -214,12 +282,53 @@ export class ProjectComponent implements OnInit {
                             .subscribe(sprintObserver);
                     },
                     error: () => {},
-                    complete: () => {}
+                    complete: () => {
+                        delete this.project.picture;
+                        // console.log(
+                        //     `projectObserver : ${JSON.stringify(this.project)}`
+                        // );
+                    }
                 };
 
                 this.projectService
                     .findOne(this.projectid)
                     .subscribe(projectObserver);
+            }
+        });
+
+        this.taskTypeService
+            .getAll()
+            .subscribe(
+                (taskTypeList: TaskType[]) => (this.taskTypeList = taskTypeList)
+            );
+
+        this.userService
+            .getAllUsers()
+            .subscribe((userList: User[]) => (this.userList = userList));
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
+
+    //Boutons modales
+    editProject() {
+        this.dialog.open(EditProjectComponent, {
+            data: {
+                project: this.project,
+                userProjectList: this.userProjects,
+                userList: this.userList
+            }
+        });
+    }
+
+    addTask() {
+        this.dialog.open(EditNewTasksComponent, {
+            data: {
+                task: new Task(),
+                taskTypeList: this.taskTypeList,
+                sprintList: this.sprintList,
+                edition: false
             }
         });
     }
@@ -233,14 +342,20 @@ export class ProjectComponent implements OnInit {
 
     closeSprintBar() {
         this.isSprintsOpen = false;
+        this.hideChart = true;
+        this.hideHistory = true;
+        console.log('close sprint bar');
+
+        const url = this.parentProject ? this.parentProject.id : this.projectid;
+
         this.router.navigate([], {
             skipLocationChange: true,
             queryParamsHandling: 'merge', //== if you need to keep queryParams
-            queryParams: { projectid: this.parentProject.id }
+            queryParams: { projectid: url }
         });
     }
 
-    //Afficher Sprint en fonction de celui sélectionner
+    //Afficher Sprint en fonction de celui sélectionné
     changeSprintDisplay(id?: string) {
         //console.log(`project.component - changeSprintDisplay - id = ${id}`);
         const sprint: Project =
@@ -296,7 +411,7 @@ export class ProjectComponent implements OnInit {
 
         const kanbanObserver = {
             next: (kanban: Kanbanstatus) => {
-                this.kanbanList.push(kanban);
+                this.kanbanList.push({ kanban: kanban } as KanbanList);
 
                 // 'next' will send a message to the server once a connection is made
                 // and all subscribed client will receive message right away
@@ -321,14 +436,14 @@ export class ProjectComponent implements OnInit {
     }
 
     onKanbanDeleted(kanban: Kanbanstatus) {
-        var index = this.kanbanList.findIndex((knb) => knb === kanban);
+        var index = this.kanbanList.findIndex((knb) => knb.kanban === kanban);
         if (index != -1) {
             this.kanbanList.splice(index, 1);
         }
     }
 
     /* -------------------------------------------------------------------------- */
-    /*    DRAG AND DROP KANBANSTATUS   */
+    /*                                DRAG AND DROP                               */
     /* -------------------------------------------------------------------------- */
 
     @ViewChild('dropListContainer') dropListContainer?: ElementRef;
@@ -383,8 +498,8 @@ export class ProjectComponent implements OnInit {
     // Méthode invoquée quand l'utilisateur lache l'item dans un element cdkDropList
     dragDropped(event: CdkDragDrop<number>) {
         this.kanbanList.forEach((kanban, index) => {
-            kanban.order = index + 1;
-            this.kanbanstatusService.edit(kanban).subscribe({
+            kanban.kanban.order = index;
+            this.kanbanstatusService.edit(kanban.kanban).subscribe({
                 next: (kanban) => {
                     //console.log(kanban);
                 },
@@ -404,5 +519,93 @@ export class ProjectComponent implements OnInit {
         this.dropListReceiverElement.style.removeProperty('display');
         this.dropListReceiverElement = undefined;
         this.dragDropInfo = undefined;
+    }
+
+    dropColumns(event: CdkDragDrop<Kanbanstatus>) {
+        console.log(event.previousIndex, event.currentIndex);
+        moveItemInArray(
+            this.kanbanList,
+            event.previousIndex,
+            event.currentIndex
+        );
+
+        this.kanbanList.forEach((kanban, index) => {
+            kanban.kanban.order = index;
+            this.kanbanstatusService.edit(kanban.kanban).subscribe({
+                next: (kanban) => {
+                    //console.log(kanban);
+                },
+                error: (err) => {
+                    console.log(err);
+                },
+                complete: () => {
+                    this.subject.next({
+                        method: 'edit',
+                        kanban: kanban.kanban,
+                        projectid: this.project.id,
+                        tasks: kanban.tasks
+                    });
+                }
+            });
+        });
+    }
+
+    drop(event: CdkDragDrop<Task[]>) {
+        if (event.previousContainer === event.container) {
+            console.log(`Même colonne`);
+            moveItemInArray(
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex
+            );
+        } else {
+            console.log(`Changement colonne`);
+            console.log(
+                `previous kanban: ${event.previousContainer.id}, current kanban: ${event.container.id}`
+            );
+            transferArrayItem(
+                event.previousContainer.data,
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex
+            );
+
+            let kanbanIndex: number = parseInt(event.container.id); //kanban = event.container = div contenant la liste des tâches
+            //console.log(this.kanbanList[kanbanIndex]);
+            let kanbanTarget: Kanbanstatus =
+                this.kanbanList[kanbanIndex].kanban;
+            let task: Task = event.container.data[event.currentIndex];
+            if (task.id) {
+                task.kanbanstatus = kanbanTarget;
+                this.taskService.edit(task.id, task).subscribe({
+                    next: () => {},
+                    error: () => {},
+                    complete: () => {
+                        this.subject.next({
+                            method: 'edit',
+                            task: task,
+                            projectid: this.project.id,
+                            sourceKanbanOrder: event.previousContainer.id,
+                            targetKanbanOrder: event.container.id
+                        });
+                    }
+                });
+            }
+        }
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                              Scroll top button                             */
+    /* -------------------------------------------------------------------------- */
+
+    onScroll(event: any) {
+        event.target.offsetHeight + event.target.scrollTop >=
+        event.target.scrollHeight - 1
+            ? (this.isBottom = true)
+            : (this.isBottom = false);
+    }
+
+    scrollTop() {
+        document.getElementById('kanbanDashboard')!.scrollTop = 0;
     }
 }

@@ -1,6 +1,6 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
+import { Project } from 'src/app/models/project.model';
 import { User } from '../../../../models/user.model';
 import { UserProject } from '../../../../models/userproject.model';
 import { UserprojectService } from '../../../../services/userproject.service';
@@ -14,6 +14,7 @@ export class EditProjectuserComponent implements OnInit {
     @Input() projectid!: string;
     @Input() user!: User;
     @Input() userProjectList!: UserProject[];
+    @Input() project!: Project;
 
     isAssigned: boolean = false;
     isAdmin: boolean = false;
@@ -103,8 +104,9 @@ export class EditProjectuserComponent implements OnInit {
 
         var newUserProject = new UserProject();
         if (this.isAssigned) {
-            newUserProject.project.id = this.projectid;
+            newUserProject.project = this.project;
             newUserProject.user = this.user;
+            //console.log(this.project);
             this.userProjectService
                 .create(newUserProject)
                 .subscribe(assignObserver);
