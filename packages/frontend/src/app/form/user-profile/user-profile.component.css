@@ -1,74 +1,33 @@
 /*css avatar*/
 
 .avatar {
-    /*vertical-align: middle;*/
-    margin: 25px;
-    width: 160px;
+    vertical-align: middle;
+    margin: 0px;
+    width: 130px;
     height: 130px;
     border-radius: 50%;
-    border: 1.5px #9eecc8;
-    color: white;
-    font-size: 70px;
+    color: rgb(13, 226, 180);
+    font-size: 0px;
 }
 
 .img-avatar{
-    margin:15px;
-    width: 140px;
-    height: 140px;
+    margin-right:25px ;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
-    color: white;
-    border: 1.5px solid  #9eecc8;
+    color: rgb(13, 226, 180);
+    border: rgb(13, 226, 180);
 }
 
-
 /*css avatar button "ajouter" image*/
-p {
-    font-family: Lato;
-  }
-  
-  .image-container {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-  }
-  
-  img {
-    height: 160px;
-    width: 160px;
-    border: 5px solid #000;
-    border-radius: 50%;
-  }
-  
-  .select-profile-picture {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-  }
-  
-  .message {
-    position: absolute;
-    width: 35%;
-    top: 50%;
-    left: 45%;
-    transform: translate(-50%, 100%);
-    transition: all 1s;
-    opacity: 0;
-    color: rgb(241, 14, 14);
-  }
-  
-  .image-container:hover .message {
-    transform: translate(-50%, -50%);
-    opacity: 1;
-  }
 
-  /*css button"ajouter" avatar*/
-  .button-ajouter-avatar{
-    margin-left: 225px;
+  img {
+    margin-left:0px;
+    height: 130px;
+    width: 130px;
+    border: 3px solid #16e7dd;
+    border-radius: 50%;
+    font-size: 70px;
   }
 
 /*css input role message erreur*/
@@ -81,142 +40,116 @@ p {
 }
 
 .h1{
-    margin-left: -130px;
+    margin-left:240px;
 }
-
 
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 280px;
-    font-style: normal;
+    margin-left: 110px;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
-
 
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: 100px;
-    font-style: normal;
+    margin-left: 25px;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
-
 
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
-    margin-left: 175px;
-    font-style: normal;
+    margin-left: 100px;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
-
 
 /*css input lastname message erreur*/
 
 .lastname-message-erreur {
     margin-left: 100px;
-    font-style: normal;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
-
 
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 175px;
-    font-style: normal;
+    margin-left: 100px;
+    font-style: italic;
     font-size: 14pt;
     color: red;
 }
 
-
 /*css role*/
 
 .input-role {
-    margin-left: 100px;
+    margin-left: 15px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
 }
-
 
 /*css username*/
 
 .input-username {
-    margin-left: 260px;
+    margin-left: 110px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
+    text-align: center;
 }
-
 
 /*css email*/
 
 .input-email {
-    margin-left: 260px;
+    margin-left: 110px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
+    text-align: center;
 }
-
 
 /*css input firstname*/
 
 .input-firstname {
-    margin-left: 50px;
+    margin-left: 30px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
 }
-
 
 /*css input lastname*/
 
 .input-lastname {
-    margin-left: 50px;
+    margin-left: 0px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
 }
-
 
 /*css input password*/
 
 .input-password {
-    margin-left: 50px;
+    margin-left:30px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
 }
-
 
 /*css input password*/
 
 .input-confirm-password {
-    margin:auto;
+    margin-left: 0px;
     font-size: 18px;
-    text-decoration: underline rgb(130, 161, 224);
+    color:rgb(11, 97, 155);
 }
-
-
-/*css buton cancel*/
-
-.clear {
-    padding: 6px 15px;
-    background: #e66565;
-    color: #ffffff;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    border: 2px solid #ffffff;
-    font-size: 20px;
-    font-style: normal;
-}
-
 
 /*css buton Update*/
 
 .update {
-    margin-left: -25px;
+    margin-left: 0px;
     padding: 6px 15px;
     background: #4e80ca;
     color: #ffffff;
@@ -225,14 +158,14 @@ p {
     border-radius: 6px;
     border: 2px solid #ffffff;
     font-size: 20px;
-    font-style: normal;
+    font-style: italic;
 }
 
 /*css button Cancel*/
 
 .cancel
 {
-    margin-left: +420px;
+    margin-left: 0px;
     padding: 6px 15px;
     background: #11df0a;
     color: #ffffff;
@@ -241,8 +174,9 @@ p {
     border-radius: 6px;
     border: 2px solid #ffffff;
     font-size: 20px;
-    font-style: normal; 
+    font-style: italic; 
 
 }
+
 
 
