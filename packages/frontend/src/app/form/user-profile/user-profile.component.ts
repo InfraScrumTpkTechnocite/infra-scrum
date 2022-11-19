@@ -87,6 +87,7 @@ onSubmit(user: User): void {
 
     this.submitted = true;
     this.userService.editUser(this.user).subscribe(userObserver)
+    this.toastService.success(`User-profile edited !`);
     window.location.reload()
   }
   
