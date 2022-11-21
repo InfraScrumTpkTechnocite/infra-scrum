@@ -111,14 +111,19 @@
             class="w-40 xl:w-48 mt-12 ml-24 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
         >
             <select
-                id="kanban"
-                class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+            id="kanban"
+            [(ngModel)]="newTask.kanbanstatus"
+            [compareWith]="compareSprint"
+            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
             >
                 <option value="kanban">
                     {{
                         'infrascrum.edit-new-task.option-kanban-title'
                             | translate
                     }}
+                </option>
+                <option *ngFor="let kanban of data.kanbanList" [ngValue]="kanban">
+                    {{ kanban.kanban.name }}
                 </option>
             </select>
         </div>

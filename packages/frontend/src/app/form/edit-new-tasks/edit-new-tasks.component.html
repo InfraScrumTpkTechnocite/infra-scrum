@@ -14,22 +14,35 @@
                     class="flex justify-center items-center w-96 md:w-128 h-24 md:mx-auto border-2 border-b-primary border-x-0 border-t-0 space-x-3"
                 >
                     <button
-                        [ngClass]="{'bg-primary text-white': switch == 'default'}"
+                        [ngClass]="{
+                            'bg-primary text-white': switch == 'default'
+                        }"
                         class="bg-primary hover:bg-secondary hover:text-white p-3 rounded-xl text-white w-40 font-semibold"
                         (click)="switch = 'default'"
                     >
                         Edit tasks
                     </button>
                     <button
-                        [ngClass]="{'bg-primary text-white': switch == 'time'}"
+                        [ngClass]="{
+                            'bg-primary text-white': switch == 'time'
+                        }"
                         class="bg-primary hover:bg-secondary hover:text-white p-3 rounded-xl text-white w-40 font-semibold"
                         (click)="switch = 'time'"
                     >
                         Time
                     </button>
                 </div>
-                <div class="w-96 xl:w-128 h-72 ml-24 md:h-80 mt-6" [ngSwitch]="switch">
-                    <app-edit-tasks *ngSwitchDefault></app-edit-tasks>
+                <div
+                    class="w-96 xl:w-128 h-72 ml-24 md:h-80 mt-6"
+                    [ngSwitch]="switch"
+                >
+                    <app-edit-tasks
+                        [taskassignmentList]="taskassignmentList"
+                        [userProjectList]="userProjectList"
+                        [taskTypeList]="taskTypeList"
+                        [data]="data"
+                        *ngSwitchDefault
+                    ></app-edit-tasks>
                     <app-time-tasks *ngSwitchCase="'time'"></app-time-tasks>
                 </div>
             </div>

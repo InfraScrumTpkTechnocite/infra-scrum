@@ -23,7 +23,7 @@ export class EditNewTasksComponent implements OnInit {
 
     taskassignmentList: TaskAssignment[] = this.data.taskassignmentList ?? [];
     newTaskAssignmentList: TaskAssignment[] = [];
-    userProjectList: UserProject[] = [];
+    userProjectList: UserProject[] = this.data.userProjectList;
     userProjectTaskCreator!: UserProject;
     switch: string = 'default';
 
@@ -39,6 +39,7 @@ export class EditNewTasksComponent implements OnInit {
     days: number;
     hours: number;
     minutes: number;
+taskTypeList!: TaskType[];
 
     constructor(
         private taskService: TaskService,
@@ -71,7 +72,6 @@ export class EditNewTasksComponent implements OnInit {
         this.data.userProjectList.map((userProject) =>
             this.userProjectList.push(userProject)
         );
-        console.log(this.data);
         this.newDate = new Date(this.data.task?.startdate);
         var index = this.data.edition
             ? /** Find Task Creator through taskAssignmentList */
@@ -87,7 +87,6 @@ export class EditNewTasksComponent implements OnInit {
                   (userProject) => userProject.user!.id == this.data.user!.id
               );
         if (index >= 0) {
-            console.log('in if');
             /** Remove yourself or taskCreator from the user you can assign */
             this.userProjectTaskCreator = this.userProjectList[index];
             this.userProjectList.splice(index, 1);
