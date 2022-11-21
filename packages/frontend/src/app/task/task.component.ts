@@ -11,7 +11,6 @@ import { UserProject } from '../models/userproject.model';
 import { User } from '../models/user.model';
 import { KanbanList } from '../models/kanbanlist.model';
 
-
 @Component({
     selector: 'app-task',
     templateUrl: './task.component.html',
@@ -84,38 +83,42 @@ export class TaskComponent implements OnInit {
         dialogRef.afterClosed().subscribe((data: any) => {
             if (data) {
                 this.task = data.task as Task;
-                this.task.id = data.taskid;
+                this.kanbanList[this.task.kanbanstatus.order].tasks[
+                    this.kanbanList[
+                        this.task.kanbanstatus.order
+                    ].tasks.findIndex((task) => task.id == this.task.id)
+                ] = this.task;
+
+                //this.task.id = data.taskid;
             }
         });
     }
 
-    ngDoCheck() {
+    ngOnChanges() {
         console.log(
-            `ngDoCheck - showCurrentUserTasks: ${this.showCurrentUserTasks}`
+            `ngOnChanges - showCurrentUserTasks: ${this.showCurrentUserTasks}`
         );
-        if (this.taskassignmentList) {
-            if (this.task.sprint?.id)
-                //sprint de la tâche existe => vue globale ou sprint
-                this.showTask =
-                    this.projectid == this.project.id ||
-                    this.task.sprint.id == this.projectid;
-            else {
-                //sinon vue globale seulement
-                this.showTask = this.projectid == this.project.id;
-            }
 
-            if (this.showCurrentUserTasks)
-                if (
-                    this.taskassignmentList.find((taskAssignment) => {
-                        return (
-                            taskAssignment.userproject.user.id ==
-                                this.user.id &&
-                            taskAssignment.task.id == this.task.id
-                        );
-                    })
-                )
-                    this.showTask = this.showTask && true;
-                else this.showTask = false;
+        if (this.task.sprint?.id)
+            //sprint de la tâche existe => vue globale ou sprint
+            this.showTask =
+                this.projectid == this.project.id ||
+                this.task.sprint.id == this.projectid;
+        else {
+            //sinon vue globale seulement
+            this.showTask = this.projectid == this.project.id;
         }
+
+        if (this.showCurrentUserTasks)
+            if (
+                this.taskassignmentList.find((taskAssignment) => {
+                    return (
+                        taskAssignment.userproject.user.id == this.user.id &&
+                        taskAssignment.task.id == this.task.id
+                    );
+                })
+            )
+                this.showTask = this.showTask && true;
+            else this.showTask = false;
     }
 }

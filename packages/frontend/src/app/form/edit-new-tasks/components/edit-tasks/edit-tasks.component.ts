@@ -23,8 +23,6 @@ export class EditTasksComponent implements OnInit {
     @Input() userProjectList!: UserProject[];
     @Input() taskTypeList!: TaskType[];
     noType: TaskType = new TaskType();
-
-    
     noSprint: Project = new Project();
 
     newDate: Date = new Date();
@@ -58,8 +56,7 @@ export class EditTasksComponent implements OnInit {
         this.days = Math.floor(
             (this.newTask.estimatedtime - this.hours - this.minutes) / 480
         );
-        console.log(this.data);
-       
+
     }
 
     isUserAssigned(userProject: UserProject): boolean {
@@ -170,4 +167,23 @@ export class EditTasksComponent implements OnInit {
             this.taskService.create(this.data.task).subscribe(observer);
         }
     }
+
+    removeUser(taskAssignment: TaskAssignment): void {
+        console.log('task assignment:', taskAssignment);
+        this.taskassignmentList.splice(
+            this.taskassignmentList.findIndex((tskAssignment) => {
+                taskAssignment.id == tskAssignment.id;
+            }),
+            1
+        );
+
+        this.taskAssignmentService.delete(taskAssignment.id!).subscribe({
+            next: () => {
+                console.log(`User unassigned from task`);
+            },
+            error: () => {},
+            complete: () => {}
+        });
+    }
+
 }

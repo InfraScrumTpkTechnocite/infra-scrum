@@ -27,7 +27,6 @@ export class EditNewTasksComponent implements OnInit {
     userProjectTaskCreator!: UserProject;
     switch: string = 'default';
 
-
     noType: TaskType = new TaskType();
 
     noSprint: Project = new Project();
@@ -40,6 +39,8 @@ export class EditNewTasksComponent implements OnInit {
     hours: number;
     minutes: number;
 taskTypeList!: TaskType[];
+
+    projectid: any = localStorage.getItem('projectid');
 
     constructor(
         private taskService: TaskService,
@@ -123,8 +124,6 @@ taskTypeList!: TaskType[];
     onNoClick(): void {
         this.dialogRef.close();
     }
-    
-
 
     addUser(userProject: UserProject): void {
         const newAssignement = new TaskAssignment(
@@ -140,7 +139,6 @@ taskTypeList!: TaskType[];
             1
         );
     }
-    
 
     addOrEditTask(): void {
         this.newTask.startdate = new Date(this.newDate).toISOString();
@@ -168,9 +166,13 @@ taskTypeList!: TaskType[];
                 },
                 complete: () => {
                     this.toastService.success('Task Edited !');
+                    this.newTask.id = this.data.task.id;
                     this.data.subject.next({
                         method: 'edit',
-                        task: this.newTask
+                        task: this.newTask,
+                        projectid: this.projectid,
+                        sourceKanbanOrder: this.newTask.kanbanstatus.order,
+                        targetKanbanOrder: this.newTask.kanbanstatus.order
                     });
                     this.dialogRef.close({
                         task: this.newTask,
