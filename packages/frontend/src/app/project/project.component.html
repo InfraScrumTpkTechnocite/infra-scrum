@@ -275,10 +275,11 @@
                             <!-- condition si photo, sinon span avec premiere lettre username -->
                             <img
                                 *ngIf="userProject.user.picture"
-                                class="rounded-full hover:cursor-default"
-                                [src]="userProject.user.picture"
-                                alt="profile picture"
-                                title="{{ userProject.user.username }}"
+                                class="img rounded-full"
+                                src="data:image/*;base64, {{
+                                    userProject.user.picture
+                                }}"
+                                alt="{{ userProject.user.picture }}"
                             />
                             <span
                                 *ngIf="!userProject.user.picture"
@@ -396,7 +397,6 @@
                             !isUserProjectadmin
                         "
                     >
-
                         <app-kanban-status
                             [subject]="subject"
                             [kanbanList]="kanban"
@@ -434,7 +434,6 @@
                                     [project]="project"
                                 ></app-task>
                             </div>
-
                         </div>
                     </div>
                     <div class="w-28 mx-2 mt-4">
