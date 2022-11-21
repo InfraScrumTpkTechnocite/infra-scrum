@@ -27,7 +27,6 @@ export class EditNewTasksComponent implements OnInit {
     userProjectTaskCreator!: UserProject;
     switch: string = 'default';
 
-
     noType: TaskType = new TaskType();
 
     noSprint: Project = new Project();
@@ -126,8 +125,6 @@ export class EditNewTasksComponent implements OnInit {
     onNoClick(): void {
         this.dialogRef.close();
     }
-    
-
 
     addUser(userProject: UserProject): void {
         const newAssignement = new TaskAssignment(
@@ -142,25 +139,6 @@ export class EditNewTasksComponent implements OnInit {
             ),
             1
         );
-    }
-    
-
-    removeUser(taskAssignment: TaskAssignment): void {
-        console.log('task assignment:', taskAssignment);
-        this.taskassignmentList.splice(
-            this.taskassignmentList.findIndex((tskAssignment) => {
-                taskAssignment.id == tskAssignment.id;
-            }),
-            1
-        );
-
-        this.taskAssignmentService.delete(taskAssignment.id!).subscribe({
-            next: () => {
-                console.log(`User unassigned from task`);
-            },
-            error: () => {},
-            complete: () => {}
-        });
     }
 
     addOrEditTask(): void {

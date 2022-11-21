@@ -10,6 +10,8 @@
                         <div
                             *ngIf="!taskassignment.userproject.isprojectadmin"
                             class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
+                            style="cursor: not-allowed"
+                            (click)="removeUser(taskassignment)"
                         >
                             {{
                                 taskassignment.userproject.user.username
