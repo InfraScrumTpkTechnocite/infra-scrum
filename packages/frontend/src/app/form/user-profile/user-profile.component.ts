@@ -53,7 +53,6 @@ translate.setDefaultLang(this.language);
 this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 this.mySubscription = this.router.events.subscribe((event) => {
     if (event instanceof NavigationEnd) {
-        // Trick the Router into believing it's last link wasn't previously loaded
         this.router.navigated = false;
     }
   });
@@ -73,13 +72,13 @@ onSubmit(user: User): void {
 
     const userObserver = {
         next: (user: User) => {
-            this.toast.success('User-profile update !');
+            this.toastService.success('User-profile update !');
           },
       error: (err: any) => {
         this.showErrorMessage = true;
         this.errorMessage = err.error.driverError.detail;
         console.log(`Erreur edit profile : ${err.error['driverError'].detail}`);
-        this.toast.error(`Error during profile edit<br><br>${err.error.driverError.detail}`);
+        this.toastService.error(`Error during profile edit<br><br>${err.error.driverError.detail}`);
       },
       complete: () => {
         this.toastService.success(`User-profile edited !`);
@@ -89,17 +88,7 @@ onSubmit(user: User): void {
 
     this.submitted = true;
     this.userService.editUser(this.user).subscribe(userObserver)
-    this.toastService.success(`User-profile edited !`);
-    window.location.reload()
   }
-  
-/*function "click"*/
-
-  Clicked(event: any) {
-    this.router.navigate(['/user'], {
-        queryParams: { userid: this.user.id }
-    });
-}
 
 /*function selectFile*/
 

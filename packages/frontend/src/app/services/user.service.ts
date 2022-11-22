@@ -93,11 +93,11 @@ export class UserService {
                 JSON.stringify(user),
                 this.httpOptions
             )
-            .pipe(
-                tap((response) => {
-                    this.log(`user-service-edituser- response = ${response}`);
-                }),
-                catchError((error) => this.handleError(error, null))
-            );
+            // .pipe(
+            //     tap((response) => {
+            //         this.log(`user-service-edituser- response = ${response}`);
+            //     }),
+            //     catchError((error) => this.handleError(error, null))
+            // );
     }
 }
