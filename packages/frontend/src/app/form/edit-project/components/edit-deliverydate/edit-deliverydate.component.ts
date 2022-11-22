@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HotToastService } from '@ngneat/hot-toast';
-import { ProcessEnvOptions } from 'child_process';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from '../../../../models/project.model';
 
