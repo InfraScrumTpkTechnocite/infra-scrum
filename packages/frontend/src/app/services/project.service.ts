@@ -70,4 +70,11 @@ export class ProjectService {
             this.httpOptions
         );
     }
+
+    delete(id: string): Observable<any>{
+        return this.httpClient.delete<any>(
+            '/backend/projects/' + id,
+            this.httpOptions
+        );
+    }
 }

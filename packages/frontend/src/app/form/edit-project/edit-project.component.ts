@@ -16,6 +16,7 @@ export class EditProjectComponent{
     project: Project = this.data.project;
     userList: User[] = this.data.userList;
     userProjectList: UserProject[] = this.data.userProjectList;
+    sprintList: Project[] = this.data.sprintList;
     switch: string = 'default';
 
     constructor(
@@ -26,7 +27,8 @@ export class EditProjectComponent{
         private data: {
             project: Project,
             userProjectList: UserProject[],
-            userList: User[]
+            userList: User[],
+            sprintList: Project[]
         }
     ) {}
 

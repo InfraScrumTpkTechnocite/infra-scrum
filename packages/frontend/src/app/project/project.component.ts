@@ -319,7 +319,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
             data: {
                 project: this.project,
                 userProjectList: this.userProjects,
-                userList: this.userList
+                userList: this.userList,
+                sprintList: this.sprintList
             }
         });
     }
@@ -390,6 +391,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     addSprint() {
         var newSprint = new Project();
+        newSprint.enddate = new Date().toISOString();
         newSprint.name = 'Sprint ' + (this.sprintList.length + 1);
         newSprint.project = this.project;
 
