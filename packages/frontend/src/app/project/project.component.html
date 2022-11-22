@@ -7,55 +7,14 @@
         <div
             class="flex flex-col h-full justify-between items-center text-center"
         >
-            <div class="flex flex-col items-center">
-                <!-- BTN MES TACHES -->
-
-                <button
-                    title="My tasks"
-                    class="mt-2 flex items-center justify-center w-28 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg h-10 text-xs"
-                    [ngClass]="{
-                        'bg-secondary text-white focus:border-2 focus:border-tpkvalidate ':
-                            showCurrentUserTasks,
-                        'text-primary': !showCurrentUserTasks
-                    }"
-                    (click)="toggleCurrentUserTasks()"
-                >
-                    <span>My tasks</span>
-                    <svg class="w-5 h-5 ml-2" viewBox="0 0 48 48">
-                        <mask id="svgIDa">
-                            <g
-                                fill="none"
-                                stroke="#fff"
-                                stroke-linejoin="round"
-                                stroke-width="4"
-                            >
-                                <path
-                                    fill="#555"
-                                    d="M8 28a4 4 0 1 0 0-8a4 4 0 0 0 0 8Z"
-                                />
-                                <path
-                                    d="M42 8a2 2 0 1 0 0-4a2 2 0 0 0 0 4Zm0 18a2 2 0 1 0 0-4a2 2 0 0 0 0 4Zm0 18a2 2 0 1 0 0-4a2 2 0 0 0 0 4Z"
-                                />
-                                <path
-                                    stroke-linecap="round"
-                                    d="M32 6H20v36h12M12 24h20"
-                                />
-                            </g>
-                        </mask>
-                        <path
-                            fill="currentColor"
-                            d="M0 0h48v48H0z"
-                            mask="url(#svgIDa)"
-                        />
-                    </svg>
-                </button>
+            <section class="flex flex-col items-center">
                 <!-- BTN GLOBAL VIEW -->
                 <button
                     title="Show global view"
                     (click)="closeSprintBar()"
                     class="w-28 h-10 hover:bg-secondary hover:text-white hoverSmooth p-2 rounded-lg m-2 text-xs font-semibold justify-center hover:cursor-pointer"
                     [ngClass]="{
-                        'bg-secondary text-white focus:border-2 focus:border-tpkvalidate ':
+                        'bg-secondary text-white ':
                             !parentProject && switch == 'default',
                         'text-primary': parentProject || switch != 'default'
                     }"
@@ -63,6 +22,7 @@
                 >
                     {{ 'infrascrum.project.btn-global' | translate }}
                 </button>
+
                 <!-- BTN ADD A SPRINT -->
                 <button
                     *ngIf="
@@ -83,6 +43,7 @@
                     *ngIf="sprintList && sprintList.length > 0"
                     name="select a sprint"
                     id="sprint"
+                    title="Filter by sprint"
                     class="w-28 h-10 bg-tpkwhite text-primary p-3 rounded-lg text-xs font font-semibold m-2 justify-center"
                     (change)="changeSprintDisplay($event)"
                 >
@@ -101,49 +62,29 @@
                     </option>
                 </select>
 
-                <!-- <div
-                    class="flex justify-center items-center mt-8"
-                    *ngFor="let sprint of sprintList"
+                <!-- FILTRE MES TACHES -->
+                <div
+                    class="flex items-center justify-center mt-2 w-28 font-semibold m-1 h-10 text-xs"
+                    title="Filter my tasks"
                 >
-                    <button
-                        (click)="changeSprintDisplay(sprint.id)"
-                        class="hover:bg-secondary hover:text-white p-3 rounded-xl m-2 text-xs font-semibold justify-center"
-                        [ngClass]="{
-                            'bg-primary text-white': sprint.id == projectid,
-                            'text-primary': sprint.id != projectid
-                        }"
-                        [disabled]="sprint.id == projectid"
-                    >
-                        {{ sprint.name }}
-                    </button> -->
-                <!-- Si sprint terminé, icône V coché  -->
-                <!-- <div
-                        *ngIf="sprint.enddate && sprint.enddate < dateToday"
-                        class=""
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5 text-tpkvalidate"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                        </svg>
-                    </div>
-                </div> -->
-            </div>
-            <div class="flex flex-col">
+                    <span class="text-primary mr-2"> My tasks </span>
+                    <mat-slide-toggle
+                        color="primary"
+                        (change)="toggleCurrentUserTasks()"
+                    ></mat-slide-toggle>
+                </div>
+            </section>
+            <section class="flex flex-col">
                 <!-- BTN DIAGRAMME DE GANTT -->
                 <button
                     (click)="switch = 'gantt'"
                     title="Gantt diagram"
                     class="flex items-center justify-center w-28 h-10 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg text-xs p-1"
+                    [ngClass]="{
+                        'bg-secondary text-white ':
+                            !parentProject && switch == 'gantt',
+                        'text-primary': parentProject || switch != 'gantt'
+                    }"
                 >
                     <span>Gantt </span>
                     <svg
@@ -161,11 +102,17 @@
                         />
                     </svg>
                 </button>
+
                 <!-- BTN HISTORIQUE TACHES COMMENCEES-->
                 <button
                     (click)="switch = 'history'"
                     title="Tasks history"
                     class="flex items-center justify-center w-28 h-10 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg text-xs p-1"
+                    [ngClass]="{
+                        'bg-secondary text-white ':
+                            !parentProject && switch == 'history',
+                        'text-primary': parentProject || switch != 'history'
+                    }"
                 >
                     <span>History</span>
                     <svg
@@ -183,7 +130,7 @@
                         />
                     </svg>
                 </button>
-            </div>
+            </section>
         </div>
     </div>
 
@@ -312,10 +259,11 @@
                 <!--  -->
                 <!-- Delivery date -->
                 <div
+                    *ngIf="sprintList && sprintList.length > 0"
                     class="flex justify-end items-center text-primary mr-52 sm:mr-36 lg:mr-40 ml-4"
                 >
-                    <h4 class="pr-2">Delivery date :</h4>
-                    <p *ngIf="project">
+                    <h4 class="pr-2">Sprint end date :</h4>
+                    <p>
                         {{
                             project.enddate
                                 ? (project.enddate | date: 'dd-MMM-yyyy')
@@ -327,77 +275,6 @@
 
             <!-- Kanban columns  -->
 
-            <!-- <div cdkDropListGroup id="kanban" class="flex px-12 pb-12 pt-16"> -->
-            <!-- boucler sur les kanbanstatus du projet  -->
-            <!--     <div class="flex">
-                <div
-                    *ngFor="let kanbanstatus of kanbanList; let i = index"
-                    cdkDropList
-                    [cdkDropListData]="i"
-                    class="flex flex-col"
-                >
-                    <div
-                        cdkDrag
-                        [cdkDragData]="i"
-                        (cdkDragEntered)="dragEntered($event)"
-                        (cdkDragMoved)="dragMoved($event)"
-                        (cdkDragDropped)="dragDropped($event)"
-                    >
-                        <app-kanban-status
-                            [subject]="subject"
-                            [kanbanList]="kanbanstatus"
-                            (kanbanDeleted)="
-                                onKanbanDeleted(kanbanstatus.kanban)
-                            "
-                            [taskTypeList]="taskTypeList"
-                            [userProjectList]="userProjects"
-                            [sprintList]="sprintList"
-                            [projectid]="projectid"
-                            [project]="project"
-                        ></app-kanban-status>
-                    </div>
-                </div> -->
-
-            <!-- BOUTON NEW COLUMN  -->
-
-            <!-- <div class="w-36 mx-4 mt-6">
-                    <button
-                        (click)="addnewKanbanStatus()"
-                        class="bg-grey1 rounded-md hover:shadow-sm hover:shadow-secondary"
-                    >
-                        <div
-                            class="w-full bg-primary text-white h-6 rounded-t-lg p-2 flex items-center justify-center"
-                        >
-                            <h3 class="text-center font-bold text-xs">
-                                {{
-                                    'infrascrum.project.btn-add-column'
-                                        | translate
-                                }}
-                            </h3>
-                        </div>
-                        <div class="h-12 items-center flex justify-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5 font-extrabold"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M12 4.5v15m7.5-7.5h-15"
-                                />
-                            </svg>
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </div> -->
-            <!-- fin kanban columns-->
-
-            <!-- début test -->
             <div
                 cdkDropList
                 cdkDropListOrientation="horizontal"
@@ -405,7 +282,7 @@
             >
                 <div cdkDropListGroup class="flex px-12 pb-12 pt-16">
                     <div
-                        class="example-container"
+                        class="example-container bg-opacity-20"
                         *ngFor="let kanban of kanbanList; let i = index"
                         cdkDrag
                         [cdkDragDisabled]="
