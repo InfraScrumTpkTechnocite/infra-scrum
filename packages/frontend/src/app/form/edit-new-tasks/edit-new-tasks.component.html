@@ -286,6 +286,8 @@
                         >
                             <input
                                 type="date"
+                                [min]="newTask.sprint?.id ? (newTask.sprint?.startdate | date: 'yyyy-MM-dd') : ''"
+                                [max]="newTask.sprint?.id ? (newTask.sprint?.enddate | date: 'yyyy-MM-dd') : ''"
                                 [ngModel]="newDate | date: 'yyyy-MM-dd'"
                                 (ngModelChange)="updateDate($event)"
                             />

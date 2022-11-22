@@ -71,7 +71,6 @@ export class EditNewTasksComponent implements OnInit {
         this.data.userProjectList.map((userProject) =>
             this.userProjectList.push(userProject)
         );
-        console.log(this.data);
         this.newDate = new Date(this.data.task?.startdate);
         var index = this.data.edition
             ? /** Find Task Creator through taskAssignmentList */
@@ -87,7 +86,6 @@ export class EditNewTasksComponent implements OnInit {
                   (userProject) => userProject.user!.id == this.data.user!.id
               );
         if (index >= 0) {
-            console.log('in if');
             /** Remove yourself or taskCreator from the user you can assign */
             this.userProjectTaskCreator = this.userProjectList[index];
             this.userProjectList.splice(index, 1);
