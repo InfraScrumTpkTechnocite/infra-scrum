@@ -72,7 +72,9 @@
                             <img
                                 *ngIf="taskassignment.userproject.user.picture"
                                 class="rounded-full hover:cursor-default"
-                                [src]="taskassignment.userproject.user.picture"
+                                src="data:image/*;base64, {{
+                                    taskassignment.userproject.user.picture
+                                }}"
                                 alt="profile picture"
                                 title="{{
                                     taskassignment.userproject.user.username
@@ -176,10 +178,10 @@
                                                 .picture
                                         "
                                         class="rounded-full hover:cursor-default"
-                                        [src]="
+                                        src="data:image/*;base64, {{
                                             taskassignment.userproject.user
                                                 .picture
-                                        "
+                                        }}"
                                         alt="profile picture"
                                         title="{{
                                             taskassignment.userproject.user
@@ -220,10 +222,10 @@
                                                 .picture
                                         "
                                         class="rounded-full hover:cursor-default"
-                                        [src]="
+                                        src="data:image/*;base64, {{
                                             taskassignment.userproject.user
                                                 .picture
-                                        "
+                                        }}"
                                         alt="profile picture"
                                         title="{{
                                             taskassignment.userproject.user
