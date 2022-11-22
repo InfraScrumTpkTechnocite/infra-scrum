@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { HeaderTitleService } from 'src/app/services/header-title.service';
@@ -14,15 +14,14 @@ import { environment } from 'src/environments/environment';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent{
+export class UserProfileComponent implements OnInit {
 
+  /*méthode localstorage de récuperation objet formulaire*/
+  user: User = JSON.parse(localStorage.getItem('user') || "{}");  
   registerForm!: FormGroup;
   submitted = false;
 
-  /*méthode localstorage de récuperation objet formulaire*/
-  user: User = JSON.parse(localStorage.getItem('user') || "{}");
-
-  @Input() verifPassword: string | undefined;
+  @Input() verifPassword: string;
   showErrorMessage: boolean = false;
   toast: any;
   defaultUserProfile: any;
@@ -73,6 +72,9 @@ this.translate.use(this.language);
 onSubmit(user: User): void {
 
     const userObserver = {
+        next: (user: User) => {
+            this.toast.success('User-profile update !');
+          },
       error: (err: any) => {
         this.showErrorMessage = true;
         this.errorMessage = err.error.driverError.detail;
