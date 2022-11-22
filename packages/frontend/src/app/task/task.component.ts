@@ -104,9 +104,15 @@ export class TaskComponent implements OnInit {
         this.taskService.delete(this.task.id!).subscribe({
             next: () => {},
             error: (err) => {
-                this.toastService.error(
-                    `Error during task deletion<br><br>${err.error.driverError.detail}`
-                );
+                let errorMessage = '';
+                switch (err.error.driverError.code) {
+                    case '23503': //foreign key constraint violation
+                        errorMessage = `Task can't be deleted : time entries still exist for that task`;
+                        break;
+                    default:
+                        errorMessage = `Error during task deletion<br><br>${err.error.driverError.detail}`;
+                }
+                this.toastService.error(errorMessage);
             },
             complete: () => {
                 this.toastService.success('Task deleted !');
