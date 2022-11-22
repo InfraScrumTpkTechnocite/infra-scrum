@@ -105,7 +105,7 @@ export class TaskComponent implements OnInit {
             next: () => {},
             error: (err) => {
                 this.toastService.error(
-                    `Error during kanban creation<br><br>${err.error.driverError.detail}`
+                    `Error during task deletion<br><br>${err.error.driverError.detail}`
                 );
             },
             complete: () => {

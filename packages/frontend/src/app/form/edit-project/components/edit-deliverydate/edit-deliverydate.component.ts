@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HotToastService } from '@ngneat/hot-toast';
-import { ProcessEnvOptions } from 'child_process';
+
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from '../../../../models/project.model';
 
@@ -47,7 +47,9 @@ export class EditDeliverydateComponent implements OnInit {
         this.projectService.update(this.sprints[index].sprint).subscribe({
             next: () => {},
             error: (err: any) => {
-                this.toastService.error(`Error during sprint edition<br><br>${err.error.driverError.detail}`);
+                this.toastService.error(
+                    `Error during sprint edition<br><br>${err.error.driverError.detail}`
+                );
             },
             complete: () => {
                 this.toastService.success('Sprint edited');
@@ -57,16 +59,18 @@ export class EditDeliverydateComponent implements OnInit {
         });
     }
 
-    delete(index: number){
+    delete(index: number) {
         this.projectService.delete(this.sprints[index].sprint.id!).subscribe({
             next: () => {},
             error: (err: any) => {
-                this.toastService.error(`Error during sprint deletion<br><br>${err.error.driverError.detail}`);
+                this.toastService.error(
+                    `Error during sprint deletion<br><br>${err.error.driverError.detail}`
+                );
             },
             complete: () => {
                 this.toastService.success('Sprint edited');
-                this.sprintList.splice(index,1);
-                this.sprints.splice(index,1);
+                this.sprintList.splice(index, 1);
+                this.sprints.splice(index, 1);
             }
         });
     }
