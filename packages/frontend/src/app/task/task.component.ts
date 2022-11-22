@@ -11,6 +11,7 @@ import { UserProject } from '../models/userproject.model';
 import { User } from '../models/user.model';
 import { KanbanList } from '../models/kanbanlist.model';
 import { TaskService } from '../services/task.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
     selector: 'app-task',
@@ -36,14 +37,14 @@ export class TaskComponent implements OnInit {
 
     @Input() showCurrentUserTasks!: boolean;
     @Input() user!: User;
-    toastService: any;
 
     // @Output() taskDeleted: EventEmitter<any> = new EventEmitter();
 
     constructor(
         private taskassignmentService: TaskassignmentService,
         private taskService: TaskService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        public toastService: HotToastService
     ) {}
 
     ngOnInit(): void {
