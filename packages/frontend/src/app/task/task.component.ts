@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Task } from '../models/task.model';
 import { TaskAssignment } from '../models/taskassignment.model';
@@ -10,6 +10,8 @@ import { Project } from '../models/project.model';
 import { UserProject } from '../models/userproject.model';
 import { User } from '../models/user.model';
 import { KanbanList } from '../models/kanbanlist.model';
+import { TaskService } from '../services/task.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
     selector: 'app-task',
@@ -36,9 +38,13 @@ export class TaskComponent implements OnInit {
     @Input() showCurrentUserTasks!: boolean;
     @Input() user!: User;
 
+    // @Output() taskDeleted: EventEmitter<any> = new EventEmitter();
+
     constructor(
         private taskassignmentService: TaskassignmentService,
-        public dialog: MatDialog
+        private taskService: TaskService,
+        public dialog: MatDialog,
+        public toastService: HotToastService
     ) {}
 
     ngOnInit(): void {
@@ -90,6 +96,20 @@ export class TaskComponent implements OnInit {
                 ] = this.task;
 
                 //this.task.id = data.taskid;
+            }
+        });
+    }
+
+    deleteTask() {
+        this.taskService.delete(this.task.id!).subscribe({
+            next: () => {},
+            error: (err) => {
+                this.toastService.error(
+                    `Error during kanban creation<br><br>${err.error.driverError.detail}`
+                );
+            },
+            complete: () => {
+                this.toastService.success('Task deleted !');
             }
         });
     }

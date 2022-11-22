@@ -1,5 +1,6 @@
 <div class="mt-2 p-4 flex justify-center">
     <div
+        *ngIf="tasksLists.length"
         class="flex flex-col w-11/12 items-center bg-tpkwhite bg-opacity-70 p-4 lg:p-6 rounded-xl"
     >
         <!-- TACHES EN COURS -->
@@ -25,29 +26,60 @@
                             >
                                 <div class="flex-1 min-w-0 justify-center">
                                     <p class="text-sm font-medium truncate">
-                                        {{ task.name }}
+                                        {{ task.task.name }}
                                     </p>
                                     <span
                                         class="text-sm text-gray-500 truncate"
                                     >
-                                        {{ task.tasktype.label }}
+                                        {{ task.task.tasktype.label }}
                                     </span>
                                 </div>
                             </div>
                             <!-- Users assignés à la tâche -->
                             <div class="flex w-3/12 justify-start items-center">
                                 <div
-                                    class="userChipSmall w-7 h-7 md:w-8 md:h-8 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                                    *ngFor="
+                                        let taskassignment of task.taskassignments
+                                    "
+                                    class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
                                 >
                                     <!-- condition si photo, sinon span avec premiere lettre username -->
                                     <img
-                                        class="rounded-full hover:cursor-default"
+                                        title="{{
+                                            taskassignment.userproject.user
+                                                .username
+                                        }}"
+                                        *ngIf="
+                                            taskassignment.userproject.user
+                                                .picture
+                                        "
+                                        class="rounded-full"
+                                        [src]="
+                                            taskassignment.userproject.user
+                                                .picture
+                                        "
                                         alt="profile picture"
-                                        src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                                        title="{{
+                                            taskassignment.userproject.user
+                                                .username
+                                        }}"
                                     />
-                                    <!-- <span class="text-2xl uppercase font-bold">
-                                    G
-                                </span> -->
+                                    <span
+                                        title="{{
+                                            taskassignment.userproject.user
+                                                .username
+                                        }}"
+                                        *ngIf="
+                                            !taskassignment.userproject.user
+                                                .picture
+                                        "
+                                        class="text-lg uppercase font-bold"
+                                    >
+                                        {{
+                                            taskassignment.userproject.user
+                                                .username | initialsName
+                                        }}
+                                    </span>
                                 </div>
                             </div>
                             <div
@@ -57,16 +89,17 @@
                                     Estimated time:
                                     <span class="font-medium">
                                         {{
-                                            task.estimatedtime / 480
+                                            task.task.estimatedtime / 480
                                                 | numberToInteger
                                         }}
                                         d,
                                         {{
-                                            (task.estimatedtime / 60) % 8
+                                            (task.task.estimatedtime / 60) % 8
                                                 | numberToInteger
                                         }}
                                         hrs
-                                        {{ task.estimatedtime % 60 }} min.</span
+                                        {{ task.task.estimatedtime % 60 }}
+                                        min.</span
                                     >
                                 </p>
                             </div>
@@ -101,7 +134,11 @@
                         >
                             <div class="flex w-full text-sm nowrap mt-2">
                                 <p>
-                                    {{ task.description }}
+                                    {{
+                                        task.task.description
+                                            ? task.task.description
+                                            : 'No description'
+                                    }}
                                 </p>
                                 <!-- !! -->
                                 <!-- Si pas de description: -->
@@ -129,7 +166,7 @@
                     >
                         <!-- DEFAULT PREVIEW -->
                         <div
-                            *ngIf="task.done"
+                            *ngIf="task.task.done"
                             class="group px-4 py-2 bg-white hover:bg-sky-100 hover:text-secondary border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out hover:cursor-pointer w-full flex flex-col"
                         >
                             <div class="flex">
@@ -139,12 +176,12 @@
                                 >
                                     <div class="flex-1 min-w-0 justify-center">
                                         <p class="text-sm font-medium truncate">
-                                            {{ task.name }}
+                                            {{ task.task.name }}
                                         </p>
                                         <span
                                             class="text-sm text-gray-500 truncate"
                                         >
-                                            {{ task.tasktype.label }}
+                                            {{ task.task.tasktype.label }}
                                         </span>
                                     </div>
                                 </div>
@@ -153,17 +190,48 @@
                                     class="flex w-3/12 justify-start items-center"
                                 >
                                     <div
-                                        class="userChipSmall w-7 h-7 md:w-8 md:h-8 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                                        *ngFor="
+                                            let taskassignment of task.taskassignments
+                                        "
+                                        class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
                                     >
                                         <!-- condition si photo, sinon span avec premiere lettre username -->
                                         <img
-                                            class="rounded-full hover:cursor-default"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                            *ngIf="
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="rounded-full"
+                                            [src]="
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            "
                                             alt="profile picture"
-                                            src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
                                         />
-                                        <!-- <span class="text-2xl uppercase font-bold">
-                                    G
-                                </span> -->
+                                        <span
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                            *ngIf="
+                                                !taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="text-lg uppercase font-bold"
+                                        >
+                                            {{
+                                                taskassignment.userproject.user
+                                                    .username | initialsName
+                                            }}
+                                        </span>
                                     </div>
                                 </div>
                                 <div
@@ -195,7 +263,7 @@
                                             stroke="currentColor"
                                             class="w-6 h-6 relative transition-transform"
                                             [ngClass]="
-                                                task.visible
+                                                !task.visible
                                                     ? 'group-hover:top-1'
                                                     : 'rotate-180 group-hover:bottom-1'
                                             "
@@ -209,21 +277,18 @@
                                     </div>
                                 </div>
                             </div>
+
                             <!-- AFFICHAGE OVERVIEW -->
                             <div
                                 *ngIf="task.visible"
                                 class="flex border-t-2 border-grey2 mt-2 justify-start"
                             >
                                 <div class="flex w-full text-sm nowrap mt-2">
-                                    <p>
-                                        Description de la tâche, Lorem ipsum
-                                        dolor sit amet consectetur adipisicing
-                                        elit. Optio unde provident numquam
-                                        laboriosam blanditiis, itaque deleniti
-                                        nostrum suscipit assumenda! Aperiam
-                                        provident quod eum laudantium facilis,
-                                        distinctio mollitia deserunt.
-                                    </p>
+                                    {{
+                                        task.task.description
+                                            ? task.task.description
+                                            : 'No description'
+                                    }}
                                     <!-- !! -->
                                     <!-- Si pas de description: -->
                                     <!-- <p>No description available</p> -->
@@ -234,6 +299,12 @@
                 </ul>
             </div>
         </div>
+    </div>
+    <div
+        *ngIf="tasksLists.length < 1"
+        class="flex flex-col items-center bg-tpkwhite bg-opacity-70 p-4 lg:p-6 rounded-xl"
+    >
+        <p class="text-secondary font-semibold">No tasks yet</p>
     </div>
 </div>
 
