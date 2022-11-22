@@ -9,6 +9,7 @@
         >
             <div class="flex flex-col items-center">
                 <!-- BTN MES TACHES -->
+
                 <button
                     title="My tasks"
                     class="mt-2 flex items-center justify-center w-28 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg h-10 text-xs"
@@ -291,7 +292,7 @@
                             <!-- condition si photo, sinon span avec premiere lettre username -->
                             <img
                                 *ngIf="userProject.user.picture"
-                                class="rounded-full hover:cursor-default"
+                                class="rounded-full"
                                 [src]="userProject.user.picture"
                                 alt="profile picture"
                                 title="{{ userProject.user.username }}"
@@ -499,7 +500,11 @@
             </div>
             <!-- fin test -->
         </div>
-        <app-chart-gantt *ngSwitchCase="'gantt'" [sprints]="sprintList" [kanbanList]="kanbanList"></app-chart-gantt>
+        <app-chart-gantt
+            *ngSwitchCase="'gantt'"
+            [sprints]="sprintList"
+            [kanbanList]="kanbanList"
+        ></app-chart-gantt>
 
         <app-tasks-history
             *ngSwitchCase="'history'"

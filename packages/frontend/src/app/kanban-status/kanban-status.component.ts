@@ -104,7 +104,7 @@ export class KanbanStatusComponent implements OnInit {
             },
             error: (err: any) => {
                 console.log(
-                    `Erreur suprresion kanbanstatus : ${err.error['driverError'].detail}`
+                    `Erreur supression kanbanstatus : ${err.error['driverError'].detail}`
                 );
                 this.toastService.error(
                     `Error during kanban supression<br><br>${err.error.driverError.detail}`

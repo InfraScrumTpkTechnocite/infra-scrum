@@ -640,6 +640,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
         document.getElementById('kanbanDashboard')!.scrollTop = 0;
     }
 
+    /* ------------------------------------ / ----------------------------------- */
+
     toggleCurrentUserTasks() {
         this.showCurrentUserTasks = !this.showCurrentUserTasks;
     }

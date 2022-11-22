@@ -1,5 +1,6 @@
 <div class="mt-2 p-4 flex justify-center">
     <div
+        *ngIf="tasksLists.length"
         class="flex flex-col w-11/12 items-center bg-tpkwhite bg-opacity-70 p-4 lg:p-6 rounded-xl"
     >
         <!-- TACHES EN COURS -->
@@ -40,15 +41,19 @@
                                     *ngFor="
                                         let taskassignment of task.taskassignments
                                     "
-                                    class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                                    class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
                                 >
                                     <!-- condition si photo, sinon span avec premiere lettre username -->
                                     <img
+                                        title="{{
+                                            taskassignment.userproject.user
+                                                .username
+                                        }}"
                                         *ngIf="
                                             taskassignment.userproject.user
                                                 .picture
                                         "
-                                        class="rounded-full hover:cursor-default"
+                                        class="rounded-full"
                                         [src]="
                                             taskassignment.userproject.user
                                                 .picture
@@ -60,11 +65,15 @@
                                         }}"
                                     />
                                     <span
+                                        title="{{
+                                            taskassignment.userproject.user
+                                                .username
+                                        }}"
                                         *ngIf="
                                             !taskassignment.userproject.user
                                                 .picture
                                         "
-                                        class="text-2xl uppercase font-bold"
+                                        class="text-lg uppercase font-bold"
                                     >
                                         {{
                                             taskassignment.userproject.user
@@ -125,7 +134,11 @@
                         >
                             <div class="flex w-full text-sm nowrap mt-2">
                                 <p>
-                                    {{ task.task.description }}
+                                    {{
+                                        task.task.description
+                                            ? task.task.description
+                                            : 'No description'
+                                    }}
                                 </p>
                                 <!-- !! -->
                                 <!-- Si pas de description: -->
@@ -147,7 +160,10 @@
                 <ul
                     class="w-full border border-gray-200 rounded overflow-hidden shadow-md"
                 >
-                    <li *ngFor="let task of tasksLists">
+                    <li
+                        *ngFor="let task of tasksLists"
+                        (click)="task.visible = !task.visible"
+                    >
                         <!-- DEFAULT PREVIEW -->
                         <div
                             *ngIf="task.task.done"
@@ -174,17 +190,48 @@
                                     class="flex w-3/12 justify-start items-center"
                                 >
                                     <div
-                                        class="userChipSmall w-7 h-7 md:w-8 md:h-8 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                                        *ngFor="
+                                            let taskassignment of task.taskassignments
+                                        "
+                                        class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
                                     >
                                         <!-- condition si photo, sinon span avec premiere lettre username -->
                                         <img
-                                            class="rounded-full hover:cursor-default"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                            *ngIf="
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="rounded-full"
+                                            [src]="
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            "
                                             alt="profile picture"
-                                            src="https://pbs.twimg.com/media/FCqK_9RWUAIcfQz.jpg:large"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
                                         />
-                                        <!-- <span class="text-2xl uppercase font-bold">
-                                    G
-                                </span> -->
+                                        <span
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                            *ngIf="
+                                                !taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="text-lg uppercase font-bold"
+                                        >
+                                            {{
+                                                taskassignment.userproject.user
+                                                    .username | initialsName
+                                            }}
+                                        </span>
                                     </div>
                                 </div>
                                 <div
@@ -216,7 +263,7 @@
                                             stroke="currentColor"
                                             class="w-6 h-6 relative transition-transform"
                                             [ngClass]="
-                                                task.visible
+                                                !task.visible
                                                     ? 'group-hover:top-1'
                                                     : 'rotate-180 group-hover:bottom-1'
                                             "
@@ -230,21 +277,18 @@
                                     </div>
                                 </div>
                             </div>
+
                             <!-- AFFICHAGE OVERVIEW -->
                             <div
                                 *ngIf="task.visible"
                                 class="flex border-t-2 border-grey2 mt-2 justify-start"
                             >
                                 <div class="flex w-full text-sm nowrap mt-2">
-                                    <p>
-                                        Description de la tâche, Lorem ipsum
-                                        dolor sit amet consectetur adipisicing
-                                        elit. Optio unde provident numquam
-                                        laboriosam blanditiis, itaque deleniti
-                                        nostrum suscipit assumenda! Aperiam
-                                        provident quod eum laudantium facilis,
-                                        distinctio mollitia deserunt.
-                                    </p>
+                                    {{
+                                        task.task.description
+                                            ? task.task.description
+                                            : 'No description'
+                                    }}
                                     <!-- !! -->
                                     <!-- Si pas de description: -->
                                     <!-- <p>No description available</p> -->
@@ -255,6 +299,12 @@
                 </ul>
             </div>
         </div>
+    </div>
+    <div
+        *ngIf="tasksLists.length < 1"
+        class="flex flex-col items-center bg-tpkwhite bg-opacity-70 p-4 lg:p-6 rounded-xl"
+    >
+        <p class="text-secondary font-semibold">No tasks yet</p>
     </div>
 </div>
 
