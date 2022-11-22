@@ -59,8 +59,8 @@
         "edit-project": {
             "title": "Editer projet",
             "btn-edit-project": "Editer projet",
-            "btn-user": "Utilisateur",
-            "btn-edit-sprint": "Editer sprint",
+            "btn-user": "Utilisateurs",
+            "btn-edit-sprint": "Editer sprints",
             "inter-date": "Date intermédiaire",
             "inter-date-description": "Description",
             "edit-projectinfo-name": "Nom",
