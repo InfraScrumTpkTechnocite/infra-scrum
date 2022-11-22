@@ -115,6 +115,17 @@ export class TaskComponent implements OnInit {
                 this.toastService.error(errorMessage);
             },
             complete: () => {
+                this.kanbanList[this.task.kanbanstatus.order].tasks.splice(
+                    this.kanbanList[
+                        this.task.kanbanstatus.order
+                    ].tasks.findIndex((task) => task.id == this.task.id),
+                    1
+                );
+                this.subject.next({
+                    method: 'delete',
+                    task: this.task,
+                    projectid: this.projectid
+                });
                 this.toastService.success('Task deleted !');
             }
         });
