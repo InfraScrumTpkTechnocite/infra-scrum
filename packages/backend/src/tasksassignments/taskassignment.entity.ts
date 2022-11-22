@@ -39,6 +39,9 @@ export class TaskAssignment {
   isTaskCreator: boolean;
 
   @ApiProperty({ example: 'a uuid...', description: 'Task id' })
-  @ManyToOne(() => Task, (task) => task.id, { nullable: false })
+  @ManyToOne(() => Task, (task) => task.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   task: Task;
 }
