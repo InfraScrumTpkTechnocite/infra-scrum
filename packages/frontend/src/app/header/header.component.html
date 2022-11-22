@@ -1,7 +1,7 @@
 <div
     class="fixed top-0 bg-primary flex justify-between h-16 md:h-24 w-screen z-50"
 >
-    <div class="w-1/3 flex justify-left ml-2 md:ml-4">
+    <div class="w-1/3 flex justify-left ml-2 md:ml-4 mr-4">
         <!-- logo triptyk -->
         <div class="mr-6 flex hover:cursor-pointer" routerLink="">
             <svg
@@ -169,8 +169,8 @@
     </div>
 
     <!-- titre page actuelle -->
-    <div class="hidden md:flex items-center w-1/3 justify-center">
-        <h1 class="text-white sm:text-3xl lg:text-4xl xl:text-5xl font-bold">
+    <div class="hidden lg:flex items-center w-1/3 justify-center">
+        <h1 class="text-white sm:text-2xl lg:text-4xl xl:text-5xl font-bold">
             {{ title }}
         </h1>
     </div>
@@ -284,7 +284,7 @@
                     <!-- Lien vers projets de l'utilisateur  -->
                     <a
                         routerLink="/projects"
-                        class="sub-menu-link flex items-center justify-between text-white mt-4 mb-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="group transition-all duration-300 ease-in-out sub-menu-link flex items-center justify-between text-white mt-4 mb-2 p-2 hover:bg-primary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -307,13 +307,16 @@
                                     | translate
                             }}
                         </p>
-                        <span>></span>
+                        <span
+                            class="relative transition-transform group-hover:left-1"
+                            >></span
+                        >
                     </a>
 
-                    <!-- Lien profil / venir ajouter lien vers porfil user au lieu de index -->
+                    <!-- Lien profil / venir ajouter lien vers profil user au lieu de index -->
                     <a
                         routerLink="/index"
-                        class="sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="group sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -334,14 +337,17 @@
                                 'infrascrum.header.sub-menu-profil' | translate
                             }}
                         </p>
-                        <span>></span>
+                        <span
+                            class="relative transition-transform group-hover:left-1"
+                            >></span
+                        >
                     </a>
 
                     <!-- Lien management users uniquement visible pour superadmin  -->
                     <a
                         *ngIf="isSuperadmin()"
                         routerLink="/admin"
-                        class="sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="group sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -361,11 +367,14 @@
                         <p class="w-full">
                             {{ 'infrascrum.header.sub-menu-users' | translate }}
                         </p>
-                        <span>></span>
+                        <span
+                            class="relative transition-transform group-hover:left-1"
+                            >></span
+                        >
                     </a>
                     <a
                         (click)="changeLanguage()"
-                        class="sub-menu-link flex text-white my-2 p-2 items-center hover:bg-primary hover:text-white rounded-md"
+                        class="group sub-menu-link flex text-white my-2 p-2 items-center hover:bg-primary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -390,13 +399,16 @@
                                 }}
                             </button>
                         </p>
-                        <span>></span>
+                        <span
+                            class="relative transition-transform group-hover:left-1"
+                            >></span
+                        >
                     </a>
                     <!-- Lien déconnexion -->
                     <a
                         routerLink="/index"
                         (click)="logOut()"
-                        class="sub-menu-link flex text-white mt-2 p-2 items-center hover:bg-tpkerror hover:text-white rounded-md"
+                        class="group sub-menu-link flex text-white mt-2 p-2 items-center hover:bg-tpkerror hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -418,7 +430,10 @@
                                 'infrascrum.header.sub-menu-logout' | translate
                             }}
                         </p>
-                        <span><</span>
+                        <span
+                            class="relative transition-transform group-hover:right-1"
+                            ><</span
+                        >
                     </a>
                 </div>
             </div>

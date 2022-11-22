@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Task } from '../models/task.model';
 import { TaskAssignment } from '../models/taskassignment.model';
@@ -10,6 +10,7 @@ import { Project } from '../models/project.model';
 import { UserProject } from '../models/userproject.model';
 import { User } from '../models/user.model';
 import { KanbanList } from '../models/kanbanlist.model';
+import { TaskService } from '../services/task.service';
 
 @Component({
     selector: 'app-task',
@@ -35,9 +36,13 @@ export class TaskComponent implements OnInit {
 
     @Input() showCurrentUserTasks!: boolean;
     @Input() user!: User;
+    toastService: any;
+
+    // @Output() taskDeleted: EventEmitter<any> = new EventEmitter();
 
     constructor(
         private taskassignmentService: TaskassignmentService,
+        private taskService: TaskService,
         public dialog: MatDialog
     ) {}
 
@@ -92,6 +97,25 @@ export class TaskComponent implements OnInit {
                 //this.task.id = data.taskid;
             }
         });
+    }
+
+    deleteTask() {
+        this.taskassignmentService.findAllUsersOfTask(this.task.id!).subscribe({
+            next: (taskassignmentList: TaskAssignment[]) => {
+                taskassignmentList.map((assignment) =>
+                    this.taskassignmentService
+                        .delete(assignment.id!)
+                        .subscribe()
+                );
+                // Faire un compteur avec l'index et dans le complete tester l'index
+            },
+            error: (err: any) => {},
+            complete: () => {
+                this.taskService.delete(this.task.id!).subscribe();
+            }
+        });
+
+        console.table(this.taskassignmentList);
     }
 
     ngOnChanges() {

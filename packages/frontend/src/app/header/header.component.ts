@@ -128,7 +128,6 @@ export class HeaderComponent implements OnInit {
             this.router.navigate(['/project'], {
                 queryParams: { projectid: event.target.value }
             });
-            event.target.value = '';
         }
     }
 
