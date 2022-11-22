@@ -34,11 +34,8 @@ import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.com
 import { EditProjectComponent } from '../form/edit-project/edit-project.component';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
+import { KanbanList } from '../models/kanbanlist.model';
 
-interface KanbanList {
-    kanban: Kanbanstatus;
-    tasks: Task[];
-}
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',
@@ -75,6 +72,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     subject = webSocket('');
 
     subscription!: Subscription;
+
+    showCurrentUserTasks: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -157,9 +156,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             this.kanbanList.push(kanbanList);
                         }
                         if (message.task) {
-                            this.kanbanList.find((kanbans) => {
-                                kanbans.tasks?.push(message.task);
-                            });
+                            const kanban = this.kanbanList.find(
+                                (kanban) =>
+                                    kanban.kanban.id ==
+                                    message.task.kanbanstatus.id
+                            );
+                            kanban?.tasks.push(message.task);
                         }
                 }
             }
@@ -317,19 +319,33 @@ export class ProjectComponent implements OnInit, OnDestroy {
             data: {
                 project: this.project,
                 userProjectList: this.userProjects,
-                userList: this.userList
+                userList: this.userList,
+                sprintList: this.sprintList
             }
         });
     }
 
-    addTask() {
-        this.dialog.open(EditNewTasksComponent, {
+    addTask(kanban?: Kanbanstatus) {
+        const task = new Task();
+        if (kanban) task.kanbanstatus = kanban;
+        const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
-                task: new Task(),
+                task: task,
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
-                edition: false
+                edition: false,
+                kanbanList: this.kanbanList,
+                userProjectList: this.userProjects,
+                user: this.user,
+                subject: this.subject
             }
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result)
+                this.kanbanList.find((kanbanAndTasks) => {
+                    if (kanbanAndTasks.kanban.id == result.task.kanbanstatus.id)
+                        kanbanAndTasks.tasks.push(result.task);
+                });
         });
     }
 
@@ -356,10 +372,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     //Afficher Sprint en fonction de celui sélectionné
-    changeSprintDisplay(id?: string) {
+    changeSprintDisplay(event: any /*id?: string*/) {
         //console.log(`project.component - changeSprintDisplay - id = ${id}`);
         const sprint: Project =
-            this.sprintList.find((sprint) => sprint.id == id) || new Project();
+            this.sprintList.find((sprint) => sprint.id == event.target.value) ||
+            new Project();
         // console.log(
         //     `project.component - changeSprintDisplay - ${JSON.stringify(
         //         sprint
@@ -374,6 +391,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     addSprint() {
         var newSprint = new Project();
+        newSprint.enddate = new Date().toISOString();
         newSprint.name = 'Sprint ' + (this.sprintList.length + 1);
         newSprint.project = this.project;
 
@@ -407,7 +425,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     addnewKanbanStatus() {
         var newKanbanStatus = new Kanbanstatus();
         newKanbanStatus.project.id = this.project.id;
-        newKanbanStatus.order = this.kanbanList.length + 1;
+        newKanbanStatus.order = this.kanbanList.length;
 
         const kanbanObserver = {
             next: (kanban: Kanbanstatus) => {
@@ -416,7 +434,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 // 'next' will send a message to the server once a connection is made
                 // and all subscribed client will receive message right away
                 //Remember value is serialized with JSON.stringify by default!
-                this.subject.next({ method: 'add', kanban: kanban });
+                this.subject.next({
+                    method: 'add',
+                    kanban: kanban,
+                    projectid: this.projectid
+                });
             },
             error: (err: any) => {
                 console.log(
@@ -436,10 +458,21 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     onKanbanDeleted(kanban: Kanbanstatus) {
-        var index = this.kanbanList.findIndex((knb) => knb.kanban === kanban);
+        var index = this.kanbanList.findIndex(
+            (knb) => knb.kanban.id === kanban.id
+        );
         if (index != -1) {
+            this.subject.next({
+                method: 'delete',
+                kanban: kanban,
+                projectid: this.projectid
+            });
             this.kanbanList.splice(index, 1);
         }
+    }
+
+    addTaskFromKanban(kanban: Kanbanstatus) {
+        this.addTask(kanban);
     }
 
     /* -------------------------------------------------------------------------- */
@@ -607,5 +640,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     scrollTop() {
         document.getElementById('kanbanDashboard')!.scrollTop = 0;
+    }
+
+    /* ------------------------------------ / ----------------------------------- */
+
+    toggleCurrentUserTasks() {
+        this.showCurrentUserTasks = !this.showCurrentUserTasks;
     }
 }

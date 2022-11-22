@@ -51,7 +51,7 @@ const routes: Routes = [
     },
     {
         path: 'table-users',
-        component: TableUsersComponent,
+        component: TableUsersComponent
     },
     {
         path: 'create-user',

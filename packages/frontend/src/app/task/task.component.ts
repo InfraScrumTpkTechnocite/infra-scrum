@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Task } from '../models/task.model';
 import { TaskAssignment } from '../models/taskassignment.model';
@@ -8,6 +8,10 @@ import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.com
 import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
 import { UserProject } from '../models/userproject.model';
+import { User } from '../models/user.model';
+import { KanbanList } from '../models/kanbanlist.model';
+import { TaskService } from '../services/task.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
     selector: 'app-task',
@@ -24,15 +28,23 @@ export class TaskComponent implements OnInit {
     @Input() taskTypeList!: TaskType[];
     @Input() sprintList!: Project[];
     @Input() userProjectList!: UserProject[];
+    @Input() kanbanList!: KanbanList[];
     taskassignmentList!: TaskAssignment[];
 
     showTask: boolean = true;
     @Input() projectid!: string | undefined | null;
     @Input() project!: Project;
 
+    @Input() showCurrentUserTasks!: boolean;
+    @Input() user!: User;
+
+    // @Output() taskDeleted: EventEmitter<any> = new EventEmitter();
+
     constructor(
         private taskassignmentService: TaskassignmentService,
-        public dialog: MatDialog
+        private taskService: TaskService,
+        public dialog: MatDialog,
+        public toastService: HotToastService
     ) {}
 
     ngOnInit(): void {
@@ -42,16 +54,6 @@ export class TaskComponent implements OnInit {
                 (taskassignmentList: TaskAssignment[]) =>
                     (this.taskassignmentList = taskassignmentList)
             );
-
-        if (this.task.sprint?.id)
-            //sprint de la tâche existe => vue globale ou sprint
-            this.showTask =
-                this.projectid == this.project.id ||
-                this.task.sprint.id == this.projectid;
-        else {
-            //sinon vue globale seulement
-            this.showTask = this.projectid == this.project.id;
-        }
 
         // console.log(
         //     `showTask : ${this.showTask} - projectid : ${
@@ -70,6 +72,7 @@ export class TaskComponent implements OnInit {
 
     editTask() {
         const task = this.task;
+        console.log(this.userProjectList);
         const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: task,
@@ -78,14 +81,70 @@ export class TaskComponent implements OnInit {
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
                 edition: true,
+                kanbanList: this.kanbanList,
+                user: this.user,
                 subject: this.subject
             }
         });
         dialogRef.afterClosed().subscribe((data: any) => {
             if (data) {
                 this.task = data.task as Task;
-                this.task.id = data.taskid;
+                this.kanbanList[this.task.kanbanstatus.order].tasks[
+                    this.kanbanList[
+                        this.task.kanbanstatus.order
+                    ].tasks.findIndex((task) => task.id == this.task.id)
+                ] = this.task;
+
+                //this.task.id = data.taskid;
             }
         });
+    }
+
+    deleteTask() {
+        this.taskService.delete(this.task.id!).subscribe({
+            next: () => {},
+            error: (err) => {
+                let errorMessage = '';
+                switch (err.error.driverError.code) {
+                    case '23503': //foreign key constraint violation
+                        errorMessage = `Task can't be deleted : time entries still exist for that task`;
+                        break;
+                    default:
+                        errorMessage = `Error during task deletion<br><br>${err.error.driverError.detail}`;
+                }
+                this.toastService.error(errorMessage);
+            },
+            complete: () => {
+                this.toastService.success('Task deleted !');
+            }
+        });
+    }
+
+    ngOnChanges() {
+        console.log(
+            `ngOnChanges - showCurrentUserTasks: ${this.showCurrentUserTasks}`
+        );
+
+        if (this.task.sprint?.id)
+            //sprint de la tâche existe => vue globale ou sprint
+            this.showTask =
+                this.projectid == this.project.id ||
+                this.task.sprint.id == this.projectid;
+        else {
+            //sinon vue globale seulement
+            this.showTask = this.projectid == this.project.id;
+        }
+
+        if (this.showCurrentUserTasks)
+            if (
+                this.taskassignmentList.find((taskAssignment) => {
+                    return (
+                        taskAssignment.userproject.user.id == this.user.id &&
+                        taskAssignment.task.id == this.task.id
+                    );
+                })
+            )
+                this.showTask = this.showTask && true;
+            else this.showTask = false;
     }
 }

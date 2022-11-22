@@ -1,18 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
 import { WebSocketSubject } from 'rxjs/webSocket';
-import { Kanbanstatus } from '../models/kanbanstatus.model';
 import { KanbanstatusService } from '../services/kanbanstatus.service';
 import { TaskType } from '../models/tasktype.model';
 import { Project } from '../models/project.model';
-import { Task } from '../models/task.model';
 import { UserProject } from '../models/userproject.model';
 import { User } from '../models/user.model';
-
-interface KanbanList {
-    kanban: Kanbanstatus;
-    tasks: Task[];
-}
+import { KanbanList } from '../models/kanbanlist.model';
 
 @Component({
     selector: 'app-kanban-status',
@@ -31,6 +25,8 @@ export class KanbanStatusComponent implements OnInit {
     @Input() sprintList!: Project[];
 
     @Output() kanbanDeleted: EventEmitter<any> = new EventEmitter();
+
+    @Output() addTaskFromKanban: EventEmitter<any> = new EventEmitter();
 
     isSprintsOpen: boolean = false;
     isEditColumn: boolean = false;
@@ -54,7 +50,7 @@ export class KanbanStatusComponent implements OnInit {
         //console.log(this.user);
         //console.log(this.isUserProjectadmin);
         this.kanbanstatus = this.kanbanList as KanbanList;
-        this.newName = this.kanbanstatus.kanban.name
+        this.newName = this.kanbanstatus.kanban.name;
         this.newColor = this.kanbanstatus.kanban.color;
         //console.log(`ngOnInit - this.project ${JSON.stringify(this.project)}`);
     }
@@ -73,7 +69,9 @@ export class KanbanStatusComponent implements OnInit {
                 this.toastService.success('Column edited !');
                 this.subject.next({
                     method: 'edit',
-                    kanban: this.kanbanstatus.kanban
+                    kanban: this.kanbanstatus.kanban,
+                    tasks: this.kanbanstatus.tasks,
+                    projectid: this.projectid
                 });
             },
             error: (err: any) => {
@@ -97,15 +95,16 @@ export class KanbanStatusComponent implements OnInit {
         const kanbanObserver = {
             next: (result: any) => {
                 console.log(`${result}`);
-                this.toastService.success(`Column deleted ! ${result}`);
+                this.toastService.success(`Column deleted !`);
                 this.subject.next({
                     method: 'delete',
-                    kaban: this.kanbanstatus.kanban
+                    kaban: this.kanbanstatus.kanban,
+                    projectid: this.projectid
                 });
             },
             error: (err: any) => {
                 console.log(
-                    `Erreur suprresion kanbanstatus : ${err.error['driverError'].detail}`
+                    `Erreur supression kanbanstatus : ${err.error['driverError'].detail}`
                 );
                 this.toastService.error(
                     `Error during kanban supression<br><br>${err.error.driverError.detail}`
@@ -118,5 +117,8 @@ export class KanbanStatusComponent implements OnInit {
         this.kanbanstatusService
             .delete(this.kanbanstatus.kanban.id!)
             .subscribe(kanbanObserver);
+    }
+    addTask() {
+        this.addTaskFromKanban.emit(this.kanbanstatus);
     }
 }

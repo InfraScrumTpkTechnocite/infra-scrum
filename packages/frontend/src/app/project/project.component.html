@@ -9,9 +9,16 @@
         >
             <div class="flex flex-col items-center">
                 <!-- BTN MES TACHES -->
+
                 <button
                     title="My tasks"
                     class="mt-2 flex items-center justify-center w-28 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg h-10 text-xs"
+                    [ngClass]="{
+                        'bg-secondary text-white focus:border-2 focus:border-tpkvalidate ':
+                            showCurrentUserTasks,
+                        'text-primary': !showCurrentUserTasks
+                    }"
+                    (click)="toggleCurrentUserTasks()"
                 >
                     <span>My tasks</span>
                     <svg class="w-5 h-5 ml-2" viewBox="0 0 48 48">
@@ -58,7 +65,12 @@
                 </button>
                 <!-- BTN ADD A SPRINT -->
                 <button
-                    *ngIf="!parentProject"
+                    *ngIf="
+                        !parentProject &&
+                        (user.role.name == 'admin' ||
+                            user.role.name == 'superadmin' ||
+                            isUserProjectadmin)
+                    "
                     (click)="addSprint()"
                     class="w-28 h-10 hover:text-white hover:bg-secondary text-primary text-center mt-2 p-2 rounded-lg text-xs hoverSmooth"
                     title="Add a sprint"
@@ -72,11 +84,11 @@
                     name="select a sprint"
                     id="sprint"
                     class="w-28 h-10 bg-tpkwhite text-primary p-3 rounded-lg text-xs font font-semibold m-2 justify-center"
+                    (change)="changeSprintDisplay($event)"
                 >
                     <option selected disabled value="default">Sprints:</option>
                     <option
                         value="{{ sprint.id }}"
-                        (click)="changeSprintDisplay(sprint.id)"
                         [ngClass]="{
                             'bg-primary text-white': sprint.id == projectid,
                             'text-primary': sprint.id != projectid
@@ -133,14 +145,14 @@
                     title="Gantt diagram"
                     class="flex items-center justify-center w-28 h-10 text-primary hover:text-white hover:bg-secondary hoverSmooth font-semibold text-center m-1 rounded-lg text-xs p-1"
                 >
-                    <span>Gantt</span>
+                    <span>Gantt </span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-5 h-5 ml-2 mb-2"
+                        class="w-5 h-5 ml-3 mb-2"
                     >
                         <path
                             stroke-linecap="round"
@@ -244,6 +256,11 @@
                         (click)="addnewKanbanStatus()"
                         class="flex items-center justify-center bg-primary hover:bg-secondary text-white hoverSmooth p-2 rounded-lg h-8 text-xs mr-8"
                         title="Add a new column"
+                        *ngIf="
+                            user.role.name == 'admin' ||
+                            user.role.name == 'superadmin' ||
+                            isUserProjectadmin
+                        "
                     >
                         <span>
                             {{
@@ -407,6 +424,9 @@
                             [project]="project"
                             [user]="user"
                             [isUserProjectadmin]="isUserProjectadmin"
+                            (addTaskFromKanban)="
+                                addTaskFromKanban(kanban.kanban)
+                            "
                         ></app-kanban-status>
 
                         <div
@@ -419,11 +439,7 @@
                             <div
                                 *ngFor="let task of kanban.tasks"
                                 cdkDrag
-                                [cdkDragDisabled]="
-                                    user.role.name != 'admin' &&
-                                    user.role.name != 'superadmin' &&
-                                    !isUserProjectadmin
-                                "
+                                [cdkDragDisabled]="user.role.name == 'guest'"
                             >
                                 <app-task
                                     [task]="task"
@@ -432,6 +448,12 @@
                                     [sprintList]="sprintList"
                                     [projectid]="projectid"
                                     [project]="project"
+                                    [kanbanList]="kanbanList"
+                                    [userProjectList]="userProjects"
+                                    [showCurrentUserTasks]="
+                                        showCurrentUserTasks
+                                    "
+                                    [user]="user"
                                 ></app-task>
                             </div>
                         </div>
@@ -441,6 +463,11 @@
                             (click)="addnewKanbanStatus()"
                             class="bg-[rgba(225,225,224,0.5)] rounded-md hover:shadow-sm hover:shadow-secondary hover:text-secondary"
                             title="Add a column"
+                            *ngIf="
+                                user.role.name == 'admin' ||
+                                user.role.name == 'superadmin' ||
+                                isUserProjectadmin
+                            "
                         >
                             <div
                                 class="w-16 bg-primary text-white h-3 rounded-t-lg flex items-center justify-center"
@@ -474,8 +501,16 @@
             </div>
             <!-- fin test -->
         </div>
-        <app-chart-gantt *ngSwitchCase="'gantt'"></app-chart-gantt>
-        <app-tasks-history *ngSwitchCase="'history'"></app-tasks-history>
+        <app-chart-gantt
+            *ngSwitchCase="'gantt'"
+            [sprints]="sprintList"
+            [kanbanList]="kanbanList"
+        ></app-chart-gantt>
+
+        <app-tasks-history
+            *ngSwitchCase="'history'"
+            [kanbanList]="kanbanList"
+        ></app-tasks-history>
 
         <!-- Bouton scroll to the top -->
         <div
@@ -505,5 +540,4 @@
         </div>
     </div>
     <!-- fin kanban dashboard -->
-    <app-chart-gantt *ngIf="!hideChart" class="w-full"></app-chart-gantt>
 </div>

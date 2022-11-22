@@ -26,9 +26,12 @@ export class TaskService {
     }
 
     create(task: Task): Observable<Task> {
-        return this.httpClient
-            .post<any>('/backend/tasks', JSON.stringify(task), this.httpOptions)
-            /*.pipe(
+        return this.httpClient.post<any>(
+            '/backend/tasks',
+            JSON.stringify(task),
+            this.httpOptions
+        );
+        /*.pipe(
                 tap((response) => this.log(response)),
                 catchError((error) => this.handleError(error, null))
             );*/
@@ -41,10 +44,17 @@ export class TaskService {
         );
     }
 
-    edit(taskId:string ,task: Task): Observable<Task> {
+    edit(taskId: string, task: Task): Observable<Task> {
         return this.httpClient.put<any>(
             '/backend/tasks/' + taskId,
             JSON.stringify(task),
+            this.httpOptions
+        );
+    }
+
+    delete(taskId: string): Observable<any> {
+        return this.httpClient.delete<any>(
+            '/backend/tasks/' + taskId,
             this.httpOptions
         );
     }
