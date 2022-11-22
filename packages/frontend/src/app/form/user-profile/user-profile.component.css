@@ -1,0 +1,190 @@
+/*css"modale"*/
+
+.modale{
+    margin-top: 230px;
+}
+
+/*css avatar*/
+
+.avatar {
+    vertical-align: middle;
+    margin-left: 35px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    color: rgb(13, 226, 180);
+    font-size: 0px;
+}
+
+.img-avatar{
+    margin-right:25px ;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    color: rgb(13, 226, 180);
+    border: rgb(13, 226, 180);
+}
+
+/*css avatar button "ajouter" image*/
+
+  img {
+    margin-left:0px;
+    height: 130px;
+    width: 130px;
+    border: 3px solid #16e7dd;
+    border-radius: 50%;
+    font-size: 70px;
+  }
+
+/*css input role message erreur*/
+
+.role-message-erreur {
+    margin-left: 100px;
+    font-style: normal;
+    font-size: 14pt;
+    color: red;
+}
+
+.h1{
+    margin-left:240px;
+}
+
+/*css input username message erreur*/
+
+.username-message-erreur {
+    margin-left: 60px;
+    font-style: italic;
+    font-size: 14pt;
+    color: red;
+}
+
+/*css input email message erreur*/
+
+.email-message-erreur {
+    margin-left: -25px;
+    font-style: italic;
+    font-size: 14pt;
+    color: red;
+}
+
+/*css input firstname message erreur*/
+
+.firstname-message-erreur {
+    margin-left: 100px;
+    font-style: italic;
+    font-size: 14pt;
+    color: red;
+}
+
+/*css input lastname message erreur*/
+
+.lastname-message-erreur {
+    margin-left: 100px;
+    font-style: italic;
+    font-size: 14pt;
+    color: red;
+}
+
+/*css input password/confirm-password message erreur*/
+
+.password-message-erreur {
+    margin-left: 100px;
+    font-style: italic;
+    font-size: 14pt;
+    color: red;
+}
+
+/*css role*/
+
+.input-role {
+    margin-left: 50px;
+    font-size: 18px;
+    color:rgb(11, 97, 155);
+}
+
+/*css username*/
+
+.input-username {
+    margin-top: 30px ;
+    margin-left: 60px;
+    font-size: 18px;
+    color:rgb(11, 97, 155);
+    text-align: center;
+}
+
+/*css email*/
+
+.input-email {
+    margin-top: 10px;
+    margin-left: 60px;
+    font-size: 18px;
+    color:rgb(11, 97, 155);
+    text-align: center;
+}
+
+/*css input firstname*/
+
+.input-firstname {
+    margin-left: 30px;
+    font-size: 18px;
+    color:rgb(11, 97, 155);
+}
+
+/*css input lastname*/
+
+.input-lastname {
+    margin-left: 0px;
+    font-size: 18px;
+    color:rgb(11, 97, 155);
+}
+
+/*css input password*/
+
+.input-password {
+    margin-left:30px;
+    font-size: 18px;
+    color:rgb(11, 97, 155);
+}
+
+/*css input password*/
+
+.input-confirm-password {
+    margin-left: 0px;
+    font-size: 18px;
+    color:rgb(11, 97, 155);
+}
+
+/*css buton Update*/
+
+.update {
+    margin-left: 0px;
+    padding: 6px 15px;
+    background: #4e80ca;
+    color: #ffffff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    border: 2px solid #ffffff;
+    font-size: 20px;
+    font-style: italic;
+}
+
+/*css button Cancel*/
+
+.cancel
+{
+    margin-left: 0px;
+    padding: 6px 15px;
+    background: #11df0a;
+    color: #ffffff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    border: 2px solid #ffffff;
+    font-size: 20px;
+    font-style: italic; 
+
+}
+
+
+

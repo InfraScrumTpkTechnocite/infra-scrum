@@ -292,10 +292,11 @@
                             <!-- condition si photo, sinon span avec premiere lettre username -->
                             <img
                                 *ngIf="userProject.user.picture"
-                                class="rounded-full"
-                                [src]="userProject.user.picture"
-                                alt="profile picture"
-                                title="{{ userProject.user.username }}"
+                                class="img rounded-full"
+                                src="data:image/*;base64, {{
+                                    userProject.user.picture
+                                }}"
+                                alt="{{ userProject.user.picture }}"
                             />
                             <span
                                 *ngIf="!userProject.user.picture"

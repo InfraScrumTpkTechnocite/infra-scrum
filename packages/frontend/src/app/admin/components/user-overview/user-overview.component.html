@@ -9,9 +9,9 @@
             <!-- condition si photo, sinon span avec premiere lettre username -->
             <img
                 *ngIf="user.picture"
-                class="rounded-full"
-                src="{{ user.picture }}"
-                alt="profile picture"
+                class="img rounded-full"
+                src="data:image/*;base64, {{ user.picture }}"
+                alt="{{ user.picture }}"
             />
             <span
                 *ngIf="!user.picture"
@@ -44,7 +44,7 @@
             *ngIf="user.role.name === 'superadmin'"
             class="text-sm sm:text-base md:text-lg lg:text-xl text-secondary"
         >
-            {{ "infrascrum.admin.title" | translate}}
+            {{ 'infrascrum.admin.title' | translate }}
         </p>
         <select
             *ngIf="user.role.name !== 'superadmin'"

@@ -1,6 +1,13 @@
 import { Role } from "./role.model";
 
 export class User {
+  name: any;
+  userprofile: any;
+  target: any;
+  user: any;
+
+  static Form() {}
+
     id? : string;
     username: string;
     password?: string;
@@ -13,7 +20,7 @@ export class User {
     constructor(){
 
         this.username = '';
-        this.password = '';    
+        this.password = '';
         this.email = '';
         this.firstname= '';
         this.lastname= '';

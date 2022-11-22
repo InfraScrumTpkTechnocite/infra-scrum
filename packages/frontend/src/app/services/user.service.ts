@@ -3,11 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { catchError } from 'rxjs/operators';
 import { Observable, of, tap } from 'rxjs';
+import { response } from 'express';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
+    findOne(arg0: string) {
+      throw new Error('Method not implemented.');
+    }
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -89,11 +93,11 @@ export class UserService {
                 JSON.stringify(user),
                 this.httpOptions
             )
-            .pipe(
-                tap((response) => {
-                    this.log(`user-service-edituser- response = ${response}`);
-                }),
-                catchError((error) => this.handleError(error, null))
-            );
+            // .pipe(
+            //     tap((response) => {
+            //         this.log(`user-service-edituser- response = ${response}`);
+            //     }),
+            //     catchError((error) => this.handleError(error, null))
+            // );
     }
 }
