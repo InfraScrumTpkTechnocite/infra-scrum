@@ -100,22 +100,17 @@ export class TaskComponent implements OnInit {
     }
 
     deleteTask() {
-        this.taskassignmentService.findAllUsersOfTask(this.task.id!).subscribe({
-            next: (taskassignmentList: TaskAssignment[]) => {
-                taskassignmentList.map((assignment) =>
-                    this.taskassignmentService
-                        .delete(assignment.id!)
-                        .subscribe()
+        this.taskService.delete(this.task.id!).subscribe({
+            next: () => {},
+            error: (err) => {
+                this.toastService.error(
+                    `Error during kanban creation<br><br>${err.error.driverError.detail}`
                 );
-                // Faire un compteur avec l'index et dans le complete tester l'index
             },
-            error: (err: any) => {},
             complete: () => {
-                this.taskService.delete(this.task.id!).subscribe();
+                this.toastService.success('Task deleted !');
             }
         });
-
-        console.table(this.taskassignmentList);
     }
 
     ngOnChanges() {
