@@ -123,7 +123,10 @@
             "lastname": "lastname",
             "firstname": "firstname",
             "password": "Password",
-            "verif-password": "verif-password"
+            "msg-password-matching": "Passwords don't match",
+            "msg-password-required": "Password required",
+            "verif-password": "verif-password",
+            "Update": "Update"
         }
     }
 }

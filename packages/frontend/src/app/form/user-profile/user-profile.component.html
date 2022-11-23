@@ -168,7 +168,7 @@
             ><input
                 style="text-align: start"
                 type="text"
-                placeholder="firstname"
+                [placeholder]="'infrascrum.create-user.firstname' | translate"
                 value="{{ user.firstname }}"
                 value=""
                 required
@@ -188,7 +188,7 @@
             ><input
                 style="text-align: start"
                 type="text"
-                placeholder="lastname"
+                [placeholder]="'infrascrum.create-user.lastname' | translate"
                 value="{{ user.lastname }}"
                 value=""
                 required
@@ -257,14 +257,14 @@
             *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
             class="password-message-erreur placeholder:italic"
         >
-            {{ 'Invalid password!' | translate }}
+            {{ 'infrascrum.create-user.msg-password-matching' | translate }}
         </p>
 
         <p
             *ngIf="password.errors?.['required'] && password.dirty"
             class="password-message-erreur placeholder:italic"
         >
-            {{ 'password required' | translate }}
+            {{ 'infrascrum.create-user.msg-password-required' | translate }}
         </p>
 
         <div *ngIf="showErrorMessage">
@@ -277,7 +277,7 @@
         <!--button Update/Delete-->
         <div class="flex w-full justify-center">
             <button class="cancel" type="submit" routerLink="/projects">
-                Cancel
+                {{ 'Cancel' | translate }}
             </button>
 
             &nbsp;&nbsp;&nbsp;
