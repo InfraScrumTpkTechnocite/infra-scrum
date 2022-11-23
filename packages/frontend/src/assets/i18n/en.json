@@ -113,6 +113,17 @@
         "task": {
             "start-date": "Start date",
             "estimate-time": "Estimate time"
+        },
+        "user-profile": {
+            "title": "My Profile",
+            "btn-add": "Add picture",
+            "username": "Username",
+            "email": "Email",
+            "role": "role",
+            "lastname": "lastname",
+            "firstname": "firstname",
+            "password": "Password",
+            "verif-password": "verif-password"
         }
     }
 }

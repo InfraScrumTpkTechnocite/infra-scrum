@@ -2,6 +2,7 @@
 
 .modale{
     margin-top: 230px;
+    margin-left: 550px;
 }
 
 /*css avatar*/
@@ -45,8 +46,12 @@
     color: red;
 }
 
+/*css titre "MY profile*/
+
 .h1{
-    margin-left:240px;
+    padding-bottom: 5%;
+    width: 100%;
+    height: 100%;
 }
 
 /*css input username message erreur*/
