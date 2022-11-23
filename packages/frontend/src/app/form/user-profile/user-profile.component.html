@@ -12,7 +12,7 @@
             mat-dialog-title
             class="h1 text-xl md:text-3xl xl:text-3xl font-bold underline underline-offset-8 text-center pt-4"
         >
-            {{ 'My Profile' | translate }}
+            {{ 'infrascrum.user-profile.title' | translate }}
         </h1>
 
         <!--Zone avatar-->
@@ -67,7 +67,7 @@
                     style="text-align: left"
                     type="text"
                     [placeholder]="
-                        'infrascrum.create-user.username' | translate
+                        'infrascrum.user-profile.username' | translate
                     "
                     value="{{ user.username }}"
                     value=""
@@ -90,7 +90,7 @@
                     class="alert username-message-erreur text-sm normal"
                 >
                     {{
-                        'infrascrum.create-user.msg-username-required'
+                        'infrascrum.user-profile.msg-username-required'
                             | translate
                     }}
                 </p>
@@ -101,7 +101,7 @@
                 ><input
                     style="text-align: left"
                     type="email"
-                    [placeholder]="'infrascrum.create-user.email' | translate"
+                    [placeholder]="'infrascrum.user-profile.email' | translate"
                     value="{{ user.email }}"
                     value=""
                     required
@@ -125,7 +125,7 @@
                     class="alert email-message-erreur text-sm placeholder:italic"
                 >
                     {{
-                        'infrascrum.create-user.msg-email-required' | translate
+                        'infrascrum.user-profile.msg-email-required' | translate
                     }}
                 </p>
             </div>
@@ -167,7 +167,7 @@
             ><input
                 style="text-align: start"
                 type="text"
-                [placeholder]="'Firstname' | translate"
+                [placeholder]="'infrascrum.user-profile.Firstname' | translate"
                 value="{{ user.firstname }}"
                 value=""
                 required
@@ -187,7 +187,7 @@
             ><input
                 style="text-align: start"
                 type="text"
-                [placeholder]="'Lastname' | translate"
+                [placeholder]="'infrascrum.user-profile.Lastname' | translate"
                 value="{{ user.lastname }}"
                 value=""
                 required
@@ -220,7 +220,7 @@
             ><input
                 type="password"
                 size="20"
-                [placeholder]="'infrascrum.create-user.password' | translate"
+                [placeholder]="'infrascrum.user-profile.password' | translate"
                 class="input-password form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                 id="password"
                 [(ngModel)]="user.password"
@@ -237,7 +237,7 @@
                 type="password"
                 size="20"
                 [placeholder]="
-                    'infrascrum.create-user.verif-password' | translate
+                    'infrascrum.user-profile.verif-password' | translate
                 "
                 class="input-confirm-password form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                 [(ngModel)]="verifPassword"
@@ -256,14 +256,14 @@
             *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
             class="password-message-erreur placeholder:italic"
         >
-            {{ 'infrascrum.create-user.msg-password-matching' | translate }}
+            {{ 'infrascrum.user-profile.msg-password-matching' | translate }}
         </p>
 
         <p
             *ngIf="password.errors?.['required'] && password.dirty"
             class="password-message-erreur placeholder:italic"
         >
-            {{ 'infrascrum.create-user.msg-password-required' | translate }}
+            {{ 'infrascrum.user-profile.msg-password-required' | translate }}
         </p>
 
         <div *ngIf="showErrorMessage">
@@ -276,7 +276,7 @@
         <!--button Update/Delete-->
         <div class="flex w-full justify-center">
             <button class="cancel" type="submit" routerLink="/projects">
-                {{ 'Cancel' | translate }}
+                {{ 'infrascrum.user-profile.Cancel' | translate }}
             </button>
 
             &nbsp;&nbsp;&nbsp;
@@ -287,7 +287,7 @@
                 [disabled]="!user.password || !user.username || !verifPassword"
                 (click)="onSubmit(user)"
             >
-                {{ 'Update' | translate }}
+                {{ 'infrascrum.user-profile.Update' | translate }}
             </button>
         </div>
         <br /><br />
