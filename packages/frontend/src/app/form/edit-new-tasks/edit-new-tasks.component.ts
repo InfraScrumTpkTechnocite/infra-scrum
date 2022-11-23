@@ -130,10 +130,9 @@ export class EditNewTasksComponent implements OnInit {
         );
         this.newTaskAssignmentList.push(newAssignement);
         this.userProjectList.splice(
-            this.userProjectList.findIndex(
-                (userProjectFromList) =>
-                    userProjectFromList.id == userProject.user.id
-            ),
+            this.userProjectList.findIndex((userProjectFromList) => {
+                return userProjectFromList.id == userProject.id;
+            }),
             1
         );
     }
@@ -149,15 +148,23 @@ export class EditNewTasksComponent implements OnInit {
                     this.newTaskAssignmentList.map((taskAssignment) => {
                         this.taskAssignmentService
                             .create(taskAssignment)
-                            .subscribe((taskAssignment: TaskAssignment) =>
-                                this.taskassignmentList.push(taskAssignment)
-                            );
+                            .subscribe({
+                                next: (taskAssignment: TaskAssignment) => {
+                                    this.taskassignmentList.push(
+                                        taskAssignment
+                                    );
+                                    console.log("done!")
+                                },
+                                error: (err: any) => {
+                                    this.toastService.error(
+                                        `Error during taskassignment creation<br><br>${err.error.driverError.detail}`
+                                    );
+                                },
+                                complete: () => {}
+                            });
                     });
                 },
                 error: (err: any) => {
-                    console.log(
-                        `Erreur edition task : ${err.error['driverError'].detail}`
-                    );
                     this.toastService.error(
                         `Error during task edition<br><br>${err.error.driverError.detail}`
                     );
