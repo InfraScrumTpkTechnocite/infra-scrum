@@ -343,7 +343,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         const task = new Task();
         if (kanban) {
             task.kanbanstatus = kanban;
-            task.done = kanban.isTypeDone ? true : false;
+            task.done = kanban.isTypeDone;
         }
         const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
@@ -632,7 +632,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             let task: Task = event.container.data[event.currentIndex];
             if (task.id) {
                 task.kanbanstatus = kanbanTarget;
-                task.done = kanbanTarget.isTypeDone ? true : false;
+                task.done = kanbanTarget.isTypeDone;
                 this.taskService.edit(task.id, task).subscribe({
                     next: () => {},
                     error: () => {},
