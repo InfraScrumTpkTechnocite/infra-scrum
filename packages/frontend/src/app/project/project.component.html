@@ -244,6 +244,7 @@
                                     userProject.user.picture
                                 }}"
                                 alt="{{ userProject.user.picture }}"
+                                title="{{ userProject.user.username }}"
                             />
                             <span
                                 *ngIf="!userProject.user.picture"
@@ -262,7 +263,9 @@
                     *ngIf="sprintList && sprintList.length > 0"
                     class="flex justify-end items-center text-primary mr-52 sm:mr-36 lg:mr-40 ml-4"
                 >
-                    <h4 class="pr-2">{{parentProject ? 'Sprint' : 'Project'}} end date :</h4>
+                    <h4 class="pr-2">
+                        {{ parentProject ? 'Sprint' : 'Project' }} end date :
+                    </h4>
                     <p>
                         {{
                             endDate
