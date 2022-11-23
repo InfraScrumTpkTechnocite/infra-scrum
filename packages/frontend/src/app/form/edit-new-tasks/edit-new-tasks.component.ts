@@ -264,7 +264,7 @@ export class EditNewTasksComponent implements OnInit {
         console.log('task assignment:', taskAssignment);
         this.taskassignmentList.splice(
             this.taskassignmentList.findIndex((tskAssignment) => {
-                taskAssignment.id == tskAssignment.id;
+                return taskAssignment.id == tskAssignment.id;
             }),
             1
         );
