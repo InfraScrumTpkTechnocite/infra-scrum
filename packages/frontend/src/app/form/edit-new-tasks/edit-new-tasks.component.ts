@@ -145,6 +145,7 @@ export class EditNewTasksComponent implements OnInit {
             //** Task EDITION */
             const observer = {
                 next: () => {
+                    var index = this.newTaskAssignmentList.length;
                     this.newTaskAssignmentList.map((taskAssignment) => {
                         this.taskAssignmentService
                             .create(taskAssignment)
@@ -153,14 +154,35 @@ export class EditNewTasksComponent implements OnInit {
                                     this.taskassignmentList.push(
                                         taskAssignment
                                     );
-                                    console.log("done!")
+                                    index--;
                                 },
                                 error: (err: any) => {
                                     this.toastService.error(
                                         `Error during taskassignment creation<br><br>${err.error.driverError.detail}`
                                     );
                                 },
-                                complete: () => {}
+                                complete: () => {
+                                    if (index == 0) {
+                                        console.log(index);
+                                        this.toastService.success(
+                                            'Task Edited !'
+                                        );
+                                        this.newTask.id = this.data.task.id;
+                                        this.data.subject.next({
+                                            method: 'edit',
+                                            task: this.newTask,
+                                            projectid: this.projectid,
+                                            sourceKanbanOrder:
+                                                this.newTask.kanbanstatus.order,
+                                            targetKanbanOrder:
+                                                this.newTask.kanbanstatus.order
+                                        });
+                                        this.dialogRef.close({
+                                            task: this.newTask,
+                                            taskid: this.data.task.id
+                                        });
+                                    }
+                                }
                             });
                     });
                 },
@@ -169,21 +191,7 @@ export class EditNewTasksComponent implements OnInit {
                         `Error during task edition<br><br>${err.error.driverError.detail}`
                     );
                 },
-                complete: () => {
-                    this.toastService.success('Task Edited !');
-                    this.newTask.id = this.data.task.id;
-                    this.data.subject.next({
-                        method: 'edit',
-                        task: this.newTask,
-                        projectid: this.projectid,
-                        sourceKanbanOrder: this.newTask.kanbanstatus.order,
-                        targetKanbanOrder: this.newTask.kanbanstatus.order
-                    });
-                    this.dialogRef.close({
-                        task: this.newTask,
-                        taskid: this.data.task.id
-                    });
-                }
+                complete: () => {}
             };
             if (!this.newTask.sprint?.id) {
                 this.newTask.sprint = null;
@@ -203,12 +211,36 @@ export class EditNewTasksComponent implements OnInit {
                     );
                     taskAdmin.isTaskCreator = true;
                     this.newTaskAssignmentList.push(taskAdmin);
+                    var index = this.newTaskAssignmentList.length;
                     this.newTaskAssignmentList.map((taskAssignment) => {
                         this.taskAssignmentService
                             .create(taskAssignment)
-                            .subscribe((taskAssignment: TaskAssignment) =>
-                                this.taskassignmentList.push(taskAssignment)
-                            );
+                            .subscribe({
+                                next: (taskAssignment: TaskAssignment) => {
+                                    this.taskassignmentList.push(
+                                        taskAssignment
+                                    );
+                                    index--;
+                                },
+                                error: (err: any) =>
+                                    console.log(
+                                        `Erreur creation taskassignment : ${err.error['driverError'].detail}`
+                                    ),
+                                complete: () => {
+                                    if (index == 0) {
+                                        this.toastService.success(
+                                            'Task created !'
+                                        );
+                                        this.dialogRef.close({
+                                            task: this.newTask
+                                        });
+                                        this.data.subject.next({
+                                            method: 'add',
+                                            task: this.newTask
+                                        });
+                                    }
+                                }
+                            });
                     });
                 },
                 error: (err: any) => {
@@ -219,16 +251,7 @@ export class EditNewTasksComponent implements OnInit {
                         `Error during task creation<br><br>${err.error.driverError.detail}`
                     );
                 },
-                complete: () => {
-                    this.toastService.success('Task created !');
-                    this.dialogRef.close({
-                        task: this.newTask
-                    });
-                    this.data.subject.next({
-                        method: 'add',
-                        task: this.newTask
-                    });
-                }
+                complete: () => {}
             };
             if (!this.newTask.sprint?.id) {
                 this.newTask.sprint = null;
