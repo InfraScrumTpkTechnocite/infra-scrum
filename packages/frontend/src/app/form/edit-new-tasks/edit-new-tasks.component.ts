@@ -11,7 +11,7 @@ import { TaskassignmentService } from '../../services/taskassignment.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Kanbanstatus } from '../../models/kanbanstatus.model';
 import { User } from '../../models/user.model';
-import { KanbanList } from '../../models/kanbanlist.model';
+import { KanbanList } from 'src/app/models/kanbanlist.model';
 
 @Component({
     selector: 'app-edit-new-tasks',
@@ -53,8 +53,8 @@ export class EditNewTasksComponent implements OnInit {
             taskTypeList: TaskType[];
             sprintList: Project[];
             edition: boolean;
+            kanbanlist: KanbanList[];
             subject: WebSocketSubject<unknown>;
-            kanbanList: KanbanList[];
             user: User;
         }
     ) {
@@ -191,7 +191,27 @@ export class EditNewTasksComponent implements OnInit {
                         `Error during task edition<br><br>${err.error.driverError.detail}`
                     );
                 },
-                complete: () => {}
+                complete: () => {
+                    if (this.newTaskAssignmentList.length == 0) {
+                        this.toastService.success(
+                            'Task Edited !'
+                        );
+                        this.newTask.id = this.data.task.id;
+                        this.data.subject.next({
+                            method: 'edit',
+                            task: this.newTask,
+                            projectid: this.projectid,
+                            sourceKanbanOrder:
+                                this.newTask.kanbanstatus.order,
+                            targetKanbanOrder:
+                                this.newTask.kanbanstatus.order
+                        });
+                        this.dialogRef.close({
+                            task: this.newTask,
+                            taskid: this.data.task.id
+                        });
+                    }
+                }
             };
             if (!this.newTask.sprint?.id) {
                 this.newTask.sprint = null;

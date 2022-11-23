@@ -133,7 +133,7 @@
                                                 (click)="addUser(userProject)"
                                             >
                                                 <div
-                                                    class="flex items-center justify-center"
+                                                    class="flex items-center"
                                                 >
                                                     <div
                                                         class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
@@ -248,7 +248,7 @@
                                 }}
                             </option>
                             <option
-                                *ngFor="let kanban of data.kanbanList"
+                                *ngFor="let kanban of data.kanbanlist"
                                 [ngValue]="kanban.kanban"
                             >
                                 {{ kanban.kanban.name }}

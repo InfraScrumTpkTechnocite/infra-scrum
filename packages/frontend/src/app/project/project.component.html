@@ -309,17 +309,17 @@
                         <div
                             id="{{ i }}"
                             cdkDropList
-                            [cdkDropListData]="kanban.tasks"
+                            [cdkDropListData]="kanban.taskList"
                             class="example-list kanbanStatusTitle flex flex-col w-56 mx-2 mt-2"
                             (cdkDropListDropped)="drop($event)"
                         >
                             <div
-                                *ngFor="let task of kanban.tasks"
+                                *ngFor="let task of kanban.taskList"
                                 cdkDrag
                                 [cdkDragDisabled]="user.role.name == 'guest'"
                             >
                                 <app-task
-                                    [task]="task"
+                                    [task]="task.task"
                                     [subject]="subject"
                                     [taskTypeList]="taskTypeList"
                                     [sprintList]="sprintList"

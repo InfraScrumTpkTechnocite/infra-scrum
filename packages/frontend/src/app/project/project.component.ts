@@ -35,6 +35,7 @@ import { EditProjectComponent } from '../form/edit-project/edit-project.componen
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { KanbanList } from '../models/kanbanlist.model';
+import { TaskAssignment } from '../models/taskassignment.model';
 
 @Component({
     selector: 'app-project',
@@ -102,7 +103,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
         const subjectObserver = {
             next: (message: any) => {
                 const method = message.method;
-                console.log(message);
                 if (message.projectid == this.project.id) {
                     switch (method) {
                         case 'edit':
@@ -118,21 +118,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                 );
 
                                 kanban!.kanban = message.kanban;
-                                kanban!.tasks = message.tasks;
+                                kanban!.taskList = message.tasks;
                             }
                             if (message.task) {
-                                console.log('in if');
                                 let sourceIndex: number = this.kanbanList[
                                     message.sourceKanbanOrder
-                                ].tasks.findIndex(
-                                    (task) => task.id == message.task.id
+                                ].taskList.findIndex(
+                                    (tasks) => tasks.task.id == message.task.id
                                 );
                                 this.kanbanList[
                                     message.sourceKanbanOrder
-                                ].tasks.splice(sourceIndex, 1);
+                                ].taskList.splice(sourceIndex, 1);
                                 this.kanbanList[
                                     message.targetKanbanOrder
-                                ].tasks.push(message.task);
+                                ].taskList.push({task: message.task, taskAssignments:[]});
                             }
                             break;
                         case 'delete':
@@ -141,11 +140,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             if (message.task)
                                 this.kanbanList[
                                     message.task.kanbanstatus.order
-                                ].tasks.splice(
+                                ].taskList.splice(
                                     this.kanbanList[
                                         message.task.kanbanstatus.order
-                                    ].tasks.findIndex(
-                                        (task) => task.id == message.task.id
+                                    ].taskList.findIndex(
+                                        (tasks) => tasks.task.id == message.task.id
                                     ),
                                     1
                                 );
@@ -163,7 +162,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             if (message.kanban) {
                                 const kanbanList: KanbanList = {
                                     kanban: message.kanban,
-                                    tasks: []
+                                    taskList: []
                                 };
                                 this.kanbanList.push(kanbanList);
                             }
@@ -173,7 +172,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                         kanban.kanban.id ==
                                         message.task.kanbanstatus.id
                                 );
-                                kanban?.tasks.push(message.task);
+                                kanban?.taskList.push({task: message.task, taskAssignments:[]});
                             }
                     }
                 }
@@ -235,7 +234,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         kanban.map((kanbanstatus) => {
                             this.kanbanList.push({
                                 kanban: kanbanstatus,
-                                tasks: []
+                                taskList: []
                             } as KanbanList);
                             this.taskService
                                 .findAllOfKanbanstatus(kanbanstatus.id!)
@@ -244,9 +243,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                         (kanbanlist) =>
                                             kanbanlist.kanban.id ==
                                             kanbanstatus.id
-                                    )!.tasks = taskList;
-                                });
-                        });
+                                    )!.taskList = taskList.map( task => ({ task: task as Task, taskAssignments: []}))
+                        })});
                         this.userProjectService
                             .findCurrentProjectUsers(projectid)
                             .subscribe(userProjectsObserver);
@@ -348,7 +346,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
                 edition: false,
-                kanbanList: this.kanbanList,
+                kanbanlist: this.kanbanList,
                 userProjectList: this.userProjects,
                 user: this.user,
                 subject: this.subject
@@ -356,8 +354,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                this.kanbanList[result.task.kanbanstatus.order].tasks.push(
-                    result.task
+                this.kanbanList[result.task.kanbanstatus.order].taskList.push({
+                    task: result.task,
+                    taskAssignments:[]
+                }
                 );
                 this.subject.next({
                     method: 'add',
@@ -595,14 +595,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
                         method: 'edit',
                         kanban: kanban.kanban,
                         projectid: this.project.id,
-                        tasks: kanban.tasks
+                        tasks: kanban.taskList
                     });
                 }
             });
         });
     }
 
-    drop(event: CdkDragDrop<Task[]>) {
+    drop(event: CdkDragDrop<any>) {
         if (event.previousContainer === event.container) {
             console.log(`Même colonne`);
             moveItemInArray(
@@ -626,16 +626,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
             //console.log(this.kanbanList[kanbanIndex]);
             let kanbanTarget: Kanbanstatus =
                 this.kanbanList[kanbanIndex].kanban;
-            let task: Task = event.container.data[event.currentIndex];
-            if (task.id) {
+            let task: any = event.container.data[event.currentIndex];
+            if (task.task.id) {
                 task.kanbanstatus = kanbanTarget;
-                this.taskService.edit(task.id, task).subscribe({
+                this.taskService.edit(task.task.id, task.task).subscribe({
                     next: () => {},
                     error: () => {},
                     complete: () => {
                         this.subject.next({
                             method: 'edit',
-                            task: task,
+                            task: task.task,
                             projectid: this.project.id,
                             sourceKanbanOrder: event.previousContainer.id,
                             targetKanbanOrder: event.container.id

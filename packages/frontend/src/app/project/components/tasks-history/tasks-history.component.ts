@@ -30,9 +30,9 @@ export class TasksHistoryComponent implements OnInit {
         // affichage des tâches en cours:
 
         this.kanbanList.forEach((knbn) => {
-            knbn.tasks.map((task) => {
+            knbn.taskList.map((task) => {
                 this.tasksLists.push({
-                    task: task,
+                    task: task.task,
                     taskassignments: [],
                     visible: false
                 });
