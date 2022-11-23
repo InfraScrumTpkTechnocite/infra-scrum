@@ -236,4 +236,22 @@ export class EditNewTasksComponent implements OnInit {
             this.taskService.create(this.newTask).subscribe(observer);
         }
     }
+
+    removeUser(taskAssignment: TaskAssignment): void {
+        console.log('task assignment:', taskAssignment);
+        this.taskassignmentList.splice(
+            this.taskassignmentList.findIndex((tskAssignment) => {
+                taskAssignment.id == tskAssignment.id;
+            }),
+            1
+        );
+
+        this.taskAssignmentService.delete(taskAssignment.id!).subscribe({
+            next: () => {
+                console.log(`User unassigned from task`);
+            },
+            error: () => {},
+            complete: () => {}
+        });
+    }
 }

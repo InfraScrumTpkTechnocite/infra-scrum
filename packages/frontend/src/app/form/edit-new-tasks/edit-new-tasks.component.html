@@ -12,9 +12,11 @@
         }}
     </h1>
     <div mat-dialog-content>
-        <div class="flex xl:mt-2 flex-col xl:flex-row items-center">
+        <div
+            class="flex xl:mt-2 flex-col xl:flex-row items-center"
+        >
             <div class="w-128 xl:w-160 h-128 mt-4 xl:mt-2 xl:ml-4">
-                <div class="flex flex-row xl:m-3">
+                <div class="flex flex-row xl:m-3 items-center">
                     <div
                         class="flex flex-col mr-10 mx-12 justify-center items-center"
                     >
@@ -32,10 +34,10 @@
                                     "
                                 >
                                     <div
-                                        *ngIf="
-                                            !taskassignment.isTaskCreator
-                                        "
+                                        *ngIf="!taskassignment.isTaskCreator"
                                         class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
+                                        style="cursor: not-allowed"
+                                        (click)="removeUser(taskassignment)"
                                     >
                                         {{
                                             taskassignment.userproject.user
@@ -49,7 +51,7 @@
                                     "
                                 >
                                     <div
-                                        class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
+                                        class="font-bold w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
                                     >
                                         {{
                                             taskassignment.userproject.user
@@ -99,7 +101,7 @@
                         </div>
                     </div>
                     <div
-                        class="flex flex-col mr-5 xl:mr-10 justify-center items-center"
+                        class="font-bold flex flex-col mr-5 xl:mr-10 justify-center items-center"
                     >
                         <h3>
                             {{
@@ -119,86 +121,13 @@
                         </div>
                     </div>
                     <div
-                        class="w-40 xl:w-52 xl:w-50 mx-8 md:mx-10 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                    >
-                        <label class="font-bold">
-                            {{
-                                'infrascrum.edit-new-task.estimate-time'
-                                    | translate
-                            }}
-                        </label>
-                        <div class="flex">
-                            <div
-                                class="flex flex-col w-12 mr-3 justify-center items-center"
-                            >
-                                <h3>
-                                    {{
-                                        'infrascrum.edit-new-task.estimate-day'
-                                            | translate
-                                    }}
-                                </h3>
-                                <input
-                                    type="number"
-                                    min="0"
-                                    step="1"
-                                    name="day"
-                                    id="day"
-                                    [(ngModel)]="days"
-                                    class="w-12"
-                                />
-                            </div>
-                            <div
-                                class="flex flex-col w-12 justify-center items-center"
-                            >
-                                <h3>
-                                    {{
-                                        'infrascrum.edit-new-task.estimate-hours'
-                                            | translate
-                                    }}
-                                </h3>
-                                <input
-                                    type="number"
-                                    min="0"
-                                    max="8"
-                                    step="1"
-                                    name="hour"
-                                    id="hour"
-                                    [(ngModel)]="hours"
-                                    class="w-12"
-                                />
-                            </div>
-                            <div
-                                class="flex flex-col w-12 mx-3 justify-center items-center"
-                            >
-                                <h3>
-                                    {{
-                                        'infrascrum.edit-new-task.estimate-minute'
-                                            | translate
-                                    }}
-                                </h3>
-                                <input
-                                    type="number"
-                                    step="15"
-                                    min="0"
-                                    max="45"
-                                    name="minute"
-                                    id="minute"
-                                    [(ngModel)]="minutes"
-                                    class="w-12"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex ml-8">
-                    <div
-                        class="w-40 xl:w-44 mt-12 mr-4 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="ml-16 w-48 xl:w-48 mt-12 mr-4 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <select
                             id="sprints"
                             [(ngModel)]="newTask.sprint"
                             [compareWith]="compareSprint"
-                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+                            class="font-bold w-full mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
                         >
                             <option [ngValue]="noSprint">
                                 {{
@@ -214,14 +143,16 @@
                             </option>
                         </select>
                     </div>
+                </div>
+                <div class="flex justify-center">
                     <div
-                        class="w-40 xl:w-48 mt-12 mr-4 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <select
                             id="kanban"
                             [(ngModel)]="newTask.kanbanstatus"
                             [compareWith]="compareById"
-                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+                            class="font-bold w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
                         >
                             <option [value]="noKanban" disabled hidden>
                                 {{
@@ -238,11 +169,11 @@
                         </select>
                     </div>
                     <div
-                        class="w-40 xl:w-44 mt-12 mx-2 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <select
                             id="type"
-                            class="w-full font-bold mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+                            class="font-bold w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
                             [(ngModel)]="newTask.tasktype"
                             [compareWith]="compareById"
                         >
@@ -262,9 +193,9 @@
                     </div>
                 </div>
 
-                <div class="flex">
+                <div class="flex justify-center">
                     <div
-                        class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-48 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <label class="font-bold">{{
                             'infrascrum.edit-new-task.name' | translate
@@ -276,7 +207,7 @@
                         />
                     </div>
                     <div
-                        class="w-40 xl:w-52 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-48 xl:w-52 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <label class="font-bold">{{
                             'infrascrum.edit-new-task.start-date' | translate
@@ -286,38 +217,115 @@
                         >
                             <input
                                 type="date"
-                                [min]="newTask.sprint?.id ? (newTask.sprint?.startdate | date: 'yyyy-MM-dd') : ''"
-                                [max]="newTask.sprint?.id ? (newTask.sprint?.enddate | date: 'yyyy-MM-dd') : ''"
+                                [min]="
+                                    newTask.sprint?.id
+                                        ? (newTask.sprint?.startdate
+                                          | date: 'yyyy-MM-dd')
+                                        : ''
+                                "
+                                [max]="
+                                    newTask.sprint?.id
+                                        ? (newTask.sprint?.enddate
+                                          | date: 'yyyy-MM-dd')
+                                        : ''
+                                "
                                 [ngModel]="newDate | date: 'yyyy-MM-dd'"
                                 (ngModelChange)="updateDate($event)"
                             />
                         </p>
                     </div>
                 </div>
-                <div
-                    class="w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                >
-                    <label class="font-bold">{{
-                        'infrascrum.edit-new-task.description' | translate
-                    }}</label>
-                    <textarea
-                        id="description"
-                        cols="30"
-                        rows="2"
-                        class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                        [(ngModel)]="newTask.description"
-                    ></textarea>
-                </div>
-                <div
-                    class="w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-                >
-                    <label class="font-bold">{{
-                        'infrascrum.edit-new-task.file' | translate
-                    }}</label>
-                    <input
-                        type="file"
-                        class="w-full mt-6 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                    />
+                <div class="flex flex-col justify-center">
+                    <div
+                        class="w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold">{{
+                            'infrascrum.edit-new-task.description' | translate
+                        }}</label>
+                        <textarea
+                            id="description"
+                            cols="30"
+                            rows="2"
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                            [(ngModel)]="newTask.description"
+                        ></textarea>
+                    </div>
+                    <div
+                        class="w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold">{{
+                            'infrascrum.edit-new-task.file' | translate
+                        }}</label>
+                        <input
+                            type="file"
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        />
+                    </div>
+                    <div
+                    class=" flex flex-row w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold flex items-center justify-center">
+                            {{
+                                'infrascrum.edit-new-task.estimate-time'
+                                    | translate
+                            }}
+                        </label>
+                        <div class="flex ml-16">
+                            <div class="flex flex-col w-24 mr-3 justify-center">
+                                <h3>
+                                    {{
+                                        'infrascrum.edit-new-task.estimate-day'
+                                            | translate
+                                    }}
+                                </h3>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    name="day"
+                                    id="day"
+                                    [(ngModel)]="days"
+                                    class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                                />
+                            </div>
+                            <div class="flex flex-col w-24 justify-center">
+                                <h3>
+                                    {{
+                                        'infrascrum.edit-new-task.estimate-hours'
+                                            | translate
+                                    }}
+                                </h3>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max="8"
+                                    step="1"
+                                    name="hour"
+                                    id="hour"
+                                    [(ngModel)]="hours"
+                                    class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                                />
+                            </div>
+                            <div class="flex flex-col w-24 ml-3 justify-center">
+                                <h3>
+                                    {{
+                                        'infrascrum.edit-new-task.estimate-minute'
+                                            | translate
+                                    }}
+                                </h3>
+                                <input
+                                    type="number"
+                                    step="15"
+                                    min="0"
+                                    max="45"
+                                    name="minute"
+                                    id="minute"
+                                    [(ngModel)]="minutes"
+                                    class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="mt-10 flex justify-center w-full">
                     <button
