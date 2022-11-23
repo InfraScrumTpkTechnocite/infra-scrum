@@ -8,7 +8,7 @@
 
 .avatar {
     vertical-align: middle;
-    margin-left: 85px;
+    margin-left: 12%;
     width: 130px;
     height: 130px;
     border-radius: 50%;
@@ -39,7 +39,7 @@
 /*css input role message erreur*/
 
 .role-message-erreur {
-    margin-left: 100px;
+    margin-left: 12%;
     font-style: normal;
     font-size: 14pt;
     color: red;
@@ -56,7 +56,7 @@
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 150px;
+    margin-left: 37%;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -65,7 +65,7 @@
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: +5px;
+    margin-left: 1%;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -74,7 +74,7 @@
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
-    margin-left: 150px;
+    margin-left: 19%;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -83,7 +83,7 @@
 /*css input lastname message erreur*/
 
 .lastname-message-erreur {
-    margin-left: 100px;
+    margin-left: 0px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -92,7 +92,7 @@
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 150px;
+    margin-left: 19%;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -101,7 +101,7 @@
 /*css role*/
 
 .input-role {
-    margin-left: 100px;
+    margin-left: 13%;
     font-size: 18px;
     color:rgb(11, 97, 155);
 }
@@ -110,7 +110,7 @@
 
 .input-username {
     margin-top: 30px ;
-    margin-left: 150px;
+    margin-left: 38%;
     font-size: 18px;
     color:rgb(11, 97, 155);
     text-align: center;
@@ -120,7 +120,7 @@
 
 .input-email {
     margin-top: 10px;
-    margin-left: 150px;
+    margin-left: 38%;
     font-size: 18px;
     color:rgb(11, 97, 155);
     text-align: center;
