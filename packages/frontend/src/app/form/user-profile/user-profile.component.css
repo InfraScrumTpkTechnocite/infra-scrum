@@ -92,7 +92,7 @@
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 170px;
+    margin-left: 150px;
     font-style: italic;
     font-size: 14pt;
     color: red;

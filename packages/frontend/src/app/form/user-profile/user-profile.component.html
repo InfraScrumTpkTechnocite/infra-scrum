@@ -66,7 +66,9 @@
                 ><input
                     style="text-align: left"
                     type="text"
-                    placeholder="username"
+                    [placeholder]="
+                        'infrascrum.create-user.username' | translate
+                    "
                     value="{{ user.username }}"
                     value=""
                     required
@@ -96,7 +98,7 @@
                 ><input
                     style="text-align: left"
                     type="email"
-                    placeholder="email"
+                    [placeholder]="'infrascrum.create-user.email' | translate"
                     value="{{ user.email }}"
                     value=""
                     required
@@ -219,7 +221,7 @@
             ><input
                 type="password"
                 size="20"
-                [placeholder]="'password' | translate"
+                [placeholder]="'infrascrum.create-user.password' | translate"
                 class="input-password form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                 id="password"
                 [(ngModel)]="user.password"
@@ -235,7 +237,9 @@
             ><input
                 type="password"
                 size="20"
-                [placeholder]="'verif-password' | translate"
+                [placeholder]="
+                    'infrascrum.create-user.verif-password' | translate
+                "
                 class="input-confirm-password form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                 [(ngModel)]="verifPassword"
                 #confirmPassword="ngModel"
