@@ -61,7 +61,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     userList!: User[];
 
     dateToday: string = '';
-    endDate!: string ;
+    endDate!: string;
 
     taskTypeList: TaskType[] = [];
 
@@ -341,7 +341,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     addTask(kanban?: Kanbanstatus) {
         const task = new Task();
-        if (kanban) task.kanbanstatus = kanban;
+        if (kanban) {
+            task.kanbanstatus = kanban;
+            task.done = kanban.isTypeDone ? true : false;
+        }
         const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: task,
@@ -629,6 +632,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             let task: Task = event.container.data[event.currentIndex];
             if (task.id) {
                 task.kanbanstatus = kanbanTarget;
+                task.done = kanbanTarget.isTypeDone ? true : false;
                 this.taskService.edit(task.id, task).subscribe({
                     next: () => {},
                     error: () => {},
