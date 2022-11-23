@@ -83,6 +83,9 @@
                             <span
                                 *ngIf="!taskassignment.userproject.user.picture"
                                 class="text-xl uppercase font-bold"
+                                title="{{
+                                    taskassignment.userproject.user.username
+                                }}"
                             >
                                 {{
                                     taskassignment.userproject.user.username
@@ -194,6 +197,10 @@
                                                 .picture
                                         "
                                         class="text-lg uppercase font-bold"
+                                        title="{{
+                                            taskassignment.userproject.user
+                                                .username
+                                        }}"
                                     >
                                         {{
                                             taskassignment.userproject.user
@@ -238,6 +245,10 @@
                                                 .picture
                                         "
                                         class="text-lg uppercase font-bold"
+                                        title="{{
+                                            taskassignment.userproject.user
+                                                .username
+                                        }}"
                                     >
                                         {{
                                             taskassignment.userproject.user

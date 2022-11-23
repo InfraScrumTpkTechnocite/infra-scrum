@@ -12,9 +12,7 @@
         }}
     </h1>
     <div mat-dialog-content>
-        <div
-            class="flex xl:mt-2 flex-col xl:flex-row items-center"
-        >
+        <div class="flex xl:mt-2 flex-col xl:flex-row items-center">
             <div class="w-128 xl:w-160 h-128 mt-4 xl:mt-2 xl:ml-4">
                 <div class="flex flex-row xl:m-3 items-center">
                     <div
@@ -39,10 +37,38 @@
                                         style="cursor: not-allowed"
                                         (click)="removeUser(taskassignment)"
                                     >
-                                        {{
-                                            taskassignment.userproject.user
-                                                .username | initialsName
-                                        }}
+                                        <img
+                                            *ngIf="
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="rounded-full hover:cursor-default"
+                                            src="data:image/*;base64, {{
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            }}"
+                                            alt="profile picture"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                        />
+                                        <span
+                                            *ngIf="
+                                                !taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="text-lg uppercase font-bold"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                        >
+                                            {{
+                                                taskassignment.userproject.user
+                                                    .username | initialsName
+                                            }}
+                                        </span>
                                     </div>
                                 </div>
                                 <div
@@ -53,10 +79,38 @@
                                     <div
                                         class="font-bold w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
                                     >
-                                        {{
-                                            taskassignment.userproject.user
-                                                .username | initialsName
-                                        }}
+                                        <img
+                                            *ngIf="
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="rounded-full hover:cursor-default"
+                                            src="data:image/*;base64, {{
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            }}"
+                                            alt="profile picture"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                        />
+                                        <span
+                                            *ngIf="
+                                                !taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="text-lg uppercase font-bold"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                        >
+                                            {{
+                                                taskassignment.userproject.user
+                                                    .username | initialsName
+                                            }}
+                                        </span>
                                     </div>
                                 </div>
                                 <button mat-button [matMenuTriggerFor]="menu">
@@ -82,11 +136,40 @@
                                                     <div
                                                         class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
                                                     >
-                                                        {{
-                                                            userProject.user
-                                                                .username
-                                                                | initialsName
-                                                        }}
+                                                        <img
+                                                            *ngIf="
+                                                                userProject.user
+                                                                    .picture
+                                                            "
+                                                            class="rounded-full hover:cursor-default"
+                                                            src="data:image/*;base64, {{
+                                                                userProject.user
+                                                                    .picture
+                                                            }}"
+                                                            alt="profile picture"
+                                                            title="{{
+                                                                userProject.user
+                                                                    .username
+                                                            }}"
+                                                        />
+                                                        <span
+                                                            *ngIf="
+                                                                !userProject
+                                                                    .user
+                                                                    .picture
+                                                            "
+                                                            class="text-lg uppercase font-bold"
+                                                            title="{{
+                                                                userProject.user
+                                                                    .username
+                                                            }}"
+                                                        >
+                                                            {{
+                                                                userProject.user
+                                                                    .username
+                                                                    | initialsName
+                                                            }}
+                                                        </span>
                                                     </div>
                                                     {{
                                                         userProject.user
@@ -146,7 +229,7 @@
                 </div>
                 <div class="flex justify-center">
                     <div
-                    class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <select
                             id="kanban"
@@ -169,7 +252,7 @@
                         </select>
                     </div>
                     <div
-                    class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
                         <select
                             id="type"
@@ -262,9 +345,11 @@
                         />
                     </div>
                     <div
-                    class=" flex flex-row w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                        class="flex flex-row w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
                     >
-                        <label class="font-bold flex items-center justify-center">
+                        <label
+                            class="font-bold flex items-center justify-center"
+                        >
                             {{
                                 'infrascrum.edit-new-task.estimate-time'
                                     | translate
