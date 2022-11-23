@@ -51,4 +51,11 @@ export class TimeentryService {
             this.httpOptions
         );
     }
+
+    taskAssignmentTimeEntries(taskassignmentid: string): Observable<any> {
+        return this.httpClient.get<any>(
+            '/backend/timeentries/taskassignment/' + taskassignmentid,
+            this.httpOptions
+        );
+    }
 }
