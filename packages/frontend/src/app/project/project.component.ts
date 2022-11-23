@@ -61,6 +61,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     userList!: User[];
 
     dateToday: string = '';
+    endDate!: string ;
 
     taskTypeList: TaskType[] = [];
 
@@ -285,6 +286,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             this.parentProject = project.project;
                             this.project = this.parentProject;
                         }
+                        this.endDate = project.enddate!;
                         this.headerTitleService.setTitle(this.project.name);
                         // console.log(
                         //     `project.component - ngOnInit - parentProject = ${this.parentProject}`
