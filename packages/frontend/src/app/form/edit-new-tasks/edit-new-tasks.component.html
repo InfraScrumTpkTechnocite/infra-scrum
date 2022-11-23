@@ -132,7 +132,9 @@
                                                 "
                                                 (click)="addUser(userProject)"
                                             >
-                                                <div>
+                                                <div
+                                                    class="flex items-center justify-center"
+                                                >
                                                     <div
                                                         class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
                                                     >
@@ -171,10 +173,12 @@
                                                             }}
                                                         </span>
                                                     </div>
-                                                    {{
-                                                        userProject.user
-                                                            .username
-                                                    }}
+                                                    <div class="text-primary">
+                                                        {{
+                                                            userProject.user
+                                                                .username
+                                                        }}
+                                                    </div>
                                                 </div>
                                             </button>
                                         </div>
