@@ -89,7 +89,10 @@
                     style="text-align: start"
                     class="alert username-message-erreur text-sm normal"
                 >
-                    Username required
+                    {{
+                        'infrascrum.create-user.msg-username-required'
+                            | translate
+                    }}
                 </p>
                 <br />
 
@@ -207,7 +210,7 @@
             style="text-align: start"
             class="alert firstname-message-erreur text-sm placeholder:italic"
         >
-            {{ 'Firstname-required' | translate }}
+            {{ 'Prénom requis' | translate }}
         </p>
         <br />
 
