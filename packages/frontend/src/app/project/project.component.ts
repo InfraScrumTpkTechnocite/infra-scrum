@@ -36,6 +36,9 @@ import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 import { KanbanList } from '../models/kanbanlist.model';
 import { TaskAssignment } from '../models/taskassignment.model';
+import { TaskassignmentService } from '../services/taskassignment.service';
+import { TimeentryService } from '../services/timeentry.service';
+import { TimeEntry } from '../models/timeentry.model';
 
 @Component({
     selector: 'app-project',
@@ -85,6 +88,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         private userProjectService: UserprojectService,
         private headerTitleService: HeaderTitleService,
         private taskService: TaskService,
+        private timeEntryService: TimeentryService,
         private taskTypeService: TasktypeService,
         private userService: UserService,
         private router: Router,
@@ -131,7 +135,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                 ].taskList.splice(sourceIndex, 1);
                                 this.kanbanList[
                                     message.targetKanbanOrder
-                                ].taskList.push({task: message.task, taskAssignments:[]});
+                                ].taskList.push({
+                                    task: message.task,
+                                    taskAssignments: []
+                                });
                             }
                             break;
                         case 'delete':
@@ -144,7 +151,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                     this.kanbanList[
                                         message.task.kanbanstatus.order
                                     ].taskList.findIndex(
-                                        (tasks) => tasks.task.id == message.task.id
+                                        (tasks) =>
+                                            tasks.task.id == message.task.id
                                     ),
                                     1
                                 );
@@ -172,7 +180,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                         kanban.kanban.id ==
                                         message.task.kanbanstatus.id
                                 );
-                                kanban?.taskList.push({task: message.task, taskAssignments:[]});
+                                kanban?.taskList.push({
+                                    task: message.task,
+                                    taskAssignments: []
+                                });
                             }
                     }
                 }
@@ -238,13 +249,56 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             } as KanbanList);
                             this.taskService
                                 .findAllOfKanbanstatus(kanbanstatus.id!)
-                                .subscribe((taskList: Task[]) => {
-                                    this.kanbanList.find(
-                                        (kanbanlist) =>
-                                            kanbanlist.kanban.id ==
-                                            kanbanstatus.id
-                                    )!.taskList = taskList.map( task => ({ task: task as Task, taskAssignments: []}))
-                        })});
+                                .subscribe({
+                                    next: (taskList: Task[]) => {
+                                        this.kanbanList.find(
+                                            (kanbanlist) =>
+                                                kanbanlist.kanban.id ==
+                                                kanbanstatus.id
+                                        )!.taskList = taskList.map((task) => ({
+                                            task: task as Task,
+                                            taskAssignments: []
+                                        }));
+                                        console.log("IN TASKLIST")
+                                        taskList.map((task) =>{ console.log("TASK ID ",task.id)
+                                            this.timeEntryService
+                                                .timeEntries(task.id!)
+                                                .subscribe(
+                                                    (
+                                                        timeentries: TimeEntry[]
+                                                    ) => {
+                                                        console.log("IN TIME ENTRIES",timeentries)
+                                                        timeentries.map( timeentry =>
+                                                            {
+                                                                /** Find taskAssignment */
+                                                                var taskassignment = this.kanbanList.find(kanbanlist => kanbanlist.kanban.id == kanbanstatus.id)!
+                                                                .taskList.find(
+                                                                    (tasks) =>
+                                                                        tasks.task.id == timeentry.taskassignment.task.id
+                                                                    )?.taskAssignments?.find(taskAssignments => taskAssignments.taskAssignment.id == timeentry.taskassignment.id);
+                                                                /** If exists just push */
+                                                                if(taskassignment)
+                                                                    {
+                                                                        taskassignment.timeentries.push(timeentry);
+                                                                    }
+                                                                    /** Else create a taskAssignment as well as new array of timeEntries in kanbanList */
+                                                                    else{
+                                                                        var timeentriesList: TimeEntry[] = [];
+                                                                        timeentriesList.push(timeentry)
+                                                                        this.kanbanList.find(kanbanlist => kanbanlist.kanban.id == kanbanstatus.id)!
+                                                                    .taskList.find(
+                                                                    (tasks) =>
+                                                                        tasks.task.id == timeentry.taskassignment.task.id
+                                                                    )?.taskAssignments?.push({taskAssignment: timeentry.taskassignment, timeentries: timeentriesList})
+                                                                    }
+                                                            }
+                                                        )
+                                                    }
+                                                )}
+                                        );
+                                    }
+                                });
+                        });
                         this.userProjectService
                             .findCurrentProjectUsers(projectid)
                             .subscribe(userProjectsObserver);
@@ -359,9 +413,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
             if (result) {
                 this.kanbanList[result.task.kanbanstatus.order].taskList.push({
                     task: result.task,
-                    taskAssignments:[]
-                }
-                );
+                    taskAssignments: []
+                });
                 this.subject.next({
                     method: 'add',
                     task: result.task,
