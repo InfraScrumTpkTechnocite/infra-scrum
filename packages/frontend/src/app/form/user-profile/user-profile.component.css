@@ -66,7 +66,7 @@
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: -25px;
+    margin-left: -200px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -75,7 +75,7 @@
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
-    margin-left: 100px;
+    margin-left: 170px;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -93,7 +93,7 @@
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 100px;
+    margin-left: 170px;
     font-style: italic;
     font-size: 14pt;
     color: red;
