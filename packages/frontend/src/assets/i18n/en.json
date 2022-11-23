@@ -119,14 +119,15 @@
             "btn-add": "Add picture",
             "username": "Username",
             "email": "Email",
-            "role": "role",
-            "lastname": "lastname",
-            "firstname": "firstname",
+            "role": "Role",
+            "lastname": "Lastname",
+            "firstname": "Firstname",
             "password": "Password",
             "msg-password-matching": "Passwords don't match",
             "msg-password-required": "Password required",
-            "verif-password": "verif-password",
-            "Update": "Update"
+            "verif-password": "Verif-password",
+            "Update": "Update",
+            "Cancel": "Cancel"
         }
     }
 }

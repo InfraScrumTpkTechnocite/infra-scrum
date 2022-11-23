@@ -89,7 +89,7 @@
                     style="text-align: start"
                     class="alert username-message-erreur text-sm normal"
                 >
-                    username required
+                    Username required
                 </p>
                 <br />
 
@@ -115,19 +115,15 @@
                 />
 
                 <!--"message erreur Email"-->
-                <p
-                    *ngIf="!email.errors?.['required'] && email.invalid && password.dirty"
-                    style="text-align: center"
-                    class="alert email-message-erreur text-sm placeholder:italic"
-                >
-                    email invalid
-                </p>
+
                 <p
                     *ngIf="email.errors?.['required'] && email.dirty"
                     style="text-align: center"
                     class="alert email-message-erreur text-sm placeholder:italic"
                 >
-                    email required
+                    {{
+                        'infrascrum.create-user.msg-email-required' | translate
+                    }}
                 </p>
             </div>
         </section>
@@ -168,7 +164,7 @@
             ><input
                 style="text-align: start"
                 type="text"
-                [placeholder]="'infrascrum.create-user.firstname' | translate"
+                [placeholder]="'Firstname' | translate"
                 value="{{ user.firstname }}"
                 value=""
                 required
@@ -188,7 +184,7 @@
             ><input
                 style="text-align: start"
                 type="text"
-                [placeholder]="'infrascrum.create-user.lastname' | translate"
+                [placeholder]="'Lastname' | translate"
                 value="{{ user.lastname }}"
                 value=""
                 required
@@ -211,7 +207,7 @@
             style="text-align: start"
             class="alert firstname-message-erreur text-sm placeholder:italic"
         >
-            firstname required
+            {{ 'Firstname-required' | translate }}
         </p>
         <br />
 
