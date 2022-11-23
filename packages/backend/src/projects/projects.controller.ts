@@ -63,6 +63,7 @@ export class ProjectsController {
         kanbancolor: '#1F71A5',
         project: '',
         order: 3,
+        isTypeDone: true,
       },
     ];
     const new_project: Project = await this.projectsService.create(project);
