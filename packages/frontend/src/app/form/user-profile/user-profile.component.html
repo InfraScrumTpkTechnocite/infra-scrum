@@ -5,7 +5,7 @@
 >
     <!--div "modale"-->
     <div
-        class="modale bg-tpkwhite text-secondary m-auto pt-6 p-auto max-w-xl max-h-max md:max-w-2xl xl:max-h-max xl:max-w-screen-md"
+        class="modale bg-tpkwhite text-secondary m-auto p-auto pt-6 max-w-xl max-h-max md:max-w-2xl xl:max-h-max xl:max-w-screen-md"
     >
         <!--titre ("My Profil")-->
         <h1
@@ -161,7 +161,7 @@
         <br />
 
         <!--zone formulaire Firstname/Lastname-->
-        <div class="flex w-full justify-center">
+        <div class="flex w-full space-x-16 justify-center">
             <label for="firstname"></label
             ><input
                 style="text-align: start"
@@ -180,7 +180,7 @@
                 #firstname="ngModel"
                 [(ngModel)]="user.firstname"
                 required="required"
-            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            />
 
             <label for="lastname"></label
             ><input
@@ -214,7 +214,7 @@
         <br />
 
         <!--zone formulaire Password-->
-        <div class="flex w-full justify-center">
+        <div class="flex w-full space-x-16 justify-center">
             <label for="password"></label
             ><input
                 type="password"
@@ -229,7 +229,7 @@
                 value=""
                 required
                 aria-required="true"
-            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            />
 
             <label for="ConfirPassword"></label
             ><input
