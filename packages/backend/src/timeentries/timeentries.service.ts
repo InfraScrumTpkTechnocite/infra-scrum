@@ -129,4 +129,25 @@ export class TimeentriesService {
       },
     );
   }
+
+  async taskAssignmentTimeEntries(
+    taskassignmentid: string,
+  ): Promise<TimeEntry[]> {
+    return await this.timeEntriesRepository.manager.transaction(
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
+      async (transactionnalEntityManager): Promise<TimeEntry[]> => {
+        return await transactionnalEntityManager.find(TimeEntry, {
+          relations: {
+            taskassignment: {
+              task: true,
+            },
+          },
+          where: { taskassignment: Equal(taskassignmentid) },
+          order: { dayofwork: 'ASC' },
+        });
+      },
+    );
+  }
 }
