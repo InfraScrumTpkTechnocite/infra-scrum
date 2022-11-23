@@ -80,15 +80,6 @@
     color: red;
 }
 
-/*css input lastname message erreur*/
-
-.lastname-message-erreur {
-    margin-left: 0px;
-    font-style: italic;
-    font-size: 14pt;
-    color: red;
-}
-
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
