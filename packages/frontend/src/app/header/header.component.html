@@ -180,7 +180,7 @@
         <!-- signup et login -->
         <div
             *ngIf="!loggedIn()"
-            class="text-md sm:text-xl md:text-2xl flex items-center ml-1"
+            class="text-sm sm:text-lg md:text-xl flex items-center ml-1"
         >
             <!-- Plus besoin du signup pour l'instant  -->
 
@@ -196,10 +196,16 @@
             <button
                 type="button"
                 routerLink="login"
-                class="btn-hover tpkBlueBtn rounded-xl sm:rounded-2xl p-2 md:px-3 md:py-2"
                 (click)="onLoginClick()"
+                class="rounded-md md:rounded-xl p-1 md:px-3 md:py-2 overflow-hidden relative group cursor-pointer border-2 font-medium border-tpkwhite group-hover:border-secondary text-white"
             >
-                {{ 'infrascrum.header.login' | translate }}
+                <span
+                    class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-secondary bg-opacity-80 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"
+                ></span>
+                <span
+                    class="relative text-white transition duration-300 group-hover:text-white ease"
+                    >Login</span
+                >
             </button>
         </div>
         <!-- input search -->
@@ -316,7 +322,7 @@
                     <!-- Lien profil / venir ajouter lien vers profil user au lieu de index -->
                     <a
                         routerLink="/user-profile"
-                        class="sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="group sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -392,7 +398,7 @@
                         </svg>
 
                         <p class="w-full">
-                            <button translate (click)="changeLanguage()">
+                            <button translate>
                                 {{
                                     'infrascrum.header.sub-menu-language'
                                         | translate
