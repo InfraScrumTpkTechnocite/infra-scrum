@@ -102,9 +102,22 @@
         "project": {
             "btn-global": "Global View",
             "btn-add": "Add sprint",
+            "option-sprint": "Sprints:",
+            "filter-tasks": "My tasks",
             "btn-new-task": "New task",
             "btn-new-column": "New Column",
-            "btn-add-column": "Add column"
+            "btn-add-column": "Add column",
+            "btn-d-gantt": "Gantt",
+            "btn-history": "History",
+            "end-date": "end date",
+            "chart-gantt-back": "Back",
+            "tasks-history-title1": "Ongoing tasks",
+            "tasks-history-sub-title1": "From most recent to oldest",
+            "tasks-history-estimated-time": "Estimated time:",
+            "tasks-history-title2": "Completed tasks",
+            "tasks-history-sub-title2": "From most recent to oldest",
+            "tasks-history-work-time": "Work time:",
+            "tasks-history-no-tasks": "No tasks yet"
         },
         "project-info": {
             "start-date": "Start date",
@@ -133,6 +146,9 @@
             "Update": "Update",
             "Cancel": "Cancel",
             "estimate-time": "Estimated time"
+        },
+        "time-entry": {
+            "title": "Time entry"
         }
     }
 }

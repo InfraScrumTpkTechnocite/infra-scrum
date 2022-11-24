@@ -103,9 +103,22 @@
         "project": {
             "btn-global": "Vue globale",
             "btn-add": "Ajouter un sprint",
+            "option-sprint": "Sprints:",
+            "filter-tasks": "Mes tâches",
             "btn-new-task": "Nouvelle tâche",
             "btn-new-column": "Nouvelle colonne",
-            "btn-add-column": "Ajouter une colonne"
+            "btn-add-column": "Ajouter une colonne",
+            "btn-d-gantt": "Gantt",
+            "btn-history": "Histoire",
+            "end-date": "date de fin",
+            "chart-gantt-back": "Retour",
+            "tasks-history-title1": "Tâches en cours",
+            "tasks-history-sub-title1": "Du plus récent au plus ancien",
+            "tasks-history-estimated-time": "Temps estimé:",
+            "tasks-history-title2": "Tâches terminées",
+            "tasks-history-sub-title2": "Du plus récent au plus ancien",
+            "tasks-history-work-time": "Temps de travail:",
+            "tasks-history-no-tasks": "Aucune tâche pour le moment"
         },
         "project-info": {
             "start-date": "Date de début",
@@ -115,24 +128,27 @@
             "start-date": "Date de début",
             "estimate-time": "Temps estimé"
         },
-            "user-profile": {
-                "title": "Mon Profil",
-                "btn-add": "Ajouter photo",
-                "username": "Nom utilisateur",
-                "email": "Email",
-                "role": "Rol",
-                "lastname": "Prenom",
-                "firstname": "Nom famille",
-                "password": "Mot de passe",
-                "msg-username-invalid": "Nom d'utilisateur non valide",
-                "msg-username-required": "Nom d'utilisateur requis",
-                "msg-email-invalid": "Email non valide",
-                "msg-email-required": "Email requis",
-                "msg-password-matching": "Mot de passe ne correspond pas",
-                "msg-password-required": "Mot de passe requis",
-                "verif-password": "vérification mot de passe",
-                "Update": "Mise à jour",
-                "Cancel": "Retour"
+        "time-entry": {
+            "title": "Temps réalisé"
+        },
+        "user-profile": {
+            "title": "Mon Profil",
+            "btn-add": "Ajouter photo",
+            "username": "Nom utilisateur",
+            "email": "Email",
+            "role": "Rol",
+            "firstname": "Prenom",
+            "lastname": "Nom famille",
+            "password": "Mot de passe",
+            "msg-username-invalid": "Nom d'utilisateur non valide",
+            "msg-username-required": "Nom d'utilisateur requis",
+            "msg-email-invalid": "Email non valide",
+            "msg-email-required": "Email requis",
+            "msg-password-matching": "Mot de passe ne correspond pas",
+            "msg-password-required": "Mot de passe requis",
+            "verif-password": "vérification mot de passe",
+            "Update": "Mise à jour",
+            "Cancel": "Retour"
         }
     }
 }
