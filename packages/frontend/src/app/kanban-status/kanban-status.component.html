@@ -134,6 +134,7 @@
                         </svg>
                     </button>
                     <button
+                        *ngIf="!kanbanstatus.kanban.isTypeDone"
                         title="Delete column"
                         (click)="deleteKanbanStatus()"
                     >

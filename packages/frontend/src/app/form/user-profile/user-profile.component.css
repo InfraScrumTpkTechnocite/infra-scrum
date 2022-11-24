@@ -1,14 +1,14 @@
 /*css"modale"*/
 
 .modale{
-    margin-top: 230px;
+    margin-top: 12%;
 }
 
 /*css avatar*/
 
 .avatar {
     vertical-align: middle;
-    margin-left: 35px;
+    margin-left: 12%;
     width: 130px;
     height: 130px;
     border-radius: 50%;
@@ -39,20 +39,24 @@
 /*css input role message erreur*/
 
 .role-message-erreur {
-    margin-left: 100px;
+    margin-left: 12%;
     font-style: normal;
     font-size: 14pt;
     color: red;
 }
 
+/*css titre "MY profile*/
+
 .h1{
-    margin-left:240px;
+    padding-bottom: 5%;
+    width: 100%;
+    height: 100%;
 }
 
 /*css input username message erreur*/
 
 .username-message-erreur {
-    margin-left: 60px;
+    margin-left: 37%;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -61,7 +65,7 @@
 /*css input email message erreur*/
 
 .email-message-erreur {
-    margin-left: -25px;
+    margin-left: 1%;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -70,16 +74,7 @@
 /*css input firstname message erreur*/
 
 .firstname-message-erreur {
-    margin-left: 100px;
-    font-style: italic;
-    font-size: 14pt;
-    color: red;
-}
-
-/*css input lastname message erreur*/
-
-.lastname-message-erreur {
-    margin-left: 100px;
+    margin-left: 19%;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -88,7 +83,7 @@
 /*css input password/confirm-password message erreur*/
 
 .password-message-erreur {
-    margin-left: 100px;
+    margin-left: 19%;
     font-style: italic;
     font-size: 14pt;
     color: red;
@@ -97,7 +92,7 @@
 /*css role*/
 
 .input-role {
-    margin-left: 50px;
+    margin-left: 13%;
     font-size: 18px;
     color:rgb(11, 97, 155);
 }
@@ -106,7 +101,7 @@
 
 .input-username {
     margin-top: 30px ;
-    margin-left: 60px;
+    margin-left: 38%;
     font-size: 18px;
     color:rgb(11, 97, 155);
     text-align: center;
@@ -116,7 +111,7 @@
 
 .input-email {
     margin-top: 10px;
-    margin-left: 60px;
+    margin-left: 38%;
     font-size: 18px;
     color:rgb(11, 97, 155);
     text-align: center;
@@ -125,7 +120,7 @@
 /*css input firstname*/
 
 .input-firstname {
-    margin-left: 30px;
+    margin-left: 85px;
     font-size: 18px;
     color:rgb(11, 97, 155);
 }
@@ -141,7 +136,7 @@
 /*css input password*/
 
 .input-password {
-    margin-left:30px;
+    margin-left:85px;
     font-size: 18px;
     color:rgb(11, 97, 155);
 }

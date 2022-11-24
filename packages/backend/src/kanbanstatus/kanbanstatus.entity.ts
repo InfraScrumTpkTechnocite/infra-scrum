@@ -29,6 +29,10 @@ export class KanbanStatus {
   @IsHexColor()
   color: string;
 
+  @ApiProperty({ example: 'false', description: "Is kanban of type 'done'" })
+  @Column({ nullable: false, default: false })
+  isTypeDone: boolean;
+
   @ApiProperty({ example: 'a uuid...', description: 'Project/Spring id' })
   @ManyToOne(() => Project, (project) => project.id, {
     nullable: false,

@@ -18,22 +18,6 @@
                         {{ task.name }}
                     </h4>
                     <div class="ml-1 flex items-start">
-                        <button class="pr-2">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-4 h-4 hover:text-tpkvalidate"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                        </button>
                         <button
                             (click)="deleteTask()"
                             title="Delete task"
@@ -136,14 +120,6 @@
                 <div class="flex justify-between ml-2 mt-3 p-1">
                     <div class="flex flex-col items-center">
                         <p class="text-xs">
-                            {{ 'infrascrum.task.start-date' | translate }}
-                        </p>
-                        <p class="text-sm">
-                            {{ task.startdate | date: 'dd-MMM-yyyy' }}
-                        </p>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <p class="text-xs">
                             {{ 'infrascrum.task.estimate-time' | translate }}
                         </p>
                         <p class="text-sm">
@@ -152,6 +128,25 @@
                                 (task.estimatedtime / 60) % 8 | numberToInteger
                             }}:{{ task.estimatedtime % 60 }}
                         </p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <p class="text-xs">Time entry</p>
+                        <button class="mt-1">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-4 h-4 hover:text-tpkvalidate"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>

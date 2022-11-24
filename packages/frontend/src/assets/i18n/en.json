@@ -125,6 +125,26 @@
         },
         "task": {
             "start-date": "Start date",
+            "estimate-time": "Estimate time"
+        },
+        "user-profile": {
+            "title": "My Profile",
+            "btn-add": "Add picture",
+            "username": "Username",
+            "email": "Email",
+            "role": "Role",
+            "lastname": "Lastname",
+            "firstname": "Firstname",
+            "password": "Password",
+            "msg-username-invalid": "Username invalid",
+            "msg-username-required": "Username required",
+            "msg-email-invalid": "Email invalid",
+            "msg-email-required": "Email required",
+            "msg-password-matching": "Passwords don't match",
+            "msg-password-required": "Password required",
+            "verif-password": "Verif-password",
+            "Update": "Update",
+            "Cancel": "Cancel",
             "estimate-time": "Estimated time"
         },
         "time-entry": {
