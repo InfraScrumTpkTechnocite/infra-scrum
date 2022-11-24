@@ -38,9 +38,16 @@ export class TimeentryService {
             );
     }
 
-    totalWorkedTimeOfTask(taskid: string): Observable<any> {
+    totalUserWorkedTimeOnTask(taskid: string): Observable<any> {
         return this.httpClient.get<any>(
             '/backend/timeentries/totalusersworkedtimeontask/' + taskid,
+            this.httpOptions
+        );
+    }
+
+    totalWorkedTimeOnTask(taskid: string): Observable<any> {
+        return this.httpClient.get<any>(
+            '/backend/timeentries/totalworkedtimeontask/' + taskid,
             this.httpOptions
         );
     }

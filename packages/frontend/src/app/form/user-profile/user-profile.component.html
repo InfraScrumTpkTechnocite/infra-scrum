@@ -5,131 +5,129 @@
 >
     <!--div "modale"-->
     <div
-        class="modale bg-tpkwhite text-secondary mt-15 m-auto w-1/3 h-12/6 rounded-md shadow-lg shadow-primary"
+        class="modale bg-tpkwhite text-secondary m-auto p-auto pt-6 max-w-xl max-h-max md:max-w-2xl xl:max-h-max xl:max-w-screen-md"
     >
-        <br />
         <!--titre ("My Profil")-->
         <h1
-            class="h1 text-xl md:text-2xl xl:text-4xl text-secondary font-bold underline underline-offset-8 text-align pt-4"
+            mat-dialog-title
+            class="h1 text-xl md:text-3xl xl:text-3xl font-bold underline underline-offset-8 text-center pt-4"
         >
-            My Profile
+            {{ 'infrascrum.user-profile.title' | translate }}
         </h1>
-        <br /><br />
 
         <!--Zone avatar-->
-        <section>
-            <div class="flex mx-12">
-                <div
-                    class="avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2"
-                >
-                    <!-- image -->
-                    <label for="#UserPicture">{{ '' | translate }}</label>
-                    <img
-                        (click)="PictureUploader.click()"
-                        *ngIf="user.picture"
-                        type="file"
-                        class="avatar"
-                        src="data:image/*;base64, {{ user.picture }}"
-                        alt="{{ user.picture }}"
-                    />
-
-                    <input
-                        #PictureUploader
-                        type="file"
-                        class="avatar"
-                        (change)="onFileSelected($event)"
-                    />
-                </div>
-
-                <!--button ("+")-->
-                &nbsp;&nbsp;&nbsp;<button
-                    class="img-button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey4 large mr-2 mt-3 text-secondary rounded-full border-2 border-secondary p-1 sm:p-1.5 md:p-2 hover:text-white hover:bg-secondary ease-in-out delay-150 hover:shadow-secondary hover:shadow-sm"
+        <section class="flex mx-12">
+            <div
+                class="avatar userChip relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-secondary flex items-center justify-center border-2"
+            >
+                <!-- image -->
+                <label for="#UserPicture">{{ '' | translate }}</label>
+                <img
                     (click)="PictureUploader.click()"
+                    *ngIf="user.picture"
+                    type="file"
+                    class="avatar"
+                    src="data:image/*;base64, {{ user.picture }}"
+                    alt="{{ user.picture }}"
+                />
+
+                <input
+                    #PictureUploader
+                    type="file"
+                    class="avatar"
+                    (change)="onFileSelected($event)"
+                />
+            </div>
+
+            <!--button ("+")-->
+            &nbsp;&nbsp;&nbsp;<button
+                class="img-button-ajouter-avatar border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center large mr-2 mt-3 text-secondary border-2 border-secondary p-1 sm:p-1.5 md:p-2 hover:text-white hover:bg-secondary ease-in-out delay-150 hover:shadow-secondary hover:shadow-sm"
+                (click)="PictureUploader.click()"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                        />
-                    </svg>
-                </button>
-
-                <div>
-                    <!--zone formulaire Username-->
-                    <label for="username"></label
-                    ><input
-                        style="text-align: left"
-                        type="text"
-                        placeholder="username"
-                        value="{{ user.username }}"
-                        value=""
-                        required
-                        aria-required="true"
-                        class="input-username form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
-                        id="username"
-                        name="username"
-                        size="20"
-                        #username="ngModel"
-                        [(ngModel)]="user.username"
-                        required="required"
-                        pattern="^[a-zA-Z0-9àéèç]{1,25}$"
-                    /><br />
-
-                    <!--"message erreur Username"-->
-                    <p
-                        *ngIf="username.errors?.['required'] && username.dirty"
-                        style="text-align: start"
-                        class="alert username-message-erreur text-sm normal"
-                    >
-                        username required
-                    </p>
-                    <br />
-
-                    <!--input Email-->
-                    <label for="email"></label
-                    ><input
-                        style="text-align: left"
-                        type="email"
-                        placeholder="email"
-                        value="{{ user.email }}"
-                        value=""
-                        required
-                        aria-required="true"
-                        name="email"
-                        size="20"
-                        #email="ngModel"
-                        [(ngModel)]="user.email"
-                        required
-                        class="input-email form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
-                        id="email"
-                        required="required"
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
                     />
+                </svg>
+            </button>
 
-                    <!--"message erreur Email"-->
-                    <p
-                        *ngIf="!email.errors?.['required'] && email.invalid && password.dirty"
-                        style="text-align: center"
-                        class="alert email-message-erreur text-sm placeholder:italic"
-                    >
-                        email invalid
-                    </p>
-                    <p
-                        *ngIf="email.errors?.['required'] && email.dirty"
-                        style="text-align: center"
-                        class="alert email-message-erreur text-sm placeholder:italic"
-                    >
-                        email required
-                    </p>
-                </div>
+            <div class="w-full">
+                <!--zone formulaire Username-->
+                <label for="username"></label
+                ><input
+                    style="text-align: left"
+                    type="text"
+                    [placeholder]="
+                        'infrascrum.user-profile.username' | translate
+                    "
+                    value="{{ user.username }}"
+                    value=""
+                    required
+                    aria-required="true"
+                    class="input-username form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
+                    id="username"
+                    name="username"
+                    size="20"
+                    #username="ngModel"
+                    [(ngModel)]="user.username"
+                    required="required"
+                    pattern="^[a-zA-Z0-9àéèç]{1,25}$"
+                /><br />
+
+                <!--"message erreur Username"-->
+                <p
+                    *ngIf="username.errors?.['required'] && username.dirty"
+                    style="text-align: start"
+                    class="alert username-message-erreur text-sm normal"
+                >
+                    {{
+                        'infrascrum.user-profile.msg-username-required'
+                            | translate
+                    }}
+                </p>
+                <br />
+
+                <!--input Email-->
+                <label for="email"></label
+                ><input
+                    style="text-align: left"
+                    type="email"
+                    [placeholder]="'infrascrum.user-profile.email' | translate"
+                    value="{{ user.email }}"
+                    value=""
+                    required
+                    aria-required="true"
+                    name="email"
+                    size="20"
+                    #email="ngModel"
+                    [(ngModel)]="user.email"
+                    required
+                    class="input-email form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
+                    id="email"
+                    required="required"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                />
+
+                <!--"message erreur Email"-->
+
+                <p
+                    *ngIf="email.errors?.['required'] && email.dirty"
+                    style="text-align: center"
+                    class="alert email-message-erreur text-sm placeholder:italic"
+                >
+                    {{
+                        'infrascrum.user-profile.msg-email-required' | translate
+                    }}
+                </p>
             </div>
         </section>
 
@@ -164,12 +162,12 @@
         <br />
 
         <!--zone formulaire Firstname/Lastname-->
-        <div class="flex w-full justify-center">
+        <div class="flex w-full space-x-16 justify-center">
             <label for="firstname"></label
             ><input
                 style="text-align: start"
                 type="text"
-                placeholder="firstname"
+                [placeholder]="'infrascrum.user-profile.firstname' | translate"
                 value="{{ user.firstname }}"
                 value=""
                 required
@@ -183,13 +181,13 @@
                 #firstname="ngModel"
                 [(ngModel)]="user.firstname"
                 required="required"
-            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            />
 
             <label for="lastname"></label
             ><input
                 style="text-align: start"
                 type="text"
-                placeholder="lastname"
+                [placeholder]="'infrascrum.user-profile.lastname' | translate"
                 value="{{ user.lastname }}"
                 value=""
                 required
@@ -212,17 +210,17 @@
             style="text-align: start"
             class="alert firstname-message-erreur text-sm placeholder:italic"
         >
-            firstname required
+            {{ 'Prénom requis' | translate }}
         </p>
         <br />
 
         <!--zone formulaire Password-->
-        <div class="flex w-full justify-center">
+        <div class="flex w-full space-x-16 justify-center">
             <label for="password"></label
             ><input
                 type="password"
                 size="20"
-                [placeholder]="'password' | translate"
+                [placeholder]="'infrascrum.user-profile.password' | translate"
                 class="input-password form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                 id="password"
                 [(ngModel)]="user.password"
@@ -232,13 +230,15 @@
                 value=""
                 required
                 aria-required="true"
-            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            />
 
             <label for="ConfirPassword"></label
             ><input
                 type="password"
                 size="20"
-                [placeholder]="'verif-password' | translate"
+                [placeholder]="
+                    'infrascrum.user-profile.verif-password' | translate
+                "
                 class="input-confirm-password form-control transform border-b-2 bg-transparent placeholder:italic focus:outline-non"
                 [(ngModel)]="verifPassword"
                 #confirmPassword="ngModel"
@@ -249,7 +249,6 @@
                 required
                 aria-required="true"
             />
-            <p></p>
         </div>
 
         <!--"message erreur Password/Confirm-Password"-->
@@ -257,14 +256,14 @@
             *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
             class="password-message-erreur placeholder:italic"
         >
-            {{ 'Invalid password!' | translate }}
+            {{ 'infrascrum.user-profile.msg-password-matching' | translate }}
         </p>
 
         <p
             *ngIf="password.errors?.['required'] && password.dirty"
             class="password-message-erreur placeholder:italic"
         >
-            {{ 'password required' | translate }}
+            {{ 'infrascrum.user-profile.msg-password-required' | translate }}
         </p>
 
         <div *ngIf="showErrorMessage">
@@ -275,19 +274,20 @@
         <br /><br />
 
         <!--button Update/Delete-->
-
         <div class="flex w-full justify-center">
             <button class="cancel" type="submit" routerLink="/projects">
-                Cancel
+                {{ 'infrascrum.global.btn-cancel' | translate }}
             </button>
+
             &nbsp;&nbsp;&nbsp;
+
             <button
                 class="update"
                 type="submit"
                 [disabled]="!user.password || !user.username || !verifPassword"
                 (click)="onSubmit(user)"
             >
-                {{ 'Update' | translate }}
+                {{ 'infrascrum.global.btn-register' | translate }}
             </button>
         </div>
         <br /><br />

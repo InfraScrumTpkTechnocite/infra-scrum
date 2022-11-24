@@ -79,6 +79,7 @@ export class TimeentriesService {
     );
   }
 
+  //total (en minutes), par user, du temps effectivement travaillé sur une tâche
   async totalUsersWorkedTimeOnTask(taskid: string): Promise<any> {
     return await this.timeEntriesRepository.manager.transaction(
       this.configService.get<IsolationLevel>(
@@ -111,6 +112,30 @@ export class TimeentriesService {
     );
   }
 
+  //temps total (en minutes) effectivement travaillé sur une tâche
+  async totalWorkedTimeOnTask(taskid: string): Promise<any> {
+    return await this.timeEntriesRepository.manager.transaction(
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
+      async (transactionnalEntityManager): Promise<any> => {
+        return await transactionnalEntityManager
+          .createQueryBuilder(TimeEntry, 'timeentry')
+          //.setLock('dirty_read')
+          .select('SUM(workedtime)', 'total_minutes')
+          .addSelect('task')
+          .innerJoin('timeentry.taskassignment', 'taskassignment')
+          .innerJoin('taskassignment.task', 'task')
+          .where('task.id = :taskid', {
+            taskid,
+          })
+          .groupBy('task.id')
+          .getRawMany();
+      },
+    );
+  }
+
+  //tous les time entries d'une tâche
   async timeEntries(taskid: string): Promise<TimeEntry[]> {
     return await this.timeEntriesRepository.manager.transaction(
       this.configService.get<IsolationLevel>(
@@ -130,6 +155,7 @@ export class TimeentriesService {
     );
   }
 
+  //tous les time entries d'1 task assignment
   async taskAssignmentTimeEntries(
     taskassignmentid: string,
   ): Promise<TimeEntry[]> {
