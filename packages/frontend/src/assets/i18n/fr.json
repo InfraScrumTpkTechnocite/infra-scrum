@@ -114,6 +114,25 @@
         "task": {
             "start-date": "Date de début",
             "estimate-time": "Temps estimé"
+        },
+            "user-profile": {
+                "title": "Mon Profil",
+                "btn-add": "Ajouter photo",
+                "username": "Nom utilisateur",
+                "email": "Email",
+                "role": "Rol",
+                "lastname": "Prenom",
+                "firstname": "Nom famille",
+                "password": "Mot de passe",
+                "msg-username-invalid": "Nom d'utilisateur non valide",
+                "msg-username-required": "Nom d'utilisateur requis",
+                "msg-email-invalid": "Email non valide",
+                "msg-email-required": "Email requis",
+                "msg-password-matching": "Mot de passe ne correspond pas",
+                "msg-password-required": "Mot de passe requis",
+                "verif-password": "vérification mot de passe",
+                "Update": "Mise à jour",
+                "Cancel": "Retour"
         }
     }
 }
