@@ -650,15 +650,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 this.kanbanList[kanbanIndex].kanban;
             let task: any = event.container.data[event.currentIndex];
             if (task.task.id) {
-                task.kanbanstatus = kanbanTarget;
-                task.done = kanbanTarget.isTypeDone;
+                task.task.kanbanstatus = kanbanTarget;
+                task.task.done = kanbanTarget.isTypeDone;
                 this.taskService.edit(task.task.id, task.task).subscribe({
                     next: () => {},
                     error: () => {},
                     complete: () => {
                         this.subject.next({
                             method: 'edit',
-                            task: task.task,
+                            task: task.task ,
                             projectid: this.project.id,
                             sourceKanbanOrder: event.previousContainer.id,
                             targetKanbanOrder: event.container.id
