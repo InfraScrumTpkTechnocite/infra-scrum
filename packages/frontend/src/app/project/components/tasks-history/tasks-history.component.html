@@ -18,139 +18,170 @@
                 <ul
                     class="w-full border border-gray-200 rounded overflow-hidden shadow-md"
                 >
-                    <li
-                        *ngFor="let task of tasksLists"
-                        (click)="task.visible = !task.visible"
-                        class="group px-4 py-2 bg-white hover:bg-sky-100 hover:text-secondary border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out hover:cursor-pointer w-full flex flex-col"
-                    >
-                        <!-- DEFAULT PREVIEW -->
-                        <div class="flex">
-                            <!-- Task name + task type -->
-                            <div
-                                class="flex w-5/12 items-center justify-start space-x-4"
-                            >
-                                <div class="flex-1 min-w-0 justify-center">
-                                    <p class="text-sm font-medium truncate">
-                                        {{ task.task.name }}
-                                    </p>
-                                    <span
-                                        class="text-sm text-gray-500 truncate"
-                                    >
-                                        {{ task.task.tasktype.label }}
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- Users assignés à la tâche -->
-                            <div class="flex w-3/12 justify-start items-center">
-                                <div
-                                    *ngFor="
-                                        let taskassignment of task.taskassignments
-                                    "
-                                    class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
-                                >
-                                    <!-- condition si photo, sinon span avec premiere lettre username -->
-                                    <img
-                                        title="{{
-                                            taskassignment.userproject.user
-                                                .username
-                                        }}"
-                                        *ngIf="
-                                            taskassignment.userproject.user
-                                                .picture
-                                        "
-                                        class="rounded-full"
-                                        src="data:image/*;base64, {{
-                                            taskassignment.userproject.user
-                                                .picture
-                                        }}"
-                                        alt="profile picture"
-                                        title="{{
-                                            taskassignment.userproject.user
-                                                .username
-                                        }}"
-                                    />
-                                    <span
-                                        title="{{
-                                            taskassignment.userproject.user
-                                                .username
-                                        }}"
-                                        *ngIf="
-                                            !taskassignment.userproject.user
-                                                .picture
-                                        "
-                                        class="text-lg uppercase font-bold"
-                                    >
-                                        {{
-                                            taskassignment.userproject.user
-                                                .username | initialsName
-                                        }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div
-                                class="flex w-3/12 items-center justify-start text-xs"
-                            >
-                                <p>
-                                    Estimated time:
-                                    <span class="font-medium">
-                                        {{
-                                            task.task.estimatedtime / 480
-                                                | numberToInteger
-                                        }}
-                                        d,
-                                        {{
-                                            (task.task.estimatedtime / 60) % 8
-                                                | numberToInteger
-                                        }}
-                                        hrs
-                                        {{ task.task.estimatedtime % 60 }}
-                                        min.</span
-                                    >
-                                </p>
-                            </div>
-                            <div class="flex w-1/12 justify-end items-center">
-                                <div>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6 relative transition-transform"
-                                        [ngClass]="
-                                            !task.visible
-                                                ? 'group-hover:top-1'
-                                                : 'rotate-180 group-hover:bottom-1'
-                                        "
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                                        />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- AFFICHAGE OVERVIEW -->
-                        <div
-                            *ngIf="task.visible"
-                            class="flex border-t-2 border-grey2 mt-2 justify-start"
+                    <div *ngFor="let task of tasksLists">
+                        <li
+                            *ngIf="!task.task.done"
+                            (click)="task.visible = !task.visible"
+                            class="group px-4 py-2 bg-white hover:bg-sky-100 hover:text-secondary border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out hover:cursor-pointer w-full flex flex-col"
                         >
-                            <div class="flex w-full text-sm nowrap mt-2">
-                                <p>
-                                    {{
-                                        task.task.description
-                                            ? task.task.description
-                                            : 'No description'
-                                    }}
-                                </p>
-                                <!-- !! -->
-                                <!-- Si pas de description: -->
-                                <!-- <p>No description available</p> -->
+                            <!-- DEFAULT PREVIEW -->
+                            <div class="flex">
+                                <!-- Task name + task type -->
+                                <div
+                                    class="flex w-5/12 items-center justify-start space-x-4"
+                                >
+                                    <div class="flex-1 min-w-0 justify-center">
+                                        <p class="text-sm font-medium truncate">
+                                            {{ task.task.name }}
+                                        </p>
+                                        <span
+                                            class="text-sm text-gray-500 truncate"
+                                        >
+                                            {{ task.task.tasktype.label }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- Users assignés à la tâche -->
+                                <div
+                                    class="flex w-3/12 justify-start items-center"
+                                >
+                                    <div
+                                        *ngFor="
+                                            let taskassignment of task.taskassignments
+                                        "
+                                        class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
+                                    >
+                                        <!-- condition si photo, sinon span avec premiere lettre username -->
+                                        <img
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                            *ngIf="
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="rounded-full"
+                                            src="data:image/*;base64, {{
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            }}"
+                                            alt="profile picture"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                        />
+                                        <span
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                            *ngIf="
+                                                !taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="text-lg uppercase font-bold"
+                                        >
+                                            {{
+                                                taskassignment.userproject.user
+                                                    .username | initialsName
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex w-3/12 items-center justify-start text-sm"
+                                >
+                                    <div
+                                        class="flex-1 min-w-0 justify-center text-xs"
+                                    >
+                                        <p>
+                                            Work time:
+                                            <span class="font-medium">
+                                                {{
+                                                    task.totalWorkedTime / 480
+                                                        | numberToInteger
+                                                }}
+                                                d,
+                                                {{
+                                                    (task.totalWorkedTime /
+                                                        60) %
+                                                        8 | numberToInteger
+                                                }}
+                                                hrs
+                                                {{ task.totalWorkedTime % 60 }}
+                                                min.</span
+                                            >
+                                        </p>
+                                        <span class="text-gray-500">
+                                            Estimated time:
+                                            <span class="font-medium">
+                                                {{
+                                                    task.task.estimatedtime /
+                                                        480 | numberToInteger
+                                                }}
+                                                d,
+                                                {{
+                                                    (task.task.estimatedtime /
+                                                        60) %
+                                                        8 | numberToInteger
+                                                }}
+                                                hrs
+                                                {{
+                                                    task.task.estimatedtime % 60
+                                                }}
+                                                min.</span
+                                            >
+                                        </span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex w-1/12 justify-end items-center"
+                                >
+                                    <div>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor"
+                                            class="w-6 h-6 relative transition-transform"
+                                            [ngClass]="
+                                                !task.visible
+                                                    ? 'group-hover:top-1'
+                                                    : 'rotate-180 group-hover:bottom-1'
+                                            "
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                            <!-- AFFICHAGE OVERVIEW -->
+                            <div
+                                *ngIf="task.visible"
+                                class="flex border-t-2 border-grey2 mt-2 justify-start"
+                            >
+                                <div class="flex w-full text-sm nowrap mt-2">
+                                    <p>
+                                        {{
+                                            task.task.description
+                                                ? task.task.description
+                                                : 'No description'
+                                        }}
+                                    </p>
+                                    <!-- !! -->
+                                    <!-- Si pas de description: -->
+                                    <!-- <p>No description available</p> -->
+                                </div>
+                            </div>
+                        </li>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -251,13 +282,42 @@
                                         class="flex-1 min-w-0 justify-center text-xs"
                                     >
                                         <p>
-                                            Work time:
-                                            <span class="font-medium"
-                                                >12 jours 7h59</span
+                                            Total work time:
+                                            <span class="font-medium">
+                                                {{
+                                                    task.totalWorkedTime / 480
+                                                        | numberToInteger
+                                                }}
+                                                d,
+                                                {{
+                                                    (task.totalWorkedTime /
+                                                        60) %
+                                                        8 | numberToInteger
+                                                }}
+                                                hrs
+                                                {{ task.totalWorkedTime % 60 }}
+                                                min.</span
                                             >
                                         </p>
                                         <span class="text-gray-500">
-                                            Estimated time: 3 jours 7h55
+                                            Estimated time:
+                                            <span class="font-medium">
+                                                {{
+                                                    task.task.estimatedtime /
+                                                        480 | numberToInteger
+                                                }}
+                                                d,
+                                                {{
+                                                    (task.task.estimatedtime /
+                                                        60) %
+                                                        8 | numberToInteger
+                                                }}
+                                                hrs
+                                                {{
+                                                    task.task.estimatedtime % 60
+                                                }}
+                                                min.</span
+                                            >
                                         </span>
                                     </div>
                                 </div>
