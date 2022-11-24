@@ -61,6 +61,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     userList!: User[];
 
     dateToday: string = '';
+    endDate!: string;
 
     taskTypeList: TaskType[] = [];
 
@@ -102,11 +103,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
             next: (message: any) => {
                 const method = message.method;
                 console.log(message);
-                switch (method) {
-                    case 'edit':
-                        //console.log('edit', message.task);
-                        //console.log(message.projectid);
-                        if (message.projectid == this.project.id) {
+                if (message.projectid == this.project.id) {
+                    switch (method) {
+                        case 'edit':
+                            //console.log('edit', message.task);
+                            //console.log(message.projectid);
+
                             if (message.kanban) {
                                 //console.log(message.kanban.id);
                                 let kanban = this.kanbanList.find(
@@ -132,37 +134,48 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                     message.targetKanbanOrder
                                 ].tasks.push(message.task);
                             }
-                        }
-                        break;
-                    case 'delete':
-                        if (message.kanban)
-                            this.kanbanList.splice(message.kanban.order, 1);
-                        if (message.task)
-                            this.kanbanList.find((kanbans) => {
-                                kanbans.tasks?.splice(
-                                    kanbans.tasks?.findIndex(
-                                        (tasks) => tasks.id == message.task.id
+                            break;
+                        case 'delete':
+                            if (message.kanban)
+                                this.kanbanList.splice(message.kanban.order, 1);
+                            if (message.task)
+                                this.kanbanList[
+                                    message.task.kanbanstatus.order
+                                ].tasks.splice(
+                                    this.kanbanList[
+                                        message.task.kanbanstatus.order
+                                    ].tasks.findIndex(
+                                        (task) => task.id == message.task.id
                                     ),
                                     1
                                 );
-                            });
-                        break;
-                    case 'add':
-                        if (message.kanban) {
-                            const kanbanList: KanbanList = {
-                                kanban: message.kanban,
-                                tasks: []
-                            };
-                            this.kanbanList.push(kanbanList);
-                        }
-                        if (message.task) {
-                            const kanban = this.kanbanList.find(
-                                (kanban) =>
-                                    kanban.kanban.id ==
-                                    message.task.kanbanstatus.id
-                            );
-                            kanban?.tasks.push(message.task);
-                        }
+                            // this.kanbanList.find((kanbans) => {
+                            //     kanbans.tasks?.splice(
+                            //         kanbans.tasks?.findIndex(
+                            //             (tasks) =>
+                            //                 tasks.id == message.task.id
+                            //         ),
+                            //         1
+                            //     );
+                            // });
+                            break;
+                        case 'add':
+                            if (message.kanban) {
+                                const kanbanList: KanbanList = {
+                                    kanban: message.kanban,
+                                    tasks: []
+                                };
+                                this.kanbanList.push(kanbanList);
+                            }
+                            if (message.task) {
+                                const kanban = this.kanbanList.find(
+                                    (kanban) =>
+                                        kanban.kanban.id ==
+                                        message.task.kanbanstatus.id
+                                );
+                                kanban?.tasks.push(message.task);
+                            }
+                    }
                 }
             }
         };
@@ -273,6 +286,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                             this.parentProject = project.project;
                             this.project = this.parentProject;
                         }
+                        this.endDate = project.enddate!;
                         this.headerTitleService.setTitle(this.project.name);
                         // console.log(
                         //     `project.component - ngOnInit - parentProject = ${this.parentProject}`
@@ -327,7 +341,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     addTask(kanban?: Kanbanstatus) {
         const task = new Task();
-        if (kanban) task.kanbanstatus = kanban;
+        if (kanban) {
+            task.kanbanstatus = kanban;
+            task.done = kanban.isTypeDone;
+        }
         const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: task,
@@ -341,11 +358,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe((result) => {
-            if (result)
-                this.kanbanList.find((kanbanAndTasks) => {
-                    if (kanbanAndTasks.kanban.id == result.task.kanbanstatus.id)
-                        kanbanAndTasks.tasks.push(result.task);
+            if (result) {
+                this.kanbanList[result.task.kanbanstatus.order].tasks.push(
+                    result.task
+                );
+                this.subject.next({
+                    method: 'add',
+                    task: result.task,
+                    projectid: this.projectid
                 });
+            }
         });
     }
 
@@ -610,6 +632,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             let task: Task = event.container.data[event.currentIndex];
             if (task.id) {
                 task.kanbanstatus = kanbanTarget;
+                task.done = kanbanTarget.isTypeDone;
                 this.taskService.edit(task.id, task).subscribe({
                     next: () => {},
                     error: () => {},

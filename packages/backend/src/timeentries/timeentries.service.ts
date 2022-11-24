@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Equal, Repository, UpdateResult } from 'typeorm';
 import { IsolationLevel } from 'typeorm/driver/types/IsolationLevel';
 import { TimeEntry } from './timeentries.entity';
 
@@ -107,6 +107,46 @@ export class TimeentriesService {
           .addGroupBy('role.id')
           .addGroupBy('tasktype.id')
           .getRawMany();
+      },
+    );
+  }
+
+  async timeEntries(taskid: string): Promise<TimeEntry[]> {
+    return await this.timeEntriesRepository.manager.transaction(
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
+      async (transactionnalEntityManager): Promise<TimeEntry[]> => {
+        return await transactionnalEntityManager.find(TimeEntry, {
+          relations: {
+            taskassignment: {
+              task: true,
+            },
+          },
+          where: { taskassignment: { task: Equal(taskid) } },
+          order: { dayofwork: 'ASC' },
+        });
+      },
+    );
+  }
+
+  async taskAssignmentTimeEntries(
+    taskassignmentid: string,
+  ): Promise<TimeEntry[]> {
+    return await this.timeEntriesRepository.manager.transaction(
+      this.configService.get<IsolationLevel>(
+        'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
+      ),
+      async (transactionnalEntityManager): Promise<TimeEntry[]> => {
+        return await transactionnalEntityManager.find(TimeEntry, {
+          relations: {
+            taskassignment: {
+              task: true,
+            },
+          },
+          where: { taskassignment: Equal(taskassignmentid) },
+          order: { dayofwork: 'ASC' },
+        });
       },
     );
   }

@@ -29,7 +29,7 @@
             "title-user": "Users",
             "title-etiquette": "Etiquette",
             "option-type-title": "Type",
-            "option-front": "Font-end",
+            "option-front": "Front-end",
             "option-back": "Back-end",
             "option-bug": "Bug",
             "option-full": "Fullstack",
@@ -38,7 +38,7 @@
             "option-liaison-bf": "Back-Front link",
             "option-ux": "UX",
             "option-correction": "Correction",
-            "option-analyse": "Analyse",
+            "option-analyse": "Analyze",
             "option-integration": "Design Integration",
             "option-sprint-title": "Sprint",
             "option-one": "Sprint 1",
@@ -46,7 +46,7 @@
             "option-three": "Sprint 3",
             "option-four": "Sprint 4",
             "option-five": "Sprint 5",
-            "estimate-time": "Estimate Time",
+            "estimate-time": "Estimated Time",
             "estimate-day": "Day",
             "estimate-hours": "Hours",
             "estimate-minute": "Minutes",
@@ -131,7 +131,8 @@
             "msg-password-required": "Password required",
             "verif-password": "Verif-password",
             "Update": "Update",
-            "Cancel": "Cancel"
+            "Cancel": "Cancel",
+            "estimate-time": "Estimated time"
         }
     }
 }

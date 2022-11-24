@@ -16,27 +16,13 @@ export class TaskassignmentService {
 
     constructor(private httpClient: HttpClient) {}
 
-    private handleError(error: Error, errorValue: any) {
-        console.error(error);
-        return of(errorValue);
-    }
-
-    private log(response: any) {
-        console.table(response);
-    }
-
     create(taskassignment: TaskAssignment): Observable<TaskAssignment> {
-        console.log(taskassignment);
         return this.httpClient
             .post<any>(
                 '/backend/tasksassignments',
                 JSON.stringify(taskassignment),
                 this.httpOptions
             )
-            .pipe(
-                tap((response) => this.log(response)),
-                catchError((error) => this.handleError(error, null))
-            );
     }
 
     findAllUsersOfTask(taskid: string): Observable<TaskAssignment[]> {

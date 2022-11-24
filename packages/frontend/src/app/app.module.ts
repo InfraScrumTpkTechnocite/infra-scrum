@@ -45,7 +45,8 @@ import { NumberToIntegerPipe } from './pipes/number-to-integer.pipe';
 import { MatMenuModule } from '@angular/material/menu';
 import { ChartGanttComponent } from './project/components/chart-gantt/chart-gantt.component';
 import { TasksHistoryComponent } from './project/components/tasks-history/tasks-history.component'
-import { TableUsersComponent } from './table-users/table-users.component'
+import { TableUsersComponent } from './table-users/table-users.component';
+import { TimeEntryComponent } from './form/time-entry/time-entry.component'
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -77,7 +78,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         NumberToIntegerPipe,
         ChartGanttComponent,
         TasksHistoryComponent,
-        TableUsersComponent
+        TableUsersComponent,
+        TimeEntryComponent
     ],
     imports: [
         BrowserModule,

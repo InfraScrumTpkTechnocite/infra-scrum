@@ -130,10 +130,9 @@ export class EditNewTasksComponent implements OnInit {
         );
         this.newTaskAssignmentList.push(newAssignement);
         this.userProjectList.splice(
-            this.userProjectList.findIndex(
-                (userProjectFromList) =>
-                    userProjectFromList.id == userProject.user.id
-            ),
+            this.userProjectList.findIndex((userProjectFromList) => {
+                return userProjectFromList.id == userProject.id;
+            }),
             1
         );
     }
@@ -146,37 +145,53 @@ export class EditNewTasksComponent implements OnInit {
             //** Task EDITION */
             const observer = {
                 next: () => {
+                    var index = this.newTaskAssignmentList.length;
                     this.newTaskAssignmentList.map((taskAssignment) => {
                         this.taskAssignmentService
                             .create(taskAssignment)
-                            .subscribe((taskAssignment: TaskAssignment) =>
-                                this.taskassignmentList.push(taskAssignment)
-                            );
+                            .subscribe({
+                                next: (taskAssignment: TaskAssignment) => {
+                                    this.taskassignmentList.push(
+                                        taskAssignment
+                                    );
+                                    index--;
+                                },
+                                error: (err: any) => {
+                                    this.toastService.error(
+                                        `Error during taskassignment creation<br><br>${err.error.driverError.detail}`
+                                    );
+                                },
+                                complete: () => {
+                                    if (index == 0) {
+                                        console.log(index);
+                                        this.toastService.success(
+                                            'Task Edited !'
+                                        );
+                                        this.newTask.id = this.data.task.id;
+                                        this.data.subject.next({
+                                            method: 'edit',
+                                            task: this.newTask,
+                                            projectid: this.projectid,
+                                            sourceKanbanOrder:
+                                                this.newTask.kanbanstatus.order,
+                                            targetKanbanOrder:
+                                                this.newTask.kanbanstatus.order
+                                        });
+                                        this.dialogRef.close({
+                                            task: this.newTask,
+                                            taskid: this.data.task.id
+                                        });
+                                    }
+                                }
+                            });
                     });
                 },
                 error: (err: any) => {
-                    console.log(
-                        `Erreur edition task : ${err.error['driverError'].detail}`
-                    );
                     this.toastService.error(
                         `Error during task edition<br><br>${err.error.driverError.detail}`
                     );
                 },
-                complete: () => {
-                    this.toastService.success('Task Edited !');
-                    this.newTask.id = this.data.task.id;
-                    this.data.subject.next({
-                        method: 'edit',
-                        task: this.newTask,
-                        projectid: this.projectid,
-                        sourceKanbanOrder: this.newTask.kanbanstatus.order,
-                        targetKanbanOrder: this.newTask.kanbanstatus.order
-                    });
-                    this.dialogRef.close({
-                        task: this.newTask,
-                        taskid: this.data.task.id
-                    });
-                }
+                complete: () => {}
             };
             if (!this.newTask.sprint?.id) {
                 this.newTask.sprint = null;
@@ -196,12 +211,36 @@ export class EditNewTasksComponent implements OnInit {
                     );
                     taskAdmin.isTaskCreator = true;
                     this.newTaskAssignmentList.push(taskAdmin);
+                    var index = this.newTaskAssignmentList.length;
                     this.newTaskAssignmentList.map((taskAssignment) => {
                         this.taskAssignmentService
                             .create(taskAssignment)
-                            .subscribe((taskAssignment: TaskAssignment) =>
-                                this.taskassignmentList.push(taskAssignment)
-                            );
+                            .subscribe({
+                                next: (taskAssignment: TaskAssignment) => {
+                                    this.taskassignmentList.push(
+                                        taskAssignment
+                                    );
+                                    index--;
+                                },
+                                error: (err: any) =>
+                                    console.log(
+                                        `Erreur creation taskassignment : ${err.error['driverError'].detail}`
+                                    ),
+                                complete: () => {
+                                    if (index == 0) {
+                                        this.toastService.success(
+                                            'Task created !'
+                                        );
+                                        this.dialogRef.close({
+                                            task: this.newTask
+                                        });
+                                        this.data.subject.next({
+                                            method: 'add',
+                                            task: this.newTask
+                                        });
+                                    }
+                                }
+                            });
                     });
                 },
                 error: (err: any) => {
@@ -212,21 +251,30 @@ export class EditNewTasksComponent implements OnInit {
                         `Error during task creation<br><br>${err.error.driverError.detail}`
                     );
                 },
-                complete: () => {
-                    this.toastService.success('Task created !');
-                    this.dialogRef.close({
-                        task: this.newTask
-                    });
-                    this.data.subject.next({
-                        method: 'add',
-                        task: this.newTask
-                    });
-                }
+                complete: () => {}
             };
             if (!this.newTask.sprint?.id) {
                 this.newTask.sprint = null;
             }
             this.taskService.create(this.newTask).subscribe(observer);
         }
+    }
+
+    removeUser(taskAssignment: TaskAssignment): void {
+        console.log('task assignment:', taskAssignment);
+        this.taskassignmentList.splice(
+            this.taskassignmentList.findIndex((tskAssignment) => {
+                return taskAssignment.id == tskAssignment.id;
+            }),
+            1
+        );
+
+        this.taskAssignmentService.delete(taskAssignment.id!).subscribe({
+            next: () => {
+                console.log(`User unassigned from task`);
+            },
+            error: () => {},
+            complete: () => {}
+        });
     }
 }
