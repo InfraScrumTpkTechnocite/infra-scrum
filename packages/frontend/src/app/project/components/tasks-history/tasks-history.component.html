@@ -8,10 +8,13 @@
         <div class="w-full">
             <div class="w-full flex justify-between items-center mb-2 px-2">
                 <h3 class="font-bold text-primary uppercase text-xl">
-                    {{"infrascrum.project.tasks-history-title1" | translate}}
+                    {{ 'infrascrum.project.tasks-history-title1' | translate }}
                 </h3>
                 <p class="text-xs text-gray-500 items-end">
-                    {{"infrascrum.project.tasks-history-sub-title1" | translate}}
+                    {{
+                        'infrascrum.project.tasks-history-sub-title1'
+                            | translate
+                    }}
                 </p>
             </div>
             <div class="flex flex-col rounded-lg">
@@ -97,7 +100,10 @@
                                         class="flex-1 min-w-0 justify-center text-xs"
                                     >
                                         <p>
-                                            Work time:
+                                            {{
+                                                'infrascrum.project.tasks-history-work-time'
+                                                    | translate
+                                            }}
                                             <span class="font-medium">
                                                 {{
                                                     task.totalWorkedTime / 480
@@ -115,7 +121,10 @@
                                             >
                                         </p>
                                         <span class="text-gray-500">
-                                            Estimated time:
+                                            {{
+                                                'infrascrum.project.tasks-history-estimated-time'
+                                                    | translate
+                                            }}
                                             <span class="font-medium">
                                                 {{
                                                     task.task.estimatedtime /
@@ -191,10 +200,13 @@
         <div class="mt-4 w-full">
             <div class="w-full flex justify-between items-center mb-2 px-2">
                 <h3 class="font-bold text-primary uppercase text-xl">
-                    {{"infrascrum.project.tasks-history-title2" | translate}}
+                    {{ 'infrascrum.project.tasks-history-title2' | translate }}
                 </h3>
                 <p class="text-xs text-gray-500 items-end">
-                    {{"infrascrum.project.tasks-history-sub-title2" | translate}}
+                    {{
+                        'infrascrum.project.tasks-history-sub-title2'
+                            | translate
+                    }}
                 </p>
             </div>
             <div class="flex flex-col rounded-lg">
@@ -282,7 +294,10 @@
                                         class="flex-1 min-w-0 justify-center text-xs"
                                     >
                                         <p>
-                                            {{"infrascrum.project.tasks-history-work-time" | translate}}
+                                            {{
+                                                'infrascrum.project.tasks-history-work-time'
+                                                    | translate
+                                            }}
                                             <span class="font-medium">
                                                 {{
                                                     task.totalWorkedTime / 480
@@ -296,10 +311,14 @@
                                                 }}
                                                 hrs
                                                 {{ task.totalWorkedTime % 60 }}
-                                                min.</span>
+                                                min.</span
+                                            >
                                         </p>
                                         <span class="text-gray-500">
-                                            Estimated time:
+                                            {{
+                                                'infrascrum.project.tasks-history-estimated-time'
+                                                    | translate
+                                            }}
                                             <span class="font-medium">
                                                 {{
                                                     task.task.estimatedtime /
@@ -373,7 +392,9 @@
         *ngIf="tasksLists.length < 1"
         class="flex flex-col items-center bg-tpkwhite bg-opacity-70 p-4 lg:p-6 rounded-xl"
     >
-        <p class="text-secondary font-semibold">{{"infrascrum.project.tasks-history-no-tasks" | translate}}</p>
+        <p class="text-secondary font-semibold">
+            {{ 'infrascrum.project.tasks-history-no-tasks' | translate }}
+        </p>
     </div>
 </div>
 
