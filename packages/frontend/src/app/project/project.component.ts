@@ -129,7 +129,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                 let sourceIndex: number = this.kanbanList[
                                     message.sourceKanbanOrder
                                 ].taskList.findIndex(
-                                    (tasks) => tasks.task.id == message.task.id
+                                    (tasks) => tasks.task.id == message.task.task.id
                                 );
                                 this.kanbanList[
                                     message.sourceKanbanOrder
@@ -137,8 +137,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                 this.kanbanList[
                                     message.targetKanbanOrder
                                 ].taskList.push({
-                                    task: message.task,
-                                    taskAssignments: []
+                                    task: message.task.task,
+                                    taskAssignments: message.task.taskAssignments
                                 });
                             }
                             break;
@@ -658,7 +658,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     complete: () => {
                         this.subject.next({
                             method: 'edit',
-                            task: task.task ,
+                            task: task,
                             projectid: this.project.id,
                             sourceKanbanOrder: event.previousContainer.id,
                             targetKanbanOrder: event.container.id
