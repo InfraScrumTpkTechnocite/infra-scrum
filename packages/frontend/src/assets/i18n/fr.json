@@ -103,9 +103,22 @@
         "project": {
             "btn-global": "Vue globale",
             "btn-add": "Ajouter un sprint",
+            "option-sprint": "Sprints:",
+            "filter-tasks": "Mes tâches",
             "btn-new-task": "Nouvelle tâche",
             "btn-new-column": "Nouvelle colonne",
-            "btn-add-column": "Ajouter une colonne"
+            "btn-add-column": "Ajouter une colonne",
+            "btn-d-gantt": "Gantt",
+            "btn-history": "Histoire",
+            "end-date": "date de fin",
+            "chart-gantt-back": "Retour",
+            "tasks-history-title1": "Tâches en cours",
+            "tasks-history-sub-title1": "Du plus récent au plus ancien",
+            "tasks-history-estimated-time": "Temps estimé:",
+            "tasks-history-title2": "Tâches terminées",
+            "tasks-history-sub-title2": "Du plus récent au plus ancien",
+            "tasks-history-work-time": "Temps de travail:",
+            "tasks-history-no-tasks": "Aucune tâche pour le moment"
         },
         "project-info": {
             "start-date": "Date de début",
@@ -114,6 +127,9 @@
         "task": {
             "start-date": "Date de début",
             "estimate-time": "Temps estimé"
+        },
+        "time-entry": {
+            "title": "Temps réalisé"
         }
     }
 }

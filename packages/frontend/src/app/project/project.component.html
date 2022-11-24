@@ -47,7 +47,7 @@
                     class="w-28 h-10 bg-tpkwhite text-primary p-3 rounded-lg text-xs font font-semibold m-2 justify-center"
                     (change)="changeSprintDisplay($event)"
                 >
-                    <option selected disabled value="default">Sprints:</option>
+                    <option selected disabled value="default">{{ "infrascrum.project.option-sprint" | translate}}</option>
                     <option
                         value="{{ sprint.id }}"
                         [ngClass]="{
@@ -67,7 +67,7 @@
                     class="flex items-center justify-center mt-2 w-28 font-semibold m-1 h-10 text-xs"
                     title="Filter my tasks"
                 >
-                    <span class="text-primary mr-2"> My tasks </span>
+                    <span class="text-primary mr-2"> {{ "infrascrum.project.filter-tasks" | translate }} </span>
                     <mat-slide-toggle
                         color="primary"
                         (change)="toggleCurrentUserTasks()"
@@ -86,7 +86,7 @@
                         'text-primary': parentProject || switch != 'gantt'
                     }"
                 >
-                    <span>Gantt </span>
+                    <span> {{ "infrascrum.project.btn-d-gantt" | translate }} </span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -114,7 +114,7 @@
                         'text-primary': parentProject || switch != 'history'
                     }"
                 >
-                    <span>History</span>
+                    <span>{{ "infrascrum.project.btn-history" | translate }}</span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -262,7 +262,7 @@
                     *ngIf="sprintList && sprintList.length > 0"
                     class="flex justify-end items-center text-primary mr-52 sm:mr-36 lg:mr-40 ml-4"
                 >
-                    <h4 class="pr-2">{{parentProject ? 'Sprint' : 'Project'}} end date :</h4>
+                    <h4 class="pr-2">{{parentProject ? 'Sprint' : 'Project'}} {{"infrascrum.project.end-date" | translate }}:</h4>
                     <p>
                         {{
                             endDate
