@@ -70,7 +70,7 @@ export class KanbanStatusComponent implements OnInit {
                 this.subject.next({
                     method: 'edit',
                     kanban: this.kanbanstatus.kanban,
-                    tasks: this.kanbanstatus.tasks,
+                    tasks: this.kanbanstatus.taskList,
                     projectid: this.projectid
                 });
             },

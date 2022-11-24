@@ -292,9 +292,9 @@ export class ChartGanttComponent implements OnInit {
     changeSprintDisplay(sprint: IGanttChartRow) {
         var tasks: Task[] = [];
         this.kanbanList.map((kanbanAndTasks) => {
-            kanbanAndTasks.tasks.map((task) => {
-                task.sprint != null && task.sprint!.id == sprint.id
-                    ? tasks.push(task)
+            kanbanAndTasks.taskList.map((task) => {
+                task.task.sprint != null && task.task.sprint!.id == sprint.id
+                    ? tasks.push(task.task)
                     : '';
             });
         });
