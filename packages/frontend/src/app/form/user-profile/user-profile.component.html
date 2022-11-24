@@ -41,7 +41,7 @@
 
             <!--button ("+")-->
             &nbsp;&nbsp;&nbsp;<button
-                class="img-button-ajouter-avatar border-2 border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center text-grey4 large mr-2 mt-3 text-secondary rounded-full border-2 border-secondary p-1 sm:p-1.5 md:p-2 hover:text-white hover:bg-secondary ease-in-out delay-150 hover:shadow-secondary hover:shadow-sm"
+                class="img-button-ajouter-avatar border-b-secondary h-12 w-12 rounded-3xl flex items-center justify-center large mr-2 mt-3 text-secondary border-2 border-secondary p-1 sm:p-1.5 md:p-2 hover:text-white hover:bg-secondary ease-in-out delay-150 hover:shadow-secondary hover:shadow-sm"
                 (click)="PictureUploader.click()"
             >
                 <svg
@@ -276,7 +276,7 @@
         <!--button Update/Delete-->
         <div class="flex w-full justify-center">
             <button class="cancel" type="submit" routerLink="/projects">
-                {{ 'infrascrum.user-profile.Cancel' | translate }}
+                {{ 'infrascrum.global.btn-cancel' | translate }}
             </button>
 
             &nbsp;&nbsp;&nbsp;
@@ -287,7 +287,7 @@
                 [disabled]="!user.password || !user.username || !verifPassword"
                 (click)="onSubmit(user)"
             >
-                {{ 'infrascrum.user-profile.Update' | translate }}
+                {{ 'infrascrum.global.btn-register' | translate }}
             </button>
         </div>
         <br /><br />
