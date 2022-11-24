@@ -32,14 +32,14 @@
                                     "
                                 >
                                     <div
-                                        *ngIf="!taskassignment.isTaskCreator"
+                                        *ngIf="!taskassignment.taskAssignment.isTaskCreator"
                                         class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
                                         style="cursor: not-allowed"
                                         (click)="removeUser(taskassignment)"
                                     >
                                         <img
                                             *ngIf="
-                                                taskassignment.userproject.user
+                                                taskassignment.taskAssignment.userproject.user
                                                     .picture
                                             "
                                             class="rounded-full hover:cursor-default"
@@ -49,23 +49,23 @@
                                             }}"
                                             alt="profile picture"
                                             title="{{
-                                                taskassignment.userproject.user
+                                                taskassignment.taskAssignment.userproject.user
                                                     .username
                                             }}"
                                         />
                                         <span
                                             *ngIf="
-                                                !taskassignment.userproject.user
+                                                !taskassignment.taskAssignment.userproject.user
                                                     .picture
                                             "
                                             class="text-lg uppercase font-bold"
                                             title="{{
-                                                taskassignment.userproject.user
+                                                taskassignment.taskAssignment.userproject.user
                                                     .username
                                             }}"
                                         >
                                             {{
-                                                taskassignment.userproject.user
+                                                taskassignment.taskAssignment.userproject.user
                                                     .username | initialsName
                                             }}
                                         </span>

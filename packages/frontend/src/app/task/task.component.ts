@@ -28,7 +28,7 @@ export class TaskComponent implements OnInit {
     @Input() sprintList!: Project[];
     @Input() userProjectList!: UserProject[];
     @Input() kanbanList!: KanbanList[];
-    taskassignmentList!: TaskAssignment[];
+    taskassignmentList: any;
 
     showTask: boolean = true;
     @Input() projectid!: string | undefined | null;
@@ -46,7 +46,10 @@ export class TaskComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-       
+        this.taskassignmentList = this.kanbanList
+            .find((kanban) => kanban.kanban.id == this.task.kanbanstatus.id)
+            ?.taskList.find((task) => task.task.id == this.task.id)
+            ?.taskAssignments
         // console.log(
         //     `showTask : ${this.showTask} - projectid : ${
         //         this.projectid
@@ -83,7 +86,9 @@ export class TaskComponent implements OnInit {
                 this.kanbanList[this.task.kanbanstatus.order].taskList[
                     this.kanbanList[
                         this.task.kanbanstatus.order
-                    ].taskList.findIndex((tasks) => tasks.task.id == this.task.id)
+                    ].taskList.findIndex(
+                        (tasks) => tasks.task.id == this.task.id
+                    )
                 ].task = this.task;
 
                 //this.task.id = data.taskid;
@@ -109,7 +114,9 @@ export class TaskComponent implements OnInit {
                 this.kanbanList[this.task.kanbanstatus.order].taskList.splice(
                     this.kanbanList[
                         this.task.kanbanstatus.order
-                    ].taskList.findIndex((tasks) => tasks.task.id == this.task.id),
+                    ].taskList.findIndex(
+                        (tasks) => tasks.task.id == this.task.id
+                    ),
                     1
                 );
                 this.subject.next({
@@ -138,10 +145,10 @@ export class TaskComponent implements OnInit {
 
         if (this.showCurrentUserTasks)
             if (
-                this.taskassignmentList.find((taskAssignment) => {
+                this.taskassignmentList.find((taskAssignments: any) => {
                     return (
-                        taskAssignment.userproject.user.id == this.user.id &&
-                        taskAssignment.task.id == this.task.id
+                        taskAssignments.taskAssignment.userproject.user.id == this.user.id &&
+                        taskAssignments.taskAssignment.task.id == this.task.id
                     );
                 })
             )

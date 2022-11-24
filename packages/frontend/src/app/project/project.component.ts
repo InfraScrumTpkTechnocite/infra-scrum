@@ -88,6 +88,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         private userProjectService: UserprojectService,
         private headerTitleService: HeaderTitleService,
         private taskService: TaskService,
+        private taskAssignmentService: TaskassignmentService,
         private timeEntryService: TimeentryService,
         private taskTypeService: TasktypeService,
         private userService: UserService,
@@ -259,43 +260,21 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                             task: task as Task,
                                             taskAssignments: []
                                         }));
-                                        console.log("IN TASKLIST")
-                                        taskList.map((task) =>{ console.log("TASK ID ",task.id)
-                                            this.timeEntryService
-                                                .timeEntries(task.id!)
-                                                .subscribe(
-                                                    (
-                                                        timeentries: TimeEntry[]
-                                                    ) => {
-                                                        console.log("IN TIME ENTRIES",timeentries)
-                                                        timeentries.map( timeentry =>
-                                                            {
-                                                                /** Find taskAssignment */
-                                                                var taskassignment = this.kanbanList.find(kanbanlist => kanbanlist.kanban.id == kanbanstatus.id)!
-                                                                .taskList.find(
-                                                                    (tasks) =>
-                                                                        tasks.task.id == timeentry.taskassignment.task.id
-                                                                    )?.taskAssignments?.find(taskAssignments => taskAssignments.taskAssignment.id == timeentry.taskassignment.id);
-                                                                /** If exists just push */
-                                                                if(taskassignment)
-                                                                    {
-                                                                        taskassignment.timeentries.push(timeentry);
-                                                                    }
-                                                                    /** Else create a taskAssignment as well as new array of timeEntries in kanbanList */
-                                                                    else{
-                                                                        var timeentriesList: TimeEntry[] = [];
-                                                                        timeentriesList.push(timeentry)
-                                                                        this.kanbanList.find(kanbanlist => kanbanlist.kanban.id == kanbanstatus.id)!
-                                                                    .taskList.find(
-                                                                    (tasks) =>
-                                                                        tasks.task.id == timeentry.taskassignment.task.id
-                                                                    )?.taskAssignments?.push({taskAssignment: timeentry.taskassignment, timeentries: timeentriesList})
-                                                                    }
-                                                            }
-                                                        )
-                                                    }
-                                                )}
-                                        );
+                                        taskList.map(task => this.taskAssignmentService.findAllUsersOfTask(task.id!).subscribe({
+                                            next : (taskAssignments : TaskAssignment[]) => {
+                                                taskAssignments.map(taskassignment => {
+                                                    this.timeEntryService.taskAssignmentTimeEntries(taskassignment.id!).subscribe(
+                                                        (timeentries : TimeEntry[]) =>
+                                                        this.kanbanList.find(
+                                                            (kanbanlist) =>
+                                                                kanbanlist.kanban.id ==
+                                                                kanbanstatus.id
+                                                        )!.taskList.find(tasks => tasks.task.id == task.id)!.taskAssignments!.push({taskAssignment:taskassignment, timeentries: timeentries})
+                                                    )
+                                            })
+                                            }
+                                        })
+                                        )
                                     }
                                 });
                         });
@@ -397,7 +376,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             task.kanbanstatus = kanban;
             task.done = kanban.isTypeDone;
         }
-        const dialogRef = this.dialog.open(EditNewTasksComponent, {
+        this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: task,
                 taskTypeList: this.taskTypeList,
@@ -407,19 +386,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 userProjectList: this.userProjects,
                 user: this.user,
                 subject: this.subject
-            }
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-                this.kanbanList[result.task.kanbanstatus.order].taskList.push({
-                    task: result.task,
-                    taskAssignments: []
-                });
-                this.subject.next({
-                    method: 'add',
-                    task: result.task,
-                    projectid: this.projectid
-                });
             }
         });
     }

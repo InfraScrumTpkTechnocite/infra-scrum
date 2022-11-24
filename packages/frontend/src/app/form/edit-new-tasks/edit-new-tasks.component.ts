@@ -20,11 +20,10 @@ import { KanbanList } from 'src/app/models/kanbanlist.model';
 })
 export class EditNewTasksComponent implements OnInit {
     newTask: Task = new Task(this.data.task);
-
-    taskassignmentList: TaskAssignment[] = this.data.taskassignmentList ?? [];
     newTaskAssignmentList: TaskAssignment[] = [];
     userProjectList: UserProject[] = [];
     userProjectTaskCreator!: UserProject;
+    taskassignmentList!: any;
 
     noType: TaskType = new TaskType();
 
@@ -48,7 +47,6 @@ export class EditNewTasksComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA)
         public data: {
             task: Task;
-            taskassignmentList: TaskAssignment[];
             userProjectList: UserProject[];
             taskTypeList: TaskType[];
             sprintList: Project[];
@@ -68,6 +66,13 @@ export class EditNewTasksComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.taskassignmentList = this.data.kanbanlist
+            .find(
+                (kanbans) => kanbans.kanban.id == this.newTask.kanbanstatus.id
+            )
+            ?.taskList.find(
+                (taskFromList) => taskFromList.task.id == this.data.task.id
+            )?.taskAssignments;
         this.data.userProjectList.map((userProject) =>
             this.userProjectList.push(userProject)
         );
@@ -75,11 +80,15 @@ export class EditNewTasksComponent implements OnInit {
         var index = this.data.edition
             ? /** Find Task Creator through taskAssignmentList */
               this.userProjectList.findIndex(
-                  (userProject) =>
-                      userProject.user!.id ==
+                  (userProject) => {
                       this.taskassignmentList.find(
-                          (taskAssignment) => taskAssignment.isTaskCreator
-                      )?.userproject.user.id
+                          (taskAssignment: any) =>
+                              taskAssignment.taskAssignment.isTaskCreator ==
+                              true
+                      ).taskAssignment.userproject.id == userProject.user.id;
+                  }
+                  //       (taskAssignment) => taskAssignment.isTaskCreator
+                  //   )?.userproject.user.id
               )
             : /** Find Yourself */
               this.userProjectList.findIndex(
@@ -95,8 +104,9 @@ export class EditNewTasksComponent implements OnInit {
     isUserAssigned(userProject: UserProject): boolean {
         if (
             this.taskassignmentList?.find(
-                (taskAssignment) =>
-                    taskAssignment.userproject.id == userProject.id
+                (taskassignment: any) =>
+                    taskassignment.taskAssignment.userproject.id ==
+                    userProject.id
             )
         )
             return true;
@@ -151,9 +161,10 @@ export class EditNewTasksComponent implements OnInit {
                             .create(taskAssignment)
                             .subscribe({
                                 next: (taskAssignment: TaskAssignment) => {
-                                    this.taskassignmentList.push(
-                                        taskAssignment
-                                    );
+                                    this.taskassignmentList.push({
+                                        taskAssignment: taskAssignment,
+                                        timeentries: []
+                                    });
                                     index--;
                                 },
                                 error: (err: any) => {
@@ -163,11 +174,27 @@ export class EditNewTasksComponent implements OnInit {
                                 },
                                 complete: () => {
                                     if (index == 0) {
-                                        console.log(index);
+                                        this.newTask.id = this.data.task.id;
+                                        this.data.kanbanlist[
+                                            this.newTask.kanbanstatus.order
+                                        ].taskList
+                                            .find(
+                                                (task) =>
+                                                    task.task.id ==
+                                                    this.newTask.id
+                                            )!
+                                            .taskAssignments!.concat(
+                                                this.newTaskAssignmentList.map(
+                                                    (taskAssignment) => ({
+                                                        taskAssignment:
+                                                            taskAssignment,
+                                                        timeentries: []
+                                                    })
+                                                )
+                                            );
                                         this.toastService.success(
                                             'Task Edited !'
                                         );
-                                        this.newTask.id = this.data.task.id;
                                         this.data.subject.next({
                                             method: 'edit',
                                             task: this.newTask,
@@ -193,23 +220,16 @@ export class EditNewTasksComponent implements OnInit {
                 },
                 complete: () => {
                     if (this.newTaskAssignmentList.length == 0) {
-                        this.toastService.success(
-                            'Task Edited !'
-                        );
+                        this.toastService.success('Task Edited !');
                         this.newTask.id = this.data.task.id;
                         this.data.subject.next({
                             method: 'edit',
                             task: this.newTask,
                             projectid: this.projectid,
-                            sourceKanbanOrder:
-                                this.newTask.kanbanstatus.order,
-                            targetKanbanOrder:
-                                this.newTask.kanbanstatus.order
+                            sourceKanbanOrder: this.newTask.kanbanstatus.order,
+                            targetKanbanOrder: this.newTask.kanbanstatus.order
                         });
-                        this.dialogRef.close({
-                            task: this.newTask,
-                            taskid: this.data.task.id
-                        });
+                        this.dialogRef.close();
                     }
                 }
             };
@@ -232,14 +252,16 @@ export class EditNewTasksComponent implements OnInit {
                     taskAdmin.isTaskCreator = true;
                     this.newTaskAssignmentList.push(taskAdmin);
                     var index = this.newTaskAssignmentList.length;
+                    this.taskassignmentList = [];
                     this.newTaskAssignmentList.map((taskAssignment) => {
                         this.taskAssignmentService
                             .create(taskAssignment)
                             .subscribe({
                                 next: (taskAssignment: TaskAssignment) => {
-                                    this.taskassignmentList.push(
-                                        taskAssignment
-                                    );
+                                    this.taskassignmentList.push({
+                                        taskAssignment: taskAssignment,
+                                        timeentries: []
+                                    });
                                     index--;
                                 },
                                 error: (err: any) =>
@@ -248,15 +270,21 @@ export class EditNewTasksComponent implements OnInit {
                                     ),
                                 complete: () => {
                                     if (index == 0) {
+                                        this.data.kanbanlist[
+                                            task.kanbanstatus.order
+                                        ].taskList.push({
+                                            task: task,
+                                            taskAssignments:
+                                                this.taskassignmentList
+                                        });
                                         this.toastService.success(
                                             'Task created !'
                                         );
-                                        this.dialogRef.close({
-                                            task: this.newTask
-                                        });
+                                        this.dialogRef.close();
                                         this.data.subject.next({
                                             method: 'add',
-                                            task: this.newTask
+                                            task: task,
+                                            projectid: this.projectid
                                         });
                                     }
                                 }
@@ -280,21 +308,22 @@ export class EditNewTasksComponent implements OnInit {
         }
     }
 
-    removeUser(taskAssignment: TaskAssignment): void {
-        console.log('task assignment:', taskAssignment);
-        this.taskassignmentList.splice(
-            this.taskassignmentList.findIndex((tskAssignment) => {
-                return taskAssignment.id == tskAssignment.id;
-            }),
-            1
-        );
-
-        this.taskAssignmentService.delete(taskAssignment.id!).subscribe({
+    removeUser(taskAssignment: any): void {
+        this.taskAssignmentService.delete(taskAssignment.taskAssignment.id!).subscribe({
             next: () => {
                 console.log(`User unassigned from task`);
             },
             error: () => {},
-            complete: () => {}
+            complete: () => {
+                this.taskassignmentList.splice(
+                    this.taskassignmentList.findIndex((tskAssignment: any) => {
+                        return (
+                            taskAssignment.taskAssignment.id == tskAssignment.taskAssignment.id
+                        );
+                    }),
+                    1
+                );
+            }
         });
     }
 }

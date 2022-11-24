@@ -57,7 +57,7 @@
                     <input
                         type="date"
                         [ngModel]="sprint.sprint.enddate | date: 'yyyy-MM-dd'"
-                        (ngModelChange)="updateDate($event,sprint.sprint.enddate!)"
+                        (ngModelChange)="sprint.sprint.enddate = updateDate($event,sprint.sprint.enddate!)"
                     />
                 </div>
                 <div class="pl-2">
