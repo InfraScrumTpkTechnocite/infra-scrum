@@ -42,7 +42,7 @@
     margin-left: 12%;
     font-style: normal;
     font-size: 14pt;
-    color: red;
+    color: #e44e4d;
 }
 
 /*css titre "MY profile*/
@@ -59,7 +59,7 @@
     margin-left: 37%;
     font-style: italic;
     font-size: 14pt;
-    color: red;
+    color: #e44e4d;
 }
 
 /*css input email message erreur*/
@@ -68,7 +68,7 @@
     margin-left: 1%;
     font-style: italic;
     font-size: 14pt;
-    color: red;
+    color: #e44e4d;
 }
 
 /*css input firstname message erreur*/
@@ -77,7 +77,7 @@
     margin-left: 19%;
     font-style: italic;
     font-size: 14pt;
-    color: red;
+    color: #e44e4d;
 }
 
 /*css input password/confirm-password message erreur*/
@@ -86,7 +86,7 @@
     margin-left: 19%;
     font-style: italic;
     font-size: 14pt;
-    color: red;
+    color: #e44e4d;
 }
 
 /*css role*/
@@ -153,15 +153,16 @@
 
 .update {
     margin-left: 0px;
-    padding: 6px 15px;
+    padding: 8px;
     background: #4e80ca;
     color: #ffffff;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
-    border-radius: 6px;
+    border-radius: 12px;
     border: 2px solid #ffffff;
-    font-size: 20px;
-    font-style: italic;
+}
+.update:hover{
+    background-color: #275e9d;
 }
 
 /*css button Cancel*/
@@ -169,17 +170,17 @@
 .cancel
 {
     margin-left: 0px;
-    padding: 6px 15px;
-    background: #ec0707;
+    padding: 8px;
+    background: #e44e4d;
     color: #ffffff;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
-    border-radius: 6px;
+    border-radius: 12px;
     border: 2px solid #ffffff;
-    font-size: 20px;
-    font-style: italic; 
 
 }
-
+.cancel:hover{
+    background-color: red;
+}
 
 

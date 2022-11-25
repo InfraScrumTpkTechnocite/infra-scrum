@@ -290,31 +290,52 @@ export class ChartGanttComponent implements OnInit {
 
     /** Set rows to be tasks of sprint */
     changeSprintDisplay(sprint: IGanttChartRow) {
-        var tasks: Task[] = [];
+        var events: IGanttChartEvent[] = [];
+        this.rows = [];
         this.kanbanList.map((kanbanAndTasks) => {
-            kanbanAndTasks.tasks.map((task) => {
-                task.sprint != null && task.sprint!.id == sprint.id
-                    ? tasks.push(task)
-                    : '';
+            kanbanAndTasks.taskList.map((task) => {
+                if (
+                    task.task.sprint != null &&
+                    task.task.sprint!.id == sprint.id
+                ) {
+                    events = [];
+                    task.taskAssignments?.map((tskAssignment) =>
+                        tskAssignment.timeentries.map((timeentry) =>
+                            events.push({
+                                name: tskAssignment.taskAssignment.userproject
+                                    .user.username,
+                                startDate: new Date(timeentry.dayofwork),
+                                endDate: this.estimatedTimeToDate(
+                                    timeentry.dayofwork,
+                                    timeentry.workedtime
+                                )
+                            })
+                        )
+                    );
+                    this.rows.push({
+                        id: task.task.id!,
+                        name: task.task.name,
+                        events: events
+                    });
+                }
             });
         });
-        this.rows = [];
-        tasks.map((task) =>
-            this.rows.push({
-                id: task.id,
-                name: task.name,
-                events: [
-                    {
-                        name: task.name,
-                        startDate: new Date(task.startdate),
-                        endDate: this.estimatedTimeToDate(
-                            task.startdate,
-                            task.estimatedtime
-                        )
-                    } as IGanttChartEvent
-                ]
-            } as IGanttChartRow)
-        );
+        // tasks.map((task) =>
+        //     this.rows.push({
+        //         id: task.task.id,
+        //         name: task.task.name,
+        //         events: [
+        //             {
+        //                 name: task.task.name,
+        //                 startDate: new Date(task.task.startdate),
+        //                 endDate: this.estimatedTimeToDate(
+        //                     task.task.startdate,
+        //                     task.task.estimatedtime
+        //                 )
+        //             } as IGanttChartEvent
+        //         ]
+        //     } as IGanttChartRow)
+        // );
         this.rows.sort(
             (a, b) =>
                 Math.min(...a.events.map((event) => Number(event.startDate))) -

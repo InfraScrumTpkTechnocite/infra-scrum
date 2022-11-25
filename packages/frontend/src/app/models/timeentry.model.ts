@@ -1,12 +1,14 @@
-import { Task } from "./task.model";
+import { TaskAssignment } from "./taskassignment.model";
 
 export class TimeEntry {
   id?: string;
-  task: Task;
+  taskassignment!: TaskAssignment;
   workedtime: number;
+  dayofwork: string;
 
-  constructor() {
-    this.task = new Task();
+  constructor(taskAssignment : TaskAssignment) {
+    this.taskassignment = taskAssignment ?? undefined; 
     this.workedtime = 0;
+    this.dayofwork = new Date().toISOString();
   }
 }

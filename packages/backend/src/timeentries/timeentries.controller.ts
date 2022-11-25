@@ -57,6 +57,11 @@ export class TimeentriesController {
     return await this.timeEntriesService.totalUsersWorkedTimeOnTask(taskid);
   }
 
+  @Get('/totalworkedtimeontask/:taskid')
+  async totalWorkedtimeOnTask(@Param('taskid') taskid: string): Promise<any> {
+    return await this.timeEntriesService.totalWorkedTimeOnTask(taskid);
+  }
+
   @Get('task/:taskid')
   async timeEntries(@Param('taskid') taskid: string): Promise<any> {
     return await this.timeEntriesService.timeEntries(taskid);
