@@ -489,9 +489,23 @@
                                             </p>
                                             <p>
                                                 {{
-                                                    taskassignment.timeentries
-                                                        | arrayReduce
+                                                    (taskassignment.timeentries
+                                                        | arrayReduce) / 480
+                                                        | numberToInteger
                                                 }}
+                                                d,
+                                                {{
+                                                    ((taskassignment.timeentries
+                                                        | arrayReduce) /
+                                                        60) %
+                                                        8 | numberToInteger
+                                                }}
+                                                hrs
+                                                {{
+                                                    (taskassignment.timeentries
+                                                        | arrayReduce) % 60
+                                                }}
+                                                min.
                                             </p>
                                         </li>
                                     </ul>
