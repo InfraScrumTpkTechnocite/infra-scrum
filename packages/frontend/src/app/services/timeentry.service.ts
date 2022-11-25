@@ -38,6 +38,14 @@ export class TimeentryService {
             );
     }
 
+    update(timeentry: TimeEntry): Observable<any>{
+        return this.httpClient.put<any>(
+            '/backend/timeentries/totalusersworkedtimeontask/' + timeentry.id,
+            JSON.stringify(timeentry),
+            this.httpOptions
+        )
+    }
+
     totalUserWorkedTimeOnTask(taskid: string): Observable<any> {
         return this.httpClient.get<any>(
             '/backend/timeentries/totalusersworkedtimeontask/' + taskid,

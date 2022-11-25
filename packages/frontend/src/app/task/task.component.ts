@@ -11,6 +11,7 @@ import { User } from '../models/user.model';
 import { KanbanList } from '../models/kanbanlist.model';
 import { TaskService } from '../services/task.service';
 import { HotToastService } from '@ngneat/hot-toast';
+import { TimeEntryComponent } from '../form/time-entry/time-entry.component';
 
 @Component({
     selector: 'app-task',
@@ -154,5 +155,15 @@ export class TaskComponent implements OnInit {
             )
                 this.showTask = this.showTask && true;
             else this.showTask = false;
+    }
+
+    openTimeEntriesDialog(){
+        this.dialog.open(TimeEntryComponent, {
+            data: {
+                task:this.task,
+                user: this.user,
+                kanbanlist : this.kanbanList
+            }
+        });
     }
 }
