@@ -263,14 +263,14 @@
                 class="sub-menu-wrapper dropdownAnim absolute top-auto right-3 md:right-6 w-64 max-h-0 drop-shadow-lg z-50"
             >
                 <div
-                    class="sub-menu bg-secondary rounded-b-lg rounded-tl-lg p-5 m-3"
+                    class="sub-menu bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-blue-400 to-secondary rounded-b-lg rounded-tl-lg p-5 m-3"
                 >
                     <div
                         class="user-info flex items-center justify-center text-center cursor-default"
                     >
                         <div class="w-1/3">
                             <div
-                                class="userChip w-12 h-12 mr-10 rounded-full bg-primary flex items-center justify-center"
+                                class="userChip w-12 h-12 mr-10 rounded-full bg-secondary flex items-center justify-center"
                             >
                                 <!-- condition si photo, sinon span avec première lettre  -->
 
@@ -290,7 +290,7 @@
                     <!-- Lien vers projets de l'utilisateur  -->
                     <a
                         routerLink="/projects"
-                        class="group transition-all duration-300 ease-in-out sub-menu-link flex items-center justify-between text-white mt-4 mb-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="group transition-all duration-300 ease-in-out sub-menu-link flex items-center justify-between text-white mt-4 mb-2 p-2 hover:bg-secondary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -322,7 +322,7 @@
                     <!-- Lien profil / venir ajouter lien vers profil user au lieu de index -->
                     <a
                         routerLink="/user-profile"
-                        class="group sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="group sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-secondary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -353,7 +353,7 @@
                     <a
                         *ngIf="isSuperadmin()"
                         routerLink="/admin"
-                        class="group sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-primary hover:text-white rounded-md"
+                        class="group sub-menu-link flex items-center justify-between text-white my-2 p-2 hover:bg-secondary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -380,7 +380,7 @@
                     </a>
                     <a
                         (click)="changeLanguage()"
-                        class="group sub-menu-link flex text-white my-2 p-2 items-center hover:bg-primary hover:text-white rounded-md"
+                        class="group sub-menu-link flex text-white my-2 p-2 items-center hover:bg-secondary hover:text-white rounded-md"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
