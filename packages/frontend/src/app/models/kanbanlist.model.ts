@@ -7,10 +7,12 @@ export class KanbanList {
     kanban!: Kanbanstatus;
     taskList!: {
         task: Task;
-        taskAssignments: {
-            taskAssignment: TaskAssignment;
-            timeentries: TimeEntry[];
-        }[] | undefined;
+        taskAssignments:
+            | {
+                  taskAssignment: TaskAssignment;
+                  timeentries: TimeEntry[];
+              }[]
+            | undefined;
     }[];
     constructor() {}
 }
