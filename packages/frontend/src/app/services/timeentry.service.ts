@@ -40,7 +40,7 @@ export class TimeentryService {
 
     update(timeentry: TimeEntry): Observable<any>{
         return this.httpClient.put<any>(
-            '/backend/timeentries/totalusersworkedtimeontask/' + timeentry.id,
+            '/backend/timeentries/' + timeentry.id,
             JSON.stringify(timeentry),
             this.httpOptions
         )
