@@ -22,7 +22,7 @@ export class TasktypeService {
     }
 
     private log(response: any) {
-        console.table(response);
+        // console.table(response);
     }
 
     create(tasktype: TaskType): Observable<TaskType> {
@@ -38,9 +38,7 @@ export class TasktypeService {
             );
     }
 
-    getAll(): Observable<TaskType[]>{
-        return this.httpClient.get<any>(
-            '/backend/tasktypes', this.httpOptions
-        )
+    getAll(): Observable<TaskType[]> {
+        return this.httpClient.get<any>('/backend/tasktypes', this.httpOptions);
     }
 }

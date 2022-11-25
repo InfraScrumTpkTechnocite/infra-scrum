@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
                 console.log(err);
             },
             complete: () => {
-                console.log(`Login - get user complete`);
+                // console.log(`Login - get user complete`);
             }
         };
 
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
                 //console.log(`Error : ${error.message}`);
             },
             complete: () => {
-                console.log(`login process completed.`);
+                // console.log(`login process completed.`);
                 var username = localStorage.getItem('username');
                 if (username)
                     this.userService

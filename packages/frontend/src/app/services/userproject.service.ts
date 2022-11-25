@@ -23,7 +23,7 @@ export class UserprojectService {
     }
 
     private log(response: any) {
-        console.table(response);
+        // console.table(response);
     }
 
     create(userproject: UserProject): Observable<UserProject> {

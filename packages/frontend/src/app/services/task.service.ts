@@ -22,7 +22,7 @@ export class TaskService {
     }
 
     private log(response: any) {
-        console.table(response);
+        // console.table(response);
     }
 
     create(task: Task): Observable<Task> {

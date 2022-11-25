@@ -129,7 +129,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                 let sourceIndex: number = this.kanbanList[
                                     message.sourceKanbanOrder
                                 ].taskList.findIndex(
-                                    (tasks) => tasks.task.id == message.task.task.id
+                                    (tasks) =>
+                                        tasks.task.id == message.task.task.id
                                 );
                                 this.kanbanList[
                                     message.sourceKanbanOrder
@@ -138,7 +139,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                     message.targetKanbanOrder
                                 ].taskList.push({
                                     task: message.task.task,
-                                    taskAssignments: message.task.taskAssignments
+                                    taskAssignments:
+                                        message.task.taskAssignments
                                 });
                             }
                             break;
@@ -260,21 +262,58 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                             task: task as Task,
                                             taskAssignments: []
                                         }));
-                                        taskList.map(task => this.taskAssignmentService.findAllUsersOfTask(task.id!).subscribe({
-                                            next : (taskAssignments : TaskAssignment[]) => {
-                                                taskAssignments.map(taskassignment => {
-                                                    this.timeEntryService.taskAssignmentTimeEntries(taskassignment.id!).subscribe(
-                                                        (timeentries : TimeEntry[]) =>
-                                                        this.kanbanList.find(
-                                                            (kanbanlist) =>
-                                                                kanbanlist.kanban.id ==
-                                                                kanbanstatus.id
-                                                        )!.taskList.find(tasks => tasks.task.id == task.id)!.taskAssignments!.push({taskAssignment:taskassignment, timeentries: timeentries})
-                                                    )
-                                            })
-                                            }
-                                        })
-                                        )
+                                        taskList.map((task) =>
+                                            this.taskAssignmentService
+                                                .findAllUsersOfTask(task.id!)
+                                                .subscribe({
+                                                    next: (
+                                                        taskAssignments: TaskAssignment[]
+                                                    ) => {
+                                                        taskAssignments.map(
+                                                            (
+                                                                taskassignment
+                                                            ) => {
+                                                                this.timeEntryService
+                                                                    .taskAssignmentTimeEntries(
+                                                                        taskassignment.id!
+                                                                    )
+                                                                    .subscribe(
+                                                                        (
+                                                                            timeentries: TimeEntry[]
+                                                                        ) =>
+                                                                            this.kanbanList
+                                                                                .find(
+                                                                                    (
+                                                                                        kanbanlist
+                                                                                    ) =>
+                                                                                        kanbanlist
+                                                                                            .kanban
+                                                                                            .id ==
+                                                                                        kanbanstatus.id
+                                                                                )!
+                                                                                .taskList.find(
+                                                                                    (
+                                                                                        tasks
+                                                                                    ) =>
+                                                                                        tasks
+                                                                                            .task
+                                                                                            .id ==
+                                                                                        task.id
+                                                                                )!
+                                                                                .taskAssignments!.push(
+                                                                                    {
+                                                                                        taskAssignment:
+                                                                                            taskassignment,
+                                                                                        timeentries:
+                                                                                            timeentries
+                                                                                    }
+                                                                                )
+                                                                    );
+                                                            }
+                                                        );
+                                                    }
+                                                })
+                                        );
                                     }
                                 });
                         });
@@ -401,7 +440,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.isSprintsOpen = false;
         this.hideChart = true;
         this.hideHistory = true;
-        console.log('close sprint bar');
+        // console.log('close sprint bar');
 
         const url = this.parentProject ? this.parentProject.id : this.projectid;
 
@@ -596,7 +635,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
 
     dropColumns(event: CdkDragDrop<Kanbanstatus>) {
-        console.log(event.previousIndex, event.currentIndex);
+        // console.log(event.previousIndex, event.currentIndex);
         moveItemInArray(
             this.kanbanList,
             event.previousIndex,
@@ -626,17 +665,17 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     drop(event: CdkDragDrop<any>) {
         if (event.previousContainer === event.container) {
-            console.log(`Même colonne`);
+            // console.log(`Même colonne`);
             moveItemInArray(
                 event.container.data,
                 event.previousIndex,
                 event.currentIndex
             );
         } else {
-            console.log(`Changement colonne`);
-            console.log(
-                `previous kanban: ${event.previousContainer.id}, current kanban: ${event.container.id}`
-            );
+            // console.log(`Changement colonne`);
+            // console.log(
+            //     `previous kanban: ${event.previousContainer.id}, current kanban: ${event.container.id}`
+            // );
             transferArrayItem(
                 event.previousContainer.data,
                 event.container.data,
