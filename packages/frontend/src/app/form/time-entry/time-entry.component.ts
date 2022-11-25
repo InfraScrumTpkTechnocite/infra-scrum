@@ -102,14 +102,15 @@ export class TimeEntryComponent implements OnInit {
         this.timeentryService
             .update(timeentry)
             .subscribe({ next: (timeentry:TimeEntry) => {
-                this.data.kanbanlist
+                var timeEntry = this.data.kanbanlist
                 .find((knb) => knb.kanban.id == this.data.task.kanbanstatus.id)!
                 .taskList.find((tsk) => tsk.task.id == this.data.task.id)!
                 .taskAssignments!.find(
                     (assign) =>
                         assign.taskAssignment.userproject.user.id ==
                         this.data.user.id
-                )!.timeentries.push(timeentry);
+                )!.timeentries.find((timeentry) => timeentry.id == timeentrydate.timeEntry.id)
+                timeEntry = timeentry;
             },
             error: (err:any) => {
                 this.toastService.error(
