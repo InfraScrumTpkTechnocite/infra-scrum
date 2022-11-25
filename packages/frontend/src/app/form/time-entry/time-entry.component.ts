@@ -63,7 +63,7 @@ export class TimeEntryComponent implements OnInit {
     }
 
     addEntry() {
-        this.timeEntries.push({timeEntry: new TimeEntry(this.taskAssignment)} as TimeEntryDate);
+        this.timeEntries.push({timeEntry: new TimeEntry(this.taskAssignment), hours: 0, minutes: 0} as TimeEntryDate);
     }
 
     confirmAddEntry(timeentrydate: TimeEntryDate) {

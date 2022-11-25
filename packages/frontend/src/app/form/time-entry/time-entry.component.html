@@ -12,6 +12,8 @@
                     ? (data.task.startdate | date: 'yyyy-MM-dd')
                     : ''
             "
+            [max]="data.task.sprint ? (data.task.sprint.enddate! | date: 'yyyy-MM-dd')
+            : ''"
             [ngModel]="timeEntry.timeEntry.dayofwork | date: 'yyyy-MM-dd'"
             (ngModelChange)="timeEntry.timeEntry.dayofwork = updateDate($event)"
             class="w-40 mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
