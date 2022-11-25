@@ -113,12 +113,12 @@ export class TimeEntryComponent implements OnInit {
             },
             error: (err:any) => {
                 this.toastService.error(
-                    `Error during timeentry creation<br><br>${err.error.driverError.detail}`
+                    `Error during timeentry edition<br><br>${err.error.driverError.detail}`
                 );
             },
             complete: () => {
                 this.toastService.success(
-                    `TimeEntry created`
+                    `TimeEntry updated`
                 )
             }
         });
