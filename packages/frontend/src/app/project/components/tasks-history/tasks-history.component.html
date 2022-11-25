@@ -57,38 +57,39 @@
                                         <!-- condition si photo, sinon span avec premiere lettre username -->
                                         <img
                                             title="{{
-                                                taskassignment.userproject.user
-                                                    .username
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
                                             }}"
                                             *ngIf="
-                                                taskassignment.userproject.user
-                                                    .picture
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.picture
                                             "
                                             class="rounded-full"
                                             src="data:image/*;base64, {{
-                                                taskassignment.userproject.user
-                                                    .picture
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.picture
                                             }}"
                                             alt="profile picture"
                                             title="{{
-                                                taskassignment.userproject.user
-                                                    .username
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
                                             }}"
                                         />
                                         <span
                                             title="{{
-                                                taskassignment.userproject.user
-                                                    .username
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
                                             }}"
                                             *ngIf="
-                                                !taskassignment.userproject.user
-                                                    .picture
+                                                !taskassignment.taskAssignment
+                                                    .userproject.user.picture
                                             "
                                             class="text-lg uppercase font-bold"
                                         >
                                             {{
-                                                taskassignment.userproject.user
-                                                    .username | initialsName
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
+                                                    | initialsName
                                             }}
                                         </span>
                                     </div>
@@ -184,6 +185,46 @@
                                                 : 'No description'
                                         }}
                                     </p>
+                                    <ul>
+                                        <div
+                                            *ngFor="
+                                                let taskassignment of task.taskassignments;
+                                                let i = index
+                                            "
+                                            class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
+                                        >
+                                            <li>
+                                                <!-- <p>
+                                                    {{
+                                                        taskassignment
+                                                            .taskAssignment
+                                                            .userproject.user
+                                                            .username
+                                                    }}
+                                                </p> -->
+                                                <p>
+                                                    {{
+                                                        (taskassignment.timeentries
+                                                            | arrayReduce) / 480
+                                                            | numberToInteger
+                                                    }}
+                                                    d,
+                                                    {{
+                                                        ((taskassignment.timeentries
+                                                            | arrayReduce) /
+                                                            60) %
+                                                            8 | numberToInteger
+                                                    }}
+                                                    hrs
+                                                    {{
+                                                        (taskassignment.timeentries
+                                                            | arrayReduce) % 60
+                                                    }}
+                                                    min.
+                                                </p>
+                                            </li>
+                                        </div>
+                                    </ul>
                                     <!-- !! -->
                                     <!-- Si pas de description: -->
                                     <!-- <p>No description available</p> -->
@@ -251,38 +292,39 @@
                                         <!-- condition si photo, sinon span avec premiere lettre username -->
                                         <img
                                             title="{{
-                                                taskassignment.userproject.user
-                                                    .username
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
                                             }}"
                                             *ngIf="
-                                                taskassignment.userproject.user
-                                                    .picture
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.picture
                                             "
                                             class="rounded-full"
                                             src="data:image/*;base64, {{
-                                                taskassignment.userproject.user
-                                                    .picture
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.picture
                                             }}"
                                             alt="profile picture"
                                             title="{{
-                                                taskassignment.userproject.user
-                                                    .username
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
                                             }}"
                                         />
                                         <span
                                             title="{{
-                                                taskassignment.userproject.user
-                                                    .username
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
                                             }}"
                                             *ngIf="
-                                                !taskassignment.userproject.user
-                                                    .picture
+                                                !taskassignment.taskAssignment
+                                                    .userproject.user.picture
                                             "
                                             class="text-lg uppercase font-bold"
                                         >
                                             {{
-                                                taskassignment.userproject.user
-                                                    .username | initialsName
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
+                                                    | initialsName
                                             }}
                                         </span>
                                     </div>
@@ -369,9 +411,9 @@
                             <!-- AFFICHAGE OVERVIEW -->
                             <div
                                 *ngIf="task.visible"
-                                class="flex border-t-2 border-grey2 mt-2 justify-start"
+                                class="flex border-t-2 w-full border-grey2 mt-2 justify-start"
                             >
-                                <div class="flex w-full text-sm nowrap mt-2">
+                                <div class="flex w-2/3 text-sm nowrap mt-2">
                                     {{
                                         task.task.description
                                             ? task.task.description
@@ -381,6 +423,109 @@
                                     <!-- Si pas de description: -->
                                     <!-- <p>No description available</p> -->
                                 </div>
+
+                                <!-- DIV USERS  -->
+
+                                <div class="w-1/3 mt-2 text-sm">
+                                    <ul
+                                        *ngFor="
+                                            let taskassignment of task.taskassignments;
+                                            let i = index
+                                        "
+                                        class=""
+                                    >
+                                        <li
+                                            class="flex items-center justify-between"
+                                        >
+                                            <div
+                                                class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
+                                            >
+                                                <!-- condition si photo, sinon span avec premiere lettre username -->
+                                                <img
+                                                    title="{{
+                                                        taskassignment
+                                                            .taskAssignment
+                                                            .userproject.user
+                                                            .username
+                                                    }}"
+                                                    *ngIf="
+                                                        taskassignment
+                                                            .taskAssignment
+                                                            .userproject.user
+                                                            .picture
+                                                    "
+                                                    class="rounded-full"
+                                                    src="data:image/*;base64, {{
+                                                        taskassignment
+                                                            .taskAssignment
+                                                            .userproject.user
+                                                            .picture
+                                                    }}"
+                                                    alt="profile picture"
+                                                    title="{{
+                                                        taskassignment
+                                                            .taskAssignment
+                                                            .userproject.user
+                                                            .username
+                                                    }}"
+                                                />
+                                                <span
+                                                    title="{{
+                                                        taskassignment
+                                                            .taskAssignment
+                                                            .userproject.user
+                                                            .username
+                                                    }}"
+                                                    *ngIf="
+                                                        !taskassignment
+                                                            .taskAssignment
+                                                            .userproject.user
+                                                            .picture
+                                                    "
+                                                    class="text-lg uppercase font-bold"
+                                                >
+                                                    {{
+                                                        taskassignment
+                                                            .taskAssignment
+                                                            .userproject.user
+                                                            .username
+                                                            | initialsName
+                                                    }}
+                                                </span>
+                                            </div>
+                                            <p>
+                                                {{
+                                                    taskassignment
+                                                        .taskAssignment
+                                                        .userproject.user
+                                                        .username
+                                                }}
+                                            </p>
+                                            <p>
+                                                {{
+                                                    (taskassignment.timeentries
+                                                        | arrayReduce) / 480
+                                                        | numberToInteger
+                                                }}
+                                                d,
+                                                {{
+                                                    ((taskassignment.timeentries
+                                                        | arrayReduce) /
+                                                        60) %
+                                                        8 | numberToInteger
+                                                }}
+                                                hrs
+                                                {{
+                                                    (taskassignment.timeentries
+                                                        | arrayReduce) % 60
+                                                }}
+                                                min.
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--  -->
+                                <!--  -->
                             </div>
                         </div>
                     </li>

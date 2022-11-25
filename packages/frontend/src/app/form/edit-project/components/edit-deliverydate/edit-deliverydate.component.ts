@@ -26,7 +26,7 @@ export class EditDeliverydateComponent implements OnInit {
 
     ngOnInit(): void {
         this.sprintList.map((sprint) => {
-            console.log(sprint);
+            // console.log(sprint);
 
             this.sprints.push({ sprint: new Project(sprint), isEdit: false });
         });

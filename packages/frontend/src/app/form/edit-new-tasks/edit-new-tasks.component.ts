@@ -309,21 +309,26 @@ export class EditNewTasksComponent implements OnInit {
     }
 
     removeUser(taskAssignment: any): void {
-        this.taskAssignmentService.delete(taskAssignment.taskAssignment.id!).subscribe({
-            next: () => {
-                console.log(`User unassigned from task`);
-            },
-            error: () => {},
-            complete: () => {
-                this.taskassignmentList.splice(
-                    this.taskassignmentList.findIndex((tskAssignment: any) => {
-                        return (
-                            taskAssignment.taskAssignment.id == tskAssignment.taskAssignment.id
-                        );
-                    }),
-                    1
-                );
-            }
-        });
+        this.taskAssignmentService
+            .delete(taskAssignment.taskAssignment.id!)
+            .subscribe({
+                next: () => {
+                    // console.log(`User unassigned from task`);
+                },
+                error: () => {},
+                complete: () => {
+                    this.taskassignmentList.splice(
+                        this.taskassignmentList.findIndex(
+                            (tskAssignment: any) => {
+                                return (
+                                    taskAssignment.taskAssignment.id ==
+                                    tskAssignment.taskAssignment.id
+                                );
+                            }
+                        ),
+                        1
+                    );
+                }
+            });
     }
 }

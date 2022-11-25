@@ -22,7 +22,7 @@ export class KanbanstatusService {
     }
 
     private log(response: any) {
-        console.table(response);
+        // console.table(response);
     }
 
     create(kanbanstatus: Kanbanstatus): Observable<Kanbanstatus> {

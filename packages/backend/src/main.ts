@@ -59,9 +59,9 @@ async function bootstrap() {
     //   } ) connected on port ${configEnv.get<number>('WEBSOCKET_SERVER_PORT')}`,
     // );
     //console.log(request.rawHeaders);
-    console.log(
-      `ws : ${ws}, Request: ${request}, Client IP address : ${request.socket.remoteAddress}`,
-    );
+    // console.log(
+    //   `ws : ${ws}, Request: ${request}, Client IP address : ${request.socket.remoteAddress}`,
+    // );
     webSockets.push({ url: request.url, ws: ws });
     // sending message
     ws.on('message', (data: any) => {
@@ -69,7 +69,7 @@ async function bootstrap() {
       //   `Client with projectid ${JSON.stringify(ws)} has sent us: ${data}`,
       // );
       // console.table(wss.clients);
-      console.log('received from ' + webSockets + ': ' + data);
+      // console.log('received from ' + webSockets + ': ' + data);
       wss.clients.forEach(function each(client: any) {
         // console.log('client : ' + client + ' - ws : ' + ws);
         if (
@@ -77,7 +77,7 @@ async function bootstrap() {
           webSockets.find((websocket) => websocket.ws == client).url ==
             webSockets.find((websocket) => websocket.ws == ws).url */
         ) {
-          console.log(`WebSocket server - sending message : ${data}`);
+          // console.log(`WebSocket server - sending message : ${data}`);
           client.send(data.toString());
         }
       });

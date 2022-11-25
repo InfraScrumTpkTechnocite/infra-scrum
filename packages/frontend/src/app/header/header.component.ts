@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit {
                 console.log(`${err}`);
             },
             complete: () => {
-                console.log(`get user's projects completed.`);
+                // console.log(`get user's projects completed.`);
             }
         };
         //...et attention : le userid n'est certainement pas le bon !
@@ -89,7 +89,7 @@ export class HeaderComponent implements OnInit {
                 console.log(`Error: ${err}`);
             },
             complete: () => {
-                console.log(`login.component.ts - get user completed.`);
+                // console.log(`login.component.ts - get user completed.`);
             }
         };
         //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
