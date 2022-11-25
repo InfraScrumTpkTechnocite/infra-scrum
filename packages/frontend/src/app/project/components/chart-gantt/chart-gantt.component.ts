@@ -55,12 +55,6 @@ export class ChartGanttComponent implements OnInit {
             } as IGanttChartRow)
         );
         this.setXAxis();
-        this.isHidden = new Array<Array<boolean>>(this.rows.length);
-        this.isHidden.fill([], 0, this.isHidden.length);
-        this.isHidden.forEach((row, index) => {
-            this.isHidden[index] = new Array(this.rows[index].events.length);
-            this.isHidden[index].fill(true, 0, this.isHidden.length);
-        });
     }
 
     /** Return the difference in months */
@@ -253,15 +247,15 @@ export class ChartGanttComponent implements OnInit {
 
     /** Get number of event overlaping each other at the dates of the event */
     getEventNumberOfOverlap(event: IGanttChartEvent): number {
-        var eventIndex: number;
+        var eventIndex: number = 0;
         var row: IGanttChartRow;
-
         var row = this.rows.find((row) => {
             eventIndex = row.events.findIndex(
                 (eventFromRows) => eventFromRows == event
             );
             return row.events.find((eventFromRows) => eventFromRows == event);
         })!;
+        
         return row.events.filter(
             (eventFromRow, index) =>
                 eventFromRow.startDate < event.endDate &&
@@ -282,7 +276,7 @@ export class ChartGanttComponent implements OnInit {
                     period.startDate < event.endDate &&
                     period.endDate > event.startDate
                 )
-                    maxOverlap[index]++;
+                maxOverlap[index]++;
             });
         });
         return Math.max(...maxOverlap);
@@ -300,7 +294,7 @@ export class ChartGanttComponent implements OnInit {
                 ) {
                     events = [];
                     task.taskAssignments?.map((tskAssignment) =>
-                        tskAssignment.timeentries.map((timeentry) =>
+                        tskAssignment.timeentries.map((timeentry) => {
                             events.push({
                                 name: tskAssignment.taskAssignment.userproject
                                     .user.username,
@@ -309,9 +303,10 @@ export class ChartGanttComponent implements OnInit {
                                     timeentry.dayofwork,
                                     timeentry.workedtime
                                 )
-                            })
-                        )
+                            });
+                        })
                     );
+                    console.log(events);
                     this.rows.push({
                         id: task.task.id!,
                         name: task.task.name,
@@ -320,6 +315,7 @@ export class ChartGanttComponent implements OnInit {
                 }
             });
         });
+        console.log(this.rows);
         // tasks.map((task) =>
         //     this.rows.push({
         //         id: task.task.id,
@@ -368,17 +364,20 @@ export class ChartGanttComponent implements OnInit {
     estimatedTimeToDate(startdate: string, estimatedtime: number): Date {
         var StartDate = new Date(startdate);
         var estimatedDate = new Date(StartDate);
+        //** hours */
         estimatedDate.setTime(
             estimatedDate.getTime() +
                 ((estimatedtime / 60) % 8) * 60 * 60 * 1000
-        ); //** hours */
+        );
+        //** days */
         estimatedDate.setTime(
             estimatedDate.getTime() +
-                (estimatedtime / 480) * 3 * 24 * 60 * 60 * 1000
-        ); //** days */
+                (estimatedtime / 480) * 24 * 60 * 60 * 1000
+        );
+        //** minutes */
         estimatedDate.setTime(
             estimatedDate.getTime() + (estimatedtime % 60) * 60 * 1000
-        ); //** minutes */
+        );
         return estimatedDate;
     }
 
@@ -413,5 +412,11 @@ export class ChartGanttComponent implements OnInit {
         this.monthAxis = this.getMonths(this.startDate, this.endDate);
         this.weekAxis = this.getWeeks(this.startDate, this.endDate);
         this.dayAxis = this.getDays(this.startDate, this.endDate);
+        this.isHidden = new Array<Array<boolean>>(this.rows.length);
+        this.isHidden.fill([], 0, this.isHidden.length);
+        this.isHidden.forEach((row, index) => {
+            this.isHidden[index] = new Array(this.rows[index].events.length);
+            this.isHidden[index].fill(true, 0, this.isHidden.length);
+        });
     }
 }
