@@ -14,6 +14,7 @@ export interface tacheAssignment {
               timeentries: TimeEntry[];
           }[]
         | undefined;
+
     visible: boolean;
     totalWorkedTime: number;
 }
@@ -58,31 +59,12 @@ export class TasksHistoryComponent implements OnInit {
             );
         });
 
-        // affichage users assignés à la tache:
-        // this.tasksLists.map((task: tacheAssignment) =>
-        //     this.taskassignmentService
-        //         .findAllUsersOfTask(task.task.id!)
-        //         .subscribe({
-        //             next: (taskassignments: TaskAssignment[]) => {
-        //                 task.taskassignments = taskassignments;
-        //             },
-        //             error: () => {},
-        //             complete: () => {}
-        //         })
-        // );
-        // this.tasksLists.map((task: tacheAssignment) =>
-        //     this.timeEntriesService
-        //         .totalWorkedTimeOnTask(task.task.id!)
-        //         .subscribe({
-        //             next: (result) => {
-        //                 if (result[0]) {
-        //                     //console.log(result);
-        //                     task.totalWorkedTime = result[0].total_minutes;
-        //                 }
-        //             },
-        //             error: () => {},
-        //             complete: () => {}
-        //         })
-        // );
+        this.tasksLists.map((task) => {
+            task.taskassignments?.map((taskAssignment) => {
+                taskAssignment.timeentries.map((timeEntry) => {
+                    task.totalWorkedTime += timeEntry.workedtime;
+                });
+            });
+        });
     }
 }

@@ -185,6 +185,32 @@
                                                 : 'No description'
                                         }}
                                     </p>
+                                    <ul>
+                                        <div
+                                            *ngFor="
+                                                let taskassignment of task.taskassignments;
+                                                let i = index
+                                            "
+                                            class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
+                                        >
+                                            <li>
+                                                <!-- <p>
+                                                    {{
+                                                        taskassignment
+                                                            .taskAssignment
+                                                            .userproject.user
+                                                            .username
+                                                    }}
+                                                </p> -->
+                                                <p>
+                                                    {{
+                                                        taskassignment.timeentries
+                                                            | arrayReduce
+                                                    }}
+                                                </p>
+                                            </li>
+                                        </div>
+                                    </ul>
                                     <!-- !! -->
                                     <!-- Si pas de description: -->
                                     <!-- <p>No description available</p> -->
@@ -383,6 +409,32 @@
                                     <!-- Si pas de description: -->
                                     <!-- <p>No description available</p> -->
                                 </div>
+                                <ul>
+                                    <div
+                                        *ngFor="
+                                            let taskassignment of task.taskassignments;
+                                            let i = index
+                                        "
+                                        class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center"
+                                    >
+                                        <li>
+                                            <!-- <p>
+                                                {{
+                                                    taskassignment
+                                                        .taskAssignment
+                                                        .userproject.user
+                                                        .username
+                                                }}
+                                            </p> -->
+                                            <p>
+                                                {{
+                                                    taskassignment.timeentries
+                                                        | arrayReduce
+                                                }}
+                                            </p>
+                                        </li>
+                                    </div>
+                                </ul>
                             </div>
                         </div>
                     </li>
