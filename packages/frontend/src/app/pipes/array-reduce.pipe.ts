@@ -5,7 +5,7 @@ import { TimeEntry } from '../models/timeentry.model';
     name: 'arrayReduce'
 })
 export class ArrayReducePipe implements PipeTransform {
-    transform(timeEntries: TimeEntry[]): unknown {
+    transform(timeEntries: TimeEntry[]): number {
         return timeEntries.reduce(
             (total, timeEntry) => total + timeEntry.workedtime,
             0
