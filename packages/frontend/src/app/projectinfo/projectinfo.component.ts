@@ -68,7 +68,7 @@ export class ProjectinfoComponent {
                 );
             },
             complete: () => {
-                console.log(`projects.component.ts - edit project completed.`);
+                // console.log(`projects.component.ts - edit project completed.`);
                 this.toastService.success('Project edited !');
             }
         };

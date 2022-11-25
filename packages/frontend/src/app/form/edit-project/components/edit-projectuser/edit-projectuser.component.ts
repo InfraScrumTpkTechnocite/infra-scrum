@@ -29,9 +29,9 @@ export class EditProjectuserComponent implements OnInit {
         // this.total_users_assigned = this.userProjectList.filter(
         //     (userProject) => userProject
         // ).length;
-        console.log(
-            `edit-EditProjectuserComponent.component - ngOnInit - total users : ${this.userProjectList.length}`
-        );
+        // console.log(
+        //     `edit-EditProjectuserComponent.component - ngOnInit - total users : ${this.userProjectList.length}`
+        // );
 
         this.userProject = this.userProjectList!.find(
             (userProject) => this.user.id == userProject.user.id
@@ -53,9 +53,9 @@ export class EditProjectuserComponent implements OnInit {
                 // this.total_users_assigned = this.userProjectList.filter(
                 // (userProject) => userProject
                 // ).length;
-                console.log(
-                    `edit-EditProjectuserComponent.component - ngOnInit - total users : ${this.userProjectList.length}`
-                );
+                // console.log(
+                //     `edit-EditProjectuserComponent.component - ngOnInit - total users : ${this.userProjectList.length}`
+                // );
             },
             error: (err: any) => {
                 console.log(
@@ -82,9 +82,9 @@ export class EditProjectuserComponent implements OnInit {
                     ),
                     1
                 );
-                console.log(
-                    `edit-EditProjectuserComponent.component - ngOnInit - total users : ${this.userProjectList.length}`
-                );
+                // console.log(
+                //     `edit-EditProjectuserComponent.component - ngOnInit - total users : ${this.userProjectList.length}`
+                // );
             },
             error: (err: any) => {
                 console.log(
@@ -126,7 +126,7 @@ export class EditProjectuserComponent implements OnInit {
                         "Admin of project can't be desassigned !"
                     );
                     this.isAssigned = true;
-                    console.log('should be true', this.isAssigned);
+                    // console.log('should be true', this.isAssigned);
                 }
             } else {
                 this.isAssigned = true;
@@ -143,7 +143,7 @@ export class EditProjectuserComponent implements OnInit {
         );
         const setUserProjectAdmin = {
             next: (userProject: UserProject) => {
-                console.log(`UserProject updated !`);
+                // console.log(`UserProject updated !`);
             },
             error: (err: any) => {
                 console.log(

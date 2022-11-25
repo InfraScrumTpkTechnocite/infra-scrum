@@ -22,7 +22,7 @@ export class TimeentryService {
     }
 
     private log(response: any) {
-        console.table(response);
+        // console.table(response);
     }
 
     create(timeentry: TimeEntry): Observable<TimeEntry> {
@@ -38,12 +38,12 @@ export class TimeentryService {
             );
     }
 
-    update(timeentry: TimeEntry): Observable<any>{
+    update(timeentry: TimeEntry): Observable<any> {
         return this.httpClient.put<any>(
             '/backend/timeentries/' + timeentry.id,
             JSON.stringify(timeentry),
             this.httpOptions
-        )
+        );
     }
 
     totalUserWorkedTimeOnTask(taskid: string): Observable<any> {

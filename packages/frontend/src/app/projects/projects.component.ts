@@ -50,9 +50,9 @@ export class ProjectsComponent implements OnInit {
                 console.log(`${err}`);
             },
             complete: () => {
-                console.log(
-                    `projects.component - ngOnInit - get user's projects completed.`
-                );
+                // console.log(
+                //     `projects.component - ngOnInit - get user's projects completed.`
+                // );
             }
         };
 
@@ -78,9 +78,9 @@ export class ProjectsComponent implements OnInit {
                 console.log(`Error: ${err}`);
             },
             complete: () => {
-                console.log(
-                    `projects.component - ngOnInit - get user completed.`
-                );
+                // console.log(
+                //     `projects.component - ngOnInit - get user completed.`
+                // );
             }
         };
         //console.log(`login.component.ts - onSubmit - token=${localStorage.getItem('jwt-token')}`);
@@ -117,7 +117,7 @@ export class ProjectsComponent implements OnInit {
                 );
             },
             complete: () => {
-                console.log(`projects.component.ts - add project completed.`);
+                // console.log(`projects.component.ts - add project completed.`);
             }
         };
 
@@ -141,9 +141,9 @@ export class ProjectsComponent implements OnInit {
                 );
             },
             complete: () => {
-                console.log(
-                    `projects.component.ts - add userproject completed.`
-                );
+                // console.log(
+                //     `projects.component.ts - add userproject completed.`
+                // );
                 this.toastService.success('New Project created !');
             }
         };

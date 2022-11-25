@@ -21,10 +21,10 @@ export class UsersService {
     // user.token = token;
     // await this.mailService.sendUserConfirmation(user, token);
     // return await this.usersRepository.save(user);
-    console.log(
-      'backend - users.service - create - user to create = ' +
-        JSON.stringify(user),
-    );
+    // console.log(
+    //   'backend - users.service - create - user to create = ' +
+    //     JSON.stringify(user),
+    // );
     return await this.usersRepository.manager.transaction(
       this.configService.get<IsolationLevel>(
         'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
@@ -43,7 +43,7 @@ export class UsersService {
         'TYPEORM_TRANSACTION_ISOLATION_LEVEL',
       ),
       async (transactionnalEntityManager): Promise<UpdateResult> => {
-        console.log(`users.services - update - user = ${JSON.stringify(user)}`);
+        // console.log(`users.services - update - user = ${JSON.stringify(user)}`);
         return await transactionnalEntityManager.update(
           User,
           { id: id },

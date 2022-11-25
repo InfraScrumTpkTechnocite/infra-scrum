@@ -22,7 +22,7 @@ export class ProjectService {
     }
 
     private log(response: any) {
-        console.table(response);
+        // console.table(response);
     }
 
     create(project: Project): Observable<Project> {
@@ -71,7 +71,7 @@ export class ProjectService {
         );
     }
 
-    delete(id: string): Observable<any>{
+    delete(id: string): Observable<any> {
         return this.httpClient.delete<any>(
             '/backend/projects/' + id,
             this.httpOptions
