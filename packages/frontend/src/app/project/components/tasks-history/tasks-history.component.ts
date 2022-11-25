@@ -3,11 +3,13 @@ import { KanbanList } from 'src/app/models/kanbanlist.model';
 import { Task } from 'src/app/models/task.model';
 import { TaskAssignment } from 'src/app/models/taskassignment.model';
 import { TaskassignmentService } from 'src/app/services/taskassignment.service';
+import { TimeentryService } from 'src/app/services/timeentry.service';
 
 export interface tacheAssignment {
     task: Task;
     taskassignments: TaskAssignment[];
     visible: boolean;
+    totalWorkedTime: number;
 }
 
 @Component({
@@ -24,17 +26,21 @@ export class TasksHistoryComponent implements OnInit {
 
     taskassignmentList: TaskAssignment[] = [];
 
-    constructor(private taskassignmentService: TaskassignmentService) {}
+    constructor(
+        private taskassignmentService: TaskassignmentService,
+        private timeEntriesService: TimeentryService
+    ) {}
 
     ngOnInit(): void {
         // affichage des tâches en cours:
 
         this.kanbanList.forEach((knbn) => {
-            knbn.tasks.map((task) => {
+            knbn.taskList.map((task) => {
                 this.tasksLists.push({
-                    task: task,
+                    task: task.task,
                     taskassignments: [],
-                    visible: false
+                    visible: false,
+                    totalWorkedTime: 0
                 });
             });
         });
@@ -53,6 +59,21 @@ export class TasksHistoryComponent implements OnInit {
                 .subscribe({
                     next: (taskassignments: TaskAssignment[]) => {
                         task.taskassignments = taskassignments;
+                    },
+                    error: () => {},
+                    complete: () => {}
+                })
+        );
+
+        this.tasksLists.map((task: tacheAssignment) =>
+            this.timeEntriesService
+                .totalWorkedTimeOnTask(task.task.id!)
+                .subscribe({
+                    next: (result) => {
+                        if (result[0]) {
+                            //console.log(result);
+                            task.totalWorkedTime = result[0].total_minutes;
+                        }
                     },
                     error: () => {},
                     complete: () => {}

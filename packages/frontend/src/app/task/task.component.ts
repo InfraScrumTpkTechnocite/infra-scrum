@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Task } from '../models/task.model';
 import { TaskAssignment } from '../models/taskassignment.model';
-import { TaskassignmentService } from '../services/taskassignment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.component';
 import { TaskType } from '../models/tasktype.model';
@@ -29,7 +28,7 @@ export class TaskComponent implements OnInit {
     @Input() sprintList!: Project[];
     @Input() userProjectList!: UserProject[];
     @Input() kanbanList!: KanbanList[];
-    taskassignmentList!: TaskAssignment[];
+    taskassignmentList: any;
 
     showTask: boolean = true;
     @Input() projectid!: string | undefined | null;
@@ -41,20 +40,16 @@ export class TaskComponent implements OnInit {
     // @Output() taskDeleted: EventEmitter<any> = new EventEmitter();
 
     constructor(
-        private taskassignmentService: TaskassignmentService,
         private taskService: TaskService,
         public dialog: MatDialog,
         public toastService: HotToastService
     ) {}
 
     ngOnInit(): void {
-        this.taskassignmentService
-            .findAllUsersOfTask(this.task.id!)
-            .subscribe(
-                (taskassignmentList: TaskAssignment[]) =>
-                    (this.taskassignmentList = taskassignmentList)
-            );
-
+        this.taskassignmentList = this.kanbanList
+            .find((kanban) => kanban.kanban.id == this.task.kanbanstatus.id)
+            ?.taskList.find((task) => task.task.id == this.task.id)
+            ?.taskAssignments
         // console.log(
         //     `showTask : ${this.showTask} - projectid : ${
         //         this.projectid
@@ -72,7 +67,6 @@ export class TaskComponent implements OnInit {
 
     editTask() {
         const task = this.task;
-        console.log(this.userProjectList);
         const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: task,
@@ -81,7 +75,7 @@ export class TaskComponent implements OnInit {
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
                 edition: true,
-                kanbanList: this.kanbanList,
+                kanbanlist: this.kanbanList,
                 user: this.user,
                 subject: this.subject
             }
@@ -89,11 +83,13 @@ export class TaskComponent implements OnInit {
         dialogRef.afterClosed().subscribe((data: any) => {
             if (data) {
                 this.task = data.task as Task;
-                this.kanbanList[this.task.kanbanstatus.order].tasks[
+                this.kanbanList[this.task.kanbanstatus.order].taskList[
                     this.kanbanList[
                         this.task.kanbanstatus.order
-                    ].tasks.findIndex((task) => task.id == this.task.id)
-                ] = this.task;
+                    ].taskList.findIndex(
+                        (tasks) => tasks.task.id == this.task.id
+                    )
+                ].task = this.task;
 
                 //this.task.id = data.taskid;
             }
@@ -115,10 +111,12 @@ export class TaskComponent implements OnInit {
                 this.toastService.error(errorMessage);
             },
             complete: () => {
-                this.kanbanList[this.task.kanbanstatus.order].tasks.splice(
+                this.kanbanList[this.task.kanbanstatus.order].taskList.splice(
                     this.kanbanList[
                         this.task.kanbanstatus.order
-                    ].tasks.findIndex((task) => task.id == this.task.id),
+                    ].taskList.findIndex(
+                        (tasks) => tasks.task.id == this.task.id
+                    ),
                     1
                 );
                 this.subject.next({
@@ -132,10 +130,9 @@ export class TaskComponent implements OnInit {
     }
 
     ngOnChanges() {
-        console.log(
-            `ngOnChanges - showCurrentUserTasks: ${this.showCurrentUserTasks}`
-        );
-
+        // console.log(
+        //     `ngOnChanges - showCurrentUserTasks: ${this.showCurrentUserTasks}`
+        // );
         if (this.task.sprint?.id)
             //sprint de la tâche existe => vue globale ou sprint
             this.showTask =
@@ -148,10 +145,10 @@ export class TaskComponent implements OnInit {
 
         if (this.showCurrentUserTasks)
             if (
-                this.taskassignmentList.find((taskAssignment) => {
+                this.taskassignmentList.find((taskAssignments: any) => {
                     return (
-                        taskAssignment.userproject.user.id == this.user.id &&
-                        taskAssignment.task.id == this.task.id
+                        taskAssignments.taskAssignment.userproject.user.id == this.user.id &&
+                        taskAssignments.taskAssignment.task.id == this.task.id
                     );
                 })
             )

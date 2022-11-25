@@ -70,25 +70,25 @@
                         >
                             <!-- condition si photo, sinon span avec premiere lettre username -->
                             <img
-                                *ngIf="taskassignment.userproject.user.picture"
+                                *ngIf="taskassignment.taskAssignment.userproject.user.picture"
                                 class="rounded-full hover:cursor-default"
                                 src="data:image/*;base64, {{
-                                    taskassignment.userproject.user.picture
+                                    taskassignment.taskAssignment.userproject.user.picture
                                 }}"
                                 alt="profile picture"
                                 title="{{
-                                    taskassignment.userproject.user.username
+                                    taskassignment.taskAssignment.userproject.user.username
                                 }}"
                             />
                             <span
-                                *ngIf="!taskassignment.userproject.user.picture"
+                                *ngIf="!taskassignment.taskAssignment.userproject.user.picture"
                                 class="text-xl uppercase font-bold"
                                 title="{{
-                                    taskassignment.userproject.user.username
+                                    taskassignment.taskAssignment.userproject.user.username
                                 }}"
                             >
                                 {{
-                                    taskassignment.userproject.user.username
+                                    taskassignment.taskAssignment.userproject.user.username
                                         | initialsName
                                 }}
                             </span>
@@ -182,39 +182,39 @@
                                 "
                             >
                                 <div
-                                    *ngIf="taskassignment.isTaskCreator"
+                                    *ngIf="taskassignment.taskAssignment.isTaskCreator"
                                     class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
                                 >
                                     <!-- condition si photo, sinon span avec premiere lettre username -->
                                     <img
                                         *ngIf="
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .picture
                                         "
                                         class="rounded-full hover:cursor-default"
                                         src="data:image/*;base64, {{
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .picture
                                         }}"
                                         alt="profile picture"
                                         title="{{
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .username
                                         }}"
                                     />
                                     <span
                                         *ngIf="
-                                            !taskassignment.userproject.user
+                                            !taskassignment.taskAssignment.userproject.user
                                                 .picture
                                         "
                                         class="text-lg uppercase font-bold"
                                         title="{{
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .username
                                         }}"
                                     >
                                         {{
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .username | initialsName
                                         }}
                                     </span>
@@ -230,39 +230,39 @@
                                 "
                             >
                                 <div
-                                    *ngIf="!taskassignment.isTaskCreator"
+                                    *ngIf="!taskassignment.taskAssignment.isTaskCreator"
                                     class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
                                 >
                                     <!-- condition si photo, sinon span avec premiere lettre username -->
                                     <img
                                         *ngIf="
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .picture
                                         "
                                         class="rounded-full hover:cursor-default"
                                         src="data:image/*;base64, {{
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .picture
                                         }}"
                                         alt="profile picture"
                                         title="{{
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .username
                                         }}"
                                     />
                                     <span
                                         *ngIf="
-                                            !taskassignment.userproject.user
+                                            !taskassignment.taskAssignment.userproject.user
                                                 .picture
                                         "
                                         class="text-lg uppercase font-bold"
                                         title="{{
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .username
                                         }}"
                                     >
                                         {{
-                                            taskassignment.userproject.user
+                                            taskassignment.taskAssignment.userproject.user
                                                 .username | initialsName
                                         }}
                                     </span>
