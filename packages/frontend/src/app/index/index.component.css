@@ -1,3 +1,6 @@
+/* -------------------------------------------------------------------------- */
+/*                           Fading underline for h1                          */
+/* -------------------------------------------------------------------------- */
 
 .gradient-underline-blue {
     padding-bottom: 4px;
@@ -14,4 +17,21 @@
     left: 0;
     height: 2px;
     width: 100%;
+ }
+
+ /* -------------------------------------------------------------------------- */
+ /*                      Animation: divs appearing on scroll                     */
+ /* -------------------------------------------------------------------------- */
+
+ .hide{
+    opacity: 0;
+    transition: all 1s;
+    transform: translateY(100%);
+    filter: blur(5px)
+ }
+ 
+ .show{
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0)
  }

@@ -106,6 +106,9 @@
                 >
                     <input
                         type="password"
+                        [placeholder]="
+                            'infrascrum.create-user.verif-password' | translate
+                        "
                         class="w-full text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
                         [(ngModel)]="verifPassword"
                         #confirmPassword="ngModel"
