@@ -222,6 +222,7 @@ export class EditNewTasksComponent implements OnInit {
                     if (this.newTaskAssignmentList.length == 0) {
                         this.toastService.success('Task Edited !');
                         this.newTask.id = this.data.task.id;
+                        this.data.task = this.newTask;
                         this.data.subject.next({
                             method: 'edit',
                             task: this.newTask,
@@ -229,7 +230,11 @@ export class EditNewTasksComponent implements OnInit {
                             sourceKanbanOrder: this.newTask.kanbanstatus.order,
                             targetKanbanOrder: this.newTask.kanbanstatus.order
                         });
-                        this.dialogRef.close();
+                        this.dialogRef.close(
+                            {
+                                task: this.newTask
+                            }
+                        );
                     }
                 }
             };

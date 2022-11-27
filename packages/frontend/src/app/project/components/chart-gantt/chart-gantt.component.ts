@@ -149,8 +149,8 @@ export class ChartGanttComponent implements OnInit {
     }
 
     getMonths(startDate: Date, endDate: Date): XAxis[] {
-        const startMonth = startDate.getMonth();
-        const endMonth = endDate.getMonth();
+        const startMonth = startDate.getMonth() + startDate.getFullYear() * 12;
+        const endMonth = endDate.getMonth() + endDate.getFullYear() * 12;
         const adjustedEndDate = this.addEndMonth(endDate);
         const totalDurationDays = this.dateDifference(
             startDate,
@@ -246,22 +246,16 @@ export class ChartGanttComponent implements OnInit {
     }
 
     /** Get number of event overlaping each other at the dates of the event */
-    getEventNumberOfOverlap(event: IGanttChartEvent): number {
-        var eventIndex: number = 0;
-        var row: IGanttChartRow;
-        var row = this.rows.find((row) => {
-            eventIndex = row.events.findIndex(
-                (eventFromRows) => eventFromRows == event
-            );
-            return row.events.find((eventFromRows) => eventFromRows == event);
-        })!;
-        
-        return row.events.filter(
-            (eventFromRow, index) =>
-                eventFromRow.startDate < event.endDate &&
-                eventFromRow.endDate > event.startDate &&
-                index < eventIndex
-        ).length;
+    getEventNumberOfOverlap(
+        row: IGanttChartRow,
+        event: IGanttChartEvent
+    ): number {        
+        var eventIndex: number = row.events.findIndex((eventFromRow) => eventFromRow == event);
+        return row.events.filter((eventFromRow, index) => {
+                return eventFromRow.startDate.getDate() <= event.endDate.getDate() &&
+                eventFromRow.endDate.getDate() >= event.startDate.getDate() &&
+                index < eventIndex;
+        }).length;
     }
 
     /** Get number of events overlaping each other in the row */
@@ -276,10 +270,10 @@ export class ChartGanttComponent implements OnInit {
                     period.startDate < event.endDate &&
                     period.endDate > event.startDate
                 )
-                maxOverlap[index]++;
+                    maxOverlap[index]++;
             });
         });
-        return Math.max(...maxOverlap);
+        return Math.max(...maxOverlap) == 0 ? 1 : Math.max(...maxOverlap);
     }
 
     /** Set rows to be tasks of sprint */
@@ -293,20 +287,34 @@ export class ChartGanttComponent implements OnInit {
                     task.task.sprint!.id == sprint.id
                 ) {
                     events = [];
-                    task.taskAssignments?.map((tskAssignment) =>
+                    task.taskAssignments?.map((tskAssignment) => {
+                        var previousentryend: Date;
                         tskAssignment.timeentries.map((timeentry) => {
-                            events.push({
-                                name: tskAssignment.taskAssignment.userproject
-                                    .user.username,
-                                startDate: new Date(timeentry.dayofwork),
-                                endDate: this.estimatedTimeToDate(
+                            var currententrystart = new Date(timeentry.dayofwork)
+                            currententrystart.setDate(currententrystart.getDate()-1);
+                            if (previousentryend?.getDate() == currententrystart.getDate()) {
+                                events[events.length - 1].endDate =
+                                this.estimatedTimeToDate(
                                     timeentry.dayofwork,
                                     timeentry.workedtime
-                                )
-                            });
-                        })
-                    );
-                    console.log(events);
+                                );
+                            } else {
+                                events.push({
+                                    name: tskAssignment.taskAssignment
+                                        .userproject.user.username,
+                                    startDate: new Date(timeentry.dayofwork),
+                                    endDate: this.estimatedTimeToDate(
+                                        timeentry.dayofwork,
+                                        timeentry.workedtime
+                                    )
+                                });
+                            }
+                            previousentryend = this.estimatedTimeToDate(
+                                timeentry.dayofwork,
+                                timeentry.workedtime
+                            );
+                        });
+                    });
                     this.rows.push({
                         id: task.task.id!,
                         name: task.task.name,
@@ -315,7 +323,6 @@ export class ChartGanttComponent implements OnInit {
                 }
             });
         });
-        console.log(this.rows);
         // tasks.map((task) =>
         //     this.rows.push({
         //         id: task.task.id,

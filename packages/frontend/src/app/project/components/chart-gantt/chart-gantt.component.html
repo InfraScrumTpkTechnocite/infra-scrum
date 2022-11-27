@@ -38,7 +38,7 @@
         </div>
     </div>
     <div>
-        <div class="w-full flex" *ngFor="let row of rows; let i = index">
+        <div class="w-full flex border-b-2 border-gray-400" *ngFor="let row of rows; let i = index">
             <div [style.height.px]="10"></div>
             <button
                 (click)="isProject? changeSprintDisplay(row) : ''"
@@ -57,7 +57,7 @@
                     class="border-r-2 border-tpkerror"
                     *ngFor="let month of monthAxis"
                     [style.width]="month.durationPercentage + '%'"
-                    [style.height.px]="30"
+                    [style.height.px]="getEventNumberOfOverlapInRow(row) * 30"
                     ></span>
                 </div>
                 <!-- Week -->
@@ -66,7 +66,7 @@
                     class="border-l-2 border-gray-400"
                     *ngFor="let week of weekAxis"
                     [style.width]="week.durationPercentage + '%'"
-                    [style.height.px]="30"
+                    [style.height.px]="getEventNumberOfOverlapInRow(row) * 30"
                     ></span>
                 </div>
                 <!-- Day -->
@@ -75,7 +75,7 @@
                         class="border-l-2 border-gray-200"
                         *ngFor="let day of dayAxis"
                         [style.width]="day.durationPercentage + '%'"
-                        [style.height.px]="30"
+                        [style.height.px]="getEventNumberOfOverlapInRow(row) * 30"
                     ></span>
                 </div>
                 <!-- period blocks-->
@@ -85,7 +85,7 @@
                     [style.margin-left]="
                         getEventOffsetPercentage(event.startDate) + '%'
                     "
-                    [style.margin-top.px]="getEventNumberOfOverlap(event) * 25"
+                    [style.margin-top.px]="getEventNumberOfOverlap(row, event) * 25"
                     [style.width]="getEventDurationPercentage(event) + '%'"
                     [style.height.px]="10"
                     class="bg-primary absolute rounded-full z-40"
@@ -94,7 +94,7 @@
                 ></div>
                 <div
                     *ngFor="let event of row.events; let j = index"
-                    class="absolute w-48 mt-10 bg-white z-40"
+                    class="absolute w-48 mt-10 bg-white z-50"
                 >
                     <div *ngIf="!isHidden[i][j]"
                         class="overflow-hidden">
