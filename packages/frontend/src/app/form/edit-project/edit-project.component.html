@@ -1,0 +1,85 @@
+<div
+    class="bg-tpkwhite text-secondary pt-6 p-auto max-w-xl max-h-max md:max-h-max md:max-w-screen-md"
+>
+    <h1
+        mat-dialog-title
+        class="text-xl md:text-2xl xl:text-2xl font-bold underline underline-offset-8 text-center pt-4"
+    >
+        {{ 'infrascrum.edit-project.title' | translate }}
+    </h1>
+    <div
+        mat-dialog-content
+        class="flex flex-col items-center justify-center w-160"
+    >
+        <div
+            class="flex justify-center items-center w-96 md:w-128 h-24 ml-10 md:mx-auto border-2 border-b-primary border-x-0 border-t-0 space-x-3"
+        >
+            <button
+                [ngClass]="{
+                    'bg-primary text-white': switch == 'default'
+                }"
+                class="bg-primary hover:bg-secondary hover:text-white p-3 rounded-xl ml-6 text-white font-semibold w-40"
+                (click)="switch = 'default'"
+            >
+                {{ 'infrascrum.edit-project.btn-edit-project' | translate }}
+            </button>
+            <button
+                [ngClass]="{
+                    'bg-primary text-white': switch == 'users'
+                }"
+                class="bg-primary hover:bg-secondary hover:text-white p-3 rounded-xl text-white w-40 font-semibold"
+                (click)="switch = 'users'"
+            >
+                {{ 'infrascrum.edit-project.btn-user' | translate }}
+            </button>
+            <button
+                [ngClass]="{
+                    'bg-primary text-white': switch == 'date'
+                }"
+                class="bg-primary hover:bg-secondary hover:text-white p-3 rounded-xl text-white w-40 font-semibold"
+                (click)="switch = 'date'"
+            >
+                {{ 'infrascrum.edit-project.btn-edit-sprint' | translate }}
+            </button>
+        </div>
+        <div
+            class="w-96 md:w-128 h-72 md:h-80 mt-6 ml-10 md:mx-auto"
+            [ngSwitch]="switch"
+        >
+            <app-edit-project-info
+                [projectid]="projectid"
+                [project]="project"
+                *ngSwitchDefault
+            ></app-edit-project-info>
+            <div class="space-y-1 text-lg font-medium" *ngSwitchCase="'users'">
+                <div *ngFor="let user of userList">
+                    <app-edit-projectuser
+                        [project]="project"
+                        [projectid]="projectid"
+                        [user]="user"
+                        [userProjectList]="userProjectList"
+                    ></app-edit-projectuser>
+                </div>
+            </div>
+            <app-edit-deliverydate
+                [sprintList]="sprintList"
+                *ngSwitchCase="'date'"
+            ></app-edit-deliverydate>
+        </div>
+    </div>
+    <!-- <div class="mt-8 xl:ml-12 mx-auto flex justify-center w-full"></div> -->
+    <div class="mx-auto flex justify-center w-full">
+        <button
+            (click)="closeWindow()"
+            class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-12 w-24 mb-8"
+        >
+            {{ 'infrascrum.global.btn-cancel' | translate }}
+        </button>
+        <button
+            (click)="editProject()"
+            class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8 disabled:bg-grey2"
+        >
+            {{ 'infrascrum.global.btn-register' | translate }}
+        </button>
+    </div>
+</div>

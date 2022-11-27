@@ -1,0 +1,9 @@
+--Nombre de projets par utilisateur
+
+SELECT 	U.USERNAME,
+		COUNT(DISTINCT (U.USERNAME,
+		P."name")) AS "Nombre de projets"
+FROM PUBLIC.USER U
+INNER JOIN PUBLIC.USER_PROJECT UP ON UP."userId" = U.ID
+INNER JOIN PUBLIC.PROJECT P ON P.ID = UP."projectId"
+GROUP BY U.USERNAME ;

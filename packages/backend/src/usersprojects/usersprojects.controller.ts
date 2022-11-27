@@ -47,8 +47,27 @@ export class UsersprojectsController {
     return await this.usersProjectsService.findAll();
   }
 
+  @Get('/findallassignedatleastonce')
+  async findAllAssignedAtLeastOnce(): Promise<UserProject[]> {
+    return await this.usersProjectsService.findAllAssignedAtLeastOnce();
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<UserProject> {
     return await this.usersProjectsService.findOne(id);
+  }
+
+  @Get('/currentuserprojects/:userid')
+  async findCurrentUserProjects(
+    @Param('userid') userid: string,
+  ): Promise<UserProject[]> {
+    return await this.usersProjectsService.findCurrentUserProjects(userid);
+  }
+
+  @Get('/currentprojectusers/:projectid')
+  async findCurrentProjectUsers(
+    @Param('projectid') projectid: string,
+  ): Promise<UserProject[]> {
+    return await this.usersProjectsService.findCurrentProjectUsers(projectid);
   }
 }

@@ -1,0 +1,51 @@
+<div class="h-full flex items-center mt-16 sm:mt-4">
+    <div
+        class="w-11/12 sm:w-4/5 xl:2/3 m-auto pt-8 bg-tpkwhite mt-20 sm:mt-40 md:mt-44 p-4 rounded-lg shadow-md shadow-primary"
+    >
+        <!-- <h1
+            class="text-primary text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center pt-4 pb-6 sm:pb-8 uppercase font-extrabold underline underline-offset-8"
+        >
+            Users administration
+        </h1> -->
+
+        <!-- LISTE USERS -->
+
+        <!-- Quand liste users disponible, boucler dans les users et utiliser ce modèle -->
+        <ul>
+            <li
+                class="justify-between items-center mb-4 last:mb-6"
+                *ngFor="let user of userList"
+            >
+                <app-user-overview
+                    [user]="user"
+                    [roleList]="roleList"
+                    class="w-full"
+                >
+                </app-user-overview>
+            </li>
+        </ul>
+        <div class="flex justify-start mt-8 ml-2 md:ml-5">
+            <!-- BOUTON ADD NEW USER -->
+            <a routerLink="/create-user">
+                <button
+                    class="mb-6 font-extrabold text-secondary rounded-full border-2 border-secondary p-1 sm:p-1.5 md:p-2 hover:text-white hover:bg-secondary transition ease-in-out delay-150 hover:shadow-secondary hover:shadow-sm"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                        />
+                    </svg>
+                </button>
+            </a>
+        </div>
+    </div>
+</div>

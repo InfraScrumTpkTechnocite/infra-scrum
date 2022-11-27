@@ -1,11 +1,11 @@
-import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../users/user.entity';
 import {
   Column,
   Entity,
   Index,
-  JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -19,15 +19,15 @@ export class UserProject {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ApiProperty({ example: 'a uuid...', description: 'User id' })
+  @ApiProperty({ example: 'a user uuid...', description: 'User id' })
   @ManyToOne(() => User, (user) => user.id, { nullable: false })
-  user: string;
+  user: User;
 
-  @ApiProperty({ example: 'a uuid...', description: 'Project id' })
+  @ApiProperty({ example: 'a project uuid...', description: 'Project id' })
   @ManyToOne(() => Project, (project) => project.id, {
     nullable: false,
   })
-  project: string;
+  project: Project;
 
   @ApiProperty({
     example: 'true/false',
@@ -35,4 +35,7 @@ export class UserProject {
   })
   @Column({ nullable: false, default: false })
   isprojectadmin: boolean;
+
+  // @OneToMany(() => UserProject, (userproject) => userproject.user)
+  // userproject: UserProject[];
 }

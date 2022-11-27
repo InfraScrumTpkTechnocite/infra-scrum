@@ -17,8 +17,8 @@ import { Role } from './roles.entity';
 import { RolesService } from './roles.service';
 
 @UseFilters(new QueryFailedExceptionFilter())
-@UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @ApiTags('roles')
 @Controller('roles')
 export class RolesController {
@@ -30,7 +30,7 @@ export class RolesController {
   }
 
   @Put(':id')
-  async updateUser(
+  async update(
     @Param('id') id: string,
     @Body() role: Role,
   ): Promise<UpdateResult> {
@@ -52,8 +52,8 @@ export class RolesController {
     return await this.roleService.findOne(id);
   }
 
-  @Get('/:name')
-  async findOneByName(@Param('rolename') rolename: string): Promise<Role> {
-    return await this.roleService.findOneByName(rolename);
+  @Get('/name/:name')
+  async findOneByName(@Param('name') name: string): Promise<Role> {
+    return await this.roleService.findOneByName(name);
   }
 }

@@ -4,22 +4,26 @@ import { AppService } from './app.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { User } from './users/user.entity';
 import { UsersService } from './users/users.service';
-import { seederUsers, seederProjects, seederRoles } from './seeder/seeder';
+import { seederUser, seederRoles, seederTaskType } from './seeder/seeder';
 import { ProjectsService } from './projects/projects.service';
 import { RolesService } from './roles/roles.service';
+import { ConfigService } from '@nestjs/config';
+import { TasktypesService } from './tasktypes/tasktypes.service';
 
 @ApiTags('app')
 @Controller()
 export class AppController {
+  taskTypes: any;
   constructor(
     private readonly appService: AppService,
     private authService: AuthService,
     private usersService: UsersService,
-    private projectsService: ProjectsService,
     private rolesService: RolesService,
+    private configService: ConfigService,
+    private taskTypeService: TasktypesService,
   ) {}
 
   @Get()
@@ -32,9 +36,26 @@ export class AppController {
   @Post('auth/login')
   async login(@Request() req) {
     //return req.user;
-    //console.log('app.controller - login');
+    console.log('app.controller - login');
     return this.authService.login(req.user);
   }
+
+  //@UseGuards(LocalAuthGuard)
+  //@ApiBody({ type: User })
+  // @Get('auth/confirm/:username/:token')
+  // async confirm(@Param('username') username: string, @Param('token') token: string) {
+  //   //return req.user;
+  //   console.log(`app.controller - confirm - username=${username}, token=${token}`);
+  //   //return this.authService.login(req.user);
+  //   let user: User = await this.usersService.findOneByUsername(username);
+  //   console.log(`app.controller - user=${user.username}, token=${user.token}`);
+  //   delete user.password;//to avoid password modification
+  //   if (user && user.token == token) {
+  //     user.active = true;
+  //     user.token = null;
+  //   }
+  //   return await this.usersService.update(user.id, user);
+  // }
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -48,24 +69,26 @@ export class AppController {
     seederRoles.forEach((role) => {
       this.rolesService
         .create(role)
-        .then((role) => console.log(`User ${role.name} created`))
+        .then((role) => {
+          console.log(`Role ${role.name} created`);
+          if (role.name == this.configService.get<string>('SUPERADMIN_ROLE')) {
+            seederUser.role = role.id;
+            this.usersService
+              .create(seederUser)
+              .then((seederUser) =>
+                console.log(`User ${seederUser.username} created`),
+              )
+              .catch((error) => console.log(error.driverError.detail));
+          }
+        })
         .catch((error) => console.log(error.driverError.detail));
     });
 
-    seederProjects.forEach((project) => {
-      this.projectsService
-        .create(project)
-        .then((project) =>
-          console.log(`Project ${project.projectname} created`),
-        )
-        .catch((error) => console.log(error.driverError.detail));
-    });
-
-    seederUsers.forEach((user) => {
-      this.usersService
-        .create(user)
-        .then((user) => console.log(`User ${user.username} created`))
-        .catch((error) => console.log(error.driverError.detail));
+    seederTaskType.forEach((taskType) => {
+      this.taskTypeService
+        .create(taskType)
+        .then((TaskType) => console.log(`New task type: ${taskType}`))
+        .catch((error) => console.log(error));
     });
   }
 }

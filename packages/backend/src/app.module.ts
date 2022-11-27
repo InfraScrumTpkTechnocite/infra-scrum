@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
@@ -14,56 +13,48 @@ import { ProjectsModule } from './projects/projects.module';
 import { TasksModule } from './tasks/tasks.module';
 import { ProjectsService } from './projects/projects.service';
 import { ProjectsController } from './projects/projects.controller';
-import { Project } from './projects/project.entity';
-import { Task } from './tasks/task.entity';
 import { RolesController } from './roles/roles.controller';
 import { RolesService } from './roles/roles.service';
-import { Role } from './roles/roles.entity';
 import { RolesModule } from './roles/roles.module';
 import { UsersprojectsModule } from './usersprojects/usersprojects.module';
 import { KanbanstatusModule } from './kanbanstatus/kanbanstatus.module';
 import { TasksassignmentsModule } from './tasksassignments/tasksassignments.module';
 import { TimeentriesModule } from './timeentries/timeentries.module';
 import { UsersprojectsController } from './usersprojects/usersprojects.controller';
-import { UserProject } from './usersprojects/userproject.entity';
 import { UsersprojectsService } from './usersprojects/usersprojects.service';
-import { KanbanStatus } from './kanbanstatus/kanbanstatus.entity';
 import { KanbanstatusController } from './kanbanstatus/kanbanstatus.controller';
 import { KanbanstatusService } from './kanbanstatus/kanbanstatus.service';
-import { TaskAssignment } from './tasksassignments/taskassignment.entity';
 import { TasksAssignmentsController } from './tasksassignments/tasksassignments.controller';
 import { TasksAssignmentsService } from './tasksassignments/tasksassignments.service';
 import { TimeentriesController } from './timeentries/timeentries.controller';
 import { TimeentriesService } from './timeentries/timeentries.service';
-import { TimeEntry } from './timeentries/timeentries.entity';
 import { TasktypesModule } from './tasktypes/tasktypes.module';
-import { TaskType } from './tasktypes/tasktype.entity';
 import { TasktypesController } from './tasktypes/tasktypes.controller';
 import { TasktypesService } from './tasktypes/tasktypes.service';
 import { SearchModule } from './search/search.module';
+import { MailModule } from './mail/mail.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'postgres',
-      entities: [
-        User,
-        Project,
-        Task,
-        Role,
-        UserProject,
-        KanbanStatus,
-        TaskAssignment,
-        TimeEntry,
-        TaskType,
-      ],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: async (config: ConfigService) => ({
+        type: config.get<any>('DATABASE_TYPE'),
+        database: config.get<string>('DATABASE_NAME'),
+        username: config.get<string>('DATABASE_USERNAME'),
+        password: config.get<string>('DATABASE_PASSWORD'),
+        host: config.get<string>('DATABASE_HOST'),
+        port: parseInt(config.get('DATABASE_PORT')),
+        autoLoadEntities: config.get<boolean>('TYPEORM_AUTOLOADENTITIES'),
+        synchronize: config.get<boolean>('TYPEORM_SYNCHRONIZE'),
+        logging: config.get('TYPEORM_LOGGING'),
+        maxQueryExecutionTime: config.get<number>(
+          'TYPEORM_MAXQUERTEXECUTIONTIME',
+        ),
+      }),
+      inject: [ConfigService],
     }),
+
     UsersModule,
     AuthModule,
     ProjectsModule,
@@ -75,6 +66,10 @@ import { SearchModule } from './search/search.module';
     TimeentriesModule,
     TasktypesModule,
     SearchModule,
+    MailModule,
+    ConfigModule.forRoot({
+      isGlobal: true, // no need to import into other modules
+    }),
   ],
   controllers: [
     AppController,
@@ -104,4 +99,8 @@ import { SearchModule } from './search/search.module';
     //  },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private configService: ConfigService) {
+    console.log(this.configService.get<string>('DATABASE_HOST'));
+  }
+}

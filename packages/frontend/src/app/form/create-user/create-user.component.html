@@ -1,0 +1,166 @@
+<form
+    #userForm="ngForm"
+    (ngSubmit)="onSubmit()"
+    [appMatchPassword]="['password', 'confirmPassword']"
+>
+    <div class="w-screen h-screen sm:mt-20">
+        <main
+            class="mx-auto flex min-h-screen w-full items-center justify-center bg-grey1 text-primary"
+        >
+            <section
+                class="flex w-3/4 2xl:w-[30rem] xl:w-[30rem] lg:w-[30rem] md:w-[30rem] flex-col space-y-10"
+            >
+                <div class="text-center text-2xl sm:text-4xl font-medium">
+                    {{ 'infrascrum.create-user.title' | translate }}
+                </div>
+
+                <div
+                    class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                >
+                    <input
+                        type="text"
+                        [placeholder]="
+                            'infrascrum.create-user.username' | translate
+                        "
+                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        [(ngModel)]="user.username"
+                        name="username"
+                        #username="ngModel"
+                        required
+                        pattern="^[a-zA-Z0-9àéèç]{1,25}$"
+                    />
+                </div>
+
+                <p
+                    *ngIf="!username.errors?.['required'] && username.invalid && username.dirty"
+                    class="text-tpkerror text-sm italic"
+                >
+                    {{
+                        'infrascrum.create-user.msg-username-invalid'
+                            | translate
+                    }}
+                </p>
+
+                <p
+                    *ngIf="username.errors?.['required'] && username.dirty"
+                    class="text-tpkerror text-sm italic"
+                >
+                    {{
+                        'infrascrum.create-user.msg-username-required'
+                            | translate
+                    }}
+                </p>
+
+                <div
+                    class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                >
+                    <input
+                        type="email"
+                        [placeholder]="
+                            'infrascrum.create-user.email' | translate
+                        "
+                        class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        [(ngModel)]="user.email"
+                        name="user.email"
+                        #email="ngModel"
+                        required
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    />
+                </div>
+
+                <p
+                    *ngIf="!email.errors?.['required'] && email.invalid && email.dirty"
+                    class="text-tpkerror text-sm italic"
+                >
+                    {{ 'infrascrum.create-user.msg-email-invalid' | translate }}
+                </p>
+
+                <p
+                    *ngIf="email.errors?.['required'] && email.dirty"
+                    class="text-tpkerror text-sm italic"
+                >
+                    {{
+                        'infrascrum.create-user.msg-email-required' | translate
+                    }}
+                </p>
+
+                <div
+                    class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                >
+                    <input
+                        type="password"
+                        [placeholder]="
+                            'infrascrum.create-user.password' | translate
+                        "
+                        class="w-full text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        id="password"
+                        [(ngModel)]="user.password"
+                        name="password"
+                        #password="ngModel"
+                        required
+                    />
+                </div>
+
+                <div
+                    class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                >
+                    <input
+                        type="password"
+                        [placeholder]="
+                            'infrascrum.create-user.verif-password' | translate
+                        "
+                        class="w-full text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        [(ngModel)]="verifPassword"
+                        #confirmPassword="ngModel"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        required
+                    />
+                </div>
+
+                <p
+                    *ngIf="!password.errors?.['required'] && confirmPassword.errors?.['matching']"
+                    class="text-tpkerror text-sm italic"
+                >
+                    {{
+                        'infrascrum.create-user.msg-password-matching'
+                            | translate
+                    }}
+                </p>
+
+                <p
+                    *ngIf="password.errors?.['required'] && password.dirty"
+                    class="text-tpkerror text-sm italic"
+                >
+                    {{
+                        'infrascrum.create-user.msg-password-required'
+                            | translate
+                    }}
+                </p>
+
+                <div *ngIf="showErrorMessage">
+                    <h1 class="text-tpkerror text-sm text-center">
+                        {{ errorMessage }}
+                    </h1>
+                </div>
+
+                <button
+                    class="transform text-white rounded-sm bg-primary py-2 font-bold duration-300 disabled:bg-grey2 hover:bg-secondary"
+                    type="submit"
+                    [disabled]="!userForm.valid"
+                >
+                    {{ 'infrascrum.global.btn-register' | translate }}
+                </button>
+
+                <p class="text-center text-gray-700 text-lg">
+                    {{ 'infrascrum.create-user.sub-title' | translate }}
+                    <a
+                        routerLink="/login"
+                        class="font-medium text-primary underline-offset-4 hover:underline"
+                        >{{ 'infrascrum.create-user.login' | translate }}</a
+                    >
+                </p>
+            </section>
+        </main>
+    </div>
+</form>

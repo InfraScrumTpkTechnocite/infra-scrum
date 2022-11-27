@@ -51,4 +51,28 @@ export class TimeentriesController {
   async findOne(@Param('id') id: string): Promise<TimeEntry> {
     return await this.timeEntriesService.findOne(id);
   }
+
+  @Get('/totalusersworkedtimeontask/:taskid')
+  async totalWorkedtime(@Param('taskid') taskid: string): Promise<any> {
+    return await this.timeEntriesService.totalUsersWorkedTimeOnTask(taskid);
+  }
+
+  @Get('/totalworkedtimeontask/:taskid')
+  async totalWorkedtimeOnTask(@Param('taskid') taskid: string): Promise<any> {
+    return await this.timeEntriesService.totalWorkedTimeOnTask(taskid);
+  }
+
+  @Get('task/:taskid')
+  async timeEntries(@Param('taskid') taskid: string): Promise<any> {
+    return await this.timeEntriesService.timeEntries(taskid);
+  }
+
+  @Get('taskassignment/:taskassignmentid')
+  async taskAssignmentTimeEntries(
+    @Param('taskassignmentid') taskassignmentid: string,
+  ): Promise<any> {
+    return await this.timeEntriesService.taskAssignmentTimeEntries(
+      taskassignmentid,
+    );
+  }
 }

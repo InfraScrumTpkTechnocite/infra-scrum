@@ -1,0 +1,37 @@
+/* -------------------------------------------------------------------------- */
+/*                           Fading underline for h1                          */
+/* -------------------------------------------------------------------------- */
+
+.gradient-underline-blue {
+    padding-bottom: 4px;
+    position: relative;
+    text-decoration: none;
+}
+
+.gradient-underline-blue::after {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(to right, transparent 0%, #275e9d 50%, transparent 100%);  
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+ }
+
+ /* -------------------------------------------------------------------------- */
+ /*                      Animation: divs appearing on scroll                     */
+ /* -------------------------------------------------------------------------- */
+
+ .hide{
+    opacity: 0;
+    transition: all 1s;
+    transform: translateY(100%);
+    filter: blur(5px)
+ }
+ 
+ .show{
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0)
+ }

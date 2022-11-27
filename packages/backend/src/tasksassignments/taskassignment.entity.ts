@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  Column,
   Entity,
   Index,
   ManyToOne,
@@ -21,9 +22,26 @@ export class TaskAssignment {
   @ManyToOne(() => UserProject, (userproject) => userproject.id, {
     nullable: false,
   })
-  userproject: string;
+  userproject: UserProject;
+
+  @ApiProperty({
+    example: 'true/false',
+    description: 'User currently active on task ?',
+  })
+  @Column({ type: 'boolean', default: true })
+  isActiveOnTask: boolean;
+
+  @ApiProperty({
+    example: 'true/false',
+    description: 'Is user the task creator ?',
+  })
+  @Column({ type: 'boolean', default: true })
+  isTaskCreator: boolean;
 
   @ApiProperty({ example: 'a uuid...', description: 'Task id' })
-  @ManyToOne(() => Task, (task) => task.id, { nullable: false })
-  task: string;
+  @ManyToOne(() => Task, (task) => task.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
+  task: Task;
 }

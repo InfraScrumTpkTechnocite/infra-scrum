@@ -1,0 +1,277 @@
+<div *ngIf="showTask">
+    <div
+        *ngIf="isTaskOverview"
+        (click)="toggleTaskOverview()"
+        class="hover:cursor-zoom-out"
+    >
+        <div
+            class="taskcontainer border-2 rounded-md mt-2 flex h-auto"
+            [style.border-color]="task.color"
+        >
+            <div class="w-2" [style.background]="task.color"></div>
+            <div class="taskcontainer w-11/12 flex flex-col p-2">
+                <!-- task title + edit -->
+                <div
+                    class="flex justify-between border-b-2 border-grey2 p-2 ml-2"
+                >
+                    <h4 class="text-center text-lg font-semibold pr-1">
+                        {{ task.name }}
+                    </h4>
+                    <div class="ml-1 flex items-start">
+                        <button
+                            (click)="deleteTask()"
+                            title="Delete task"
+                            class="pr-2"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-4 h-4 hover:text-tpkerror"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                />
+                            </svg>
+                        </button>
+                        <button (click)="editTask()" title="Edit task">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-4 h-4 hover:text-primary"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- task type + users -->
+                <div class="flex justify-between mt-2 mr-1 p-2 items-center">
+                    <h5 class="text-sm items-start">
+                        {{ task.tasktype.label }}
+                    </h5>
+                    <span>|</span>
+
+                    <div class="flex items-end ml-4">
+                        <div
+                            *ngFor="let taskassignment of taskassignmentList"
+                            class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                        >
+                            <!-- condition si photo, sinon span avec premiere lettre username -->
+                            <img
+                                *ngIf="taskassignment.taskAssignment.userproject.user.picture"
+                                class="rounded-full hover:cursor-default"
+                                src="data:image/*;base64, {{
+                                    taskassignment.taskAssignment.userproject.user.picture
+                                }}"
+                                alt="profile picture"
+                                title="{{
+                                    taskassignment.taskAssignment.userproject.user.username
+                                }}"
+                            />
+                            <span
+                                *ngIf="!taskassignment.taskAssignment.userproject.user.picture"
+                                class="text-xl uppercase font-bold"
+                                title="{{
+                                    taskassignment.taskAssignment.userproject.user.username
+                                }}"
+                            >
+                                {{
+                                    taskassignment.taskAssignment.userproject.user.username
+                                        | initialsName
+                                }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- task description -->
+                <div
+                    class="h-32 overflow-y-scroll ml-2 mt-1 p-2 border-2 border-grey2 border-opacity-50"
+                >
+                    <p class="overflow-y-scroll text-sm">
+                        {{ task.description }}
+                    </p>
+                </div>
+
+                <!-- Files -->
+
+                <!-- <div class="mt-4 flex items-center justify-center"> -->
+                <!-- image de référence visuelle en attendant -->
+                <!-- <img
+                            src="https://img.freepik.com/free-vector/hand-drawn-web-developers_23-2148819604.jpg?w=2000"
+                            alt="image projet"
+                            class="w-10/12"
+                        />
+                    </div> -->
+
+                <!-- date début et temps estimé -->
+
+                <div class="flex justify-between ml-2 mt-3 p-1">
+                    <div class="flex flex-col items-center">
+                        <p class="text-xs">
+                            {{ 'infrascrum.task.estimate-time' | translate }}
+                        </p>
+                        <p class="text-sm">
+                            {{ task.estimatedtime / 480 | numberToInteger }} d,
+                            {{
+                                (task.estimatedtime / 60) % 8 | numberToInteger
+                            }}:{{ task.estimatedtime % 60 }}
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <p class="text-xs">Time entry</p>
+                        <button class="mt-1" (click)="openTimeEntriesDialog()">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-4 h-4 hover:text-tpkvalidate"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        *ngIf="!isTaskOverview"
+        (click)="toggleTaskOverview()"
+        class="hover:cursor-zoom-in"
+    >
+        <div
+            class="border-2 rounded-sm taskcontainer mt-2 flex h-auto"
+            [style.border-color]="task.color"
+        >
+            <div class="w-2" [style.background]="task.color"></div>
+            <div class="w-11/12 taskcontainer flex flex-col">
+                <!-- titre tâche -->
+                <div
+                    class="flex justify-center items-center border-b-2 border-grey2 p-1"
+                >
+                    <h4 class="text-center text-sm font-semibold">
+                        {{ task.name }}
+                    </h4>
+                </div>
+                <!-- users  -->
+                <div class="p-1">
+                    <div class="flex justify-between items-center">
+                        <!-- créateur tâche -->
+                        <div class="flex items-start">
+                            <div
+                                *ngFor="
+                                    let taskassignment of taskassignmentList
+                                "
+                            >
+                                <div
+                                    *ngIf="taskassignment.taskAssignment.isTaskCreator"
+                                    class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                                >
+                                    <!-- condition si photo, sinon span avec premiere lettre username -->
+                                    <img
+                                        *ngIf="
+                                            taskassignment.taskAssignment.userproject.user
+                                                .picture
+                                        "
+                                        class="rounded-full hover:cursor-default"
+                                        src="data:image/*;base64, {{
+                                            taskassignment.taskAssignment.userproject.user
+                                                .picture
+                                        }}"
+                                        alt="profile picture"
+                                        title="{{
+                                            taskassignment.taskAssignment.userproject.user
+                                                .username
+                                        }}"
+                                    />
+                                    <span
+                                        *ngIf="
+                                            !taskassignment.taskAssignment.userproject.user
+                                                .picture
+                                        "
+                                        class="text-lg uppercase font-bold"
+                                        title="{{
+                                            taskassignment.taskAssignment.userproject.user
+                                                .username
+                                        }}"
+                                    >
+                                        {{
+                                            taskassignment.taskAssignment.userproject.user
+                                                .username | initialsName
+                                        }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <span>|</span>
+                        <!-- autres users assignés -->
+                        <div class="flex items-end">
+                            <div
+                                *ngFor="
+                                    let taskassignment of taskassignmentList
+                                "
+                            >
+                                <div
+                                    *ngIf="!taskassignment.taskAssignment.isTaskCreator"
+                                    class="userChipSmall w-5 h-5 md:w-6 md:h-6 rounded-full bg-secondary text-white flex items-center justify-center hover:cursor-pointer"
+                                >
+                                    <!-- condition si photo, sinon span avec premiere lettre username -->
+                                    <img
+                                        *ngIf="
+                                            taskassignment.taskAssignment.userproject.user
+                                                .picture
+                                        "
+                                        class="rounded-full hover:cursor-default"
+                                        src="data:image/*;base64, {{
+                                            taskassignment.taskAssignment.userproject.user
+                                                .picture
+                                        }}"
+                                        alt="profile picture"
+                                        title="{{
+                                            taskassignment.taskAssignment.userproject.user
+                                                .username
+                                        }}"
+                                    />
+                                    <span
+                                        *ngIf="
+                                            !taskassignment.taskAssignment.userproject.user
+                                                .picture
+                                        "
+                                        class="text-lg uppercase font-bold"
+                                        title="{{
+                                            taskassignment.taskAssignment.userproject.user
+                                                .username
+                                        }}"
+                                    >
+                                        {{
+                                            taskassignment.taskAssignment.userproject.user
+                                                .username | initialsName
+                                        }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

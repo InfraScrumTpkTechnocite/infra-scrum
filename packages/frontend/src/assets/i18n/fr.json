@@ -1,0 +1,154 @@
+{
+    "infrascrum": {
+        "global": {
+            "btn-register": "Enregistrer",
+            "btn-cancel": "Annuler",
+            "btn-delete": "Supprimer",
+            "btn-login": "CONNECTEZ-VOUS"
+        },
+        "admin": {
+            "title": "Super admin"
+        },
+        "create-user": {
+            "title": "Créer un compte",
+            "username": "Nom d'utilisateur",
+            "email": "Email",
+            "password": "Mot de passe",
+            "verif-password": "Confirmer mot de passe",
+            "sub-title": "Vous avez déjà un compte ?",
+            "login": "Connectez-vous",
+            "msg-username-invalid": "Nom d'utilisateur non valide",
+            "msg-username-required": "Nom d'utilisateur requis",
+            "msg-email-invalid": "Email non valide",
+            "msg-email-required": "Email requis",
+            "msg-password-matching": "Les mots de passe ne correspondent pas",
+            "msg-password-required": "Mot de passe requis"
+        },
+        "edit-new-task": {
+            "title": "Editer tâche",
+            "title-user": "Utilisateur",
+            "title-etiquette": "Couleur",
+            "option-type-title": "Choisir un type",
+            "option-front": "Front-end",
+            "option-back": "Back-end",
+            "option-bug": "Bug",
+            "option-full": "Fullstack",
+            "option-design": "Design",
+            "option-improvement": "Amélioration",
+            "option-liaison-bf": "Liaison Back-Front",
+            "option-ux": "UX/UI",
+            "option-correction": "Correction",
+            "option-analyse": "Analyse",
+            "option-integration": "Intégration design",
+            "option-sprint-title": "Choisir un sprint",
+            "option-one": "Sprint 1",
+            "option-two": "Sprint 2",
+            "option-three": "Sprint 3",
+            "option-four": "Sprint 4",
+            "option-five": "Sprint 5",
+            "option-kanban-title": "Choisir un kanban",
+            "estimate-time": "Temps estimé",
+            "estimate-day": "j",
+            "estimate-hours": "hrs",
+            "estimate-minute": "min.",
+            "name": "Nom",
+            "start-date": "Date de début",
+            "description": "Description",
+            "file": "Choisir un fichier/image"
+        },
+        "edit-project": {
+            "title": "Editer projet",
+            "btn-edit-project": "Editer projet",
+            "btn-user": "Utilisateurs",
+            "btn-edit-sprint": "Editer sprints",
+            "inter-date": "Date intermédiaire",
+            "inter-date-description": "Description",
+            "edit-projectinfo-name": "Nom",
+            "edit-projectinfo-file": "Choisir un fichier/image",
+            "edit-project-delivery": "Date de livraison",
+            "assigned": "assigné",
+            "admin": "admin"
+        },
+        "login": {
+            "title": "Connectez-vous",
+            "username": "Nom d'utilisateur ou Email",
+            "password": "Mot de passe",
+            "msg-error": "Nom d'utilisateur ou Email non valide.",
+            "no-account": "Pas de compte ?",
+            "create-account": "Créer un compte"
+        },
+        "header": {
+            "option-project": "Mes projets",
+            "login": "Connectez-vous",
+            "search": "Recherche",
+            "sub-menu-projects": "Mes projets",
+            "sub-menu-profil": "Mon profil",
+            "sub-menu-users": "Editer les utilisateurs",
+            "sub-menu-logout": "Déconnexion",
+            "sub-menu-language": "English"
+        },
+        "index": {
+            "title": "INFRASCRUM",
+            "sub-title": ""
+        },
+        "kanban-status": {
+            "color": "Couleur:"
+        },
+        "page-not-found": {
+            "title": "Vous semblez perdu !",
+            "sub-title-one": "La page que vous recherchez n'est pas disponible.",
+            "sub-title-two": "Essayez de rechercher à nouveau ou utilisez le bouton Retour ci-dessous.",
+            "btn-goback": "Retour"
+        },
+        "project": {
+            "btn-global": "Vue globale",
+            "btn-add": "Ajouter un sprint",
+            "option-sprint": "Sprints:",
+            "filter-tasks": "Mes tâches",
+            "btn-new-task": "Nouvelle tâche",
+            "btn-new-column": "Nouvelle colonne",
+            "btn-add-column": "Ajouter une colonne",
+            "btn-d-gantt": "Gantt",
+            "btn-history": "Historique",
+            "end-date": "Date de fin",
+            "chart-gantt-back": "Retour",
+            "tasks-history-title1": "Tâches en cours",
+            "tasks-history-sub-title1": "De la plus récente à la plus ancienne",
+            "tasks-history-estimated-time": "Temps estimé:",
+            "tasks-history-title2": "Tâches terminées",
+            "tasks-history-sub-title2": "De la plus récente à la plus ancienne",
+            "tasks-history-work-time": "Temps de travail:",
+            "tasks-history-no-tasks": "Aucune tâche pour le moment"
+        },
+        "project-info": {
+            "start-date": "Date de début",
+            "picture": "Ajouter une photo:"
+        },
+        "task": {
+            "start-date": "Date de début",
+            "estimate-time": "Temps estimé"
+        },
+        "time-entry": {
+            "title": "Temps réalisé"
+        },
+        "user-profile": {
+            "title": "Mon profil",
+            "btn-add": "Ajouter photo",
+            "username": "Nom utilisateur",
+            "email": "Email",
+            "role": "Rol",
+            "firstname": "Prénom",
+            "lastname": "Nom de famille",
+            "password": "Mot de passe",
+            "msg-username-invalid": "Nom d'utilisateur non valide",
+            "msg-username-required": "Nom d'utilisateur requis",
+            "msg-email-invalid": "Email non valide",
+            "msg-email-required": "Email requis",
+            "msg-password-matching": "Mot de passe ne correspond pas",
+            "msg-password-required": "Mot de passe requis",
+            "verif-password": "Vérification mot de passe",
+            "Update": "Mise à jour",
+            "Cancel": "Retour"
+        }
+    }
+}

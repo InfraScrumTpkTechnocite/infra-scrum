@@ -1,27 +1,28 @@
-import { Project } from 'src/projects/project.entity';
-
 export const seederRoles: any = [
   { name: 'superadmin' },
   { name: 'admin' },
   { name: 'employee' },
-  { name: 'trainee' },
+  { name: 'intern' },
+  { name: 'guest' },
 ];
 
-export const seederUsers: any = [
-  {
-    username: 'gilles',
-    email: 'gilles@triptyk.eu',
-    firstname: 'Gilles',
-    lastname: '',
-    password: 'gilles',
-    picture: 'zrzerzer',
-    role: 'acf42287-aaaa-48b5-ae6e-ebc75e2a275f',
-  },
-];
+export const seederUser: any = {
+  username: 'gilles',
+  email: 'gilles@triptyk.eu',
+  firstname: 'gilles',
+  lastname: 'bertrand',
+  password: 'gilles',
+  picture: '',
+  role: 'f5d033ee-d60d-4d52-8366-e3295cd71ef3',
+};
 
-export const seederProjects: any[] = [
-  {
-    id: '00000000-0000-0000-0000-000000000000',
-    projectname: null,
-  },
+export const seederTaskType: any = [
+  { label: 'Bug' },
+  { label: 'Back end' },
+  { label: 'Front end' },
+  { label: 'Full stack' },
+  { label: 'Designer' },
+  { label: 'Liaison front-back' },
+  { label: 'UX' },
+  { label: 'New feature' },
 ];

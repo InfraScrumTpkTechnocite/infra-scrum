@@ -1,4 +1,7 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 .appBackground{
     background-image: url("../assets/img/fond-infrascrum.jpg");
     background-size: 100%;
+    background-size: cover;
 }

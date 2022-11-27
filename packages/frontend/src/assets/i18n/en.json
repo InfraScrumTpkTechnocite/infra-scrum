@@ -1,0 +1,155 @@
+{
+    "infrascrum": {
+        "global": {
+            "btn-register": "Save",
+            "btn-cancel": "Cancel",
+            "btn-delete": "Delete",
+            "btn-login": "LOG IN"
+        },
+        "admin": {
+            "title": "Super admin"
+        },
+        "create-user": {
+            "title": "Create an account",
+            "username": "Username",
+            "email": "Email",
+            "password": "Password",
+            "verif-password": "Confirm Password",
+            "sub-title": "Already have an account ?",
+            "login": "Log in",
+            "msg-username-invalid": "Username invalid",
+            "msg-username-required": "Username required",
+            "msg-email-invalid": "Email invalid",
+            "msg-email-required": "Email required",
+            "msg-password-matching": "Passwords don't match",
+            "msg-password-required": "Password required"
+        },
+        "edit-new-task": {
+            "title": "Edit task",
+            "title-user": "Users",
+            "title-etiquette": "Etiquette",
+            "option-type-title": "Choose a type",
+            "option-front": "Front-end",
+            "option-back": "Back-end",
+            "option-bug": "Bug",
+            "option-full": "Fullstack",
+            "option-design": "Design",
+            "option-improvement": "Improvement",
+            "option-liaison-bf": "Back-Front link",
+            "option-ux": "UX/UI",
+            "option-correction": "Correction",
+            "option-analyse": "Analysis",
+            "option-integration": "Design Integration",
+            "option-sprint-title": "Choose a sprint",
+            "option-one": "Sprint 1",
+            "option-two": "Sprint 2",
+            "option-three": "Sprint 3",
+            "option-four": "Sprint 4",
+            "option-five": "Sprint 5",
+            "option-kanban-title": "Choose a kanban",
+            "estimate-time": "Estimated Time",
+            "estimate-day": "d",
+            "estimate-hours": "hrs",
+            "estimate-minute": "min",
+            "name": "Name",
+            "start-date": "Start date",
+            "description": "Description",
+            "file": "Choose a file/capture"
+        },
+        "edit-project": {
+            "title": "Edit project",
+            "btn-edit-project": "Edit project",
+            "btn-user": "Users",
+            "btn-edit-sprint": "Edit sprint",
+            "inter-date": "Intermediate date",
+            "inter-date-description": "Description",
+            "edit-projectinfo-name": "Name",
+            "edit-projectinfo-file": "Choose a file/image",
+            "edit-project-delivery": "Delivery date",
+            "assigned": "assigned",
+            "admin": "admin"
+        },
+        "login": {
+            "title": "Log In",
+            "username": "Username or Email",
+            "password": "Password",
+            "msg-error": "Username or password invalid.",
+            "no-account": "No account?",
+            "create-account": "Create One"
+        },
+        "header": {
+            "option-project": "My projects",
+            "login": "Login",
+            "search": "Search",
+            "sub-menu-projects": "My projects",
+            "sub-menu-profil": "My profile",
+            "sub-menu-users": "Edit users",
+            "sub-menu-logout": "Logout",
+            "sub-menu-language": "Français"
+        },
+        "index": {
+            "title": "INFRASCRUM",
+            "sub-title": ""
+        },
+        "kanban-status": {
+            "color": "Color:"
+        },
+        "page-not-found": {
+            "title": "You seem to be lost!",
+            "sub-title-one": "The page you're looking for isn't available.",
+            "sub-title-two": "Try searching again or use the Go Back button below.",
+            "btn-goback": "Go back"
+        },
+        "project": {
+            "btn-global": "Global View",
+            "btn-add": "Add sprint",
+            "option-sprint": "Sprints:",
+            "filter-tasks": "My tasks",
+            "btn-new-task": "New task",
+            "btn-new-column": "New Column",
+            "btn-add-column": "Add column",
+            "btn-d-gantt": "Gantt",
+            "btn-history": "History",
+            "end-date": "End date",
+            "chart-gantt-back": "Back",
+            "tasks-history-title1": "Ongoing tasks",
+            "tasks-history-sub-title1": "From most recent to oldest",
+            "tasks-history-estimated-time": "Estimated time:",
+            "tasks-history-title2": "Completed tasks",
+            "tasks-history-sub-title2": "From most recent to oldest",
+            "tasks-history-work-time": "Work time:",
+            "tasks-history-no-tasks": "No tasks yet"
+        },
+        "project-info": {
+            "start-date": "Start date",
+            "picture": "Add a picture:"
+        },
+        "task": {
+            "start-date": "Start date",
+            "estimate-time": "Estimated time"
+        },
+        "user-profile": {
+            "title": "My profile",
+            "btn-add": "Add picture",
+            "username": "Username",
+            "email": "Email",
+            "role": "Role",
+            "lastname": "Lastname",
+            "firstname": "Firstname",
+            "password": "Password",
+            "msg-username-invalid": "Username invalid",
+            "msg-username-required": "Username required",
+            "msg-email-invalid": "Email invalid",
+            "msg-email-required": "Email required",
+            "msg-password-matching": "Passwords don't match",
+            "msg-password-required": "Password required",
+            "verif-password": "Password verification",
+            "Update": "Update",
+            "Cancel": "Cancel",
+            "estimate-time": "Estimated time"
+        },
+        "time-entry": {
+            "title": "Time entry"
+        }
+    }
+}

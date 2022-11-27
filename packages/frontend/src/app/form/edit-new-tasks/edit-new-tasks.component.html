@@ -1,0 +1,438 @@
+<div
+    class="bg-tpkwhite text-secondary pt-6 p-auto max-w-xl max-h-max md:max-w-2xl xl:max-h-max xl:max-w-screen-md"
+>
+    <h1
+        mat-dialog-title
+        class="text-xl xl:text-2xl font-bold underline underline-offset-8 text-center pt-4"
+    >
+        {{
+            data.edition
+                ? ('infrascrum.edit-new-task.title' | translate)
+                : 'Add'
+        }}
+    </h1>
+    <div mat-dialog-content>
+        <div class="flex xl:mt-2 flex-col xl:flex-row items-center">
+            <div class="w-128 xl:w-160 h-128 mt-4 xl:mt-2 xl:ml-4">
+                <div class="flex flex-row xl:m-3 items-center">
+                    <div
+                        class="flex flex-col mr-10 mx-12 justify-center items-center"
+                    >
+                        <h3>
+                            {{
+                                'infrascrum.edit-new-task.title-user'
+                                    | translate
+                            }}
+                        </h3>
+                        <div class="flex flex-row">
+                            <div class="flex mt-1">
+                                <div
+                                    *ngFor="
+                                        let taskassignment of taskassignmentList
+                                    "
+                                >
+                                    <div
+                                        *ngIf="
+                                            !taskassignment.taskAssignment
+                                                .isTaskCreator
+                                        "
+                                        class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
+                                        style="cursor: not-allowed"
+                                        (click)="removeUser(taskassignment)"
+                                    >
+                                        <img
+                                            *ngIf="
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.picture
+                                            "
+                                            class="rounded-full hover:cursor-default"
+                                            src="data:image/*;base64, {{
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.picture
+                                            }}"
+                                            alt="profile picture"
+                                            title="{{
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
+                                            }}"
+                                        />
+                                        <span
+                                            *ngIf="
+                                                !taskassignment.taskAssignment
+                                                    .userproject.user.picture
+                                            "
+                                            class="text-lg uppercase font-bold"
+                                            title="{{
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
+                                            }}"
+                                        >
+                                            {{
+                                                taskassignment.taskAssignment
+                                                    .userproject.user.username
+                                                    | initialsName
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div
+                                    *ngFor="
+                                        let taskassignment of newTaskAssignmentList
+                                    "
+                                >
+                                    <div
+                                        class="font-bold w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
+                                    >
+                                        <img
+                                            *ngIf="
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="rounded-full hover:cursor-default"
+                                            src="data:image/*;base64, {{
+                                                taskassignment.userproject.user
+                                                    .picture
+                                            }}"
+                                            alt="profile picture"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                        />
+                                        <span
+                                            *ngIf="
+                                                !taskassignment.userproject.user
+                                                    .picture
+                                            "
+                                            class="text-lg uppercase font-bold"
+                                            title="{{
+                                                taskassignment.userproject.user
+                                                    .username
+                                            }}"
+                                        >
+                                            {{
+                                                taskassignment.userproject.user
+                                                    .username | initialsName
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <button mat-button [matMenuTriggerFor]="menu">
+                                    <div
+                                        class="w-8 h-8 bg-grey1 rounded-2xl text-grey4 flex justify-center items-center"
+                                    >
+                                        +
+                                    </div>
+                                    <mat-menu #menu="matMenu">
+                                        <div
+                                            *ngFor="
+                                                let userProject of userProjectList
+                                            "
+                                        >
+                                            <button
+                                                mat-menu-item
+                                                *ngIf="
+                                                    !isUserAssigned(userProject)
+                                                "
+                                                (click)="addUser(userProject)"
+                                            >
+                                                <div class="flex items-center">
+                                                    <div
+                                                        class="w-8 h-8 mr-2 bg-primary rounded-2xl text-white flex justify-center items-center"
+                                                    >
+                                                        <img
+                                                            *ngIf="
+                                                                userProject.user
+                                                                    .picture
+                                                            "
+                                                            class="rounded-full hover:cursor-default"
+                                                            src="data:image/*;base64, {{
+                                                                userProject.user
+                                                                    .picture
+                                                            }}"
+                                                            alt="profile picture"
+                                                            title="{{
+                                                                userProject.user
+                                                                    .username
+                                                            }}"
+                                                        />
+                                                        <span
+                                                            *ngIf="
+                                                                !userProject
+                                                                    .user
+                                                                    .picture
+                                                            "
+                                                            class="text-lg uppercase font-bold"
+                                                            title="{{
+                                                                userProject.user
+                                                                    .username
+                                                            }}"
+                                                        >
+                                                            {{
+                                                                userProject.user
+                                                                    .username
+                                                                    | initialsName
+                                                            }}
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-primary">
+                                                        {{
+                                                            userProject.user
+                                                                .username
+                                                        }}
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </mat-menu>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="font-bold flex flex-col mr-5 xl:mr-10 justify-center items-center"
+                    >
+                        <h3>
+                            {{
+                                'infrascrum.edit-new-task.title-etiquette'
+                                    | translate
+                            }}
+                        </h3>
+                        <div class="flex flex-row w-10 h-10">
+                            <div class="flex">
+                                <input
+                                    type="color"
+                                    class="h-10 w-10 mr-2"
+                                    required
+                                    [(ngModel)]="newTask.color"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="ml-16 w-48 xl:w-48 mt-12 mr-4 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <select
+                            id="sprints"
+                            [(ngModel)]="newTask.sprint"
+                            [compareWith]="compareSprint"
+                            class="font-bold w-full mt-4 p-4 bg-transparent border-none outline-none placeholder:italic focus:outline-none"
+                        >
+                            <option [ngValue]="noSprint">
+                                {{
+                                    'infrascrum.edit-new-task.option-sprint-title'
+                                        | translate
+                                }}
+                            </option>
+                            <option
+                                *ngFor="let sprint of data.sprintList"
+                                [ngValue]="sprint"
+                            >
+                                {{ sprint.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div
+                        class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <select
+                            id="kanban"
+                            [(ngModel)]="newTask.kanbanstatus"
+                            [compareWith]="compareById"
+                            class="font-bold w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        >
+                            <option [value]="noKanban" disabled hidden>
+                                {{
+                                    'infrascrum.edit-new-task.option-kanban-title'
+                                        | translate
+                                }}
+                            </option>
+                            <option
+                                *ngFor="let kanban of data.kanbanlist"
+                                [ngValue]="kanban.kanban"
+                            >
+                                {{ kanban.kanban.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div
+                        class="w-40 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <select
+                            id="type"
+                            class="font-bold w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                            [(ngModel)]="newTask.tasktype"
+                            [compareWith]="compareById"
+                        >
+                            <option [ngValue]="noType" disabled hidden>
+                                {{
+                                    'infrascrum.edit-new-task.option-type-title'
+                                        | translate
+                                }}
+                            </option>
+                            <option
+                                *ngFor="let taskType of data.taskTypeList"
+                                [ngValue]="taskType"
+                            >
+                                {{ taskType.label }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <div
+                        class="w-48 xl:w-52 mt-16 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold">{{
+                            'infrascrum.edit-new-task.name' | translate
+                        }}</label>
+                        <input
+                            type="text"
+                            [(ngModel)]="newTask.name"
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        />
+                    </div>
+                    <div
+                        class="w-48 xl:w-52 mt-16 mx-12 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold">{{
+                            'infrascrum.edit-new-task.start-date' | translate
+                        }}</label>
+                        <p
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        >
+                            <input
+                                type="date"
+                                [min]="
+                                    newTask.sprint?.id
+                                        ? (newTask.sprint?.startdate
+                                          | date: 'yyyy-MM-dd')
+                                        : ''
+                                "
+                                [max]="
+                                    newTask.sprint?.id
+                                        ? (newTask.sprint?.enddate
+                                          | date: 'yyyy-MM-dd')
+                                        : ''
+                                "
+                                [ngModel]="newDate | date: 'yyyy-MM-dd'"
+                                (ngModelChange)="updateDate($event)"
+                            />
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <div
+                        class="w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold">{{
+                            'infrascrum.edit-new-task.description' | translate
+                        }}</label>
+                        <textarea
+                            id="description"
+                            cols="30"
+                            rows="2"
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                            [(ngModel)]="newTask.description"
+                        ></textarea>
+                    </div>
+                    <div
+                        class="w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label class="font-bold">{{
+                            'infrascrum.edit-new-task.file' | translate
+                        }}</label>
+                        <input
+                            type="file"
+                            class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                        />
+                    </div>
+                    <div
+                        class="flex flex-row w-50 mt-12 mx-8 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                    >
+                        <label
+                            class="font-bold flex items-center justify-center"
+                        >
+                            {{
+                                'infrascrum.edit-new-task.estimate-time'
+                                    | translate
+                            }}
+                        </label>
+                        <div class="flex ml-16">
+                            <div class="flex flex-col w-24 mr-3 justify-center">
+                                <h3>
+                                    {{
+                                        'infrascrum.edit-new-task.estimate-day'
+                                            | translate
+                                    }}
+                                </h3>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    name="day"
+                                    id="day"
+                                    [(ngModel)]="days"
+                                    class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                                />
+                            </div>
+                            <div class="flex flex-col w-24 justify-center">
+                                <h3>
+                                    {{
+                                        'infrascrum.edit-new-task.estimate-hours'
+                                            | translate
+                                    }}
+                                </h3>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max="8"
+                                    step="1"
+                                    name="hour"
+                                    id="hour"
+                                    [(ngModel)]="hours"
+                                    class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                                />
+                            </div>
+                            <div class="flex flex-col w-24 ml-3 justify-center">
+                                <h3>
+                                    {{
+                                        'infrascrum.edit-new-task.estimate-minute'
+                                            | translate
+                                    }}
+                                </h3>
+                                <input
+                                    type="number"
+                                    step="15"
+                                    min="0"
+                                    max="45"
+                                    name="minute"
+                                    id="minute"
+                                    [(ngModel)]="minutes"
+                                    class="w-full mt-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-10 flex justify-center w-full">
+                    <button
+                        class="bg-tpkerror hover:bg-red-600 text-white p-2 rounded-xl mr-4 w-24 mb-8"
+                        (click)="onNoClick()"
+                    >
+                        {{ 'infrascrum.global.btn-cancel' | translate }}
+                    </button>
+                    <button
+                        class="bg-primary hover:bg-secondary text-white p-2 rounded-xl w-24 mb-8"
+                        (click)="addOrEditTask()"
+                    >
+                        {{ 'infrascrum.global.btn-register' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

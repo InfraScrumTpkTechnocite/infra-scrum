@@ -1,8 +1,70 @@
 /* You can add global styles to this file, and also import other style files */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*{
+
+* {
     font-family: 'Raleway', sans-serif;
 }
+
+/* a:focus-visible, button:focus-visible, input:focus-visible {
+    @apply outline-none ring-2 ring-secondary;
+} */
+
+
+/* buttons smooth hover transition */
+
+.hoverSmooth {
+  @apply transition duration-500 ease-in-out
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 12px;
+    opacity: 0.5;
+  } 
+  ::-webkit-scrollbar:hover {
+    width: 12px;
+    opacity: 1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #82979F;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar {
+    width: 12px;
+    opacity: 0.5;
+  }
+  
+  ::-webkit-scrollbar:hover {
+    width: 12px;
+    opacity: 1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #82979F;
+  }
+
+  td, th {
+    border: 1px solid #a1a1a0;
+    text-align: left;
+    padding: 8px;
+  }
+
+  th {
+    color: #1F71A5;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #a1a1a0;
+  }
+

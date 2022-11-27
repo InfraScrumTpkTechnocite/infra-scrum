@@ -1,0 +1,83 @@
+<div class="w-full flex mb-4 items-center justify-around">
+    <!--div pastille user + nom/prénom -->
+    <div class="w-1/6 flex justify-start">
+        <!-- TODO : Lien vers page profil quand clique sur pastille ou username/name -->
+        <!-- Pastille initiales ou photo profil -->
+        <div
+            class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-secondary flex items-center justify-center ml-2 md:ml-5"
+        >
+            <!-- condition si photo, sinon span avec premiere lettre username -->
+            <img
+                *ngIf="user.picture"
+                class="img rounded-full"
+                src="data:image/*;base64, {{ user.picture }}"
+                alt="{{ user.picture }}"
+            />
+            <span
+                *ngIf="!user.picture"
+                class="text-white font-semibold text-xs sm:text-base md:text-lg min-w-max"
+                >{{
+                    user.firstname && user.lastname
+                        ? user.firstname[0] + user.lastname[0]
+                        : (user.username[0] | uppercase)
+                }}</span
+            >
+        </div>
+    </div>
+    <!-- Prénom + nom utilisateur, si vide ==> username à la place -->
+    <div class="w-2/6 flex justify-center">
+        <p
+            class="pl-2 text-sm ml-1 sm:text-base md:text-lg lg:text-xl font-bold text-primary"
+        >
+            {{
+                user.firstname && user.lastname
+                    ? user.firstname + ' ' + user.lastname
+                    : user.username
+            }}
+        </p>
+    </div>
+
+    <!-- Rôle user -->
+
+    <div class="w-2/6 flex justify-end items-center">
+        <p
+            *ngIf="user.role.name === 'superadmin'"
+            class="text-sm sm:text-base md:text-lg lg:text-xl text-secondary"
+        >
+            {{ 'infrascrum.admin.title' | translate }}
+        </p>
+        <select
+            *ngIf="user.role.name !== 'superadmin'"
+            class="text-sm sm:text-base md:text-lg lg:text-xl text-secondary"
+            [(ngModel)]="user.role"
+            name="role"
+            [compareWith]="compareByName"
+        >
+            <option *ngFor="let role of roleList" [ngValue]="role">
+                {{ role.name }}
+            </option>
+        </select>
+    </div>
+    <!-- Bouton edit role of user -->
+    <div class="w-1/6 grid justify-items-center">
+        <button
+            *ngIf="user.role.id != defaultRole.id"
+            (click)="setRole(user)"
+            class="text-secondary hover:text-blue-900 transition ease-in-out delay-150"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+                class="w-5 h-5 md:w-6 md:h-6 lg:w-9 lg:h-9"
+            >
+                <path d="M0 0h48v48h-48z" fill="currentColor" />
+                <path
+                    d="M18 32.34l-8.34-8.34-2.83 2.83 11.17 11.17 24-24-2.83-2.83z"
+                    fill="#FFFFFF"
+                />
+            </svg>
+        </button>
+    </div>
+</div>

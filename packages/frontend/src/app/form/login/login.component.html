@@ -1,45 +1,60 @@
 <div class="w-screen h-screen">
-  <main
-    class="mx-auto flex min-h-screen w-full items-center justify-center bg-grey1 text-primary"
-  >
-    
-    <section class="flex w-[30rem] flex-col space-y-10">
-      <div class="text-center text-4xl font-medium">Log In</div>
+    <main
+        class="mx-auto flex min-h-screen w-full items-center justify-center bg-grey1 text-primary"
+    >
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <section
+                class="flex max-w-[20rem] sm:min-w-[25rem] xl:w-[30rem] flex-col space-y-5 xl:space-y-10"
+            >
+                <div class="text-center text-2xl font-semibold xl:text-4xl">
+                    {{ 'infrascrum.login.title' | translate }}
+                </div>
 
-      <div
-        class="w-full  transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-      >
-        <input
-          type="text"
-          placeholder="Email or Username"
-          class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-        />
-      </div>
+                <div
+                    class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                >
+                    <input
+                        id="username"
+                        formControlName="username"
+                        type="text"
+                        [placeholder]="'infrascrum.login.username' | translate"
+                        class="w-full pl-2 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                    />
+                </div>
 
-      <div
-        class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
-      >
-        <input
-          type="password"
-          placeholder="Password"
-          class="w-full text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-        />
-      </div>
+                <div
+                    class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-primary"
+                >
+                    <input
+                        id="password"
+                        formControlName="password"
+                        type="password"
+                        [placeholder]="'infrascrum.login.password' | translate"
+                        class="w-full pl-2 text-gray-700 border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                    />
+                </div>
 
-      <button
-        class="transform text-white rounded-sm bg-primary py-2 font-bold duration-300 hover:bg-secondary"
-      >
-        LOG IN
-      </button>
+                <div *ngIf="showErrorMessage">
+                    <h1 class="text-tpkerror text-sm text-center">
+                        {{ 'infrascrum.login.msg-error' | translate }}
+                    </h1>
+                </div>
 
-      <p class="text-center text-gray-700 text-lg">
-        No account?
-        <a
-          href="#"
-          class="font-medium text-primary underline-offset-4 hover:underline"
-          >Create One</a
-        >
-      </p>
-    </section>
-  </main>
+                <button
+                    type="submit"
+                    [disabled]="!profileForm.valid"
+                    class="transform text-white rounded-sm bg-primary py-2 font-bold duration-300 hover:bg-secondary"
+                >
+                    {{ 'infrascrum.global.btn-login' | translate }}
+                </button>
+
+                <!-- Pas besoin du create user pour l'instant -->
+                <!-- <p class="text-center text-gray-700 text-lg">
+                    {{"infrascrum.login.no-account" | translate}}
+                    <a routerLink="/create-user"
+                        class="font-medium text-primary underline-offset-4 hover:underline">{{"infrascrum.login.create-account" | translate}}</a>
+                </p> -->
+            </section>
+        </form>
+    </main>
 </div>
