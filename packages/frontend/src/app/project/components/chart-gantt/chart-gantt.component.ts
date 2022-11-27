@@ -6,12 +6,14 @@ export interface IGanttChartEvent {
     startDate: Date;
     endDate: Date;
     name: string;
+    timeWorked?: number;
 }
 
 export interface IGanttChartRow {
     id: string;
     name: string;
     events: IGanttChartEvent[];
+    color?: string;
 }
 
 export interface XAxis {
@@ -249,12 +251,16 @@ export class ChartGanttComponent implements OnInit {
     getEventNumberOfOverlap(
         row: IGanttChartRow,
         event: IGanttChartEvent
-    ): number {        
-        var eventIndex: number = row.events.findIndex((eventFromRow) => eventFromRow == event);
+    ): number {
+        var eventIndex: number = row.events.findIndex(
+            (eventFromRow) => eventFromRow == event
+        );
         return row.events.filter((eventFromRow, index) => {
-                return eventFromRow.startDate.getDate() <= event.endDate.getDate() &&
+            return (
+                eventFromRow.startDate.getDate() <= event.endDate.getDate() &&
                 eventFromRow.endDate.getDate() >= event.startDate.getDate() &&
-                index < eventIndex;
+                index < eventIndex
+            );
         }).length;
     }
 
@@ -279,6 +285,8 @@ export class ChartGanttComponent implements OnInit {
     /** Set rows to be tasks of sprint */
     changeSprintDisplay(sprint: IGanttChartRow) {
         var events: IGanttChartEvent[] = [];
+        var color: string;
+        var estimatedtime: number;
         this.rows = [];
         this.kanbanList.map((kanbanAndTasks) => {
             kanbanAndTasks.taskList.map((task) => {
@@ -287,17 +295,28 @@ export class ChartGanttComponent implements OnInit {
                     task.task.sprint!.id == sprint.id
                 ) {
                     events = [];
+                    estimatedtime = task.task.estimatedtime;
                     task.taskAssignments?.map((tskAssignment) => {
                         var previousentryend: Date;
+                        var previousEntryWorkedTime: number;
                         tskAssignment.timeentries.map((timeentry) => {
-                            var currententrystart = new Date(timeentry.dayofwork)
-                            currententrystart.setDate(currententrystart.getDate()-1);
-                            if (previousentryend?.getDate() == currententrystart.getDate()) {
+                            estimatedtime -= timeentry.workedtime;
+                            var currententrystart = new Date(
+                                timeentry.dayofwork
+                            );
+                            currententrystart.setDate(
+                                currententrystart.getDate() - 1
+                            );
+                            if (
+                                previousentryend?.getDate() ==
+                                currententrystart.getDate()
+                            ) {
                                 events[events.length - 1].endDate =
-                                this.estimatedTimeToDate(
-                                    timeentry.dayofwork,
-                                    timeentry.workedtime
-                                );
+                                    this.estimatedTimeToDate(
+                                        timeentry.dayofwork,
+                                        timeentry.workedtime
+                                    );
+                                events[events.length - 1].timeWorked! += previousEntryWorkedTime;
                             } else {
                                 events.push({
                                     name: tskAssignment.taskAssignment
@@ -306,39 +325,28 @@ export class ChartGanttComponent implements OnInit {
                                     endDate: this.estimatedTimeToDate(
                                         timeentry.dayofwork,
                                         timeentry.workedtime
-                                    )
+                                    ),
+                                    timeWorked: timeentry.workedtime
                                 });
                             }
                             previousentryend = this.estimatedTimeToDate(
                                 timeentry.dayofwork,
                                 timeentry.workedtime
                             );
+                            previousEntryWorkedTime = timeentry.workedtime;
                         });
                     });
+                    color =
+                        estimatedtime < 0 ? 'bg-tpkerror' : 'bg-tpkvalidate';
                     this.rows.push({
                         id: task.task.id!,
                         name: task.task.name,
-                        events: events
+                        events: events,
+                        color: color
                     });
                 }
             });
         });
-        // tasks.map((task) =>
-        //     this.rows.push({
-        //         id: task.task.id,
-        //         name: task.task.name,
-        //         events: [
-        //             {
-        //                 name: task.task.name,
-        //                 startDate: new Date(task.task.startdate),
-        //                 endDate: this.estimatedTimeToDate(
-        //                     task.task.startdate,
-        //                     task.task.estimatedtime
-        //                 )
-        //             } as IGanttChartEvent
-        //         ]
-        //     } as IGanttChartRow)
-        // );
         this.rows.sort(
             (a, b) =>
                 Math.min(...a.events.map((event) => Number(event.startDate))) -
@@ -371,20 +379,28 @@ export class ChartGanttComponent implements OnInit {
     estimatedTimeToDate(startdate: string, estimatedtime: number): Date {
         var StartDate = new Date(startdate);
         var estimatedDate = new Date(StartDate);
-        //** hours */
-        estimatedDate.setTime(
-            estimatedDate.getTime() +
-                ((estimatedtime / 60) % 8) * 60 * 60 * 1000
-        );
-        //** days */
-        estimatedDate.setTime(
-            estimatedDate.getTime() +
-                (estimatedtime / 480) * 24 * 60 * 60 * 1000
-        );
-        //** minutes */
+        //** Minutes */
         estimatedDate.setTime(
             estimatedDate.getTime() + (estimatedtime % 60) * 60 * 1000
         );
+        if (this.isProject) {
+            /** Hours */
+            estimatedDate.setTime(
+                estimatedDate.getTime() +
+                    ((estimatedtime / 60) % 8) * 60 * 60 * 1000
+            );
+            /** Days */
+            estimatedDate.setTime(
+                estimatedDate.getTime() +
+                    (estimatedtime / 480) * 24 * 60 * 60 * 1000
+            );
+        } else {
+            /** Hours */
+            estimatedDate.setTime(
+                estimatedDate.getTime() +
+                    ((estimatedtime / 60) % 9) * 60 * 60 * 1000
+            );
+        }
         return estimatedDate;
     }
 
@@ -423,7 +439,8 @@ export class ChartGanttComponent implements OnInit {
         this.isHidden.fill([], 0, this.isHidden.length);
         this.isHidden.forEach((row, index) => {
             this.isHidden[index] = new Array(this.rows[index].events.length);
-            this.isHidden[index].fill(true, 0, this.isHidden.length);
+            this.isHidden[index].fill(true, 0);
         });
+        
     }
 }
