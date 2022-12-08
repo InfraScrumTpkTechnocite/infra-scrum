@@ -66,6 +66,7 @@ export class EditNewTasksComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.newTask.id = this.data.task.id;
         this.taskassignmentList = this.data.kanbanlist
             .find(
                 (kanbans) => kanbans.kanban.id == this.newTask.kanbanstatus.id
@@ -151,11 +152,11 @@ export class EditNewTasksComponent implements OnInit {
         this.newTask.startdate = new Date(this.newDate).toISOString();
         this.newTask.estimatedtime =
             this.days * 480 + this.hours * 60 + this.minutes;
+        var index = this.newTaskAssignmentList.length;
         if (this.data.edition) {
             //** Task EDITION */
             const observer = {
                 next: () => {
-                    var index = this.newTaskAssignmentList.length;
                     this.newTaskAssignmentList.map((taskAssignment) => {
                         this.taskAssignmentService
                             .create(taskAssignment)
@@ -192,22 +193,36 @@ export class EditNewTasksComponent implements OnInit {
                                                     })
                                                 )
                                             );
-                                        this.toastService.success(
-                                            'Task Edited !'
-                                        );
-                                        this.data.subject.next({
-                                            method: 'edit',
-                                            task: this.newTask,
-                                            projectid: this.projectid,
-                                            sourceKanbanOrder:
-                                                this.newTask.kanbanstatus.order,
-                                            targetKanbanOrder:
-                                                this.newTask.kanbanstatus.order
-                                        });
-                                        this.dialogRef.close({
-                                            task: this.newTask,
-                                            taskid: this.data.task.id
-                                        });
+                                        if (index == 0) {
+                                            this.toastService.success(
+                                                'Task Edited !'
+                                            );
+                                            this.newTask.id = this.data.task.id;
+                                            this.data.task = this.newTask;
+                                            this.data.subject.next({
+                                                method: 'edit',
+                                                task: this.newTask,
+                                                projectid: this.projectid,
+                                                sourceKanbanOrder:
+                                                    this.newTask.kanbanstatus
+                                                        .order,
+                                                targetKanbanOrder:
+                                                    this.newTask.kanbanstatus
+                                                        .order,
+                                                taskAssignments:
+                                                    this.newTaskAssignmentList.map(
+                                                        (taskAssignment) => ({
+                                                            taskAssignment:
+                                                                taskAssignment,
+                                                            timeentries: []
+                                                        })
+                                                    )
+                                            });
+                                            this.dialogRef.close({
+                                                task: this.newTask,
+                                                taskid: this.data.task.id
+                                            });
+                                        }
                                     }
                                 }
                             });
@@ -219,22 +234,22 @@ export class EditNewTasksComponent implements OnInit {
                     );
                 },
                 complete: () => {
-                    if (this.newTaskAssignmentList.length == 0) {
-                        this.toastService.success('Task Edited !');
-                        this.newTask.id = this.data.task.id;
-                        this.data.task = this.newTask;
+                    if (index == 0) {
                         this.data.subject.next({
                             method: 'edit',
                             task: this.newTask,
                             projectid: this.projectid,
-                            sourceKanbanOrder: this.newTask.kanbanstatus.order,
-                            targetKanbanOrder: this.newTask.kanbanstatus.order
+                            sourceKanbanOrder:
+                                this.newTask.kanbanstatus
+                                    .order,
+                            targetKanbanOrder:
+                                this.newTask.kanbanstatus
+                                    .order,
                         });
-                        this.dialogRef.close(
-                            {
-                                task: this.newTask
-                            }
-                        );
+                        this.dialogRef.close({
+                            task: this.newTask,
+                            taskid: this.data.task.id
+                        });
                     }
                 }
             };
@@ -285,12 +300,14 @@ export class EditNewTasksComponent implements OnInit {
                                         this.toastService.success(
                                             'Task created !'
                                         );
-                                        this.dialogRef.close();
                                         this.data.subject.next({
                                             method: 'add',
                                             task: task,
-                                            projectid: this.projectid
+                                            projectid: this.projectid,
+                                            taskAssignments:
+                                                this.taskassignmentList
                                         });
+                                        this.dialogRef.close();
                                     }
                                 }
                             });
@@ -333,6 +350,12 @@ export class EditNewTasksComponent implements OnInit {
                         ),
                         1
                     );
+                    this.data.subject.next({
+                        method: 'delete',
+                        task: this.newTask,
+                        taskAssignments : this.taskassignmentList,
+                        projectid : this.projectid
+                    });
                 }
             });
     }

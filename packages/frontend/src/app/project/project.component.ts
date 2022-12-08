@@ -104,6 +104,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         //         this.user.role.id
         // );
 
+        /** WEB SOCKET */
         //messages received from webSocket server are processed here
         const subjectObserver = {
             next: (message: any) => {
@@ -129,25 +130,31 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                 let sourceIndex: number = this.kanbanList[
                                     message.sourceKanbanOrder
                                 ].taskList.findIndex(
-                                    (tasks) =>
-                                        tasks.task.id == message.task.task.id
+                                    (tasks) => tasks.task.id == message.task.id
                                 );
                                 this.kanbanList[
                                     message.sourceKanbanOrder
-                                ].taskList.splice(sourceIndex, 1);
-                                this.kanbanList[
-                                    message.targetKanbanOrder
-                                ].taskList.push({
-                                    task: message.task.task,
-                                    taskAssignments:
-                                        message.task.taskAssignments
-                                });
+                                ].taskList[sourceIndex] = {
+                                    task: message.task,
+                                    taskAssignments: message.taskAssignments
+                                        ? this.kanbanList[
+                                              message.sourceKanbanOrder
+                                          ].taskList[
+                                              sourceIndex
+                                          ].taskAssignments?.concat(
+                                              message.taskAssignments
+                                          )
+                                        : this.kanbanList[
+                                              message.sourceKanbanOrder
+                                          ].taskList[sourceIndex]
+                                              .taskAssignments
+                                };
                             }
                             break;
                         case 'delete':
                             if (message.kanban)
                                 this.kanbanList.splice(message.kanban.order, 1);
-                            if (message.task)
+                            if (message.task && !message.taskAssignments)
                                 this.kanbanList[
                                     message.task.kanbanstatus.order
                                 ].taskList.splice(
@@ -159,6 +166,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                     ),
                                     1
                                 );
+                            if (message.taskAssignments) {
+                                console.log(message.taskAssignments)
+                                this.kanbanList[
+                                    message.task.kanbanstatus.order
+                                ].taskList.find(
+                                    (tasks) =>
+                                        tasks.task.id == message.task.id
+                                )!.taskAssignments = message.taskAssignments
+                            }
                             // this.kanbanList.find((kanbans) => {
                             //     kanbans.tasks?.splice(
                             //         kanbans.tasks?.findIndex(
@@ -185,7 +201,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                 );
                                 kanban?.taskList.push({
                                     task: message.task,
-                                    taskAssignments: []
+                                    taskAssignments: message.taskAssignments
                                 });
                             }
                     }
