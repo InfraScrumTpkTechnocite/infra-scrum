@@ -29,7 +29,7 @@ import { webSocket } from 'rxjs/webSocket';
 import { User } from '../models/user.model';
 import { TasktypeService } from '../services/tasktype.service';
 import { TaskType } from '../models/tasktype.model';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EditNewTasksComponent } from '../form/edit-new-tasks/edit-new-tasks.component';
 import { EditProjectComponent } from '../form/edit-project/edit-project.component';
 import { UserService } from '../services/user.service';
@@ -167,13 +167,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
                                     1
                                 );
                             if (message.taskAssignments) {
-                                console.log(message.taskAssignments)
+                                console.log(message.taskAssignments);
                                 this.kanbanList[
                                     message.task.kanbanstatus.order
                                 ].taskList.find(
-                                    (tasks) =>
-                                        tasks.task.id == message.task.id
-                                )!.taskAssignments = message.taskAssignments
+                                    (tasks) => tasks.task.id == message.task.id
+                                )!.taskAssignments = message.taskAssignments;
                             }
                             // this.kanbanList.find((kanbans) => {
                             //     kanbans.tasks?.splice(
@@ -431,7 +430,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
             task.kanbanstatus = kanban;
             task.done = kanban.isTypeDone;
         }
-        this.dialog.open(EditNewTasksComponent, {
+        const dialogRef = this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: task,
                 taskTypeList: this.taskTypeList,
@@ -442,6 +441,74 @@ export class ProjectComponent implements OnInit, OnDestroy {
                 user: this.user,
                 subject: this.subject
             }
+        });
+        dialogRef.componentInstance.AddTask.subscribe((object: any) => {
+            // Sprint should be null if his id is undefined
+            object.task.sprint?.id ? null : (object.task.sprint = null);
+            /** Add you as the creator of the task */
+            this.taskService.create(object.task).subscribe({
+                next: (task: Task) => {
+                    const taskAdmin = new TaskAssignment(
+                        object.taskCreator,
+                        task
+                    );
+                    taskAdmin.isTaskCreator = true;
+                    object.taskAssignmentList.push(taskAdmin);
+                    var index = object.taskAssignmentList.length;
+                    object.taskAssignmentList.map(
+                        (taskAssignment: TaskAssignment) => {
+                            taskAssignment.task.id = task.id;
+                            this.taskAssignmentService
+                                .create(taskAssignment)
+                                .subscribe({
+                                    next: () => {
+                                        index--;
+                                    },
+                                    error: (err: any) =>
+                                        console.log(
+                                            `Erreur creation taskassignment : ${err.error['driverError'].detail}`
+                                        ),
+                                    complete: () => {
+                                        if (index == 0) {
+                                            this.kanbanList[
+                                                task.kanbanstatus.order
+                                            ].taskList.push({
+                                                task: task,
+                                                taskAssignments:
+                                                    object.taskAssignmentList.map(
+                                                        (
+                                                            taskAssignmentFromList: TaskAssignment
+                                                        ) => ({
+                                                            taskAssignment:
+                                                                taskAssignmentFromList,
+                                                            timeentries: []
+                                                        })
+                                                    )
+                                            });
+                                            this.toastService.success(
+                                                'Task created !'
+                                            );
+                                            this.subject.next({
+                                                method: 'add',
+                                                task: task,
+                                                projectid: this.projectid
+                                            });
+                                            dialogRef.close();
+                                        }
+                                    }
+                                });
+                        }
+                    );
+                },
+                error: (err: any) => {
+                    console.log(
+                        `Erreur creation task : ${err.error['driverError'].detail}`
+                    );
+                    this.toastService.error(
+                        `Error during task creation<br><br>${err.error.driverError.detail}`
+                    );
+                }
+            });
         });
     }
 

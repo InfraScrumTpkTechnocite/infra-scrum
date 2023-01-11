@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskAssignment } from '../../models/taskassignment.model';
 import { Task } from '../../models/task.model';
@@ -19,6 +19,10 @@ import { KanbanList } from 'src/app/models/kanbanlist.model';
     styleUrls: ['./edit-new-tasks.component.css']
 })
 export class EditNewTasksComponent implements OnInit {
+
+    @Output() AddTask = new EventEmitter<any>();
+    @Output() EditTask = new EventEmitter<any>();
+
     newTask: Task = new Task(this.data.task);
     newTaskAssignmentList: TaskAssignment[] = [];
     userProjectList: UserProject[] = [];
@@ -43,7 +47,7 @@ export class EditNewTasksComponent implements OnInit {
         private taskService: TaskService,
         private taskAssignmentService: TaskassignmentService,
         private toastService: HotToastService,
-        public dialogRef: MatDialogRef<EditNewTasksComponent>,
+        private dialogRef: MatDialogRef<EditNewTasksComponent>,
         @Inject(MAT_DIALOG_DATA)
         public data: {
             task: Task;
@@ -153,6 +157,11 @@ export class EditNewTasksComponent implements OnInit {
         this.newTask.estimatedtime =
             this.days * 480 + this.hours * 60 + this.minutes;
         var index = this.newTaskAssignmentList.length;
+        if (!this.newTask.id){
+           return this.AddTask.emit(
+            {task : this.newTask, taskAssignmentList: this.newTaskAssignmentList, taskCreator: this.userProjectTaskCreator}
+            );
+        }
         if (this.data.edition) {
             //** Task EDITION */
             const observer = {
@@ -259,74 +268,6 @@ export class EditNewTasksComponent implements OnInit {
             this.taskService
                 .edit(this.data.task.id!, this.newTask)
                 .subscribe(observer);
-        } else {
-            //** Task CREATION */
-            const observer = {
-                next: (task: Task) => {
-                    this.newTask.id = task.id;
-                    /** Add you as the creator of the task */
-                    const taskAdmin = new TaskAssignment(
-                        this.userProjectTaskCreator,
-                        task
-                    );
-                    taskAdmin.isTaskCreator = true;
-                    this.newTaskAssignmentList.push(taskAdmin);
-                    var index = this.newTaskAssignmentList.length;
-                    this.taskassignmentList = [];
-                    this.newTaskAssignmentList.map((taskAssignment) => {
-                        this.taskAssignmentService
-                            .create(taskAssignment)
-                            .subscribe({
-                                next: (taskAssignment: TaskAssignment) => {
-                                    this.taskassignmentList.push({
-                                        taskAssignment: taskAssignment,
-                                        timeentries: []
-                                    });
-                                    index--;
-                                },
-                                error: (err: any) =>
-                                    console.log(
-                                        `Erreur creation taskassignment : ${err.error['driverError'].detail}`
-                                    ),
-                                complete: () => {
-                                    if (index == 0) {
-                                        this.data.kanbanlist[
-                                            task.kanbanstatus.order
-                                        ].taskList.push({
-                                            task: task,
-                                            taskAssignments:
-                                                this.taskassignmentList
-                                        });
-                                        this.toastService.success(
-                                            'Task created !'
-                                        );
-                                        this.data.subject.next({
-                                            method: 'add',
-                                            task: task,
-                                            projectid: this.projectid,
-                                            taskAssignments:
-                                                this.taskassignmentList
-                                        });
-                                        this.dialogRef.close();
-                                    }
-                                }
-                            });
-                    });
-                },
-                error: (err: any) => {
-                    console.log(
-                        `Erreur creation task : ${err.error['driverError'].detail}`
-                    );
-                    this.toastService.error(
-                        `Error during task creation<br><br>${err.error.driverError.detail}`
-                    );
-                },
-                complete: () => {}
-            };
-            if (!this.newTask.sprint?.id) {
-                this.newTask.sprint = null;
-            }
-            this.taskService.create(this.newTask).subscribe(observer);
         }
     }
 
