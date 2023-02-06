@@ -54,7 +54,6 @@ export class EditNewTasksComponent implements OnInit {
             userProjectList: UserProject[];
             taskTypeList: TaskType[];
             sprintList: Project[];
-            edition: boolean;
             kanbanlist: KanbanList[];
             subject: WebSocketSubject<unknown>;
             user: User;
@@ -82,7 +81,7 @@ export class EditNewTasksComponent implements OnInit {
             this.userProjectList.push(userProject)
         );
         this.newDate = new Date(this.data.task?.startdate);
-        var index = this.data.edition
+        var index = this.data.task.id
             ? /** Find Task Creator through taskAssignmentList */
               this.userProjectList.findIndex(
                   (userProject) => {
@@ -141,7 +140,7 @@ export class EditNewTasksComponent implements OnInit {
     addUser(userProject: UserProject): void {
         const newAssignement = new TaskAssignment(
             userProject,
-            this.data.edition ? this.data.task : this.newTask
+            this.data.task.id ? this.data.task : this.newTask
         );
         this.newTaskAssignmentList.push(newAssignement);
         this.userProjectList.splice(
@@ -162,113 +161,118 @@ export class EditNewTasksComponent implements OnInit {
             {task : this.newTask, taskAssignmentList: this.newTaskAssignmentList, taskCreator: this.userProjectTaskCreator}
             );
         }
-        if (this.data.edition) {
-            //** Task EDITION */
-            const observer = {
-                next: () => {
-                    this.newTaskAssignmentList.map((taskAssignment) => {
-                        this.taskAssignmentService
-                            .create(taskAssignment)
-                            .subscribe({
-                                next: (taskAssignment: TaskAssignment) => {
-                                    this.taskassignmentList.push({
-                                        taskAssignment: taskAssignment,
-                                        timeentries: []
-                                    });
-                                    index--;
-                                },
-                                error: (err: any) => {
-                                    this.toastService.error(
-                                        `Error during taskassignment creation<br><br>${err.error.driverError.detail}`
-                                    );
-                                },
-                                complete: () => {
-                                    if (index == 0) {
-                                        this.newTask.id = this.data.task.id;
-                                        this.data.kanbanlist[
-                                            this.newTask.kanbanstatus.order
-                                        ].taskList
-                                            .find(
-                                                (task) =>
-                                                    task.task.id ==
-                                                    this.newTask.id
-                                            )!
-                                            .taskAssignments!.concat(
-                                                this.newTaskAssignmentList.map(
-                                                    (taskAssignment) => ({
-                                                        taskAssignment:
-                                                            taskAssignment,
-                                                        timeentries: []
-                                                    })
-                                                )
-                                            );
-                                        if (index == 0) {
-                                            this.toastService.success(
-                                                'Task Edited !'
-                                            );
-                                            this.newTask.id = this.data.task.id;
-                                            this.data.task = this.newTask;
-                                            this.data.subject.next({
-                                                method: 'edit',
-                                                task: this.newTask,
-                                                projectid: this.projectid,
-                                                sourceKanbanOrder:
-                                                    this.newTask.kanbanstatus
-                                                        .order,
-                                                targetKanbanOrder:
-                                                    this.newTask.kanbanstatus
-                                                        .order,
-                                                taskAssignments:
-                                                    this.newTaskAssignmentList.map(
-                                                        (taskAssignment) => ({
-                                                            taskAssignment:
-                                                                taskAssignment,
-                                                            timeentries: []
-                                                        })
-                                                    )
-                                            });
-                                            this.dialogRef.close({
-                                                task: this.newTask,
-                                                taskid: this.data.task.id
-                                            });
-                                        }
-                                    }
-                                }
-                            });
-                    });
-                },
-                error: (err: any) => {
-                    this.toastService.error(
-                        `Error during task edition<br><br>${err.error.driverError.detail}`
-                    );
-                },
-                complete: () => {
-                    if (index == 0) {
-                        this.data.subject.next({
-                            method: 'edit',
-                            task: this.newTask,
-                            projectid: this.projectid,
-                            sourceKanbanOrder:
-                                this.newTask.kanbanstatus
-                                    .order,
-                            targetKanbanOrder:
-                                this.newTask.kanbanstatus
-                                    .order,
-                        });
-                        this.dialogRef.close({
-                            task: this.newTask,
-                            taskid: this.data.task.id
-                        });
-                    }
-                }
-            };
-            if (!this.newTask.sprint?.id) {
-                this.newTask.sprint = null;
-            }
-            this.taskService
-                .edit(this.data.task.id!, this.newTask)
-                .subscribe(observer);
+        else{
+            return this.EditTask.emit(
+                {task : this.newTask, taskAssignmentList: this.newTaskAssignmentList}
+            )
         }
+        // if (this.data.edition) {
+        //     //** Task EDITION */
+        //     const observer = {
+        //         next: () => {
+        //             this.newTaskAssignmentList.map((taskAssignment) => {
+        //                 this.taskAssignmentService
+        //                     .create(taskAssignment)
+        //                     .subscribe({
+        //                         next: (taskAssignment: TaskAssignment) => {
+        //                             this.taskassignmentList.push({
+        //                                 taskAssignment: taskAssignment,
+        //                                 timeentries: []
+        //                             });
+        //                             index--;
+        //                         },
+        //                         error: (err: any) => {
+        //                             this.toastService.error(
+        //                                 `Error during taskassignment creation<br><br>${err.error.driverError.detail}`
+        //                             );
+        //                         },
+        //                         complete: () => {
+        //                             if (index == 0) {
+        //                                 this.newTask.id = this.data.task.id;
+        //                                 this.data.kanbanlist[
+        //                                     this.newTask.kanbanstatus.order
+        //                                 ].taskList
+        //                                     .find(
+        //                                         (task) =>
+        //                                             task.task.id ==
+        //                                             this.newTask.id
+        //                                     )!
+        //                                     .taskAssignments!.concat(
+        //                                         this.newTaskAssignmentList.map(
+        //                                             (taskAssignment) => ({
+        //                                                 taskAssignment:
+        //                                                     taskAssignment,
+        //                                                 timeentries: []
+        //                                             })
+        //                                         )
+        //                                     );
+        //                                 if (index == 0) {
+        //                                     this.toastService.success(
+        //                                         'Task Edited !'
+        //                                     );
+        //                                     this.newTask.id = this.data.task.id;
+        //                                     this.data.task = this.newTask;
+        //                                     this.data.subject.next({
+        //                                         method: 'edit',
+        //                                         task: this.newTask,
+        //                                         projectid: this.projectid,
+        //                                         sourceKanbanOrder:
+        //                                             this.newTask.kanbanstatus
+        //                                                 .order,
+        //                                         targetKanbanOrder:
+        //                                             this.newTask.kanbanstatus
+        //                                                 .order,
+        //                                         taskAssignments:
+        //                                             this.newTaskAssignmentList.map(
+        //                                                 (taskAssignment) => ({
+        //                                                     taskAssignment:
+        //                                                         taskAssignment,
+        //                                                     timeentries: []
+        //                                                 })
+        //                                             )
+        //                                     });
+        //                                     this.dialogRef.close({
+        //                                         task: this.newTask,
+        //                                         taskid: this.data.task.id
+        //                                     });
+        //                                 }
+        //                             }
+        //                         }
+        //                     });
+        //             });
+        //         },
+        //         error: (err: any) => {
+        //             this.toastService.error(
+        //                 `Error during task edition<br><br>${err.error.driverError.detail}`
+        //             );
+        //         },
+        //         complete: () => {
+        //             if (index == 0) {
+        //                 this.data.subject.next({
+        //                     method: 'edit',
+        //                     task: this.newTask,
+        //                     projectid: this.projectid,
+        //                     sourceKanbanOrder:
+        //                         this.newTask.kanbanstatus
+        //                             .order,
+        //                     targetKanbanOrder:
+        //                         this.newTask.kanbanstatus
+        //                             .order,
+        //                 });
+        //                 this.dialogRef.close({
+        //                     task: this.newTask,
+        //                     taskid: this.data.task.id
+        //                 });
+        //             }
+        //         }
+        //     };
+        //     if (!this.newTask.sprint?.id) {
+        //         this.newTask.sprint = null;
+        //     }
+        //     this.taskService
+        //         .edit(this.data.task.id!, this.newTask)
+        //         .subscribe(observer);
+        // }
     }
 
     removeUser(taskAssignment: any): void {

@@ -424,24 +424,28 @@ export class ProjectComponent implements OnInit, OnDestroy {
         });
     }
 
-    addTask(kanban?: Kanbanstatus) {
-        const task = new Task();
-        if (kanban) {
-            task.kanbanstatus = kanban;
-            task.done = kanban.isTypeDone;
-        }
-        const dialogRef = this.dialog.open(EditNewTasksComponent, {
+    /** Event from child Functions */
+    private openTaskDialog(task: Task): MatDialogRef<EditNewTasksComponent> {
+        return this.dialog.open(EditNewTasksComponent, {
             data: {
                 task: task,
                 taskTypeList: this.taskTypeList,
                 sprintList: this.sprintList,
-                edition: false,
                 kanbanlist: this.kanbanList,
                 userProjectList: this.userProjects,
                 user: this.user,
                 subject: this.subject
             }
         });
+    }
+
+    addTask(kanban?: Kanbanstatus) {
+        const task = new Task();
+        if (kanban) {
+            task.kanbanstatus = kanban;
+            task.done = kanban.isTypeDone;
+        }
+        const dialogRef = this.openTaskDialog(task);
         dialogRef.componentInstance.AddTask.subscribe((object: any) => {
             // Sprint should be null if his id is undefined
             object.task.sprint?.id ? null : (object.task.sprint = null);
@@ -509,6 +513,36 @@ export class ProjectComponent implements OnInit, OnDestroy {
                     );
                 }
             });
+        });
+    }
+
+    editTask(task: Task) {
+        const dialogRef = this.openTaskDialog(task!);
+        var taskTaskAssignment = this.kanbanList
+            .find((kanbanList) => kanbanList.kanban.id == task?.kanbanstatus.id)
+            ?.taskList.find((taskList) => (taskList.task.id = task?.id));
+        dialogRef.componentInstance.EditTask.subscribe({
+            next: (object: any) => {
+                if (!object.task.sprint?.id) {
+                    object.task.sprint = null;
+                }
+                this.taskService.edit(object.task.id!, object.task).subscribe({
+                    next: () => {
+                        taskTaskAssignment!.task = task;
+                        object.taskAssignmentList ? object.taskAssignmentList.map(
+                            (taskAssignment: TaskAssignment) => {
+                                this.taskAssignmentService
+                                    .create(taskAssignment)
+                                    .subscribe((taskAssigned: TaskAssignment) =>
+                                        taskTaskAssignment?.taskAssignments?.push(
+                                            {taskAssignment: taskAssigned, timeentries : []}
+                                        )
+                                    );
+                            }
+                        ):"";
+                    }
+                });
+            }
         });
     }
 

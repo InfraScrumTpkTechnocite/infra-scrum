@@ -303,7 +303,7 @@
                             [user]="user"
                             [isUserProjectadmin]="isUserProjectadmin"
                             (addTaskFromKanban)="
-                                addTaskFromKanban(kanban.kanban)
+                                addTaskFromKanban($event)
                             "
                         ></app-kanban-status>
 
@@ -332,6 +332,7 @@
                                         showCurrentUserTasks
                                     "
                                     [user]="user"
+                                    (editTaskOutput)="editTask($event)"
                                 ></app-task>
                             </div>
                         </div>

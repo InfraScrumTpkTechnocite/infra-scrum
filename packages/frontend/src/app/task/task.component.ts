@@ -39,6 +39,7 @@ export class TaskComponent implements OnInit {
     @Input() user!: User;
 
     // @Output() taskDeleted: EventEmitter<any> = new EventEmitter();
+    @Output() editTaskOutput: EventEmitter<any> = new EventEmitter();
 
     constructor(
         private taskService: TaskService,
@@ -67,34 +68,7 @@ export class TaskComponent implements OnInit {
     }
 
     editTask() {
-        const task = this.task;
-        const dialogRef = this.dialog.open(EditNewTasksComponent, {
-            data: {
-                task: task,
-                taskassignmentList: this.taskassignmentList,
-                userProjectList: this.userProjectList,
-                taskTypeList: this.taskTypeList,
-                sprintList: this.sprintList,
-                edition: true,
-                kanbanlist: this.kanbanList,
-                user: this.user,
-                subject: this.subject
-            }
-        });
-        dialogRef.afterClosed().subscribe((data: any) => {
-            if (data) {
-                this.task = data.task as Task;
-                this.kanbanList[this.task.kanbanstatus.order].taskList[
-                    this.kanbanList[
-                        this.task.kanbanstatus.order
-                    ].taskList.findIndex(
-                        (tasks) => tasks.task.id == this.task.id
-                    )
-                ].task = this.task;
-
-                //this.task.id = data.taskid;
-            }
-        });
+        this.editTaskOutput.emit(this.task)
     }
 
     deleteTask() {
